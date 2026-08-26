@@ -1385,17 +1385,20 @@ html[lang='en'] body {
   }
 
   .experience-canvas {
+    --color-text-on-canvas: #ffffff;
+    --color-text-on-canvas-muted: #e2f2e9;
     display: grid;
     flex: 1 0 auto;
     border-radius: 0;
-    background: #164a36;
+    background: #2c7152;
     box-shadow: none;
   }
 
   .experience-canvas .pui-canvas-glow {
     background:
-      radial-gradient(100% 90% at 88% 8%, rgb(65 155 102 / 58%) 0%, transparent 62%),
-      radial-gradient(88% 76% at 4% 100%, rgb(35 112 77 / 68%) 0%, transparent 66%);
+      radial-gradient(72% 84% at 92% 4%, rgb(214 245 154 / 22%) 0%, transparent 66%),
+      radial-gradient(78% 72% at 4% 100%, rgb(116 218 166 / 28%) 0%, transparent 68%),
+      radial-gradient(48% 52% at 62% 42%, rgb(255 213 124 / 12%) 0%, transparent 72%);
   }
 
   .experience-canvas .pui-canvas-inner {
