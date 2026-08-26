@@ -732,6 +732,8 @@
     "funding": "Scholarships & funding",
     "records": "Records & safety",
     "support": "Support",
+    "toolbarLabel": "Workspace tools",
+    "publicSite": "Public website",
     "progress": "Journey progress",
     "progressHelp": "Each completed proof moves your journey forward."
   },
@@ -764,7 +766,15 @@
     "yourDataBody": "The platform keeps private records inside your authenticated account and separates self-declared information from reviewed evidence.",
     "dataRule1": "No personal data is sold as a lead.",
     "dataRule2": "Family access is limited and revocable.",
-    "dataRule3": "AI suggestions cannot mark evidence verified."
+    "dataRule3": "AI suggestions cannot mark evidence verified.",
+    "readinessEyebrow": "Account readiness",
+    "readinessTitle": "Complete your profile",
+    "readinessAccount": "Secure account created",
+    "readinessPath": "Primary journey selected",
+    "readinessGoal": "Journey goal added",
+    "readinessPassport": "Migration Passport started",
+    "readinessDocuments": "First evidence document added",
+    "readinessCount": "{completed} of {total} foundations complete"
   },
   "journey": {
     "welcome": "Your talent workspace is ready. The journey now follows the direction you chose.",

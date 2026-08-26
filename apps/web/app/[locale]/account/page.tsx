@@ -72,6 +72,35 @@ export default async function AccountPage({
     workspace.unreadAlerts > 0,
     workspace.pendingVerifications > 0,
   ].filter(Boolean).length;
+  const passportStarted = Boolean(
+    profile.passport.identity.hasPassport !== undefined ||
+    profile.passport.education.highestLevel ||
+    profile.passport.professional.experienceMonths !== undefined ||
+    profile.passport.study.target ||
+    profile.passport.language.englishLevel ||
+    profile.passport.preferences.destinationCountries.length,
+  );
+  const readinessItems = [
+    { label: t('account.readinessAccount'), complete: true, href: `/${seg}/account` },
+    { label: t('account.readinessPath'), complete: true, href: '#journey-settings' },
+    {
+      label: t('account.readinessGoal'),
+      complete: Boolean(profile.goalTitle),
+      href: '#journey-settings',
+    },
+    {
+      label: t('account.readinessPassport'),
+      complete: passportStarted,
+      href: `/${seg}/passport`,
+    },
+    {
+      label: t('account.readinessDocuments'),
+      complete: workspace.documents.length > 0,
+      href: `/${seg}/documents`,
+    },
+  ];
+  const readinessCompleted = readinessItems.filter((item) => item.complete).length;
+  const readinessProgress = Math.round((readinessCompleted / readinessItems.length) * 100);
 
   return (
     <JourneyWorkspaceShell
@@ -129,7 +158,11 @@ export default async function AccountPage({
         </div>
 
         <div className="account-settings-grid">
-          <form action={updateProfileDirectionAction} className="account-direction-card">
+          <form
+            action={updateProfileDirectionAction}
+            className="account-direction-card"
+            id="journey-settings"
+          >
             <input type="hidden" name="locale" value={seg} />
             <header>
               <span>
@@ -195,31 +228,60 @@ export default async function AccountPage({
             </button>
           </form>
 
-          <aside className="account-privacy-card">
-            <span>
-              <Icon name="shield" size={23} />
-            </span>
-            <small>{t('account.dataControl')}</small>
-            <h2>{t('account.yourData')}</h2>
-            <p>{t('account.yourDataBody')}</p>
-            <ul>
-              <li>
-                <Icon name="check" size={16} />
-                {t('account.dataRule1')}
-              </li>
-              <li>
-                <Icon name="check" size={16} />
-                {t('account.dataRule2')}
-              </li>
-              <li>
-                <Icon name="check" size={16} />
-                {t('account.dataRule3')}
-              </li>
-            </ul>
-            <Link href={chatGPTSignOutPath(`/${seg}`)} className="account-signout-link">
-              {t('account.signOut')} →
-            </Link>
-          </aside>
+          <div className="account-side-rail">
+            <aside className="account-readiness-card">
+              <header>
+                <div>
+                  <small>{t('account.readinessEyebrow')}</small>
+                  <h2>{t('account.readinessTitle')}</h2>
+                </div>
+                <strong>{readinessProgress}%</strong>
+              </header>
+              <div className="account-readiness-progress" aria-hidden="true">
+                <span style={{ width: `${readinessProgress}%` }} />
+              </div>
+              <ul>
+                {readinessItems.map((item, index) => (
+                  <li className={item.complete ? 'complete' : undefined} key={item.label}>
+                    <span aria-hidden="true">{item.complete ? '✓' : index + 1}</span>
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+              <p>
+                {t('account.readinessCount', {
+                  completed: readinessCompleted,
+                  total: readinessItems.length,
+                })}
+              </p>
+            </aside>
+
+            <aside className="account-privacy-card">
+              <span>
+                <Icon name="shield" size={23} />
+              </span>
+              <small>{t('account.dataControl')}</small>
+              <h2>{t('account.yourData')}</h2>
+              <p>{t('account.yourDataBody')}</p>
+              <ul>
+                <li>
+                  <Icon name="check" size={16} />
+                  {t('account.dataRule1')}
+                </li>
+                <li>
+                  <Icon name="check" size={16} />
+                  {t('account.dataRule2')}
+                </li>
+                <li>
+                  <Icon name="check" size={16} />
+                  {t('account.dataRule3')}
+                </li>
+              </ul>
+              <Link href={chatGPTSignOutPath(`/${seg}`)} className="account-signout-link">
+                {t('account.signOut')} →
+              </Link>
+            </aside>
+          </div>
         </div>
       </div>
     </JourneyWorkspaceShell>

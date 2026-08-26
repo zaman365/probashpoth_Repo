@@ -164,6 +164,8 @@ export function JourneyWorkspaceShell({
     },
   ];
   const pathLabel = t(path === 'work' ? 'account.workTalent' : 'account.studyTalent');
+  const activeLabel = t(active === 'account' ? 'account.myAccount' : 'nav.dashboard');
+  const alternateLocale = seg === 'bn' ? 'en' : 'bn';
   const progressStyle = {
     '--journey-rail-progress': `${boundedProgress}%`,
   } as CSSProperties;
@@ -215,8 +217,51 @@ export function JourneyWorkspaceShell({
 
   return (
     <div className={`journey-workspace-shell wide-page journey-rail-${path}`}>
+      <header className="journey-workspace-toolbar">
+        <div className="journey-toolbar-brand">{workspaceHead}</div>
+        <div className="journey-toolbar-context">
+          <span aria-hidden="true">
+            <Icon name={active === 'account' ? 'shield' : 'route'} size={18} />
+          </span>
+          <span>
+            <small>{pathLabel}</small>
+            <strong>{activeLabel}</strong>
+          </span>
+        </div>
+        <nav className="journey-toolbar-actions" aria-label={t('workspaceNav.toolbarLabel')}>
+          <Link href={`/${seg}`} className="journey-toolbar-link">
+            <Icon name="globe" size={18} />
+            <span>{t('workspaceNav.publicSite')}</span>
+          </Link>
+          <Link href={`/${seg}/help`} className="journey-toolbar-link">
+            <Icon name="phone" size={18} />
+            <span>{t('common.help')}</span>
+          </Link>
+          <Link
+            href={`/${alternateLocale}/${active}`}
+            className="journey-toolbar-language"
+            aria-label={t(seg === 'bn' ? 'common.switchToEnglish' : 'common.switchToBangla')}
+          >
+            <Icon name="globe" size={17} />
+            <span>{t(seg === 'bn' ? 'common.switchToEnglish' : 'common.switchToBangla')}</span>
+          </Link>
+          <Link
+            href={`/${seg}/account`}
+            className={`journey-toolbar-account${active === 'account' ? ' active' : ''}`}
+            aria-current={active === 'account' ? 'page' : undefined}
+          >
+            <span className="journey-rail-avatar" aria-hidden="true">
+              {initials(user)}
+            </span>
+            <span>
+              <strong>{user.displayName}</strong>
+              <small>{t('account.myAccount')}</small>
+            </span>
+          </Link>
+        </nav>
+      </header>
+
       <aside className="journey-workspace-sidebar">
-        {workspaceHead}
         <span className="journey-rail-path">
           <Icon name={path} size={16} />
           {pathLabel}
@@ -233,7 +278,6 @@ export function JourneyWorkspaceShell({
           <small>{pathLabel}</small>
         </summary>
         <div className="journey-workspace-mobile-panel">
-          {workspaceHead}
           <RailNavigation groups={groups} label={t('workspaceNav.navigation')} />
           {workspaceProgress}
           {accountCard}
