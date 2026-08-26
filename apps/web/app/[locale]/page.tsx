@@ -1,6 +1,14 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Disclosure, Icon } from '@probash/web-ui';
+import {
+  CanvasPanel,
+  ChipLink,
+  Disclosure,
+  FeaturePill,
+  GlassCard,
+  Icon,
+  Reveal,
+} from '@probash/web-ui';
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata, siteUrl } from '@/lib/seo';
@@ -175,104 +183,131 @@ export default async function Landing({
     <div className="experience-home">
       <section className="experience-hero" aria-labelledby="experience-hero-title">
         <div className="experience-shell">
-          <div className="experience-hero-stage">
-            <div className="experience-route-mark" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-
-            <div className="experience-hero-layout">
-              <div className="experience-hero-copy">
-                <p className="experience-kicker">
-                  <span className="experience-kicker-dot" aria-hidden="true" />
-                  {t('experience.heroEyebrow')}
-                </p>
-                <h1 id="experience-hero-title" className="experience-hero-title">
-                  <span>{t('experience.heroTitleLine')}</span>
-                  <strong>{t('experience.heroTitleAccent')}</strong>
-                </h1>
-                <p className="experience-hero-lead">{t('site.heroLead')}</p>
-
-                <div className="experience-hero-actions">
-                  <Link href={`/${seg}/verify`} className="experience-btn experience-btn-light">
-                    <span>{t('site.heroVerifyCta')}</span>
-                    <Icon name="arrow" size={20} />
-                  </Link>
-                  <Link href={`/${seg}/countries`} className="experience-btn experience-btn-ghost">
-                    <Icon name="globe" size={20} />
-                    <span>{t('experience.exploreRoutes')}</span>
-                  </Link>
-                </div>
-
-                <div className="experience-hero-audio">
-                  <ListenButton
-                    text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
-                    label={t('common.listen')}
-                    lang={locale}
-                  />
-                  <span>{t('site.heroNote')}</span>
-                </div>
+          <div className="experience-hero-frame">
+            <CanvasPanel className="experience-canvas">
+              <div className="hero-topbar">
+                <IntentSwitch locale={locale} intent={intent} tone="canvas" />
               </div>
 
-              <aside className="experience-check-card" aria-labelledby="quick-check-title">
-                <div className="experience-check-card-head">
-                  <span className="experience-check-icon" aria-hidden="true">
-                    <Icon name="verify" size={24} />
-                  </span>
-                  <p>{t('experience.checkEyebrow')}</p>
+              <div className="hero-grid">
+                <div className="hero-copy">
+                  <Reveal index={0}>
+                    <span className="hero-eyebrow">{t('site.tagline')}</span>
+                  </Reveal>
+                  <Reveal index={1}>
+                    <h1 id="experience-hero-title" className="hero-title">
+                      {t('site.heroTitle')}
+                    </h1>
+                  </Reveal>
+                  <Reveal index={2}>
+                    <p className="hero-lead">{t('site.heroLead')}</p>
+                  </Reveal>
+
+                  <Reveal index={3}>
+                    <div className="hero-actions">
+                      <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
+                        {t('site.heroVerifyCta')}
+                      </ChipLink>
+                      <Link
+                        href={`/${seg}/countries`}
+                        className="experience-btn experience-btn-ghost"
+                      >
+                        <Icon name="globe" size={20} />
+                        <span>{t('experience.exploreRoutes')}</span>
+                      </Link>
+                    </div>
+                  </Reveal>
+
+                  <Reveal index={4}>
+                    <div className="hero-utility">
+                      <ListenButton
+                        text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
+                        label={t('common.listen')}
+                        lang={locale}
+                      />
+                      <p className="hero-note">{t('site.heroNote')}</p>
+                    </div>
+                  </Reveal>
+
+                  <Reveal index={5}>
+                    <ul className="hero-pills">
+                      <FeaturePill icon={<Icon name="check" size={16} />}>
+                        {t('site.pill1')}
+                      </FeaturePill>
+                      <FeaturePill icon={<Icon name="check" size={16} />}>
+                        {t('site.pill2')}
+                      </FeaturePill>
+                      <FeaturePill icon={<Icon name="check" size={16} />}>
+                        {t('site.pill3')}
+                      </FeaturePill>
+                    </ul>
+                  </Reveal>
                 </div>
-                <h2 id="quick-check-title">{t('experience.checkTitle')}</h2>
-                <p className="experience-check-body">{t('experience.checkBody')}</p>
 
-                <form action={`/${seg}/verify`} method="get" className="experience-check-form">
-                  <label htmlFor="experience-public-id">{t('scanner.publicIdLabel')}</label>
-                  <div>
-                    <input
-                      id="experience-public-id"
-                      name="publicId"
-                      placeholder="BD-QA-2026-00000000"
-                      autoComplete="off"
-                    />
-                    <button type="submit">
-                      <span>{t('scanner.checkNow')}</span>
-                      <Icon name="arrow" size={19} />
-                    </button>
-                  </div>
-                </form>
+                <Reveal index={2} className="hero-side">
+                  <GlassCard as="article">
+                    <span className="hero-side-icon" aria-hidden="true">
+                      <Icon name="verify" size={22} />
+                    </span>
+                    <h2 id="quick-check-title" className="hero-side-title">
+                      {t('experience.checkTitle')}
+                    </h2>
+                    <p>{t('experience.checkBody')}</p>
 
-                <div className="experience-check-note">
-                  <Icon name="shield" size={18} />
-                  <span>{t('experience.checkNote')}</span>
-                </div>
-              </aside>
+                    <form action={`/${seg}/verify`} method="get" className="hero-verify-form">
+                      <label htmlFor="hero-public-id" className="hero-verify-label">
+                        {t('scanner.publicIdLabel')}
+                      </label>
+                      <div className="hero-verify-row">
+                        <input
+                          id="hero-public-id"
+                          name="publicId"
+                          className="hero-verify-input"
+                          placeholder="BD-QA-2026-00000000"
+                          autoComplete="off"
+                        />
+                        <button type="submit" className="pui-btn pui-btn-primary pui-btn-md">
+                          {t('scanner.checkNow')}
+                        </button>
+                      </div>
+                    </form>
+
+                    <dl className="hero-side-stats">
+                      <div>
+                        <dt>{t('intent.routesFor')}</dt>
+                        <dd>{intent === 'study' ? studyRoutes.length : workRoutes.length}</dd>
+                      </div>
+                      <div>
+                        <dt>{t('site.statCountries')}</dt>
+                        <dd>
+                          {distinctCountries(intent === 'study' ? studyRoutes : workRoutes)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>{intent === 'study' ? t('site.studyCourses') : t('site.statJobs')}</dt>
+                        <dd>{intent === 'study' ? courses : jobs}</dd>
+                      </div>
+                    </dl>
+
+                    <p className="hero-warning">
+                      <Icon name="warning" size={18} />
+                      <span>{t('cost.payOnlyHere')}</span>
+                    </p>
+                  </GlassCard>
+                </Reveal>
+              </div>
+            </CanvasPanel>
+
+            <div className="experience-status-strip" role="note">
+              <div>
+                <span className="experience-status-pulse" aria-hidden="true" />
+                <strong>{t('experience.statusLabel')}</strong>
+              </div>
+              <p>{t('experience.statusBody')}</p>
+              <Link href={`/${seg}/about`}>
+                {t('experience.statusCta')} <Icon name="arrow" size={17} />
+              </Link>
             </div>
-
-            <ul className="experience-hero-proof">
-              <li>
-                <Icon name="check" size={17} />
-                <span>{t('site.pill1')}</span>
-              </li>
-              <li>
-                <Icon name="check" size={17} />
-                <span>{t('site.pill2')}</span>
-              </li>
-              <li>
-                <Icon name="check" size={17} />
-                <span>{t('site.pill3')}</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="experience-status-strip" role="note">
-            <div>
-              <span className="experience-status-pulse" aria-hidden="true" />
-              <strong>{t('experience.statusLabel')}</strong>
-            </div>
-            <p>{t('experience.statusBody')}</p>
-            <Link href={`/${seg}/about`}>
-              {t('experience.statusCta')} <Icon name="arrow" size={17} />
-            </Link>
           </div>
         </div>
       </section>

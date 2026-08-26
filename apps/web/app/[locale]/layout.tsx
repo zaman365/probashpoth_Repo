@@ -6,8 +6,8 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 
 const productName = {
-  'bn-BD': process.env['PUBLIC_PRODUCT_NAME_BN'] ?? 'প্রবাস ওএস',
-  en: process.env['PUBLIC_PRODUCT_NAME'] ?? 'ProbashOS',
+  'bn-BD': process.env['PUBLIC_PRODUCT_NAME_BN'] ?? 'প্রবাসযাত্রা',
+  en: process.env['PUBLIC_PRODUCT_NAME'] ?? 'ProbashJatra',
 };
 
 export async function generateMetadata({

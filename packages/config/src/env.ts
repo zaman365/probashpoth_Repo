@@ -11,8 +11,8 @@ export const envSchema = z.object({
   API_BASE_URL: z.string().url().default('http://localhost:3001'),
   PORT: z.coerce.number().int().positive().default(3001),
   DEFAULT_LOCALE: z.enum(['bn-BD', 'en']).default('bn-BD'),
-  PUBLIC_PRODUCT_NAME: z.string().min(1).default('ProbashOS'),
-  PUBLIC_PRODUCT_NAME_BN: z.string().min(1).default('প্রবাস ওএস'),
+  PUBLIC_PRODUCT_NAME: z.string().min(1).default('ProbashJatra'),
+  PUBLIC_PRODUCT_NAME_BN: z.string().min(1).default('প্রবাসযাত্রা'),
 
   STORAGE_DRIVER: z.enum(['memory', 'postgres']).default('memory'),
   DATABASE_URL: z.string().optional(),

@@ -1143,9 +1143,9 @@ html[lang='en'] body {
   }
 
   .experience-shell {
-    width: min(100%, 1280px);
+    width: min(100%, var(--size-max-site-width));
     margin-inline: auto;
-    padding-inline: clamp(18px, 4vw, 54px);
+    padding-inline: clamp(var(--space-md), 3vw, var(--space-3xl));
   }
 
   .experience-section {
@@ -1350,6 +1350,21 @@ html[lang='en'] body {
   /* Hero */
   .experience-hero {
     padding-block: 16px 0;
+  }
+
+  .experience-hero-frame {
+    overflow: hidden;
+    border-radius: 34px;
+    box-shadow: var(--elevation-float);
+  }
+
+  .experience-canvas {
+    border-radius: 34px 34px 0 0;
+    box-shadow: none;
+  }
+
+  .experience-canvas .hero-grid {
+    max-width: none;
   }
 
   .experience-hero-stage {
