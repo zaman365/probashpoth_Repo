@@ -154,7 +154,7 @@ export default async function StudyHub({ params }: { params: Promise<{ locale: s
         </Grid>
       </Section>
 
-      <Section surface="default" title={t('intent.coursesAvailable')}>
+      <Section surface="default" title={t('intent.coursesAvailable')} headingId="study-programmes">
         <Grid min={300}>
           {courses.map((course) => (
             <Link key={course.id} href={`/${seg}/programs/${course.id}`} className="guide-link">
