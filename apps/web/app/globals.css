@@ -1400,7 +1400,7 @@ html[lang='en'] body {
     overflow: hidden;
     min-height: 690px;
     padding: clamp(34px, 5vw, 70px);
-    border-radius: 34px 34px 0 0;
+    border-radius: 0;
     background: var(--experience-ink);
     color: #f5fbf7;
   }
@@ -2545,7 +2545,7 @@ html[lang='en'] body {
 
     .experience-hero-stage {
       padding: 34px 22px 26px;
-      border-radius: 24px 24px 0 0;
+      border-radius: 0;
     }
 
     .experience-hero-layout {
@@ -2745,4 +2745,11 @@ html[lang='en'] body {
       transform: translateY(0);
     }
   }
+}
+
+/* The shared canvas primitive is intentionally unlayered, so this final override
+   keeps the homepage hero square-edged regardless of cascade-layer precedence. */
+.experience-home .experience-hero-frame,
+.experience-home .experience-canvas {
+  border-radius: 0;
 }
