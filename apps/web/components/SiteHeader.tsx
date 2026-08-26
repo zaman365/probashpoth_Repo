@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Locale } from '@probash/domain';
-import { Container, Icon, LogoMark } from '@probash/web-ui';
+import { Container, Icon, LogoMark, type IconName } from '@probash/web-ui';
 import { localeSegment, otherLocale, translator } from '@/lib/i18n';
 import { OfflineBanner } from './OfflineBanner';
 import { AccountControl } from './AccountControl';
@@ -34,14 +34,34 @@ export function SiteHeader({
    * Long labels overflowed the pill and were clipped — links that exist but cannot be
    * seen or clicked are worse than links that are not there.
    */
-  const links = [
+  const journeyIcon: IconName =
+    profile?.activePath === 'study' ? 'study' : profile?.activePath === 'work' ? 'work' : 'route';
+  const journeyTone = !user
+    ? 'guest'
+    : profile?.activePath === 'study'
+      ? 'study'
+      : profile?.activePath === 'work'
+        ? 'work'
+        : 'unset';
+  const links: Array<{
+    href: string;
+    label: string;
+    icon?: IconName;
+    accountIcon?: boolean;
+    journeyTone?: string;
+  }> = [
+    {
+      href: `/${seg}/dashboard`,
+      label: t('nav.dashboard'),
+      icon: user ? journeyIcon : undefined,
+      accountIcon: !user,
+      journeyTone,
+    },
     {
       href: `/${seg}/verify`,
       label: t('home.verifyOffer'),
       icon: 'verify' as const,
-      priority: true,
     },
-    { href: `/${seg}/dashboard`, label: t('nav.dashboard') },
     { href: `/${seg}/work`, label: t('nav.work') },
     { href: `/${seg}/study`, label: t('nav.study') },
     { href: `/${seg}/countries`, label: t('nav.countries') },
@@ -64,10 +84,16 @@ export function SiteHeader({
               <Link
                 key={link.href}
                 href={link.href}
-                className={'priority' in link && link.priority ? 'is-priority' : undefined}
+                className={
+                  link.journeyTone ? `is-journey-cta journey-cta-${link.journeyTone}` : undefined
+                }
               >
-                {'icon' in link && link.icon ? <Icon name={link.icon} size={17} /> : null}
-                {link.label}
+                {link.accountIcon ? (
+                  <span className="nav-account-icon" aria-hidden="true" />
+                ) : link.icon ? (
+                  <Icon name={link.icon} size={17} />
+                ) : null}
+                <span>{link.label}</span>
               </Link>
             ))}
           </nav>
@@ -83,7 +109,7 @@ export function SiteHeader({
                 {target === 'en' ? t('common.switchToEnglish') : t('common.switchToBangla')}
               </span>
             </Link>
-            <AccountControl locale={locale} user={user} profile={profile} />
+            {user ? <AccountControl locale={locale} user={user} profile={profile} /> : null}
           </div>
         </div>
 
@@ -93,7 +119,17 @@ export function SiteHeader({
             <span>{t('common.menu')}</span>
           </summary>
           <nav aria-label={t('common.menu')}>
-            <Link href={`/${seg}/dashboard`}>{t('nav.dashboard')}</Link>
+            <Link
+              href={`/${seg}/dashboard`}
+              className={`mobile-journey-cta journey-cta-${journeyTone}`}
+            >
+              {!user ? (
+                <span className="nav-account-icon" aria-hidden="true" />
+              ) : (
+                <Icon name={journeyIcon} size={19} />
+              )}
+              <span>{t('nav.dashboard')}</span>
+            </Link>
             <Link href={`/${seg}/passport`}>{t('passport.title')}</Link>
             <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
             <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
