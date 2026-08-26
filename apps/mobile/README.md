@@ -1,11 +1,12 @@
 # Worker/student mobile app (Expo)
 
-**Status: scaffold.** Structure, navigation and the shared-package wiring are here;
-the screens are the Bangla-first entry points, not the full product.
+**Status: engineering-complete mobile client; device evidence gate open.** The
+Bangla-first client now covers OTP, Passport, matching, QR verification, cases,
+documents, payments, alerts, family access, study applications and outcome follow-ups.
 
-This app is deliberately **excluded from the root pnpm install** (see
-`pnpm-workspace.yaml`) so the trust-rail slice installs and builds in seconds. Nothing
-in CI builds it yet — that is stated plainly rather than implied by a green badge.
+It is part of the root workspace and typechecked in the shared pipeline. Release still
+requires low-memory Android, intermittent-network, camera, accessibility and store
+review evidence; a green TypeScript build is not a device certification.
 
 ## Why Expo (§42.3)
 
@@ -30,10 +31,9 @@ Point it at a local API with `EXPO_PUBLIC_API_BASE_URL=http://<your-lan-ip>:3001
 - No literal UI strings: copy comes from `@probash/i18n` (ADR 0002).
 - Bangla is the default locale, English is the toggle — never the reverse.
 
-## Next steps (Epic 2–3 on mobile)
+## Release evidence still required
 
-1. `expo-secure-store` session storage + phone OTP onboarding.
-2. `expo-sqlite` offline cache for case tasks and downloaded country packs.
-3. Document capture with client-side compression and deferred upload.
-4. QR scanning that resolves against `/verify/job/:publicId`.
-5. Maestro E2E flows: onboarding, offline, camera mock, voice fallback (§66).
+1. Maestro flows for OTP, offline recovery, camera mock and consent revocation.
+2. Low-memory Android testing and Bangla screen-reader review.
+3. Notification credentials, licensed SMS/payment integrations and store signing.
+4. Secure lifecycle testing for cached files and queued document deletion.

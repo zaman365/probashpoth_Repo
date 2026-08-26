@@ -41,6 +41,11 @@ import type {
   HumanReviewDto,
   HumanReviewDecisionDto,
   PublicationChangeDto,
+  PartnerSubmissionDto,
+  PartnerFeeDeclarationDto,
+  PartnerAccessGrantDto,
+  PartnerPipelineEventDto,
+  OutcomeReviewDto,
 } from '@probash/contracts';
 
 /** Persistence-shaped records. The Postgres driver stores exactly these shapes. */
@@ -50,6 +55,8 @@ export interface UserRecord {
   phone: string;
   displayName?: string;
   roles: string[];
+  /** Required for supply-side roles; never inferred from an email domain. */
+  organizationId?: string;
   locale: Locale;
   createdAt: string;
   lastSeenAt?: string;
@@ -120,6 +127,11 @@ export type ComplaintEventRecord = ComplaintEventDto;
 export type HumanReviewRecord = HumanReviewDto;
 export type HumanReviewDecisionRecord = HumanReviewDecisionDto;
 export type PublicationChangeRecord = PublicationChangeDto;
+export type PartnerSubmissionRecord = PartnerSubmissionDto;
+export type PartnerFeeDeclarationRecord = PartnerFeeDeclarationDto;
+export type PartnerAccessGrantRecord = PartnerAccessGrantDto;
+export type PartnerPipelineEventRecord = PartnerPipelineEventDto;
+export type OutcomeReviewRecord = OutcomeReviewDto;
 
 export interface RecommendationSetRecord {
   id: string;

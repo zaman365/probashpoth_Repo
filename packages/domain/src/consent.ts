@@ -6,6 +6,7 @@ export type ConsentPurpose =
   | 'assisted_service'
   | 'document_sharing'
   | 'employer_shortlisting'
+  | 'institution_application_sharing'
   | 'government_reporting'
   | 'family_delegation'
   | 'payment_processing'
@@ -24,6 +25,9 @@ export interface ConsentRecord {
   /** Recorded when an assistant captured consent on the user's behalf (§27). */
   capturedByUserId?: string;
   evidence?: { kind: 'otp' | 'signature' | 'voice' | 'in_person'; reference: string };
+  /** Narrow recipient/resource scope; absence never implies broad partner access. */
+  granteeOrganizationId?: string;
+  resourceId?: string;
 }
 
 /** §28 — family co-pilot permissions. Deliberately cannot include identity or contract changes. */

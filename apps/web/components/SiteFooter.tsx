@@ -30,6 +30,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         { href: `/${seg}/safety`, label: t('guide.safetyTitle') },
         { href: `/${seg}/explore`, label: t('home.howMuchCost') },
         { href: `/${seg}/services`, label: t('nav.services') },
+        { href: `/${seg}/outcomes`, label: t('outcomeIntelligence.title') },
       ],
     },
     {
@@ -38,6 +39,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         { href: `/${seg}/for-employers`, label: t('site.orgEmployers') },
         { href: `/${seg}/for-agencies`, label: t('site.orgAgencies') },
         { href: `/${seg}/for-government`, label: t('site.orgGovernment') },
+        { href: `/${seg}/partners`, label: t('supply.title') },
       ],
     },
     {

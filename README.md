@@ -24,8 +24,8 @@ The platform wins only if a worker can say:
 
 ## What is built today
 
-This repository contains the **trust rail** — the foundation plus the first
-end-to-end vertical slice (§63 of the product blueprint):
+This repository contains the **trust rail and the seven blueprint engineering
+releases**. The original end-to-end slice remains the smallest runnable proof:
 
 > a Bangla-speaking worker creates an account → picks an occupation and country →
 > sees a source-backed route → views one verified job → sees the exact cost →
@@ -35,15 +35,22 @@ end-to-end vertical slice (§63 of the product blueprint):
 
 English is available at every step.
 
+The implementation now also includes the shared Migration Passport, separate Work
+and Higher Study operating systems, organisation-scoped supply portals, independent
+publication and outcome review, privacy-thresholded institutional analytics, and an
+Android-first Expo client. See `docs/blueprint-delivery.md` for the evidence gate of
+each release.
+
 Alongside it, the **public web surface (§14.1)** is live and needs no account:
 country guides, occupation guides, scam education, public job verification, and the
 SEO plumbing (`sitemap.xml`, `robots.txt`, canonical URLs, Bangla/English `hreflang`,
 guide JSON-LD). Case, receipt and document routes are excluded from indexing.
 
-**Not built yet** (and not faked): Temporal workflows, the PostgreSQL storage
-adapter, real payment/government integrations, the study-abroad engine, employer /
-agency / admin / provider portals, learning content, and the mobile and desktop apps
-beyond their scaffolds. Each is called out where it appears.
+**External launch dependencies remain deliberately unfaked:** production Temporal
+workflows, licensed payment/government/communications integrations, KMS-backed object
+storage and malware scanning, human-reviewed country and programme evidence, real
+partner demand, device/accessibility certification, legal approval and operating
+support teams. Synthetic records remain labelled and are blocked in production.
 
 ---
 

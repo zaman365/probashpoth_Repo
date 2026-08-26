@@ -57,6 +57,11 @@ import type {
   HumanReviewRecord,
   HumanReviewDecisionRecord,
   PublicationChangeRecord,
+  PartnerSubmissionRecord,
+  PartnerFeeDeclarationRecord,
+  PartnerAccessGrantRecord,
+  PartnerPipelineEventRecord,
+  OutcomeReviewRecord,
 } from '../records';
 
 interface PayloadRow {
@@ -87,6 +92,11 @@ const SENSITIVE_NAMESPACES = new Set([
   'human_review',
   'human_review_decision',
   'publication_change',
+  'partner_submission',
+  'partner_fee_declaration',
+  'partner_access_grant',
+  'partner_pipeline_event',
+  'outcome_review',
   'consent',
   'delegation',
   'credential',
@@ -227,6 +237,11 @@ export class PostgresStorage implements Storage {
   readonly humanReviews: PostgresCollection<HumanReviewRecord>;
   readonly humanReviewDecisions: PostgresCollection<HumanReviewDecisionRecord>;
   readonly publicationChanges: PostgresCollection<PublicationChangeRecord>;
+  readonly partnerSubmissions: PostgresCollection<PartnerSubmissionRecord>;
+  readonly partnerFeeDeclarations: PostgresCollection<PartnerFeeDeclarationRecord>;
+  readonly partnerAccessGrants: PostgresCollection<PartnerAccessGrantRecord>;
+  readonly partnerPipelineEvents: PostgresCollection<PartnerPipelineEventRecord>;
+  readonly outcomeReviews: PostgresCollection<OutcomeReviewRecord>;
   readonly consents: PostgresCollection<ConsentRecordRow>;
   readonly delegations: PostgresCollection<DelegationRecord>;
   readonly credentials: PostgresCollection<CredentialRecord>;
@@ -287,6 +302,11 @@ export class PostgresStorage implements Storage {
     this.humanReviews = collection('human_review');
     this.humanReviewDecisions = collection('human_review_decision');
     this.publicationChanges = collection('publication_change');
+    this.partnerSubmissions = collection('partner_submission');
+    this.partnerFeeDeclarations = collection('partner_fee_declaration');
+    this.partnerAccessGrants = collection('partner_access_grant');
+    this.partnerPipelineEvents = collection('partner_pipeline_event');
+    this.outcomeReviews = collection('outcome_review');
     this.consents = collection('consent');
     this.delegations = collection('delegation');
     this.credentials = collection('credential');

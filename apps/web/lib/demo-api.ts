@@ -4,6 +4,7 @@ import type {
   JobDetailDto,
   JobSummaryDto,
   OccupationSummaryDto,
+  OutcomeAggregateDto,
   PublicJobVerificationDto,
   RequestOptions,
   RouteDetailDto,
@@ -231,7 +232,7 @@ function organization(id: string | undefined): DemoOrganization | undefined {
 function serviceDirectory(url: URL): ServiceDirectoryEntryDto[] {
   const type = url.searchParams.get('type');
   const country = url.searchParams.get('country')?.toUpperCase();
-  return organizations
+  const organizationEntries = organizations
     .filter((item) => !type || item.type === type)
     .filter((item) => !country || item.countryCode === country)
     .map((item) => {
@@ -270,6 +271,45 @@ function serviceDirectory(url: URL): ServiceDirectoryEntryDto[] {
         isSyntheticDemoData: item.isSyntheticDemoData,
       };
     });
+  const institutionEntries: ServiceDirectoryEntryDto[] = institutionsData.institutions
+    .filter(() => !type || type === 'education_institution')
+    .filter((item) => !country || item.countryCode === country)
+    .map((item) => ({
+      id: item.id,
+      type: 'education_institution',
+      legalName: item.legalName,
+      countryCode: item.countryCode,
+      officialStatus: item.lastVerifiedAt ? 'partially_verified' : 'unverified',
+      officialDomain: item.officialDomain,
+      officialContact: {},
+      services: [],
+      licences: [],
+      complaintCount: 0,
+      publishedSafetyIncidentCount: 0,
+      outcomeCount: 0,
+      sources: resolveSources(item.sourceIds),
+      lastVerifiedAt: item.lastVerifiedAt,
+      isSyntheticDemoData: item.isSyntheticDemoData,
+    }));
+  return [...organizationEntries, ...institutionEntries];
+}
+
+function outcomeAggregate(url: URL): OutcomeAggregateDto {
+  const path = url.searchParams.get('path') === 'study' ? 'study' : 'work';
+  return {
+    path,
+    countryCode: url.searchParams.get('country')?.toUpperCase(),
+    organizationId: url.searchParams.get('organization') ?? undefined,
+    currency: url.searchParams.get('currency')?.toUpperCase(),
+    minimumCohortSize: 5,
+    reviewedCohortSize: 0,
+    suppressed: true,
+    metrics: null,
+    privacyNotice: {
+      bn: 'ডেমো সাইটে পাঁচটি মানব-যাচাইকৃত, সম্মত ফলাফল নেই—তাই কোনো সমষ্টিগত মেট্রিক দেখানো হয়নি।',
+      en: 'The demo site has fewer than five consented, human-reviewed outcomes, so aggregate metrics are hidden.',
+    },
+  };
 }
 
 function jobSummary(job: DemoJob): JobSummaryDto {
@@ -555,6 +595,8 @@ export async function demoApiRequest<TResponse = unknown>(
     );
   } else if (pathname === '/api/v1/services') {
     payload = serviceDirectory(url);
+  } else if (pathname === '/api/v1/public/outcomes/aggregates') {
+    payload = outcomeAggregate(url);
   } else {
     throw new ApiRequestError(503, 'API_UNAVAILABLE', 'This action requires the live API service');
   }

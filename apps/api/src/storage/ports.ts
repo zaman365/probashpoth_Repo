@@ -49,6 +49,11 @@ import type {
   HumanReviewRecord,
   HumanReviewDecisionRecord,
   PublicationChangeRecord,
+  PartnerSubmissionRecord,
+  PartnerFeeDeclarationRecord,
+  PartnerAccessGrantRecord,
+  PartnerPipelineEventRecord,
+  OutcomeReviewRecord,
 } from './records';
 
 /**
@@ -88,6 +93,11 @@ export interface Storage {
   humanReviews: Collection<HumanReviewRecord>;
   humanReviewDecisions: Collection<HumanReviewDecisionRecord>;
   publicationChanges: Collection<PublicationChangeRecord>;
+  partnerSubmissions: Collection<PartnerSubmissionRecord>;
+  partnerFeeDeclarations: Collection<PartnerFeeDeclarationRecord>;
+  partnerAccessGrants: Collection<PartnerAccessGrantRecord>;
+  partnerPipelineEvents: Collection<PartnerPipelineEventRecord>;
+  outcomeReviews: Collection<OutcomeReviewRecord>;
   consents: Collection<ConsentRecordRow>;
   delegations: Collection<DelegationRecord>;
   credentials: Collection<CredentialRecord>;

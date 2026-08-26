@@ -92,6 +92,8 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             <Link href={`/${seg}/study`}>{t('home.findStudy')}</Link>
             <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>
             <Link href={`/${seg}/services`}>{t('nav.services')}</Link>
+            <Link href={`/${seg}/outcomes`}>{t('outcomeIntelligence.title')}</Link>
+            <Link href={`/${seg}/partners`}>{t('supply.title')}</Link>
             <Link href={`/${seg}/how-it-works`}>{t('site.howItWorksTitle')}</Link>
             <Link href={`/${seg}/cases`}>{t('home.myApplications')}</Link>
           </nav>

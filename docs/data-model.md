@@ -60,6 +60,21 @@ sort by creation time and keep large audit and event tables index-friendly (§42
 Public job identifiers are a separate, human-readable, non-PII format:
 `BD-QA-2026-00482915`.
 
+## Supply and outcome records
+
+- `PartnerSubmission` is organisation-scoped, source-backed and cannot set organic
+  rank, verification or guarantee fields. Publication remains a separate two-person
+  decision.
+- `PartnerAccessGrant` binds one user, one application and one organisation to one
+  revocable consent record. Partner candidate projections are pseudonymous and omit
+  contact and identity-document fields.
+- `PartnerFeeDeclaration` preserves unknown amount/legal state and stays pending until
+  human review.
+- `OutcomeReview` is an independent MFA decision. Self-reported Work/Study outcomes
+  never enter public aggregates without it.
+- Outcome aggregates have a hard minimum cohort of five, do not combine currencies,
+  and produce derived trust edges rather than mutating verification facts.
+
 ## What the in-memory driver does not model
 
 Transactions, row-level security, partitioning, and full-text search. Those arrive

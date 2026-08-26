@@ -125,6 +125,27 @@ export default async function JourneyDashboard({
         </Grid>
       </Section>
 
+      <Section surface="default" title={t('os.ecosystemTitle')}>
+        <Grid min={340}>
+          <Card>
+            <Badge tone="success">{t('outcomeIntelligence.privacyProtected')}</Badge>
+            <h2 className="card-title">{t('outcomeIntelligence.title')}</h2>
+            <p>{t('outcomeIntelligence.dashboardBody')}</p>
+            <ButtonLink href={`/${seg}/outcomes`} variant="outline">
+              {t('outcomeIntelligence.open')}
+            </ButtonLink>
+          </Card>
+          <Card>
+            <Badge tone="neutral">{t('supply.evidenceGate')}</Badge>
+            <h2 className="card-title">{t('supply.title')}</h2>
+            <p>{t('supply.dashboardBody')}</p>
+            <ButtonLink href={`/${seg}/partners`} variant="outline">
+              {t('supply.open')}
+            </ButtonLink>
+          </Card>
+        </Grid>
+      </Section>
+
       <Section surface="default" title={t('os.nextActions')}>
         {nextActions.length === 0 ? <p className="muted">{t('os.noNextActions')}</p> : null}
         <Grid min={300}>

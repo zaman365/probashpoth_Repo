@@ -62,6 +62,7 @@ export class SessionGuard implements CanActivate {
     request.probashSubject = {
       userId: user.id,
       roles: user.roles as Subject['roles'],
+      organizationId: user.organizationId,
       sessionKind: session.kind,
       mfaSatisfied:
         Boolean(session.mfaSatisfiedAt) &&

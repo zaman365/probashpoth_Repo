@@ -8,5 +8,5 @@
     "noEmit": true,
     "lib": ["ES2023"]
   },
-  "include": ["app/**/*", "lib/**/*"]
+  "include": ["app/**/*", "lib/**/*", "components/**/*"]
 }

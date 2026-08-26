@@ -1,6 +1,7 @@
 packages:
   - 'apps/web'
   - 'apps/api'
+  - 'apps/mobile'
   - 'packages/*'
 # Install scripts are opt-in. esbuild ships a platform binary through its install
 # script (tsx depends on it); @scarf/scarf is analytics and stays blocked.

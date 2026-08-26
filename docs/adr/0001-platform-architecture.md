@@ -30,6 +30,11 @@ disagreeing about a fee or an eligibility answer is a worker-harm event, not a c
    PostgreSQL adapter is selected behind `STORAGE_DRIVER`.
 7. **No premature infrastructure:** no Kubernetes, no search cluster, no microservice split, no
    vector store on the authoritative path (§82).
+8. **Supply Portals** own partner evidence, consented pipelines and fee declarations; they
+   cannot write verification or organic ranking directly.
+9. **Outcome Intelligence** owns review decisions, promised-versus-actual projections and
+   privacy-thresholded aggregates; it consumes Work/Study outcomes without changing their
+   source records.
 
 ## Consequences
 

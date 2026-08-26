@@ -10,6 +10,19 @@ export default function RootLayout() {
         headerTintColor: tokens.semanticLight.textPrimary,
         contentStyle: { backgroundColor: tokens.semanticLight.background },
       }}
-    />
+    >
+      <Stack.Screen name="index" options={{ title: 'প্রবাসযাত্রা' }} />
+      <Stack.Screen name="sign-in" options={{ title: 'নিরাপদ সাইন ইন' }} />
+      <Stack.Screen name="passport" options={{ title: 'মাইগ্রেশন পাসপোর্ট' }} />
+      <Stack.Screen name="matches" options={{ title: 'ম্যাচ' }} />
+      <Stack.Screen name="verify" options={{ title: 'যাচাই' }} />
+      <Stack.Screen name="cases" options={{ title: 'আবেদন' }} />
+      <Stack.Screen name="documents" options={{ title: 'ডকুমেন্ট' }} />
+      <Stack.Screen name="payments" options={{ title: 'পেমেন্ট' }} />
+      <Stack.Screen name="alerts" options={{ title: 'অ্যালার্ট' }} />
+      <Stack.Screen name="family" options={{ title: 'ফ্যামিলি কো-পাইলট' }} />
+      <Stack.Screen name="study-applications" options={{ title: 'স্টাডি আবেদন' }} />
+      <Stack.Screen name="outcomes" options={{ title: 'ফলাফল' }} />
+    </Stack>
   );
 }

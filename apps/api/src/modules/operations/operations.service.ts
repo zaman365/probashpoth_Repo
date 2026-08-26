@@ -327,6 +327,18 @@ export class OperationsService {
       reviewNote: input.note,
     };
     await this.storage.publicationChanges.put(updated);
+    const partnerSubmission = await this.storage.partnerSubmissions.find(
+      (entry) => entry.publicationChangeId === id,
+    );
+    if (partnerSubmission) {
+      await this.storage.partnerSubmissions.put({
+        ...partnerSubmission,
+        status: input.decision === 'approve' ? 'approved' : 'rejected',
+        verificationLevel: input.decision === 'approve' ? 'human_verified' : 'evidence_submitted',
+        reviewNote: input.note,
+        updatedAt: this.clock.nowIso(),
+      });
+    }
     await this.audit.record({
       actorUserId: subject.userId,
       action: `publication_change.${updated.status}`,
@@ -347,8 +359,9 @@ export class OperationsService {
     countryCode?: string;
   }): Promise<ServiceDirectoryEntryDto[]> {
     const organizations = filterSynthetic(await this.storage.organizations.list(), this.env);
+    const institutions = filterSynthetic(await this.storage.institutions.list(), this.env);
     const complaints = await this.storage.complaints.list();
-    return Promise.all(
+    const organizationEntries = await Promise.all(
       organizations
         .filter((item) => !options.type || item.type === options.type)
         .filter((item) => !options.countryCode || item.countryCode === options.countryCode)
@@ -401,5 +414,39 @@ export class OperationsService {
           };
         }),
     );
+    const institutionEntries: ServiceDirectoryEntryDto[] = await Promise.all(
+      institutions
+        .filter(() => !options.type || options.type === 'education_institution')
+        .filter((item) => !options.countryCode || item.countryCode === options.countryCode)
+        .map(async (institution) => {
+          const related = complaints.filter((item) => item.organizationId === institution.id);
+          const publicIncidents = related.filter((item) =>
+            ['corroborated', 'verified', 'resolved'].includes(item.safetyState),
+          );
+          return {
+            id: institution.id,
+            type: 'education_institution',
+            legalName: institution.legalName,
+            countryCode: institution.countryCode,
+            officialStatus:
+              institution.lastVerifiedAt && institution.sourceIds.length > 0
+                ? 'partially_verified'
+                : 'unverified',
+            officialDomain: institution.officialDomain,
+            officialContact: {},
+            services: [],
+            licences: institution.accreditationId
+              ? [{ number: institution.accreditationId, status: institution.recognizedStatus }]
+              : [],
+            complaintCount: related.length,
+            publishedSafetyIncidentCount: publicIncidents.length,
+            outcomeCount: 0,
+            sources: await this.catalogue.sourceSummaries(institution.sourceIds),
+            lastVerifiedAt: institution.lastVerifiedAt,
+            isSyntheticDemoData: institution.isSyntheticDemoData,
+          };
+        }),
+    );
+    return [...organizationEntries, ...institutionEntries];
   }
 }

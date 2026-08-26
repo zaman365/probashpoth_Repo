@@ -13,3 +13,5 @@ export * from './passport';
 export * from './work';
 export * from './study';
 export * from './operations';
+export * from './supply';
+export * from './outcomes';

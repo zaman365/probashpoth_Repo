@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, TextInput } from 'react-native';
-import { lookupMessage } from '@probash/i18n';
+import { TextInput, View } from 'react-native';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { tokens } from '@probash/design-tokens';
 import type { PublicJobVerificationDto } from '@probash/contracts';
 import { apiRequest } from '../lib/api';
-
-const t = (key: string) => lookupMessage('bn-BD', key) ?? key;
+import { ActionButton, Card, Notice, Screen, t, Value } from '../components/MobileUi';
 
 /**
  * §21/§23 — verification by id. The QR camera path lands in the next mobile epic;
@@ -15,6 +14,9 @@ const t = (key: string) => lookupMessage('bn-BD', key) ?? key;
 export default function Verify() {
   const [publicId, setPublicId] = useState('');
   const [result, setResult] = useState<PublicJobVerificationDto | undefined>();
+  const [cameraOpen, setCameraOpen] = useState(false);
+  const [permission, requestPermission] = useCameraPermissions();
+  const [scanLocked, setScanLocked] = useState(false);
 
   async function check() {
     const response = await apiRequest<PublicJobVerificationDto>(
@@ -23,47 +25,80 @@ export default function Verify() {
     setResult(response);
   }
 
-  return (
-    <ScrollView contentContainerStyle={{ padding: tokens.space.md, gap: tokens.space.md }}>
-      <Text style={{ fontSize: tokens.typography.scale.title, fontWeight: '700' }}>
-        {t('scanner.title')}
-      </Text>
-      <TextInput
-        accessibilityLabel={t('scanner.publicIdLabel')}
-        placeholder="BD-QA-2026-00000000"
-        value={publicId}
-        onChangeText={setPublicId}
-        autoCapitalize="characters"
-        style={{
-          minHeight: tokens.size.tapTargetMin,
-          borderWidth: 1,
-          borderColor: tokens.semanticLight.border,
-          borderRadius: tokens.radius.md,
-          paddingHorizontal: tokens.space.md,
-          fontSize: tokens.typography.scale.body,
-        }}
-      />
-      <Pressable
-        accessibilityRole="button"
-        onPress={check}
-        style={{
-          minHeight: tokens.size.tapTargetMin,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: tokens.radius.md,
-          backgroundColor: tokens.semanticLight.accent,
-        }}
-      >
-        <Text style={{ color: tokens.semanticLight.textOnAccent, fontWeight: '600' }}>
-          {t('scanner.checkNow')}
-        </Text>
-      </Pressable>
+  async function scanQr(token: string) {
+    if (scanLocked) return;
+    setScanLocked(true);
+    try {
+      const response = await apiRequest<{ qrValid: boolean; publicId?: string }>(
+        '/api/v1/verify/qr',
+        { method: 'POST', body: { token } },
+      );
+      if (response.qrValid && response.publicId) {
+        setPublicId(response.publicId);
+        const verified = await apiRequest<PublicJobVerificationDto>(
+          `/api/v1/verify/job/${encodeURIComponent(response.publicId)}`,
+        );
+        setResult(verified);
+        setCameraOpen(false);
+      }
+    } finally {
+      setScanLocked(false);
+    }
+  }
 
-      {result ? (
-        <Text style={{ fontSize: tokens.typography.scale.bodyLarge }}>
-          {result.status === 'verified' ? t('job.verifiedJob') : t('risk.kind.job_id_not_found')}
-        </Text>
+  return (
+    <Screen title={t('scanner.title')}>
+      <Card>
+        <TextInput
+          accessibilityLabel={t('scanner.publicIdLabel')}
+          placeholder="BD-QA-2026-00000000"
+          value={publicId}
+          onChangeText={setPublicId}
+          autoCapitalize="characters"
+          style={{
+            minHeight: tokens.size.tapTargetMin,
+            borderWidth: 1,
+            borderColor: tokens.semanticLight.border,
+            borderRadius: tokens.radius.md,
+            paddingHorizontal: tokens.space.md,
+            fontSize: tokens.typography.scale.body,
+          }}
+        />
+        <ActionButton label={t('scanner.checkNow')} onPress={() => void check()} />
+        <ActionButton
+          label={t('mobile.scanQr')}
+          secondary
+          onPress={() =>
+            void (async () => {
+              if (!permission?.granted) await requestPermission();
+              setCameraOpen(true);
+            })()
+          }
+        />
+      </Card>
+      {cameraOpen && permission?.granted ? (
+        <View style={{ height: 320, overflow: 'hidden', borderRadius: tokens.radius.lg }}>
+          <CameraView
+            style={{ flex: 1 }}
+            barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
+            onBarcodeScanned={(event) => void scanQr(event.data)}
+          />
+        </View>
       ) : null}
-    </ScrollView>
+      {cameraOpen && permission && !permission.granted ? (
+        <Notice tone="warning">{t('mobile.cameraPermission')}</Notice>
+      ) : null}
+      {result ? (
+        <Card>
+          <Value>
+            {result.status === 'verified' ? t('job.verifiedJob') : t('risk.kind.job_id_not_found')}
+          </Value>
+          <Value>{result.publicId}</Value>
+          {result.isSyntheticDemoData ? (
+            <Notice tone="warning">{t('common.demoDataWarning')}</Notice>
+          ) : null}
+        </Card>
+      ) : null}
+    </Screen>
   );
 }

@@ -39,6 +39,11 @@ import type {
   HumanReviewRecord,
   HumanReviewDecisionRecord,
   PublicationChangeRecord,
+  PartnerSubmissionRecord,
+  PartnerFeeDeclarationRecord,
+  PartnerAccessGrantRecord,
+  PartnerPipelineEventRecord,
+  OutcomeReviewRecord,
 } from '../records';
 
 /**
@@ -75,6 +80,17 @@ export class MemoryStorage implements Storage {
     'human_review_decision',
   );
   readonly publicationChanges = new MemoryCollection<PublicationChangeRecord>('publication_change');
+  readonly partnerSubmissions = new MemoryCollection<PartnerSubmissionRecord>('partner_submission');
+  readonly partnerFeeDeclarations = new MemoryCollection<PartnerFeeDeclarationRecord>(
+    'partner_fee_declaration',
+  );
+  readonly partnerAccessGrants = new MemoryCollection<PartnerAccessGrantRecord>(
+    'partner_access_grant',
+  );
+  readonly partnerPipelineEvents = new MemoryCollection<PartnerPipelineEventRecord>(
+    'partner_pipeline_event',
+  );
+  readonly outcomeReviews = new MemoryCollection<OutcomeReviewRecord>('outcome_review');
   readonly consents = new MemoryCollection<ConsentRecordRow>('consent');
   readonly delegations = new MemoryCollection<DelegationRecord>('delegation');
   readonly credentials = new MemoryCollection<CredentialRecord>('credential');
@@ -148,6 +164,11 @@ export class MemoryStorage implements Storage {
     this.humanReviews.clear();
     this.humanReviewDecisions.clear();
     this.publicationChanges.clear();
+    this.partnerSubmissions.clear();
+    this.partnerFeeDeclarations.clear();
+    this.partnerAccessGrants.clear();
+    this.partnerPipelineEvents.clear();
+    this.outcomeReviews.clear();
     this.consents.clear();
     this.delegations.clear();
     this.credentials.clear();

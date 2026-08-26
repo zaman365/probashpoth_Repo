@@ -3452,3 +3452,78 @@ html[lang='bn'] .passport-section-heading h2 {
     grid-template-columns: 1fr;
   }
 }
+
+.partner-portal-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-md);
+}
+
+.governance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.partner-workflow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-border);
+}
+
+.partner-workflow li {
+  display: grid;
+  min-height: 150px;
+  align-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-surface);
+}
+
+.partner-workflow span {
+  color: var(--color-accent);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+}
+
+.outcome-cohort-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-md);
+}
+
+.privacy-threshold {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  color: #7a4d05;
+  border: 1px solid #e6bd77;
+  border-radius: var(--radius-md);
+  background: #fdf3e2;
+}
+
+@media (max-width: 900px) {
+  .governance-grid,
+  .partner-workflow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .governance-grid,
+  .partner-workflow {
+    grid-template-columns: 1fr;
+  }
+
+  .partner-workflow li {
+    min-height: 112px;
+  }
+}
