@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Badge, ButtonLink, Icon } from '@probash/web-ui';
+import { ButtonLink, Icon } from '@probash/web-ui';
 import { chatGPTSignOutPath, requireChatGPTUser } from '@/app/chatgpt-auth';
 import { getProfile, getWorkspace } from '@/db/operations';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
@@ -118,9 +118,6 @@ export default async function AccountPage({
             <h1>{t('account.pageTitle')}</h1>
             <p>{t('account.pageLead')}</p>
           </div>
-          <Badge tone="success">
-            {t(path === 'work' ? 'account.workTalent' : 'account.studyTalent')}
-          </Badge>
         </header>
 
         {saved === '1' ? (
