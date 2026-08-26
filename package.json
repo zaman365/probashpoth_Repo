@@ -8,7 +8,7 @@
     "node": ">=22.11.0"
   },
   "scripts": {
-    "build": "turbo run build",
+    "build": "pnpm -r --if-present run build",
     "dev": "turbo run dev",
     "lint": "eslint .",
     "typecheck": "turbo run typecheck",
