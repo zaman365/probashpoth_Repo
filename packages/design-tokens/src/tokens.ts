@@ -32,6 +32,12 @@ export const color = {
     800: '#0d3a28',
     900: '#08251a',
   },
+  /** A warm sand tint used sparingly for marketing bands, never inside worker flows. */
+  sand: {
+    50: '#faf8f4',
+    100: '#f3efe7',
+    200: '#e8e1d4',
+  },
   success: { bg: '#e6f4ea', fg: '#125c2e', border: '#8ccfa4' },
   warning: { bg: '#fdf3e2', fg: '#7a4d05', border: '#e6bd77' },
   danger: { bg: '#fdeceb', fg: '#8a1c14', border: '#e79c96' },
@@ -42,6 +48,8 @@ export const semanticLight = {
   background: color.neutral[50],
   surface: color.neutral[0],
   surfaceMuted: color.neutral[100],
+  surfaceWarm: color.sand[50],
+  surfaceAccent: color.primary[50],
   border: color.neutral[300],
   textPrimary: color.neutral[900],
   textSecondary: color.neutral[700],
@@ -55,6 +63,8 @@ export const semanticDark = {
   background: color.neutral[900],
   surface: color.neutral[800],
   surfaceMuted: color.neutral[700],
+  surfaceWarm: color.neutral[800],
+  surfaceAccent: color.primary[900],
   border: color.neutral[600],
   textPrimary: color.neutral[50],
   textSecondary: color.neutral[300],
@@ -74,7 +84,20 @@ export const size = {
   iconSm: 20,
   iconMd: 24,
   iconLg: 32,
+  /** Worker flows: one narrow column, one question per screen (§15). */
   maxContentWidth: 720,
+  /** Public website: wide enough for real multi-column layout (§14.1). */
+  maxSiteWidth: 1200,
+  /** Long-form reading measure — roughly 65 characters. */
+  maxProseWidth: 680,
+} as const;
+
+/** Breakpoints are tokens too, so web and the future mobile UI agree on the shape. */
+export const breakpoint = {
+  sm: 480,
+  md: 760,
+  lg: 1024,
+  xl: 1280,
 } as const;
 
 export const space = {
@@ -114,6 +137,9 @@ export const typography = {
     display: 34,
     /** Money is read aloud and acted on: it gets its own, larger step (§15). */
     amount: 30,
+    /** Marketing-scale headings, used only on the public website. */
+    display2: 42,
+    display3: 54,
   },
   weight: {
     regular: 400,
@@ -133,8 +159,10 @@ export const motion = {
 
 export const elevation = {
   none: 'none',
-  low: '0 1px 2px rgba(23, 26, 24, 0.08)',
-  medium: '0 2px 8px rgba(23, 26, 24, 0.10)',
+  low: '0 1px 2px rgba(23, 26, 24, 0.06)',
+  medium: '0 2px 10px rgba(23, 26, 24, 0.08)',
+  /** Reserved for the hero card and sticky header — nothing else floats. */
+  high: '0 12px 32px rgba(23, 26, 24, 0.10)',
 } as const;
 
 export const tokens = {
@@ -142,6 +170,7 @@ export const tokens = {
   semanticLight,
   semanticDark,
   size,
+  breakpoint,
   space,
   radius,
   typography,

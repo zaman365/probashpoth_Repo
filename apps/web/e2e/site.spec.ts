@@ -1,0 +1,115 @@
+import { expect, test } from '@playwright/test';
+
+/**
+ * §14.1 — the website itself: landing page, navigation, and the pages a visitor reads
+ * before they trust anything. These specs check the promises the page makes, and the
+ * ones it must never make.
+ */
+
+test('the landing page leads with the product promise and both primary CTAs', async ({ page }) => {
+  await page.goto('/bn');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('যাচাই করুন');
+  await expect(page.getByRole('link', { name: /একটি চাকরি বা ভিসা যাচাই করুন/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /কাজের সুযোগ দেখুন/ })).toBeVisible();
+});
+
+test('the seven worker actions sit above everything a visitor merely reads (§15)', async ({
+  page,
+}) => {
+  await page.goto('/bn');
+  const tiles = page.locator('.action-tile');
+  await expect(tiles).toHaveCount(7);
+
+  // The action grid must come before the marketing sections in document order.
+  const actionsTop = (await tiles.first().boundingBox())?.y ?? Infinity;
+  const faqTop = (await page.getByRole('heading', { name: 'সাধারণ প্রশ্ন' }).boundingBox())?.y ?? 0;
+  expect(actionsTop).toBeLessThan(faqTop);
+});
+
+test('every landing section renders with a heading', async ({ page }) => {
+  await page.goto('/en');
+  for (const heading of [
+    'What would you like to do?',
+    'What is on the platform today',
+    'How it works',
+    'Rules we will not break',
+    'Understand first, then decide',
+    'For organisations',
+    'Common questions',
+  ]) {
+    await expect(page.getByRole('heading', { name: heading })).toBeVisible();
+  }
+});
+
+test('the landing page never promises an outcome', async ({ page }) => {
+  await page.goto('/en');
+  const body = (await page.locator('body').innerText()).toLowerCase();
+  expect(body).not.toContain('guaranteed visa');
+  expect(body).not.toContain('100% visa');
+  // It says the opposite, explicitly.
+  expect(body).toContain('nobody can');
+});
+
+test('desktop shows the full navigation; small screens get a no-JS menu', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/bn');
+  await expect(page.locator('.site-nav-desktop')).toBeVisible();
+  await expect(page.locator('.site-nav-mobile')).toBeHidden();
+
+  await page.setViewportSize({ width: 380, height: 800 });
+  await expect(page.locator('.site-nav-desktop')).toBeHidden();
+  const menu = page.locator('.site-nav-mobile');
+  await expect(menu).toBeVisible();
+
+  // The menu is a <details> disclosure, so it opens without JavaScript.
+  await menu.getByText('মেনু').click();
+  await expect(menu.getByRole('link', { name: 'দেশ দেখুন' })).toBeVisible();
+});
+
+test('the footer works as a site map in four columns', async ({ page }) => {
+  await page.goto('/bn');
+  const footer = page.locator('.site-footer');
+  await expect(footer.locator('nav')).toHaveCount(4);
+  await expect(footer.getByRole('link', { name: 'দেশভিত্তিক তথ্য' })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'আইনগত অবস্থান' })).toBeVisible();
+  await expect(footer.getByText('ডেমো তথ্য — এটি আসল চাকরি নয়')).toBeVisible();
+});
+
+const PAGES = [
+  '/about',
+  '/how-it-works',
+  '/faq',
+  '/legal',
+  '/study',
+  '/for-employers',
+  '/for-agencies',
+  '/for-government',
+];
+
+for (const path of PAGES) {
+  test(`${path} renders in both languages with alternates declared`, async ({ page }) => {
+    for (const locale of ['bn', 'en']) {
+      const response = await page.goto(`/${locale}${path}`);
+      expect(response?.status()).toBe(200);
+      await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
+      await expect(page.locator(`link[rel="alternate"][hreflang="${locale}"]`)).toHaveAttribute(
+        'href',
+        new RegExp(`/${locale}${path}$`),
+      );
+    }
+  });
+}
+
+test('the institutional pages state plainly that no portal exists yet', async ({ page }) => {
+  for (const path of ['/for-employers', '/for-agencies', '/for-government']) {
+    await page.goto(`/en${path}`);
+    await expect(page.getByText('This portal is not open yet.')).toBeVisible();
+    await expect(page.getByText('no partnership is claimed', { exact: false })).toBeVisible();
+  }
+});
+
+test('the legal page publishes what the platform is not', async ({ page }) => {
+  await page.goto('/en/legal');
+  await expect(page.getByText('Not a government service')).toBeVisible();
+  await expect(page.getByText('we do not hold your money', { exact: false })).toBeVisible();
+});

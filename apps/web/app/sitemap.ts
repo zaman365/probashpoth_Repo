@@ -10,7 +10,23 @@ export const dynamic = 'force-dynamic';
  * account are listed; case, receipt and document routes are never indexed.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPaths = ['', '/countries', '/occupations', '/jobs', '/verify', '/safety', '/explore'];
+  const staticPaths = [
+    '',
+    '/countries',
+    '/occupations',
+    '/jobs',
+    '/study',
+    '/verify',
+    '/safety',
+    '/explore',
+    '/how-it-works',
+    '/about',
+    '/faq',
+    '/legal',
+    '/for-employers',
+    '/for-agencies',
+    '/for-government',
+  ];
 
   // A sitemap must never take the site down: if the API is unreachable, the static
   // paths still ship rather than the whole route erroring.

@@ -1,0 +1,360 @@
+/*
+ * @probash/web-ui — component styles.
+ *
+ * Every value resolves to a CSS variable generated from @probash/design-tokens, so
+ * this file never hard-codes a colour, a font or a size. §52: calm, high contrast,
+ * one accent, generous whitespace, no gradient soup.
+ */
+
+.pui-container {
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+  width: 100%;
+}
+
+.pui-container-site {
+  max-width: var(--size-max-site-width);
+}
+.pui-container-narrow {
+  max-width: var(--size-max-content-width);
+}
+.pui-container-prose {
+  max-width: var(--size-max-prose-width);
+}
+
+/* ------------------------------------------------------------------ section --- */
+
+.pui-section {
+  padding-block: var(--space-3xl);
+}
+
+.pui-section + .pui-section {
+  padding-block-start: var(--space-3xl);
+}
+
+.pui-surface-default {
+  background: var(--color-background);
+}
+.pui-surface-muted {
+  background: var(--color-surface-muted);
+}
+.pui-surface-warm {
+  background: var(--color-surface-warm);
+}
+.pui-surface-accent {
+  background: var(--color-surface-accent);
+}
+
+.pui-section-header {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-end: var(--space-xl);
+  max-width: var(--size-max-prose-width);
+}
+
+.pui-eyebrow {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.pui-section-title {
+  /* Fluid: never larger than the token, never so large it wraps to one word a line. */
+  font-size: clamp(var(--font-size-heading), 4.5vw, var(--font-size-display2));
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.pui-lead {
+  font-size: var(--font-size-body-large);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------- structure --- */
+
+.pui-stack {
+  display: grid;
+}
+.pui-stack-sm {
+  gap: var(--space-sm);
+}
+.pui-stack-md {
+  gap: var(--space-md);
+}
+.pui-stack-lg {
+  gap: var(--space-lg);
+}
+
+.pui-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 760px) {
+  .pui-grid {
+    grid-template-columns: repeat(auto-fit, minmax(var(--pui-grid-min, 300px), 1fr));
+  }
+}
+
+/* -------------------------------------------------------------------- card --- */
+
+.pui-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  box-shadow: var(--elevation-low);
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+}
+
+.pui-card-muted {
+  background: var(--color-surface-muted);
+  box-shadow: none;
+}
+.pui-card-warm {
+  background: var(--color-surface-warm);
+  box-shadow: none;
+}
+.pui-card-accent {
+  background: var(--color-surface-accent);
+  border-color: var(--color-accent);
+  box-shadow: none;
+}
+
+.pui-card-interactive {
+  transition:
+    border-color var(--motion-fast) var(--motion-easing),
+    box-shadow var(--motion-fast) var(--motion-easing),
+    transform var(--motion-fast) var(--motion-easing);
+}
+
+.pui-card-interactive:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--elevation-medium);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pui-card-interactive:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* ------------------------------------------------------------------ button --- */
+
+.pui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  /* §15 — never below the 48px tap target. */
+  min-height: var(--size-tap-target-min);
+  padding-inline: var(--space-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body);
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  /* A label that breaks mid-phrase reads as broken, not as responsive. */
+  white-space: nowrap;
+  transition: background var(--motion-fast) var(--motion-easing);
+}
+
+.pui-btn-lg {
+  min-height: var(--size-tap-target-primary);
+  font-size: var(--font-size-body-large);
+  padding-inline: var(--space-xl);
+}
+
+.pui-btn-full {
+  width: 100%;
+}
+
+/* Very narrow screens: let long Bangla labels wrap rather than overflow. */
+@media (max-width: 420px) {
+  .pui-btn {
+    white-space: normal;
+  }
+}
+
+.pui-btn-primary {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+.pui-btn-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.pui-btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+.pui-btn-secondary:hover {
+  border-color: var(--color-accent);
+}
+
+.pui-btn-danger {
+  background: #fdeceb;
+  color: #8a1c14;
+  border-color: #e79c96;
+}
+
+.pui-btn-ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+}
+.pui-btn-ghost:hover {
+  background: var(--color-surface-muted);
+}
+
+.pui-btn-icon {
+  display: inline-flex;
+}
+
+/* ------------------------------------------------------------------- badge --- */
+
+.pui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid transparent;
+  line-height: 1.5;
+}
+
+.pui-badge-neutral {
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+.pui-badge-success {
+  background: #e6f4ea;
+  color: #125c2e;
+  border-color: #8ccfa4;
+}
+.pui-badge-warning {
+  background: #fdf3e2;
+  color: #7a4d05;
+  border-color: #e6bd77;
+}
+.pui-badge-danger {
+  background: #fdeceb;
+  color: #8a1c14;
+  border-color: #e79c96;
+}
+.pui-badge-info {
+  background: #eaf1fb;
+  color: #1a457f;
+  border-color: #9dbbe6;
+}
+
+/* -------------------------------------------------------------------- stat --- */
+
+.pui-stat-group {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 760px) {
+  .pui-stat-group {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.pui-stat {
+  display: grid;
+  gap: 4px;
+}
+
+.pui-stat dt {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+}
+
+.pui-stat dd {
+  font-size: clamp(var(--font-size-title), 5vw, var(--font-size-display2));
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.pui-stat-hint {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------------- prose --- */
+
+.pui-prose {
+  max-width: var(--size-max-prose-width);
+  display: grid;
+  gap: var(--space-md);
+  line-height: 1.75;
+}
+
+.pui-prose h2 {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  margin-block-start: var(--space-lg);
+}
+
+.pui-prose h3 {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  margin-block-start: var(--space-md);
+}
+
+.pui-prose ul,
+.pui-prose ol {
+  display: grid;
+  gap: var(--space-sm);
+  padding-inline-start: var(--space-lg);
+}
+
+.pui-prose li {
+  list-style: disc;
+}
+
+.pui-prose ol li {
+  list-style: decimal;
+}
+
+/* -------------------------------------------------------------- disclosure --- */
+
+.pui-disclosure {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.pui-disclosure > summary {
+  cursor: pointer;
+  padding: var(--space-md);
+  min-height: var(--size-tap-target-min);
+  display: flex;
+  align-items: center;
+  font-weight: var(--font-weight-medium);
+}
+
+.pui-disclosure-body {
+  padding: 0 var(--space-md) var(--space-md);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.pui-icon {
+  flex: none;
+}

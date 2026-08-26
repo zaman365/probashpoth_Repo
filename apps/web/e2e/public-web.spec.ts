@@ -8,7 +8,8 @@ import { expect, test } from '@playwright/test';
 
 test('the public knowledge surface is reachable from every page', async ({ page }) => {
   await page.goto('/bn');
-  const nav = page.getByRole('navigation', { name: 'দেশভিত্তিক তথ্য' });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  const nav = page.locator('.site-nav-desktop');
   await expect(nav.getByRole('link', { name: 'দেশ দেখুন' })).toBeVisible();
   await expect(nav.getByRole('link', { name: 'পেশা দেখুন' })).toBeVisible();
   await expect(nav.getByRole('link', { name: 'প্রতারণা চেনার উপায়' })).toBeVisible();

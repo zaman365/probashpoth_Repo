@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import './tokens.css';
+/* Shared web primitives — the same components every web surface uses (§43). */
+@import '@probash/web-ui/styles.css';
 
 /*
  * §52 — calm, high-contrast, public-service quality. Component classes live here so
@@ -55,29 +57,195 @@ html[lang='en'] body {
     padding-block-end: var(--space-3xl);
   }
 
-  .site-header {
-    border-block-end: 1px solid var(--color-border);
-    background: var(--color-surface);
+  /*
+   * Page layout without a wrapper per page.
+   *
+   * `main` is full-bleed so a marketing section can span the viewport. Any other
+   * direct child is placed in the narrow worker column by default — one question per
+   * screen (§15) — and a guide page widens itself with `.wide-page` (§14.1).
+   */
+  main {
+    display: block;
+    padding-block-end: var(--space-3xl);
   }
 
-  .site-nav {
+  main > *:not(.pui-section) {
+    max-width: var(--size-max-content-width);
+    margin-inline: auto;
+    padding-inline: var(--space-lg);
+  }
+
+  main > .wide-page {
+    max-width: var(--size-max-site-width);
+  }
+
+  main > * + *:not(.pui-section) {
+    margin-block-start: var(--space-lg);
+  }
+
+  /* A page that opens with a full-bleed section owns its own top spacing. */
+  main:not(:has(> .pui-section:first-child)) {
+    padding-block-start: var(--space-2xl);
+  }
+
+  .skip-link {
+    position: absolute;
+    inset-inline-start: -9999px;
+    z-index: 30;
+  }
+
+  .skip-link:focus {
+    inset-inline-start: var(--space-md);
+    top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-md);
+  }
+
+  /* ---------------------------------------------------------- site chrome --- */
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .site-header-row {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm) var(--space-lg);
+    min-height: 68px;
+    padding-block: var(--space-sm);
+  }
+
+  .site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-body-large);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .site-nav-desktop {
+    display: none;
+    align-items: center;
+    gap: var(--space-xs);
+    flex: 1;
+  }
+
+  .site-nav-desktop a {
+    padding: 10px var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+  }
+
+  .site-nav-desktop a:hover {
+    color: var(--color-text-primary);
+    background: var(--color-surface-muted);
+  }
+
+  .site-header-actions {
+    display: flex;
     align-items: center;
     gap: var(--space-sm);
   }
 
-  .site-nav a {
-    display: inline-flex;
+  /* Small screens: a disclosure menu that needs no JavaScript. */
+  .site-nav-mobile {
+    padding-block-end: var(--space-sm);
+  }
+
+  .site-nav-mobile > summary {
+    display: flex;
     align-items: center;
+    gap: var(--space-sm);
     min-height: var(--size-tap-target-min);
-    padding-inline: var(--space-md);
+    padding-inline: var(--space-sm);
     border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--color-text-secondary);
     font-weight: var(--font-weight-medium);
   }
 
-  .site-nav a:hover {
+  .site-nav-mobile nav {
+    display: grid;
+    padding-block: var(--space-sm);
+  }
+
+  .site-nav-mobile nav a {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-tap-target-min);
+    padding-inline: var(--space-sm);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 1024px) {
+    .site-nav-desktop {
+      display: flex;
+    }
+    .site-nav-mobile {
+      display: none;
+    }
+  }
+
+  /* ---------------------------------------------------------- site footer --- */
+
+  .site-footer {
+    margin-block-start: var(--space-3xl);
+    padding-block: var(--space-3xl);
+    border-block-start: 1px solid var(--color-border);
     background: var(--color-surface-muted);
+  }
+
+  .site-footer-columns {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .site-footer-columns h2 {
+    font-size: var(--font-size-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+    margin-block-end: var(--space-sm);
+  }
+
+  .site-footer-columns ul {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .site-footer-columns a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+  }
+
+  .site-footer-columns a:hover {
+    color: var(--color-accent);
+  }
+
+  .site-footer-legal {
+    display: grid;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-2xl);
+    padding-block-start: var(--space-lg);
+    border-block-start: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-caption);
+    justify-items: start;
   }
 
   .grid-cards {
@@ -194,6 +362,7 @@ html[lang='en'] body {
     border-color: #e79c96;
   }
 
+  /* §15 — the worker's primary actions: large, text + icon, never icon alone. */
   .action-tile {
     display: flex;
     align-items: center;
@@ -207,10 +376,111 @@ html[lang='en'] body {
     font-size: var(--font-size-body-large);
     font-weight: var(--font-weight-semibold);
     text-align: start;
+    box-shadow: var(--elevation-low);
+    transition:
+      border-color var(--motion-fast) var(--motion-easing),
+      box-shadow var(--motion-fast) var(--motion-easing);
   }
 
   .action-tile:hover {
     border-color: var(--color-accent);
+    box-shadow: var(--elevation-medium);
+  }
+
+  .action-tile .pui-icon {
+    color: var(--color-accent);
+  }
+
+  /* ------------------------------------------------------------- landing --- */
+
+  .hero-section {
+    padding-block: var(--space-3xl);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-3xl);
+    }
+  }
+
+  .hero-copy {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: start;
+  }
+
+  .hero-title {
+    font-size: clamp(var(--font-size-heading), 5.5vw, var(--font-size-display3));
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 20ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-sm);
+  }
+
+  .hero-art {
+    width: 100%;
+    height: auto;
+    max-width: 460px;
+    justify-self: center;
+    filter: drop-shadow(var(--elevation-medium));
+  }
+
+  .card-title {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .step-icon,
+  .check-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-accent);
+    color: var(--color-accent);
+  }
+
+  .check-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-pill);
+  }
+
+  .guide-link {
+    display: block;
+    height: 100%;
+  }
+
+  .link-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-accent);
+    font-weight: var(--font-weight-medium);
+    margin-block-start: var(--space-xs);
+  }
+
+  .cta-block {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: start;
   }
 
   .badge {

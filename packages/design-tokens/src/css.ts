@@ -1,4 +1,5 @@
 import {
+  breakpoint,
   elevation,
   motion,
   radius,
@@ -32,6 +33,7 @@ export function cssVariables(): string {
     ...entries('font-weight', typography.weight),
     ...entries('elevation', elevation),
     ...entries('motion', motion),
+    ...entries('breakpoint', breakpoint, 'px'),
     `  --font-family-bangla: ${typography.fontFamilyBangla};`,
     `  --font-family-latin: ${typography.fontFamilyLatin};`,
     `  --line-height-bangla: ${typography.lineHeightBangla};`,
