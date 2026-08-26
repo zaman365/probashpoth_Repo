@@ -17,6 +17,7 @@ export interface OperationalProfile {
   displayName: string | null;
   locale: string;
   activePath: JourneyPath | 'both' | 'unsure';
+  enabledPaths: JourneyPath[];
   journeyStage: JourneyStage;
   goalTitle: string | null;
   onboardingCompletedAt: string | null;
@@ -324,7 +325,7 @@ export function ensureOperationalSchema(): Promise<void> {
 async function createOperationalSchema(): Promise<void> {
   const db = getD1();
   const statements = [
-    `CREATE TABLE IF NOT EXISTS user_profiles (user_id TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT, locale TEXT NOT NULL, active_path TEXT NOT NULL, journey_stage TEXT NOT NULL DEFAULT 'exploring', goal_title TEXT, onboarding_completed_at TEXT, passport_json TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)`,
+    `CREATE TABLE IF NOT EXISTS user_profiles (user_id TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, display_name TEXT, locale TEXT NOT NULL, active_path TEXT NOT NULL, enabled_paths TEXT NOT NULL DEFAULT '["work","study"]', journey_stage TEXT NOT NULL DEFAULT 'exploring', goal_title TEXT, onboarding_completed_at TEXT, passport_json TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)`,
     `CREATE TABLE IF NOT EXISTS journeys (id TEXT PRIMARY KEY NOT NULL, user_id TEXT NOT NULL, path TEXT NOT NULL, target_type TEXT NOT NULL, target_id TEXT, title TEXT NOT NULL, destination_country TEXT, stage TEXT NOT NULL, status TEXT NOT NULL, details_json TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)`,
     `CREATE TABLE IF NOT EXISTS journey_tasks (id TEXT PRIMARY KEY NOT NULL, journey_id TEXT NOT NULL, user_id TEXT NOT NULL, task_key TEXT NOT NULL, title_bn TEXT NOT NULL, title_en TEXT NOT NULL, detail_bn TEXT NOT NULL, detail_en TEXT NOT NULL, status TEXT NOT NULL, position INTEGER NOT NULL, due_at TEXT, completed_at TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)`,
     `CREATE TABLE IF NOT EXISTS journey_records (id TEXT PRIMARY KEY NOT NULL, journey_id TEXT NOT NULL, user_id TEXT NOT NULL, record_type TEXT NOT NULL, title TEXT NOT NULL, status TEXT NOT NULL, notes TEXT, due_at TEXT, amount_minor INTEGER, currency TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)`,
@@ -362,6 +363,9 @@ async function createOperationalSchema(): Promise<void> {
     .all<{ name: string }>();
   const columnNames = new Set(profileColumns.results.map((column) => column.name));
   const profileUpgrades = [
+    !columnNames.has('enabled_paths')
+      ? `ALTER TABLE user_profiles ADD COLUMN enabled_paths TEXT NOT NULL DEFAULT '["work","study"]'`
+      : null,
     !columnNames.has('journey_stage')
       ? `ALTER TABLE user_profiles ADD COLUMN journey_stage TEXT NOT NULL DEFAULT 'exploring'`
       : null,
@@ -424,18 +428,35 @@ export async function savePassport(
     passport.intent === 'work' || passport.intent === 'study' || passport.intent === 'both'
       ? passport.intent
       : 'unsure';
+  const enabledPaths: JourneyPath[] =
+    activePath === 'both'
+      ? ['work', 'study']
+      : activePath === 'work' || activePath === 'study'
+        ? [activePath]
+        : ['work', 'study'];
   const timestamp = now();
   await getD1()
     .prepare(
-      `INSERT INTO user_profiles (user_id, email, display_name, locale, active_path, journey_stage, passport_json, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, 'exploring', ?, ?, ?)
+      `INSERT INTO user_profiles (user_id, email, display_name, locale, active_path, enabled_paths, journey_stage, passport_json, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, 'exploring', ?, ?, ?)
        ON CONFLICT(user_id) DO UPDATE SET email = excluded.email, display_name = excluded.display_name,
          locale = excluded.locale,
          active_path = CASE WHEN user_profiles.onboarding_completed_at IS NULL THEN excluded.active_path ELSE user_profiles.active_path END,
+         enabled_paths = CASE WHEN user_profiles.onboarding_completed_at IS NULL THEN excluded.enabled_paths ELSE user_profiles.enabled_paths END,
          passport_json = excluded.passport_json,
          updated_at = excluded.updated_at`,
     )
-    .bind(user.userId, user.email, user.fullName, locale, activePath, encoded, timestamp, timestamp)
+    .bind(
+      user.userId,
+      user.email,
+      user.fullName,
+      locale,
+      activePath,
+      JSON.stringify(enabledPaths),
+      encoded,
+      timestamp,
+      timestamp,
+    )
     .run();
   await audit(user.userId, 'passport.saved', 'user_profile', user.userId, { activePath });
   const profile = await getProfile(user.userId);
@@ -446,23 +467,32 @@ export async function savePassport(
 export async function completeOnboarding(
   user: ChatGPTUser,
   locale: string,
-  input: { path: JourneyPath; stage: JourneyStage; goalTitle?: string },
+  input: {
+    path: JourneyPath;
+    enabledPaths: JourneyPath[];
+    stage: JourneyStage;
+    goalTitle?: string;
+  },
 ): Promise<OperationalProfile> {
   await ensureOperationalSchema();
   const timestamp = now();
-  const passport: MigrationPassport = { ...EMPTY_PASSPORT, intent: input.path };
+  const passport: MigrationPassport = {
+    ...EMPTY_PASSPORT,
+    intent: input.enabledPaths.length === 2 ? 'both' : input.path,
+  };
   const goalTitle = input.goalTitle?.trim().slice(0, 180) || null;
   await getD1()
     .prepare(
       `INSERT INTO user_profiles (
-        user_id, email, display_name, locale, active_path, journey_stage, goal_title,
+        user_id, email, display_name, locale, active_path, enabled_paths, journey_stage, goal_title,
         onboarding_completed_at, passport_json, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(user_id) DO UPDATE SET
         email = excluded.email,
         display_name = excluded.display_name,
         locale = excluded.locale,
         active_path = excluded.active_path,
+        enabled_paths = excluded.enabled_paths,
         journey_stage = excluded.journey_stage,
         goal_title = excluded.goal_title,
         onboarding_completed_at = COALESCE(user_profiles.onboarding_completed_at, excluded.onboarding_completed_at),
@@ -474,6 +504,7 @@ export async function completeOnboarding(
       user.fullName,
       locale,
       input.path,
+      JSON.stringify(input.enabledPaths),
       input.stage,
       goalTitle,
       timestamp,
@@ -484,6 +515,7 @@ export async function completeOnboarding(
     .run();
   await audit(user.userId, 'onboarding.completed', 'user_profile', user.userId, {
     path: input.path,
+    enabledPaths: input.enabledPaths,
     stage: input.stage,
   });
   const profile = await getProfile(user.userId);
@@ -493,23 +525,57 @@ export async function completeOnboarding(
 
 export async function updateProfileDirection(
   userId: string,
-  input: { path: JourneyPath; stage: JourneyStage; goalTitle?: string },
+  input: {
+    path: JourneyPath;
+    enabledPaths: JourneyPath[];
+    stage: JourneyStage;
+    goalTitle?: string;
+  },
 ): Promise<void> {
   await ensureOperationalSchema();
+  const profile = await getProfile(userId);
+  if (!profile) throw new Error('Profile not found.');
   const goalTitle = input.goalTitle?.trim().slice(0, 180) || null;
+  const passport: MigrationPassport = {
+    ...profile.passport,
+    intent: input.enabledPaths.length === 2 ? 'both' : input.path,
+  };
   const result = await getD1()
     .prepare(
       `UPDATE user_profiles
-       SET active_path = ?, journey_stage = ?, goal_title = ?, updated_at = ?
+       SET active_path = ?, enabled_paths = ?, journey_stage = ?, goal_title = ?, passport_json = ?, updated_at = ?
        WHERE user_id = ?`,
     )
-    .bind(input.path, input.stage, goalTitle, now(), userId)
+    .bind(
+      input.path,
+      JSON.stringify(input.enabledPaths),
+      input.stage,
+      goalTitle,
+      JSON.stringify(passport),
+      now(),
+      userId,
+    )
     .run();
   if (!result.meta.changes) throw new Error('Profile not found.');
   await audit(userId, 'profile.direction_updated', 'user_profile', userId, {
     path: input.path,
+    enabledPaths: input.enabledPaths,
     stage: input.stage,
   });
+}
+
+export async function setActiveWorkspace(userId: string, path: JourneyPath): Promise<void> {
+  await ensureOperationalSchema();
+  const profile = await getProfile(userId);
+  if (!profile || !profile.enabledPaths.includes(path)) {
+    throw new Error('Workspace is not enabled for this account.');
+  }
+  const result = await getD1()
+    .prepare('UPDATE user_profiles SET active_path = ?, updated_at = ? WHERE user_id = ?')
+    .bind(path, now(), userId)
+    .run();
+  if (!result.meta.changes) throw new Error('Profile not found.');
+  await audit(userId, 'profile.workspace_switched', 'user_profile', userId, { path });
 }
 
 export async function getProfile(userId: string): Promise<OperationalProfile | null> {
@@ -519,12 +585,18 @@ export async function getProfile(userId: string): Promise<OperationalProfile | n
     .bind(userId)
     .first<Record<string, unknown>>();
   if (!row) return null;
+  const fallbackPaths: JourneyPath[] = ['work', 'study'];
+  const enabledPaths = parseJson<unknown>(row['enabled_paths'], fallbackPaths);
+  const safeEnabledPaths = Array.isArray(enabledPaths)
+    ? enabledPaths.filter((path): path is JourneyPath => path === 'work' || path === 'study')
+    : fallbackPaths;
   return {
     userId: String(row['user_id']),
     email: String(row['email']),
     displayName: row['display_name'] ? String(row['display_name']) : null,
     locale: String(row['locale']),
     activePath: String(row['active_path']) as OperationalProfile['activePath'],
+    enabledPaths: safeEnabledPaths.length > 0 ? [...new Set(safeEnabledPaths)] : fallbackPaths,
     journeyStage: String(row['journey_stage'] ?? 'exploring') as JourneyStage,
     goalTitle: row['goal_title'] ? String(row['goal_title']) : null,
     onboardingCompletedAt: row['onboarding_completed_at']

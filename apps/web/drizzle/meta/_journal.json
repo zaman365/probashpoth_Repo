@@ -29,6 +29,13 @@
       "when": 1787766948114,
       "tag": "0003_rare_ares",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1787773581816,
+      "tag": "0004_tricky_mole_man",
+      "breakpoints": true
     }
   ]
 }

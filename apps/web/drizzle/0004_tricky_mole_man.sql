@@ -1,0 +1,1 @@
+ALTER TABLE `user_profiles` ADD `enabled_paths` text DEFAULT '["work","study"]' NOT NULL;

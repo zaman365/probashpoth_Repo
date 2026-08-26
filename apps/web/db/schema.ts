@@ -6,6 +6,7 @@ export const userProfiles = sqliteTable('user_profiles', {
   displayName: text('display_name'),
   locale: text('locale').notNull(),
   activePath: text('active_path').notNull(),
+  enabledPaths: text('enabled_paths').notNull().default('["work","study"]'),
   journeyStage: text('journey_stage').notNull().default('exploring'),
   goalTitle: text('goal_title'),
   onboardingCompletedAt: text('onboarding_completed_at'),

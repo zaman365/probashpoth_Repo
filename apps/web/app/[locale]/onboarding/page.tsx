@@ -94,6 +94,17 @@ export default async function OnboardingPage({ params }: { params: Promise<{ loc
                 <Icon name="check" size={16} />
               </span>
             </label>
+            <label className="talent-path-option both">
+              <input type="radio" name="path" value="both" required />
+              <span className="talent-path-icon">
+                <Icon name="route" size={26} />
+              </span>
+              <strong>{t('account.bothPaths')}</strong>
+              <small>{t('onboarding.bothPathBody')}</small>
+              <span className="talent-option-check">
+                <Icon name="check" size={16} />
+              </span>
+            </label>
           </div>
         </fieldset>
 

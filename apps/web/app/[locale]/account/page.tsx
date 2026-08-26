@@ -59,6 +59,10 @@ export default async function AccountPage({
 
   const stages = ['exploring', 'preparing', 'applying', 'progressing'] as const;
   const path = profile.activePath === 'study' ? 'study' : 'work';
+  const enabledSelection =
+    profile.enabledPaths.includes('work') && profile.enabledPaths.includes('study')
+      ? 'both'
+      : (profile.enabledPaths[0] ?? path);
   const primaryJourney =
     workspace.journeys.find((journey) => journey.path === path && journey.status === 'active') ??
     workspace.journeys.find((journey) => journey.path === path) ??
@@ -161,23 +165,24 @@ export default async function AccountPage({
             id="journey-settings"
           >
             <input type="hidden" name="locale" value={seg} />
+            <input type="hidden" name="activePath" value={path} />
             <header>
               <span>
                 <Icon name="route" size={22} />
               </span>
               <div>
                 <small>{t('account.journeySettings')}</small>
-                <h2>{t('account.primaryJourney')}</h2>
+                <h2>{t('account.enabledWorkspaces')}</h2>
               </div>
             </header>
             <p>{t('account.switchHelp')}</p>
             <div className="account-path-options">
-              <label className={path === 'work' ? 'selected' : ''}>
+              <label className={enabledSelection === 'work' ? 'selected' : ''}>
                 <input
                   type="radio"
                   name="path"
                   value="work"
-                  defaultChecked={path === 'work'}
+                  defaultChecked={enabledSelection === 'work'}
                   required
                 />
                 <Icon name="work" size={20} />
@@ -186,18 +191,32 @@ export default async function AccountPage({
                   <small>{t('onboarding.workPathBody')}</small>
                 </span>
               </label>
-              <label className={path === 'study' ? 'selected' : ''}>
+              <label className={enabledSelection === 'study' ? 'selected' : ''}>
                 <input
                   type="radio"
                   name="path"
                   value="study"
-                  defaultChecked={path === 'study'}
+                  defaultChecked={enabledSelection === 'study'}
                   required
                 />
                 <Icon name="study" size={20} />
                 <span>
                   <strong>{t('account.studyTalent')}</strong>
                   <small>{t('onboarding.studyPathBody')}</small>
+                </span>
+              </label>
+              <label className={enabledSelection === 'both' ? 'selected' : ''}>
+                <input
+                  type="radio"
+                  name="path"
+                  value="both"
+                  defaultChecked={enabledSelection === 'both'}
+                  required
+                />
+                <Icon name="route" size={20} />
+                <span>
+                  <strong>{t('account.bothPaths')}</strong>
+                  <small>{t('onboarding.bothPathBody')}</small>
                 </span>
               </label>
             </div>

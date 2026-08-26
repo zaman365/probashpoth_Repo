@@ -4,6 +4,7 @@ import { Icon, LogoMark, type IconName } from '@probash/web-ui';
 import type { ChatGPTUser } from '@/app/chatgpt-auth';
 import type { OperationalProfile } from '@/db/operations';
 import { localeSegment, translator, type Locale } from '@/lib/i18n';
+import { switchActiveWorkspaceAction } from '@/app/[locale]/operational-actions';
 import { DismissibleDetails } from './DismissibleDetails';
 
 type WorkspaceDestination = 'dashboard' | 'account';
@@ -78,6 +79,7 @@ export function JourneyWorkspaceShell({
   const t = translator(locale);
   const seg = localeSegment(locale);
   const path = profile.activePath === 'study' ? 'study' : 'work';
+  const enabledPaths = new Set(profile.enabledPaths);
   const boundedProgress = Math.max(0, Math.min(100, progress));
   const dashboardHref = `/${seg}/dashboard`;
   const groups: RailGroup[] = [
@@ -215,6 +217,47 @@ export function JourneyWorkspaceShell({
     </Link>
   );
 
+  const workspaceSwitcher = (
+    <form
+      action={switchActiveWorkspaceAction}
+      className="journey-rail-path-switcher"
+      aria-label={t('workspaceNav.switchWorkspace')}
+    >
+      <input type="hidden" name="locale" value={seg} />
+      <input type="hidden" name="returnTo" value={`/${seg}/${active}`} />
+      {(['work', 'study'] as const).map((workspacePath) => {
+        const isEnabled = enabledPaths.has(workspacePath);
+        const isActive = path === workspacePath;
+        const label = t(workspacePath === 'work' ? 'account.workTalent' : 'account.studyTalent');
+        return isEnabled ? (
+          <button
+            key={workspacePath}
+            type="submit"
+            name="path"
+            value={workspacePath}
+            className={isActive ? 'active' : undefined}
+            aria-pressed={isActive}
+            disabled={isActive}
+          >
+            <Icon name={workspacePath} size={16} />
+            <span>{label}</span>
+          </button>
+        ) : (
+          <Link
+            key={workspacePath}
+            href={`/${seg}/account#journey-settings`}
+            className="disabled"
+            title={t('workspaceNav.enableWorkspace')}
+          >
+            <Icon name={workspacePath} size={16} />
+            <span>{label}</span>
+            <b aria-hidden="true">+</b>
+          </Link>
+        );
+      })}
+    </form>
+  );
+
   return (
     <div className={`journey-workspace-shell wide-page journey-rail-${path}`}>
       <header className="journey-workspace-toolbar">
@@ -300,10 +343,7 @@ export function JourneyWorkspaceShell({
       </header>
 
       <aside className="journey-workspace-sidebar">
-        <span className="journey-rail-path">
-          <Icon name={path} size={16} />
-          {pathLabel}
-        </span>
+        {workspaceSwitcher}
         <RailNavigation groups={groups} label={t('workspaceNav.navigation')} />
         {workspaceProgress}
         {accountCard}
@@ -316,6 +356,7 @@ export function JourneyWorkspaceShell({
           <small>{pathLabel}</small>
         </summary>
         <div className="journey-workspace-mobile-panel">
+          {workspaceSwitcher}
           <RailNavigation groups={groups} label={t('workspaceNav.navigation')} />
           {workspaceProgress}
           {accountCard}

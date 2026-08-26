@@ -4952,7 +4952,7 @@ html[lang='bn'] .account-empty h1 {
 
 .talent-path-options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -5004,6 +5004,11 @@ html[lang='bn'] .account-empty h1 {
 .talent-path-option.study .talent-path-icon {
   color: #514b9a;
   background: #e6e4ff;
+}
+
+.talent-path-option.both .talent-path-icon {
+  color: #7a4a12;
+  background: #f8ead0;
 }
 
 .talent-path-option > strong {
@@ -5262,7 +5267,7 @@ html[lang='bn'] .account-empty h1 {
 
 .account-path-options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 9px;
   margin: 18px 0;
 }
@@ -5622,19 +5627,58 @@ main > .journey-workspace-shell {
   white-space: nowrap;
 }
 
-.journey-rail-path {
-  min-height: 38px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 10px;
+.journey-rail-path-switcher {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
   margin-bottom: 4px;
   border: 1px solid color-mix(in srgb, var(--journey-rail-accent) 22%, var(--color-border));
-  border-radius: 10px;
-  color: var(--journey-rail-accent);
-  background: color-mix(in srgb, var(--journey-rail-soft) 82%, #fff);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--journey-rail-soft) 60%, #fff);
+}
+
+.journey-rail-path-switcher > button,
+.journey-rail-path-switcher > a {
+  position: relative;
+  min-width: 0;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 7px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  background: transparent;
   font-size: 0.72rem;
   font-weight: 750;
+  cursor: pointer;
+}
+
+.journey-rail-path-switcher > button:hover,
+.journey-rail-path-switcher > a:hover {
+  color: var(--journey-rail-accent);
+  background: var(--color-surface);
+}
+
+.journey-rail-path-switcher > button.active {
+  color: #fff;
+  background: var(--journey-rail-accent);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--journey-rail-accent) 24%, transparent);
+  cursor: default;
+  opacity: 1;
+}
+
+.journey-rail-path-switcher > a.disabled {
+  border: 1px dashed color-mix(in srgb, var(--color-border) 78%, transparent);
+  opacity: 0.64;
+}
+
+.journey-rail-path-switcher > a.disabled b {
+  font-family: var(--font-family-latin);
+  font-size: 0.85rem;
 }
 
 .journey-rail-navigation {

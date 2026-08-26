@@ -19,6 +19,7 @@ import {
   markAlertRead,
   revokeDelegation,
   savePassport,
+  setActiveWorkspace,
   storeDocument,
   setJourneyRecordStatus,
   updateProfileDirection,
@@ -82,17 +83,26 @@ const JOURNEY_STAGES = new Set<JourneyStage>(['exploring', 'preparing', 'applyin
 
 function journeyDirection(formData: FormData): {
   path: JourneyPath;
+  enabledPaths: JourneyPath[];
   stage: JourneyStage;
   goalTitle?: string;
 } {
   const pathValue = textField(formData, 'path');
-  if (pathValue !== 'work' && pathValue !== 'study') {
-    throw new Error('Choose one primary journey.');
+  if (pathValue !== 'work' && pathValue !== 'study' && pathValue !== 'both') {
+    throw new Error('Choose Work, Higher Study, or both.');
   }
+  const enabledPaths: JourneyPath[] = pathValue === 'both' ? ['work', 'study'] : [pathValue];
+  const requestedActivePath = textField(formData, 'activePath');
+  const path: JourneyPath = enabledPaths.includes(requestedActivePath as JourneyPath)
+    ? (requestedActivePath as JourneyPath)
+    : pathValue === 'study'
+      ? 'study'
+      : 'work';
   const stageValue = textField(formData, 'stage') as JourneyStage;
   if (!JOURNEY_STAGES.has(stageValue)) throw new Error('Choose your current stage.');
   return {
-    path: pathValue,
+    path,
+    enabledPaths,
     stage: stageValue,
     goalTitle: textField(formData, 'goalTitle', 180) || undefined,
   };
@@ -117,6 +127,18 @@ export async function updateProfileDirectionAction(formData: FormData): Promise<
   revalidatePath(`/${seg}/dashboard`);
   revalidatePath(`/${seg}/account`);
   redirect(`/${seg}/account?saved=1`);
+}
+
+export async function switchActiveWorkspaceAction(formData: FormData): Promise<void> {
+  const seg = segment(formData);
+  const returnTo = textField(formData, 'returnTo', 80);
+  const path = textField(formData, 'path');
+  if (path !== 'work' && path !== 'study') throw new Error('Choose a valid workspace.');
+  const user = await requireChatGPTUser(returnTo || `/${seg}/dashboard`);
+  await setActiveWorkspace(user.userId, path);
+  revalidatePath(`/${seg}/dashboard`);
+  revalidatePath(`/${seg}/account`);
+  redirect(returnTo.startsWith(`/${seg}/`) ? returnTo : `/${seg}/dashboard`);
 }
 
 export async function savePassportAction(
