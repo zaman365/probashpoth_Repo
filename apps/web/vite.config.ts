@@ -7,12 +7,13 @@ import hostingConfig from '../../.openai/hosting.json';
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === 'seatbelt';
+const isDirectCloudflareBuild = process.env.PROBASH_DIRECT_CLOUDFLARE === '1';
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID = '00000000-0000-4000-8000-000000000000';
 const { d1, r2 } = hostingConfig;
 
 const localBindingConfig = {
   main: 'vinext/server/app-router-entry',
-  d1_databases: d1
+  d1_databases: d1 && !isDirectCloudflareBuild
     ? [
         {
           binding: d1,
@@ -21,7 +22,10 @@ const localBindingConfig = {
         },
       ]
     : [],
-  r2_buckets: r2 ? [{ binding: r2, bucket_name: 'probashjatra-documents' }] : [],
+  r2_buckets:
+    r2 && !isDirectCloudflareBuild
+      ? [{ binding: r2, bucket_name: 'probashjatra-documents' }]
+      : [],
 };
 
 export default defineConfig(async () => {
