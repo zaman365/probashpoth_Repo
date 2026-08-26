@@ -2793,6 +2793,79 @@ html[lang='en'] body {
   border-radius: 0;
 }
 
+/* Keep the full-bleed hero optimistic and daylight-bright. These selectors live
+   outside cascade layers because the shared canvas primitives are unlayered. */
+.experience-home .experience-canvas {
+  --color-text-on-canvas: #12392b;
+  --color-text-on-canvas-muted: #436659;
+  background:
+    radial-gradient(circle at 82% 14%, rgb(255 244 198 / 82%) 0%, transparent 30%),
+    radial-gradient(circle at 8% 88%, rgb(93 188 130 / 22%) 0%, transparent 36%),
+    linear-gradient(118deg, #edf8f0 0%, #d9f1e1 54%, #f5ecd9 100%);
+}
+
+.experience-home .experience-canvas .pui-canvas-glow {
+  background:
+    radial-gradient(55% 68% at 92% 8%, rgb(255 255 255 / 58%) 0%, transparent 70%),
+    radial-gradient(62% 60% at 0% 100%, rgb(36 165 89 / 13%) 0%, transparent 72%);
+}
+
+.experience-home .experience-canvas .pui-glass {
+  border-color: rgb(18 57 43 / 16%);
+  background: rgb(255 255 255 / 58%);
+  box-shadow: 0 24px 60px rgb(27 82 58 / 12%);
+}
+
+.experience-home .experience-canvas .hero-eyebrow,
+.experience-home .experience-canvas .hero-copy > *:last-child,
+.experience-home .experience-canvas .hero-side-stats,
+.experience-home .experience-canvas .hero-warning {
+  border-color: rgb(18 57 43 / 16%);
+}
+
+.experience-home .experience-canvas .hero-eyebrow {
+  background: rgb(255 255 255 / 48%);
+}
+
+.experience-home .experience-canvas .experience-btn-ghost,
+.experience-home .experience-canvas .hero-utility .btn {
+  border-color: rgb(18 57 43 / 30%);
+  color: var(--color-text-on-canvas);
+}
+
+.experience-home .experience-canvas .experience-btn-ghost:hover,
+.experience-home .experience-canvas .hero-utility .btn:hover {
+  border-color: rgb(18 57 43 / 48%);
+  background: rgb(255 255 255 / 58%);
+}
+
+.experience-home .experience-canvas .hero-verify-input {
+  border-color: rgb(18 57 43 / 24%);
+  background: rgb(255 255 255 / 72%);
+  color: var(--color-text-on-canvas);
+}
+
+.experience-home .experience-canvas .hero-verify-input::placeholder {
+  color: #6b887c;
+}
+
+.experience-home .experience-canvas .pui-feature-pill {
+  border-color: rgb(18 57 43 / 18%);
+  background: rgb(255 255 255 / 46%);
+}
+
+.experience-home .experience-canvas .intent-switch-canvas {
+  border-color: rgb(18 57 43 / 22%);
+  background: rgb(255 255 255 / 54%);
+}
+
+.experience-home
+  .experience-canvas
+  .intent-switch-canvas
+  .intent-switch-option:not(.is-selected):hover {
+  background: rgb(255 255 255 / 76%);
+}
+
 /* ---------------------------------------------------- Migration Passport ---
  * The Passport is a working product surface rather than a marketing section: the
  * form, transparent comparison, and gap plan stay visually connected on one page.
