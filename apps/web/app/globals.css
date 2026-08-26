@@ -1138,7 +1138,14 @@ html[lang='en'] body {
   }
 
   main:has(> .experience-home) {
+    margin-block-start: -12px;
     padding-block: 0;
+  }
+
+  @media (min-width: 1024px) {
+    main:has(> .experience-home) {
+      margin-block-start: -36px;
+    }
   }
 
   .experience-home {
