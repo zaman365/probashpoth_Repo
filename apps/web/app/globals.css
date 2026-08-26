@@ -4541,7 +4541,15 @@ html[lang='bn'] .scholarship-preparation-section h2 {
 
 .journey-account-control > summary > strong,
 .journey-account-signin > strong {
+  display: inline-flex;
+  align-items: center;
   font: inherit;
+  line-height: 1.25;
+}
+
+.journey-account-control > summary > .pui-icon,
+.journey-account-signin > .nav-account-icon {
+  flex: 0 0 auto;
 }
 
 .account-avatar {
@@ -4590,9 +4598,20 @@ html[lang='bn'] .scholarship-preparation-section h2 {
 }
 
 .account-chevron {
-  color: currentColor;
-  font-size: 0.9rem;
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  margin-inline-start: 1px;
+  border-inline-end: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
   opacity: 0.78;
+  transform: translateY(-2px) rotate(45deg);
+  transform-origin: center;
+  transition: transform 160ms ease;
+}
+
+.account-control[open] .account-chevron {
+  transform: translateY(2px) rotate(225deg);
 }
 
 .account-menu {

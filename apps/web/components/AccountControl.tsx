@@ -57,9 +57,7 @@ export function AccountControl({
           size={18}
         />
         <strong>{t('nav.dashboard')}</strong>
-        <span className="account-chevron" aria-hidden="true">
-          ⌄
-        </span>
+        <span className="account-chevron" aria-hidden="true" />
       </summary>
 
       <div className="account-menu">
