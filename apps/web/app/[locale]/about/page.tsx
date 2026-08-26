@@ -49,7 +49,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </Prose>
       </Section>
 
-      <Section surface="muted" title={t('site.aboutBuildTitle')}>
+      <Section
+        surface="muted"
+        eyebrow={t('experience.statusLabel')}
+        title={t('site.aboutBuildTitle')}
+        lead={t('experience.statusBody')}
+      >
         <Grid min={320}>
           <Card>
             <h3 className="card-title">{t('site.aboutBuildTitle')}</h3>

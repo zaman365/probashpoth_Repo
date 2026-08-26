@@ -1708,6 +1708,16 @@ html[lang='en'] body {
     font-size: 0.82rem;
   }
 
+  .experience-status-footer {
+    background: #efe5d6;
+  }
+
+  .experience-status-footer .experience-status-strip {
+    border-inline: 0;
+    border-block-end: 0;
+    border-radius: 0;
+  }
+
   .experience-status-strip > div,
   .experience-status-strip a {
     display: inline-flex;

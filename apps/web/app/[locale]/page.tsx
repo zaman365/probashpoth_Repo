@@ -298,16 +298,6 @@ export default async function Landing({
               </div>
             </CanvasPanel>
 
-            <div className="experience-status-strip" role="note">
-              <div>
-                <span className="experience-status-pulse" aria-hidden="true" />
-                <strong>{t('experience.statusLabel')}</strong>
-              </div>
-              <p>{t('experience.statusBody')}</p>
-              <Link href={`/${seg}/about`}>
-                {t('experience.statusCta')} <Icon name="arrow" size={17} />
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -628,6 +618,19 @@ export default async function Landing({
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="experience-status-footer" aria-label={t('experience.statusLabel')}>
+        <div className="experience-status-strip" role="note">
+          <div>
+            <span className="experience-status-pulse" aria-hidden="true" />
+            <strong>{t('experience.statusLabel')}</strong>
+          </div>
+          <p>{t('experience.statusBody')}</p>
+          <Link href={`/${seg}/about`}>
+            {t('experience.statusCta')} <Icon name="arrow" size={17} />
+          </Link>
         </div>
       </section>
     </div>
