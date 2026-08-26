@@ -1313,7 +1313,7 @@ html[lang='en'] body {
     text-underline-offset: 5px;
   }
 
-  /* Header: keep the light navbar palette, make verification the clear first action. */
+  /* Header: keep the light navbar palette and reserve emphasis for My journey. */
   .site-header {
     padding-block: 12px 8px;
   }
@@ -1353,27 +1353,6 @@ html[lang='en'] body {
     white-space: nowrap;
   }
 
-  .site-nav-desktop a.is-journey-cta {
-    gap: 7px;
-    color: #fff;
-    background: #117b3e;
-    box-shadow: 0 6px 16px rgb(10 94 47 / 16%);
-  }
-
-  .site-nav-desktop a.is-journey-cta:hover {
-    color: #fff;
-    background: #0a6b34;
-  }
-
-  .site-nav-desktop a.is-journey-cta.journey-cta-study {
-    background: #5a54a7;
-    box-shadow: 0 6px 16px rgb(74 68 145 / 16%);
-  }
-
-  .site-nav-desktop a.is-journey-cta.journey-cta-study:hover {
-    background: #49438e;
-  }
-
   .nav-account-icon {
     position: relative;
     width: 19px;
@@ -1406,18 +1385,6 @@ html[lang='en'] body {
     border: 1.4px solid currentColor;
     border-bottom: 0;
     border-radius: 7px 7px 0 0;
-  }
-
-  .site-nav-mobile .mobile-journey-cta {
-    gap: 9px;
-    margin-bottom: 4px;
-    border-block-start: 0;
-    color: #fff;
-    background: #117b3e;
-  }
-
-  .site-nav-mobile .mobile-journey-cta.journey-cta-study {
-    background: #5a54a7;
   }
 
   .site-header-actions .pui-btn {
@@ -3439,28 +3406,65 @@ html[lang='bn'] .passport-section-heading h2 {
   flex: 0 0 auto;
 }
 
-.account-control > summary {
-  display: flex;
-  min-height: 48px;
+.journey-account-cta,
+.journey-account-control > summary {
+  min-height: 46px;
+  display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 5px 9px 5px 6px;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
-  border-radius: 12px;
-  color: var(--color-text-primary);
-  background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface));
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #117b3e;
+  border-radius: 13px;
+  color: #fff;
+  background: #117b3e;
+  box-shadow: 0 8px 20px rgb(10 94 47 / 18%);
   cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 750;
+  line-height: 1;
   list-style: none;
+  white-space: nowrap;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .account-control > summary::-webkit-details-marker {
   display: none;
 }
 
+.journey-account-control.journey-cta-study > summary {
+  border-color: #5a54a7;
+  background: #5a54a7;
+  box-shadow: 0 8px 20px rgb(74 68 145 / 20%);
+}
+
+.journey-account-control.journey-cta-unset > summary,
+.journey-account-signin {
+  border-color: #117b3e;
+  background: #117b3e;
+}
+
 .account-control[open] > summary,
-.account-control > summary:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 8px 22px rgb(11 31 24 / 9%);
+.account-control > summary:hover,
+.journey-account-signin:hover {
+  color: #fff;
+  background: #0a6b34;
+  box-shadow: 0 12px 26px rgb(10 94 47 / 24%);
+  transform: translateY(-1px);
+}
+
+.journey-account-control.journey-cta-study[open] > summary,
+.journey-account-control.journey-cta-study > summary:hover {
+  background: #49438e;
+  box-shadow: 0 12px 26px rgb(74 68 145 / 24%);
+}
+
+.journey-account-control > summary > strong,
+.journey-account-signin > strong {
+  font: inherit;
 }
 
 .account-avatar {
@@ -3509,8 +3513,9 @@ html[lang='bn'] .passport-section-heading h2 {
 }
 
 .account-chevron {
-  color: var(--color-text-secondary);
+  color: currentColor;
   font-size: 0.9rem;
+  opacity: 0.78;
 }
 
 .account-menu {
@@ -3622,6 +3627,14 @@ html[lang='bn'] .passport-section-heading h2 {
 .account-menu nav .account-menu-highlight:hover {
   color: #fff;
   background: color-mix(in srgb, var(--color-accent) 88%, #000);
+}
+
+.journey-account-control.journey-cta-study .account-menu-highlight {
+  background: #5a54a7;
+}
+
+.journey-account-control.journey-cta-study .account-menu-highlight:hover {
+  background: #49438e;
 }
 
 .talent-onboarding-page,

@@ -32,11 +32,11 @@ export function AccountControl({
   if (!user) {
     return (
       <Link
-        href={chatGPTSignInPath(`/${seg}/onboarding`)}
-        className="account-signin pui-btn pui-btn-primary pui-btn-md"
+        href={chatGPTSignInPath(`/${seg}/dashboard`)}
+        className="journey-account-cta journey-account-signin journey-cta-guest"
       >
-        <Icon name="shield" size={18} />
-        <span>{t('account.signIn')}</span>
+        <span className="nav-account-icon" aria-hidden="true" />
+        <strong>{t('nav.dashboard')}</strong>
       </Link>
     );
   }
@@ -44,20 +44,16 @@ export function AccountControl({
   const primaryPath =
     profile?.activePath === 'work' || profile?.activePath === 'study' ? profile.activePath : null;
 
+  const journeyTone = primaryPath ?? 'unset';
+
   return (
-    <details className="account-control">
+    <details className={`account-control journey-account-control journey-cta-${journeyTone}`}>
       <summary aria-label={t('account.openMenu')}>
-        <span className="account-avatar" aria-hidden="true">
-          {initials(user)}
-        </span>
-        <span className="account-trigger-copy">
-          <strong>{user.displayName}</strong>
-          <small>
-            {primaryPath
-              ? t(primaryPath === 'work' ? 'account.workTalent' : 'account.studyTalent')
-              : t('account.choosePath')}
-          </small>
-        </span>
+        <Icon
+          name={primaryPath === 'study' ? 'study' : primaryPath === 'work' ? 'work' : 'route'}
+          size={18}
+        />
+        <strong>{t('nav.dashboard')}</strong>
         <span className="account-chevron" aria-hidden="true">
           ⌄
         </span>
@@ -94,7 +90,10 @@ export function AccountControl({
               <span aria-hidden="true">→</span>
             </Link>
           ) : null}
-          <Link href={`/${seg}/dashboard`}>
+          <Link
+            href={`/${seg}/dashboard`}
+            className={profile?.onboardingCompletedAt ? 'account-menu-highlight' : undefined}
+          >
             <Icon name="route" size={18} />
             <span>{t('nav.dashboard')}</span>
           </Link>
