@@ -24,3 +24,4 @@ export * from './risk';
 export * from './documents';
 export * from './credentials';
 export * from './consent';
+export * from './passport';

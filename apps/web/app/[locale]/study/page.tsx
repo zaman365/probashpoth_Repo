@@ -98,10 +98,13 @@ export default async function StudyHub({ params }: { params: Promise<{ locale: s
         lead={t('intent.studyHubLead')}
       >
         <div className="hub-actions">
+          <ButtonLink href={`/${seg}/passport`} size="lg" icon={<Icon name="route" size={20} />}>
+            {t('passport.startPassport')}
+          </ButtonLink>
           <ButtonLink href={`/${seg}/countries`} size="lg" icon={<Icon name="globe" size={20} />}>
             {t('guide.browseCountries')}
           </ButtonLink>
-          <ButtonLink href={`/${seg}/verify`} size="lg" variant="secondary">
+          <ButtonLink href={`/${seg}/verify`} size="lg" variant="outline">
             {t('home.verifyOffer')}
           </ButtonLink>
           <ButtonLink href={`/${seg}?intent=work`} size="lg" variant="ghost">

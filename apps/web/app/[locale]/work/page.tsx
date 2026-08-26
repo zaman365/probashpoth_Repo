@@ -83,10 +83,13 @@ export default async function WorkHub({ params }: { params: Promise<{ locale: st
         lead={t('intent.workHubLead')}
       >
         <div className="hub-actions">
+          <ButtonLink href={`/${seg}/passport`} size="lg" icon={<Icon name="route" size={20} />}>
+            {t('passport.startPassport')}
+          </ButtonLink>
           <ButtonLink href={`/${seg}/jobs`} size="lg" icon={<Icon name="work" size={20} />}>
             {t('home.findWork')}
           </ButtonLink>
-          <ButtonLink href={`/${seg}/verify`} size="lg" variant="secondary">
+          <ButtonLink href={`/${seg}/verify`} size="lg" variant="outline">
             {t('home.verifyOffer')}
           </ButtonLink>
           <ButtonLink href={`/${seg}?intent=study`} size="lg" variant="ghost">

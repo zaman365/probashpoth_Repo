@@ -12,6 +12,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
     {
       title: t('site.footerProduct'),
       links: [
+        { href: `/${seg}/passport`, label: t('passport.title') },
         { href: `/${seg}/work`, label: t('intent.work') },
         { href: `/${seg}/study`, label: t('intent.study') },
         { href: `/${seg}/jobs`, label: t('home.findWork') },

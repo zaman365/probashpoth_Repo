@@ -28,10 +28,10 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
       icon: 'verify' as const,
       priority: true,
     },
+    { href: `/${seg}/passport`, label: t('passport.nav') },
     { href: `/${seg}/countries`, label: t('nav.countries') },
     { href: `/${seg}/work`, label: t('nav.work') },
     { href: `/${seg}/study`, label: t('nav.study') },
-    { href: `/${seg}/safety`, label: t('nav.safety') },
   ];
 
   return (
@@ -83,6 +83,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             <span>{t('common.menu')}</span>
           </summary>
           <nav aria-label={t('common.menu')}>
+            <Link href={`/${seg}/passport`}>{t('passport.title')}</Link>
             <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
             <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
             <Link href={`/${seg}/work`}>{t('intent.work')}</Link>
