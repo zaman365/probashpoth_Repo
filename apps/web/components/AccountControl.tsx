@@ -5,6 +5,7 @@ import type { ChatGPTUser } from '@/app/chatgpt-auth';
 import { chatGPTSignInPath, chatGPTSignOutPath } from '@/app/chatgpt-auth';
 import type { OperationalProfile } from '@/db/operations';
 import { localeSegment, translator } from '@/lib/i18n';
+import { DismissibleDetails } from './DismissibleDetails';
 
 function initials(user: ChatGPTUser): string {
   return (
@@ -47,7 +48,9 @@ export function AccountControl({
   const journeyTone = primaryPath ?? 'unset';
 
   return (
-    <details className={`account-control journey-account-control journey-cta-${journeyTone}`}>
+    <DismissibleDetails
+      className={`account-control journey-account-control journey-cta-${journeyTone}`}
+    >
       <summary aria-label={t('account.openMenu')}>
         <Icon
           name={primaryPath === 'study' ? 'study' : primaryPath === 'work' ? 'work' : 'route'}
@@ -82,7 +85,7 @@ export function AccountControl({
           </span>
         </div>
 
-        <nav aria-label={t('account.menuLabel')}>
+        <nav aria-label={t('account.menuLabel')} data-dismiss-details>
           {!profile?.onboardingCompletedAt ? (
             <Link className="account-menu-highlight" href={`/${seg}/onboarding`}>
               <Icon name="route" size={18} />
@@ -111,6 +114,6 @@ export function AccountControl({
           </Link>
         </nav>
       </div>
-    </details>
+    </DismissibleDetails>
   );
 }
