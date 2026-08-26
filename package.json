@@ -4,11 +4,28 @@
   "version": "0.1.0",
   "description": "Safe migration and global opportunity operating system (working codename ProbashOS). Brand name is configurable, never hard-coded.",
   "packageManager": "pnpm@11.22.0",
+  "workspaces": [
+    "packages/domain",
+    "packages/design-tokens",
+    "packages/analytics",
+    "packages/config",
+    "packages/contracts",
+    "packages/auth",
+    "packages/i18n",
+    "packages/ledger",
+    "packages/rules",
+    "packages/testing",
+    "packages/web-ui",
+    "apps/api",
+    "apps/ops-desktop",
+    "apps/web",
+    "apps/mobile"
+  ],
   "engines": {
     "node": ">=22.11.0"
   },
   "scripts": {
-    "build": "pnpm -r --if-present run build",
+    "build": "npm run build --workspace=@probash/domain --workspace=@probash/design-tokens --workspace=@probash/analytics --workspace=@probash/config --workspace=@probash/contracts --workspace=@probash/auth --workspace=@probash/i18n --workspace=@probash/ledger --workspace=@probash/rules --workspace=@probash/testing --workspace=@probash/web-ui --workspace=@probash/api --workspace=@probash/web --if-present",
     "dev": "turbo run dev",
     "lint": "eslint .",
     "typecheck": "turbo run typecheck",
