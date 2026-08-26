@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import { Badge, ButtonLink, Card, Grid, Icon, Section } from '@probash/web-ui';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getWorkspace } from '@/db/operations';
+import { PartnerEvidenceForm } from '@/components/OperationalForms';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
@@ -28,6 +33,8 @@ export default async function PartnerPortalsPage({
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
+  const user = await getChatGPTUser();
+  const workspace = user ? await getWorkspace(user.userId) : null;
   const portals = [
     ['work', 'supply.employerTitle', 'supply.employerBody'],
     ['route', 'supply.recruiterTitle', 'supply.recruiterBody'],
@@ -103,6 +110,32 @@ export default async function PartnerPortalsPage({
             </li>
           ))}
         </ol>
+      </Section>
+
+      <Section surface="warm" title={t('supply.intakeTitle')} lead={t('supply.intakeLead')}>
+        <Grid min={360}>
+          <PartnerEvidenceForm locale={locale} localeSegment={seg} />
+          <div className="stack">
+            <Card tone="muted">
+              <Badge tone="warning">{t('supply.evidenceGate')}</Badge>
+              <h2 className="card-title">{t('supply.reviewBoundaryTitle')}</h2>
+              <p>{t('supply.reviewBoundaryBody')}</p>
+            </Card>
+            {workspace?.partnerSubmissions.map((submission) => (
+              <Card key={submission.id}>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <Badge tone="warning">{submission.status}</Badge>
+                  <span className="muted">
+                    {t(`supply.portalTypeValue.${submission.portalType}`)}
+                  </span>
+                </div>
+                <h3 className="card-title">{submission.title}</h3>
+                <p>{submission.organizationName}</p>
+                <p className="muted">{submission.countryCode || '—'}</p>
+              </Card>
+            ))}
+          </div>
+        </Grid>
       </Section>
     </>
   );

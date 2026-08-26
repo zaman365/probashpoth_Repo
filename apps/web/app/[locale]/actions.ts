@@ -4,8 +4,16 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { randomUUID } from 'node:crypto';
-import { ApiRequestError, apiRequest, authedRequest, SESSION_COOKIE } from '@/lib/api';
+import {
+  ApiRequestError,
+  apiRequest,
+  authedRequest,
+  hasExternalApi,
+  SESSION_COOKIE,
+} from '@/lib/api';
 import { localeSegment, parseLocaleParam } from '@/lib/i18n';
+import { requireChatGPTUser } from '@/app/chatgpt-auth';
+import { createJourney } from '@/db/operations';
 
 /**
  * Server actions. The session token is written to an httpOnly cookie and never
@@ -86,6 +94,22 @@ export async function startCaseAction(formData: FormData): Promise<void> {
   const jobId = String(formData.get('jobId') ?? '') || undefined;
   const segment = String(formData.get('locale') ?? 'bn');
   const seg = localeSegment(parseLocaleParam(segment));
+
+  if (!hasExternalApi) {
+    const user = await requireChatGPTUser(`/${seg}/dashboard`);
+    const path = String(formData.get('path') ?? 'work') === 'study' ? 'study' : 'work';
+    const id = await createJourney(user.userId, {
+      path,
+      targetType: jobId ? 'job' : 'route',
+      targetId: jobId ?? routeVersionId,
+      title:
+        String(formData.get('title') ?? '').trim() ||
+        (path === 'study' ? 'Higher Study route' : jobId ? 'Work opportunity' : 'Work route'),
+      destinationCountry: String(formData.get('destinationCountry') ?? '').trim() || undefined,
+      details: { routeVersionId, jobId },
+    });
+    redirect(`/${seg}/cases/${id}`);
+  }
 
   const created = await authedRequest<{ id: string }>('/api/v1/cases', {
     method: 'POST',

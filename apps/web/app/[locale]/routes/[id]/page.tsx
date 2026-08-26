@@ -105,6 +105,9 @@ export default async function RoutePage({
           routeVersionId={route.id}
           label={t('case.title')}
           signInLabel={t('onboarding.phoneTitle')}
+          title={pick(route.officialName, locale)}
+          destinationCountry={route.destinationCountry}
+          path={route.purpose === 'study' ? 'study' : 'work'}
         />
       ) : null}
 

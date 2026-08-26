@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1787760996671,
+      "tag": "0000_cynical_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787762032976,
+      "tag": "0001_breezy_luminals",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1787762391740,
+      "tag": "0002_blushing_ender_wiggin",
+      "breakpoints": true
+    }
+  ]
+}

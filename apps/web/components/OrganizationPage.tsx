@@ -4,8 +4,7 @@ import { localeSegment, translator } from '@/lib/i18n';
 
 /**
  * The three institutional pages share a shape (§14.5–§14.7): what the surface will
- * do, what it will require, and — stated first, not buried — that it does not exist
- * yet and claims no partnership (docs/compliance).
+ * do, what it requires, and the publication boundary for evidence intake.
  */
 export function OrganizationPage({
   locale,
@@ -52,10 +51,10 @@ export function OrganizationPage({
 
       <Section surface="accent" width="prose">
         <div className="cta-block">
-          <h2 className="pui-section-title">{t('site.ctaTitle')}</h2>
-          <p className="pui-lead">{t('site.ctaLead')}</p>
-          <ButtonLink href={`/${seg}/verify`} size="lg">
-            {t('scanner.checkNow')}
+          <h2 className="pui-section-title">{t('site.orgIntakeTitle')}</h2>
+          <p className="pui-lead">{t('site.orgIntakeLead')}</p>
+          <ButtonLink href={`/${seg}/partners`} size="lg">
+            {t('supply.submitEvidence')}
           </ButtonLink>
         </div>
       </Section>

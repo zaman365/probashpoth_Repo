@@ -275,9 +275,7 @@ export default async function Landing({
                       </div>
                       <div>
                         <dt>{t('site.statCountries')}</dt>
-                        <dd>
-                          {distinctCountries(intent === 'study' ? studyRoutes : workRoutes)}
-                        </dd>
+                        <dd>{distinctCountries(intent === 'study' ? studyRoutes : workRoutes)}</dd>
                       </div>
                       <div>
                         <dt>{intent === 'study' ? t('site.studyCourses') : t('site.statJobs')}</dt>
@@ -297,12 +295,14 @@ export default async function Landing({
                 <IntentSwitch locale={locale} intent={intent} tone="canvas" compact />
               </div>
             </CanvasPanel>
-
           </div>
         </div>
       </section>
 
-      <section className="experience-section experience-questions" aria-labelledby="questions-title">
+      <section
+        className="experience-section experience-questions"
+        aria-labelledby="questions-title"
+      >
         <div className="experience-shell">
           <header className="experience-section-head experience-section-head-split">
             <div>
@@ -349,7 +349,9 @@ export default async function Landing({
           </div>
 
           <div className="experience-path-grid">
-            <article className={`experience-path-card work${intent === 'work' ? ' is-selected' : ''}`}>
+            <article
+              className={`experience-path-card work${intent === 'work' ? ' is-selected' : ''}`}
+            >
               <div className="experience-path-visual" aria-hidden="true">
                 <span className="experience-path-orbit" />
                 <Icon name="work" size={38} />
@@ -379,7 +381,9 @@ export default async function Landing({
               </div>
             </article>
 
-            <article className={`experience-path-card study${intent === 'study' ? ' is-selected' : ''}`}>
+            <article
+              className={`experience-path-card study${intent === 'study' ? ' is-selected' : ''}`}
+            >
               <div className="experience-path-visual" aria-hidden="true">
                 <span className="experience-path-orbit" />
                 <Icon name="study" size={38} />
@@ -553,7 +557,10 @@ export default async function Landing({
         </div>
       </section>
 
-      <section className="experience-section experience-organizations" aria-labelledby="organizations-title">
+      <section
+        className="experience-section experience-organizations"
+        aria-labelledby="organizations-title"
+      >
         <div className="experience-shell">
           <header className="experience-section-head experience-section-head-split">
             <div>
@@ -591,7 +598,10 @@ export default async function Landing({
           </header>
           <div className="experience-faq-list">
             {faqs.map((faq, index) => (
-              <Disclosure key={faq.question} summary={`${String(index + 1).padStart(2, '0')}  ${faq.question}`}>
+              <Disclosure
+                key={faq.question}
+                summary={`${String(index + 1).padStart(2, '0')}  ${faq.question}`}
+              >
                 <p>{faq.answer}</p>
               </Disclosure>
             ))}

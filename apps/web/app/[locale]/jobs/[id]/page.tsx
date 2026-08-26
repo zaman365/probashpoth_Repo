@@ -130,6 +130,8 @@ export default async function JobDetailPage({
           jobId={job.id}
           label={t('case.title')}
           signInLabel={t('onboarding.phoneTitle')}
+          title={pick(job.title, locale)}
+          destinationCountry={job.destinationCountry}
         />
       </section>
 

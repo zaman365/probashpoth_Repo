@@ -13,7 +13,8 @@
     "start": "vinext start",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@probash/contracts": "workspace:*",
@@ -21,6 +22,7 @@
     "@probash/domain": "workspace:*",
     "@probash/i18n": "workspace:*",
     "@probash/web-ui": "workspace:*",
+    "drizzle-orm": "0.45.2",
     "next": "^16.3.3",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
@@ -37,6 +39,7 @@
     "@types/qrcode": "^1.5.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "drizzle-kit": "0.31.10",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
     "react-server-dom-webpack": "19.2.6",

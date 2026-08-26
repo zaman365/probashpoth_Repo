@@ -142,7 +142,7 @@ export default async function WorkHub({ params }: { params: Promise<{ locale: st
             const example = jobs.find((job) => job.occupationKey === occupation.key);
             return (
               <Link
-                key={occupation.id}
+                key={occupation.key}
                 href={`/${seg}/occupations/${occupation.key}`}
                 className="guide-link"
               >

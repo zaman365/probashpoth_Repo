@@ -34,6 +34,6 @@ minimumReleaseAgeExclude:
   - '@next/swc-win32-x64-msvc@16.3.3'
   - next@16.3.3
 
-# apps/mobile (Expo) and apps/ops-desktop (Tauri) are scaffolded but intentionally
-# kept out of the default install so the trust-rail slice installs and builds fast.
+# The Expo mobile app is included in the default workspace. The Tauri operations
+# shell remains outside the default install because its Rust toolchain is optional.
 # See apps/mobile/README.md and apps/ops-desktop/README.md.

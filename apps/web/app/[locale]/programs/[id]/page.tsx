@@ -6,6 +6,7 @@ import { apiRequest } from '@/lib/api';
 import { money } from '@/lib/format';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { createOperationalJourneyAction } from '../../operational-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -145,9 +146,17 @@ export default async function ProgramPage({
         </div>
         <div className="hub-actions">
           <ButtonLink href={`/${seg}/passport`}>{t('passport.startPassport')}</ButtonLink>
-          <ButtonLink href={`/${seg}/dashboard`} variant="outline">
-            {t('os.openDashboard')}
-          </ButtonLink>
+          <form action={createOperationalJourneyAction}>
+            <input type="hidden" name="locale" value={seg} />
+            <input type="hidden" name="path" value="study" />
+            <input type="hidden" name="targetType" value="programme" />
+            <input type="hidden" name="targetId" value={course.id} />
+            <input type="hidden" name="title" value={pick(course.title, locale)} />
+            <input type="hidden" name="destinationCountry" value={institution.countryCode} />
+            <button type="submit" className="btn btn-primary">
+              {t('case.startApplication')}
+            </button>
+          </form>
         </div>
       </Section>
     </>

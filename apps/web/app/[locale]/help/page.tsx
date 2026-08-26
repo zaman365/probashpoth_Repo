@@ -1,5 +1,9 @@
 import { parseLocaleParam, translator } from '@/lib/i18n';
 import { ListenButton } from '@/components/ListenButton';
+import { SupportTicketForm } from '@/components/OperationalForms';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getWorkspace } from '@/db/operations';
+import { localeSegment } from '@/lib/i18n';
 
 /**
  * §34/§35 — the help surface. Emergency contact numbers are operational data that
@@ -9,7 +13,11 @@ import { ListenButton } from '@/components/ListenButton';
 export default async function HelpPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: segment } = await params;
   const locale = parseLocaleParam(segment);
+  const seg = localeSegment(locale);
   const t = translator(locale);
+  const user = await getChatGPTUser();
+  const workspace = user ? await getWorkspace(user.userId) : null;
+  const journeys = workspace?.journeys.map(({ id, title }) => ({ id, title })) ?? [];
 
   return (
     <>
@@ -31,6 +39,35 @@ export default async function HelpPage({ params }: { params: Promise<{ locale: s
         <p>{t('payment.neverPayCash')}</p>
         <p>{t('legal.noVisaGuarantee')}</p>
       </section>
+      <SupportTicketForm locale={locale} localeSegment={seg} journeys={journeys} />
+      {workspace ? (
+        <section className="card stack" aria-labelledby="support-history-heading">
+          <h2 id="support-history-heading" className="card-title">
+            {t('operations.supportHistory')}
+          </h2>
+          {workspace.supportTickets.length === 0 ? (
+            <p className="muted">{t('operations.noSupportTickets')}</p>
+          ) : (
+            <ul className="record-list">
+              {workspace.supportTickets.map((ticket) => (
+                <li key={ticket.id}>
+                  <div>
+                    <strong>{ticket.subject}</strong>
+                    <span className="muted">{ticket.category}</span>
+                  </div>
+                  <span
+                    className={`badge ${ticket.priority === 'critical' ? 'badge-danger' : 'badge-info'}`}
+                  >
+                    {ticket.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ) : (
+        <p className="muted">{t('operations.signInToTrack')}</p>
+      )}
     </>
   );
 }

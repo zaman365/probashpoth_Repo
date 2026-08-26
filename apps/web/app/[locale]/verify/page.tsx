@@ -3,6 +3,9 @@ import type { ScanResultDto } from '@probash/contracts';
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { ScanResult } from '@/components/ScanResult';
+import { VerificationRequestForm } from '@/components/OperationalForms';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getWorkspace } from '@/db/operations';
 import { ScannerForm } from './scanner-form';
 
 export const dynamic = 'force-dynamic';
@@ -21,7 +24,10 @@ export default async function VerifyPage({
   const { locale: segment } = await params;
   const { publicId } = await searchParams;
   const locale = parseLocaleParam(segment);
+  const seg = localeSegment(locale);
   const t = translator(locale);
+  const user = await getChatGPTUser();
+  const workspace = user ? await getWorkspace(user.userId) : null;
 
   const labels = {
     whatWeChecked: t('scanner.whatWeChecked'),
@@ -76,6 +82,34 @@ export default async function VerifyPage({
           ...labels,
         }}
       />
+
+      <section className="stack" aria-labelledby="human-review-heading">
+        <VerificationRequestForm locale={locale} localeSegment={seg} />
+        {workspace ? (
+          <div className="card stack">
+            <h2 id="human-review-heading" className="card-title">
+              {t('operations.reviewHistory')}
+            </h2>
+            {workspace.verifications.length === 0 ? (
+              <p className="muted">{t('operations.noReviews')}</p>
+            ) : (
+              <ul className="record-list">
+                {workspace.verifications.map((request) => (
+                  <li key={request.id}>
+                    <div>
+                      <strong>{request.subject}</strong>
+                      <span className="muted">{t(`operations.kind.${request.kind}`)}</span>
+                    </div>
+                    <span className="badge badge-warning">{request.status}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <p className="muted">{t('operations.signInToTrack')}</p>
+        )}
+      </section>
     </>
   );
 }

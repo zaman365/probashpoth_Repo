@@ -57,24 +57,34 @@ export default async function CountriesIndex({ params }: { params: Promise<{ loc
 
       <ul className="grid-cards">
         {countries.map((country) => (
-          <li key={country.code} className="card stack">
+          <li key={country.code}>
             <Link
               href={`/${seg}/countries/${country.code.toLowerCase()}`}
-              style={{ fontWeight: 700, fontSize: 'var(--font-size-body-large)' }}
+              className="country-index-card"
+              aria-label={`${pick(country.name, locale)} — ${t('guide.openCountryGuide')}`}
             >
-              {pick(country.name, locale)}
+              <div className="country-index-card-topline">
+                <span className="country-code">{country.code}</span>
+                <span className="country-card-arrow" aria-hidden="true">
+                  →
+                </span>
+              </div>
+              <h2>{pick(country.name, locale)}</h2>
+              <p>{t('guide.countryCardLead')}</p>
+              <div className="flex flex-wrap gap-2">
+                <span className={`badge ${STATUS_BADGE[country.supportStatus] ?? 'badge-neutral'}`}>
+                  {country.supportStatus}
+                </span>
+                <span className="badge badge-neutral">
+                  {t('guide.routeCount', { count: country.routeCount })}
+                </span>
+                <span className="badge badge-info">{t('guide.workAndStudy')}</span>
+              </div>
+              {country.statusNotice ? (
+                <p className="badge badge-warning">{pick(country.statusNotice, locale)}</p>
+              ) : null}
+              <strong className="country-index-cta">{t('guide.openCountryGuide')}</strong>
             </Link>
-            <div className="flex flex-wrap gap-2">
-              <span className={`badge ${STATUS_BADGE[country.supportStatus] ?? 'badge-neutral'}`}>
-                {country.supportStatus}
-              </span>
-              <span className="badge badge-neutral">
-                {t('guide.routeCount', { count: country.routeCount })}
-              </span>
-            </div>
-            {country.statusNotice ? (
-              <p className="badge badge-warning">{pick(country.statusNotice, locale)}</p>
-            ) : null}
           </li>
         ))}
       </ul>

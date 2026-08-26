@@ -5,6 +5,12 @@ import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { MoneyBreakdown } from '@/components/MoneyBreakdown';
 import { ListenButton } from '@/components/ListenButton';
 import { completeTaskAction, createPaymentIntentAction, inviteFamilyAction } from '../../actions';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getWorkspace } from '@/db/operations';
+import { Badge, ButtonLink, Card, Grid, Section } from '@probash/web-ui';
+import { completeOperationalTaskAction } from '../../operational-actions';
+import { setJourneyRecordStatusAction } from '../../operational-actions';
+import { JourneyRecordForm } from '@/components/OperationalForms';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,6 +32,177 @@ export default async function CaseDetailPage({
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
+
+  const user = await getChatGPTUser();
+  if (user) {
+    const workspace = await getWorkspace(user.userId);
+    const journey = workspace.journeys.find((item) => item.id === id);
+    if (journey) {
+      const doneCount = journey.tasks.filter((task) => task.status === 'done').length;
+      const nextTask = journey.tasks.find((task) => task.status !== 'done');
+      const journeyLedger = workspace.ledger.filter((entry) => entry.journeyId === journey.id);
+      const journeyDocuments = workspace.documents.filter(
+        (document) => document.journeyId === journey.id,
+      );
+      const journeyRecords = workspace.records.filter((record) => record.journeyId === journey.id);
+      return (
+        <>
+          <Section
+            surface="warm"
+            headingLevel={1}
+            eyebrow={t(journey.path === 'work' ? 'intent.work' : 'intent.study')}
+            title={journey.title}
+            lead={t('case.operationalDetailLead')}
+          >
+            <div className="journey-progress-summary">
+              <strong>{t('case.step', { current: doneCount, total: journey.tasks.length })}</strong>
+              <div className="progress-bar" aria-label={t('case.progress')}>
+                <span
+                  style={{
+                    width: `${journey.tasks.length ? (doneCount / journey.tasks.length) * 100 : 0}%`,
+                  }}
+                />
+              </div>
+              {nextTask ? (
+                <p>{pick(nextTask.title, locale)}</p>
+              ) : (
+                <Badge tone="success">{t('case.allTasksDone')}</Badge>
+              )}
+            </div>
+          </Section>
+          <Section surface="default" title={t('case.tasks')}>
+            <ol className="operational-timeline">
+              {journey.tasks.map((task) => (
+                <li key={task.id} className={task.status === 'done' ? 'is-done' : undefined}>
+                  <span className="operational-timeline-number">
+                    {String(task.position).padStart(2, '0')}
+                  </span>
+                  <div className="card stack">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h3 className="card-title">{pick(task.title, locale)}</h3>
+                      <Badge tone={task.status === 'done' ? 'success' : 'neutral'}>
+                        {task.status === 'done' ? t('case.statusDone') : t('case.statusTodo')}
+                      </Badge>
+                    </div>
+                    <p>{pick(task.detail, locale)}</p>
+                    {task.status !== 'done' ? (
+                      <form action={completeOperationalTaskAction}>
+                        <input type="hidden" name="locale" value={seg} />
+                        <input type="hidden" name="journeyId" value={journey.id} />
+                        <input type="hidden" name="taskId" value={task.id} />
+                        <button type="submit" className="btn btn-secondary">
+                          {t('case.markDone')}
+                        </button>
+                      </form>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Section>
+          <Section
+            surface="warm"
+            title={t('operations.workbenchTitle')}
+            lead={t('operations.workbenchLead')}
+          >
+            <Grid min={360}>
+              <JourneyRecordForm
+                locale={locale}
+                localeSegment={seg}
+                journeyId={journey.id}
+                path={journey.path}
+              />
+              <div className="stack">
+                {journeyRecords.length === 0 ? (
+                  <Card tone="muted">
+                    <p>{t('operations.noRecords')}</p>
+                  </Card>
+                ) : null}
+                {journeyRecords.map((record) => (
+                  <Card key={record.id}>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <Badge
+                        tone={
+                          record.status === 'completed' || record.status === 'verified'
+                            ? 'success'
+                            : record.status === 'blocked' || record.status === 'rejected'
+                              ? 'danger'
+                              : 'info'
+                        }
+                      >
+                        {t(`operations.recordStatus.${record.status}`)}
+                      </Badge>
+                      <span className="muted">
+                        {t(`operations.recordType.${record.recordType}`)}
+                      </span>
+                    </div>
+                    <h3 className="card-title">{record.title}</h3>
+                    {record.notes ? <p>{record.notes}</p> : null}
+                    {record.dueAt ? (
+                      <p className="muted">
+                        {t('operations.deadline')}: {record.dueAt}
+                      </p>
+                    ) : null}
+                    {record.amountMinor !== null && record.currency ? (
+                      <p className="amount">
+                        {new Intl.NumberFormat(locale === 'bn-BD' ? 'bn-BD' : 'en', {
+                          style: 'currency',
+                          currency: record.currency,
+                        }).format(record.amountMinor / 100)}
+                      </p>
+                    ) : null}
+                    {record.status !== 'completed' ? (
+                      <form action={setJourneyRecordStatusAction}>
+                        <input type="hidden" name="locale" value={seg} />
+                        <input type="hidden" name="journeyId" value={journey.id} />
+                        <input type="hidden" name="recordId" value={record.id} />
+                        <input type="hidden" name="status" value="completed" />
+                        <button type="submit" className="btn btn-secondary">
+                          {t('operations.markComplete')}
+                        </button>
+                      </form>
+                    ) : null}
+                  </Card>
+                ))}
+              </div>
+            </Grid>
+          </Section>
+          <Section surface="muted" title={t('case.caseTools')}>
+            <Grid min={240}>
+              <Card>
+                <h3 className="card-title">{t('workspace.documents')}</h3>
+                <p>{t('case.documentCount', { count: journeyDocuments.length })}</p>
+                <ButtonLink href={`/${seg}/documents`} variant="outline">
+                  {t('workspace.openDocuments')}
+                </ButtonLink>
+              </Card>
+              <Card>
+                <h3 className="card-title">{t('workspace.money')}</h3>
+                <p>{t('case.costCount', { count: journeyLedger.length })}</p>
+                <ButtonLink href={`/${seg}/money`} variant="outline">
+                  {t('workspace.openMoney')}
+                </ButtonLink>
+              </Card>
+              <Card>
+                <h3 className="card-title">{t('workspace.family')}</h3>
+                <p>{t('workspace.familyBody')}</p>
+                <ButtonLink href={`/${seg}/family`} variant="outline">
+                  {t('workspace.openFamily')}
+                </ButtonLink>
+              </Card>
+              <Card>
+                <h3 className="card-title">{t('common.help')}</h3>
+                <p>{t('case.helpBody')}</p>
+                <ButtonLink href={`/${seg}/help`} variant="outline">
+                  {t('common.help')}
+                </ButtonLink>
+              </Card>
+            </Grid>
+          </Section>
+        </>
+      );
+    }
+  }
 
   const detail = await tryAuthed<CaseDetailDto>(`/api/v1/cases/${id}`);
   if (!detail) {

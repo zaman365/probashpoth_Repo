@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, type ReactNode } from 'react';
+import { useActionState, useMemo, useState, type ReactNode } from 'react';
 import {
   buildPreparationPlan,
   compareJourneyReadiness,
@@ -17,6 +17,7 @@ import {
 } from '@probash/domain';
 import { Badge, ButtonLink, Icon } from '@probash/web-ui';
 import { translator, type Translate } from '@/lib/i18n';
+import { savePassportAction } from '../operational-actions';
 
 const EMPTY_PASSPORT: MigrationPassport = {
   intent: 'unsure',
@@ -190,12 +191,15 @@ function AssessmentCard({
 export function PassportPlanner({
   locale,
   localeSegment,
+  initialPassport,
 }: {
   locale: Locale;
   localeSegment: 'bn' | 'en';
+  initialPassport?: MigrationPassport;
 }) {
   const t = translator(locale);
-  const [passport, setPassport] = useState<MigrationPassport>(EMPTY_PASSPORT);
+  const [passport, setPassport] = useState<MigrationPassport>(initialPassport ?? EMPTY_PASSPORT);
+  const [saveState, saveAction, saving] = useActionState(savePassportAction, {});
   const comparison = useMemo(() => compareJourneyReadiness(passport), [passport]);
   const workPlan = useMemo(() => buildPreparationPlan(comparison.work), [comparison.work]);
   const studyPlan = useMemo(() => buildPreparationPlan(comparison.study), [comparison.study]);
@@ -262,7 +266,9 @@ export function PassportPlanner({
             <p>{t('passport.formLead')}</p>
           </header>
 
-          <form onSubmit={(event) => event.preventDefault()}>
+          <form action={saveAction}>
+            <input type="hidden" name="locale" value={localeSegment} />
+            <input type="hidden" name="passportJson" value={JSON.stringify(passport)} />
             <fieldset>
               <legend>{t('passport.sectionDirection')}</legend>
               <SelectField
@@ -605,6 +611,24 @@ export function PassportPlanner({
                 />
               </div>
             </fieldset>
+
+            <div className="passport-save-bar">
+              <div>
+                <strong>{t('passport.saveTitle')}</strong>
+                <p>{t('passport.saveBody')}</p>
+                {saveState.message ? (
+                  <p
+                    className={`badge ${saveState.status === 'success' ? 'badge-success' : 'badge-danger'}`}
+                    role="status"
+                  >
+                    {saveState.message}
+                  </p>
+                ) : null}
+              </div>
+              <button type="submit" className="btn btn-primary" disabled={saving}>
+                {saving ? t('common.loading') : t('passport.save')}
+              </button>
+            </div>
           </form>
         </div>
 

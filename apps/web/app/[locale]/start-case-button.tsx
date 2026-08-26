@@ -3,6 +3,7 @@ import type { Locale } from '@probash/domain';
 import { sessionToken } from '@/lib/api';
 import { localeSegment } from '@/lib/i18n';
 import { startCaseAction } from './actions';
+import { getChatGPTUser, chatGPTSignInPath } from '@/app/chatgpt-auth';
 
 /**
  * Starting an application requires an account, but browsing never does (§14.1).
@@ -14,19 +15,25 @@ export async function StartCaseButton({
   jobId,
   label,
   signInLabel,
+  title,
+  destinationCountry,
+  path = 'work',
 }: {
   locale: Locale;
   routeVersionId: string;
   jobId?: string;
   label: string;
   signInLabel: string;
+  title?: string;
+  destinationCountry?: string;
+  path?: 'work' | 'study';
 }) {
-  const token = await sessionToken();
+  const [token, user] = await Promise.all([sessionToken(), getChatGPTUser()]);
   const seg = localeSegment(locale);
 
-  if (!token) {
+  if (!token && !user) {
     return (
-      <Link href={`/${seg}/onboarding`} className="btn btn-primary">
+      <Link href={chatGPTSignInPath(`/${seg}/dashboard`)} className="btn btn-primary">
         {signInLabel}
       </Link>
     );
@@ -36,6 +43,9 @@ export async function StartCaseButton({
     <form action={startCaseAction}>
       <input type="hidden" name="routeVersionId" value={routeVersionId} />
       {jobId ? <input type="hidden" name="jobId" value={jobId} /> : null}
+      <input type="hidden" name="title" value={title ?? ''} />
+      <input type="hidden" name="destinationCountry" value={destinationCountry ?? ''} />
+      <input type="hidden" name="path" value={path} />
       <input type="hidden" name="locale" value={seg} />
       <button type="submit" className="btn btn-primary">
         {label}

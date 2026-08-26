@@ -6,6 +6,7 @@ import { demoApiRequest } from './demo-api';
 export const SESSION_COOKIE = 'probash_session';
 
 const baseUrl = process.env['API_BASE_URL'];
+export const hasExternalApi = Boolean(baseUrl);
 
 /**
  * Server-side API client. The session token lives in an httpOnly cookie and never

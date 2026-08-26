@@ -4,6 +4,9 @@ import { Badge, ButtonLink, Card, Grid, Icon, Section, Stat, StatGroup } from '@
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getWorkspace } from '@/db/operations';
+import { OutcomeReportForm } from '@/components/OperationalForms';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,9 +31,11 @@ export default async function OutcomesPage({ params }: { params: Promise<{ local
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
-  const [work, study] = await Promise.all([
+  const user = await getChatGPTUser();
+  const [work, study, workspace] = await Promise.all([
     apiRequest<OutcomeAggregateDto>('/api/v1/public/outcomes/aggregates?path=work', { locale }),
     apiRequest<OutcomeAggregateDto>('/api/v1/public/outcomes/aggregates?path=study', { locale }),
+    user ? getWorkspace(user.userId) : Promise.resolve(null),
   ]);
   const cohorts = [
     { key: 'work', data: work, title: t('outcomeIntelligence.workTitle') },
@@ -103,6 +108,44 @@ export default async function OutcomesPage({ params }: { params: Promise<{ local
               <p>{t(`outcomeIntelligence.${key}Body`)}</p>
             </Card>
           ))}
+        </Grid>
+      </Section>
+      <Section
+        surface="warm"
+        title={t('outcomeIntelligence.submitTitle')}
+        lead={t('outcomeIntelligence.submitLead')}
+      >
+        <Grid min={360}>
+          <OutcomeReportForm
+            locale={locale}
+            localeSegment={seg}
+            journeys={workspace?.journeys.map(({ id, title, path }) => ({ id, title, path })) ?? []}
+          />
+          <div className="stack">
+            {workspace?.outcomes.length === 0 ? (
+              <Card tone="muted">
+                <p>{t('outcomeIntelligence.noReports')}</p>
+              </Card>
+            ) : null}
+            {workspace?.outcomes.map((outcome) => (
+              <Card key={outcome.id}>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <Badge tone="warning">{outcome.reviewStatus}</Badge>
+                  <Badge tone={outcome.path === 'work' ? 'info' : 'neutral'}>
+                    {t(outcome.path === 'work' ? 'intent.work' : 'intent.study')}
+                  </Badge>
+                </div>
+                <h3 className="card-title">
+                  {t(`outcomeIntelligence.outcomeValue.${outcome.primaryOutcome}`)}
+                </h3>
+                <p>
+                  {t('outcomeIntelligence.promiseMatched')}:{' '}
+                  {t(`outcomeIntelligence.answer.${outcome.promiseMatched}`)}
+                </p>
+                {outcome.notes ? <p className="muted">{outcome.notes}</p> : null}
+              </Card>
+            ))}
+          </div>
         </Grid>
       </Section>
     </>

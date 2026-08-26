@@ -14,6 +14,7 @@ import { canonicalMetadata, guideJsonLd, siteUrl } from '@/lib/seo';
 import { SourceCitation } from '@/components/SourceCitation';
 import { CountryVault, parseVaultPath, type CountryProfileDto } from '@/components/CountryVault';
 import { Badge } from '@probash/web-ui';
+import { ButtonLink, Icon } from '@probash/web-ui';
 
 export const dynamic = 'force-dynamic';
 
@@ -131,6 +132,29 @@ export default async function CountryGuide({
           </div>
         </dl>
       </header>
+
+      <nav className="country-command-bar" aria-label={t('guide.countryActions')}>
+        <ButtonLink href={`/${seg}/passport`} icon={<Icon name="route" size={18} />}>
+          {t('guide.matchForMe')}
+        </ButtonLink>
+        <ButtonLink
+          href={`/${seg}/explore?country=${upper}`}
+          variant="secondary"
+          icon={<Icon name="money" size={18} />}
+        >
+          {t('guide.compareCosts')}
+        </ButtonLink>
+        <ButtonLink
+          href={`/${seg}/verify`}
+          variant="outline"
+          icon={<Icon name="verify" size={18} />}
+        >
+          {t('guide.verifyForCountry')}
+        </ButtonLink>
+        <ButtonLink href={`/${seg}/help`} variant="ghost" icon={<Icon name="phone" size={18} />}>
+          {t('common.help')}
+        </ButtonLink>
+      </nav>
 
       {profile ? (
         <>

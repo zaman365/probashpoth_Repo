@@ -3,6 +3,8 @@ import { Icon } from '@probash/web-ui';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
 import { PassportPlanner } from './passport-planner';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getProfile } from '@/db/operations';
 
 export async function generateMetadata({
   params,
@@ -25,6 +27,8 @@ export default async function PassportPage({ params }: { params: Promise<{ local
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
+  const user = await getChatGPTUser();
+  const profile = user ? await getProfile(user.userId) : null;
 
   return (
     <div className="passport-page">
@@ -55,7 +59,7 @@ export default async function PassportPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <PassportPlanner locale={locale} localeSegment={seg} />
+      <PassportPlanner locale={locale} localeSegment={seg} initialPassport={profile?.passport} />
     </div>
   );
 }
