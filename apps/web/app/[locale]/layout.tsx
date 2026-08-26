@@ -4,6 +4,7 @@ import '../globals.css';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { FloatingChatButton } from '@/components/FloatingChatButton';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { getProfile } from '@/db/operations';
 
@@ -59,6 +60,7 @@ export default async function LocaleLayout({
         />
         <main id="main">{children}</main>
         <SiteFooter locale={locale} productName={productName[locale]} />
+        <FloatingChatButton locale={locale} />
       </body>
     </html>
   );

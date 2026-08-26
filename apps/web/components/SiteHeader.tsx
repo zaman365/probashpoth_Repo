@@ -83,10 +83,6 @@ export function SiteHeader({
                 {target === 'en' ? t('common.switchToEnglish') : t('common.switchToBangla')}
               </span>
             </Link>
-            <Link href={`/${seg}/help`} className="header-help pui-btn pui-btn-outline pui-btn-md">
-              <Icon name="phone" size={20} />
-              <span>{t('common.help')}</span>
-            </Link>
             <AccountControl locale={locale} user={user} profile={profile} />
           </div>
         </div>

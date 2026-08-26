@@ -17,6 +17,8 @@
     "loading": "Loading…",
     "offline": "You are offline. This is previously saved information.",
     "help": "I need help",
+    "chat": "Chat",
+    "openSupportChat": "Open support chat",
     "emergency": "Emergency help",
     "demoDataWarning": "DEMO DATA — NOT A REAL JOB",
     "simpleLanguage": "Explain in plain language",
