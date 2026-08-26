@@ -27,22 +27,32 @@ export function IntentSwitch({
   locale,
   intent,
   tone = 'light',
+  compact = false,
 }: {
   locale: Locale;
   intent: Intent;
   tone?: 'light' | 'canvas';
+  compact?: boolean;
 }) {
   const t = translator(locale);
   const seg = localeSegment(locale);
 
   const options = [
-    { key: 'work' as const, icon: 'work' as const, label: t('intent.work') },
-    { key: 'study' as const, icon: 'study' as const, label: t('intent.study') },
+    {
+      key: 'work' as const,
+      icon: 'work' as const,
+      label: t(compact ? 'intent.workShort' : 'intent.work'),
+    },
+    {
+      key: 'study' as const,
+      icon: 'study' as const,
+      label: t(compact ? 'intent.studyShort' : 'intent.study'),
+    },
   ];
 
   return (
     <div
-      className={`intent-switch intent-switch-${tone}`}
+      className={`intent-switch intent-switch-${tone}${compact ? ' intent-switch-compact' : ''}`}
       role="group"
       aria-label={t('intent.chooseTitle')}
     >
@@ -54,7 +64,7 @@ export function IntentSwitch({
           aria-current={intent === option.key ? 'true' : undefined}
           scroll={false}
         >
-          <Icon name={option.icon} size={20} />
+          <Icon name={option.icon} size={compact ? 17 : 20} />
           <span>{option.label}</span>
         </Link>
       ))}

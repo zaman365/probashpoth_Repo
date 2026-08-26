@@ -185,10 +185,6 @@ export default async function Landing({
         <div className="experience-shell">
           <div className="experience-hero-frame">
             <CanvasPanel className="experience-canvas">
-              <div className="hero-topbar">
-                <IntentSwitch locale={locale} intent={intent} tone="canvas" />
-              </div>
-
               <div className="hero-grid">
                 <div className="hero-copy">
                   <Reveal index={0}>
@@ -295,6 +291,10 @@ export default async function Landing({
                     </p>
                   </GlassCard>
                 </Reveal>
+              </div>
+
+              <div className="hero-intent-dock">
+                <IntentSwitch locale={locale} intent={intent} tone="canvas" compact />
               </div>
             </CanvasPanel>
 

@@ -515,6 +515,8 @@
     "chooseLead": "Work and study are two different routes, with different requirements, costs and timelines. Look at both before you choose.",
     "work": "Work abroad",
     "study": "Study abroad",
+    "workShort": "Jobs",
+    "studyShort": "Higher study",
     "workTagline": "Built on an employer's demand",
     "studyTagline": "Built on an institution's admission",
     "workSummary": "A verified demand from a foreign employer, processed through a licensed agency, ending in a work visa or permit. In most cases you begin earning once you arrive.",
