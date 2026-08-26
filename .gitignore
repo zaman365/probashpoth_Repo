@@ -6,6 +6,7 @@ out/
 coverage/
 .turbo/
 .wrangler/
+.vinext/
 *.tsbuildinfo
 .env
 .env.local

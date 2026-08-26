@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "probashpoth-repo",
+  "account_id": "48dd3aa43c937cea4bbb1840184461cc",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-05-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "none",
+    "binding": "ASSETS"
+  },
+  "routes": [
+    {
+      "pattern": "bdos.io/*",
+      "zone_name": "bdos.io"
+    },
+    {
+      "pattern": "www.bdos.io/*",
+      "zone_name": "bdos.io"
+    }
+  ],
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  }
+}
