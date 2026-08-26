@@ -277,15 +277,16 @@ a human.
 
 ## Documentation
 
-| Document                                         | Contents                                                                   |
-| ------------------------------------------------ | -------------------------------------------------------------------------- |
-| [`docs/adr/`](docs/adr/)                         | Architecture decisions — read these first                                  |
-| [`docs/data-model.md`](docs/data-model.md)       | Entity map and how records relate                                          |
-| [`docs/security/`](docs/security/)               | Threat model summary, controls, reporting                                  |
-| [`docs/compliance/`](docs/compliance/)           | Legal workstreams that gate scale, and what this platform does _not_ claim |
-| [`docs/ux/`](docs/ux/)                           | Low-literacy design rules and copy principles                              |
-| [`docs/country-sources/`](docs/country-sources/) | Official source registry and review cadence                                |
-| [`docs/api/`](docs/api/)                         | Generated OpenAPI specification                                            |
+| Document                                                                                           | Contents                                                                   |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [`docs/adr/`](docs/adr/)                                                                           | Architecture decisions — read these first                                  |
+| [`docs/data-model.md`](docs/data-model.md)                                                         | Entity map and how records relate                                          |
+| [`docs/security/`](docs/security/)                                                                 | Threat model summary, controls, reporting                                  |
+| [`docs/compliance/`](docs/compliance/)                                                             | Legal workstreams that gate scale, and what this platform does _not_ claim |
+| [`docs/long-term-production-platform-strategy.md`](docs/long-term-production-platform-strategy.md) | Gated migration to standalone Workers, Clerk, EU PostgreSQL and private R2 |
+| [`docs/ux/`](docs/ux/)                                                                             | Low-literacy design rules and copy principles                              |
+| [`docs/country-sources/`](docs/country-sources/)                                                   | Official source registry and review cadence                                |
+| [`docs/api/`](docs/api/)                                                                           | Generated OpenAPI specification                                            |
 
 ## Product invariants
 

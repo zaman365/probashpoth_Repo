@@ -456,7 +456,7 @@ function factor(
   return { id, state, label, action, hard };
 }
 
-function priorEducationState(passport: MigrationPassport, scholarship: ScholarshipRecord) {
+function priorEducationState(passport: MigrationPassport, _scholarship: ScholarshipRecord) {
   const target = passport.study.target;
   const highest = passport.education.highestLevel;
   if (!target || target === 'unsure' || !highest) return 'unknown' as const;

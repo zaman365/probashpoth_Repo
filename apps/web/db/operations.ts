@@ -5,7 +5,10 @@ import {
 } from '@probash/domain';
 import type { ChatGPTUser } from '@/app/chatgpt-auth';
 import { translator } from '@/lib/i18n';
-import { getD1, getFiles } from './index';
+import { getD1, getFiles, getOperationalDatabase } from './index';
+import { requireSensitiveDocumentGate } from '@/lib/release-gates';
+import { env } from 'cloudflare:workers';
+import { Client } from 'pg';
 
 export type JourneyPath = 'work' | 'study';
 export type JourneyStatus = 'active' | 'paused' | 'completed' | 'withdrawn';
@@ -318,6 +321,7 @@ const STUDY_TASKS = [
 let schemaReady: Promise<void> | null = null;
 
 export function ensureOperationalSchema(): Promise<void> {
+  if (env.STORAGE_DRIVER === 'postgres') return Promise.resolve();
   schemaReady ??= createOperationalSchema();
   return schemaReady;
 }
@@ -385,6 +389,7 @@ function now(): string {
 }
 
 function parseJson<T>(value: unknown, fallback: T): T {
+  if (value !== null && typeof value === 'object') return value as T;
   if (typeof value !== 'string') return fallback;
   try {
     return JSON.parse(value) as T;
@@ -400,7 +405,7 @@ async function audit(
   resourceId: string,
   details: Record<string, unknown> = {},
 ): Promise<void> {
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare(
       'INSERT INTO audit_events (id, user_id, action, resource_type, resource_id, details_json, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
     )
@@ -435,7 +440,7 @@ export async function savePassport(
         ? [activePath]
         : ['work', 'study'];
   const timestamp = now();
-  await getD1()
+  await getOperationalDatabase(user.userId)
     .prepare(
       `INSERT INTO user_profiles (user_id, email, display_name, locale, active_path, enabled_paths, journey_stage, passport_json, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, 'exploring', ?, ?, ?)
@@ -481,7 +486,7 @@ export async function completeOnboarding(
     intent: input.enabledPaths.length === 2 ? 'both' : input.path,
   };
   const goalTitle = input.goalTitle?.trim().slice(0, 180) || null;
-  await getD1()
+  await getOperationalDatabase(user.userId)
     .prepare(
       `INSERT INTO user_profiles (
         user_id, email, display_name, locale, active_path, enabled_paths, journey_stage, goal_title,
@@ -513,6 +518,13 @@ export async function completeOnboarding(
       timestamp,
     )
     .run();
+  if (env.STORAGE_DRIVER === 'postgres') {
+    const roles = input.enabledPaths.map((path) => (path === 'work' ? 'worker' : 'student'));
+    await getOperationalDatabase(user.userId)
+      .prepare('UPDATE app_user SET roles = ?::text[] WHERE id = ?')
+      .bind(roles, user.userId)
+      .run();
+  }
   await audit(user.userId, 'onboarding.completed', 'user_profile', user.userId, {
     path: input.path,
     enabledPaths: input.enabledPaths,
@@ -540,7 +552,7 @@ export async function updateProfileDirection(
     ...profile.passport,
     intent: input.enabledPaths.length === 2 ? 'both' : input.path,
   };
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare(
       `UPDATE user_profiles
        SET active_path = ?, enabled_paths = ?, journey_stage = ?, goal_title = ?, passport_json = ?, updated_at = ?
@@ -570,7 +582,7 @@ export async function setActiveWorkspace(userId: string, path: JourneyPath): Pro
   if (!profile || !profile.enabledPaths.includes(path)) {
     throw new Error('Workspace is not enabled for this account.');
   }
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare('UPDATE user_profiles SET active_path = ?, updated_at = ? WHERE user_id = ?')
     .bind(path, now(), userId)
     .run();
@@ -580,7 +592,7 @@ export async function setActiveWorkspace(userId: string, path: JourneyPath): Pro
 
 export async function getProfile(userId: string): Promise<OperationalProfile | null> {
   await ensureOperationalSchema();
-  const row = await getD1()
+  const row = await getOperationalDatabase(userId)
     .prepare('SELECT * FROM user_profiles WHERE user_id = ? LIMIT 1')
     .bind(userId)
     .first<Record<string, unknown>>();
@@ -621,7 +633,7 @@ export async function createJourney(
 ): Promise<string> {
   await ensureOperationalSchema();
   if (input.targetId) {
-    const existing = await getD1()
+    const existing = await getOperationalDatabase(userId)
       .prepare(
         "SELECT id FROM journeys WHERE user_id = ? AND target_type = ? AND target_id = ? AND status = 'active' LIMIT 1",
       )
@@ -647,7 +659,7 @@ export async function createJourney(
       })
     : [];
   const tasks = [...readinessTasks, ...(input.path === 'work' ? WORK_TASKS : STUDY_TASKS)];
-  const db = getD1();
+  const db = getOperationalDatabase(userId);
   const statements = [
     db
       .prepare(
@@ -699,14 +711,14 @@ export async function createJourney(
 export async function completeJourneyTask(userId: string, journeyId: string, taskId: string) {
   await ensureOperationalSchema();
   const timestamp = now();
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare(
       "UPDATE journey_tasks SET status = 'done', completed_at = ?, updated_at = ? WHERE id = ? AND journey_id = ? AND user_id = ?",
     )
     .bind(timestamp, timestamp, taskId, journeyId, userId)
     .run();
   if (!result.meta.changes) throw new Error('Task not found.');
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare('UPDATE journeys SET updated_at = ? WHERE id = ? AND user_id = ?')
     .bind(timestamp, journeyId, userId)
     .run();
@@ -729,7 +741,7 @@ export async function addJourneyRecord(
   await ensureOperationalSchema();
   const id = crypto.randomUUID();
   const timestamp = now();
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO journey_records
         (id, journey_id, user_id, record_type, title, status, notes, due_at, amount_minor, currency, created_at, updated_at)
@@ -754,7 +766,7 @@ export async function addJourneyRecord(
   if (!result.meta.changes) throw new Error('Journey not found.');
 
   if (input.dueAt) {
-    await getD1()
+    await getOperationalDatabase(userId)
       .prepare(
         `INSERT INTO alerts (id, user_id, journey_id, alert_type, title, body, severity, read_at, created_at)
          VALUES (?, ?, ?, 'deadline', ?, ?, 'info', NULL, ?)`,
@@ -784,7 +796,7 @@ export async function setJourneyRecordStatus(
 ): Promise<void> {
   await ensureOperationalSchema();
   const timestamp = now();
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare(
       'UPDATE journey_records SET status = ?, updated_at = ? WHERE id = ? AND journey_id = ? AND user_id = ?',
     )
@@ -799,7 +811,7 @@ export async function setJourneyRecordStatus(
 
 export async function markAlertRead(userId: string, alertId: string): Promise<void> {
   await ensureOperationalSchema();
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare('UPDATE alerts SET read_at = ? WHERE id = ? AND user_id = ? AND read_at IS NULL')
     .bind(now(), alertId, userId)
     .run();
@@ -822,7 +834,7 @@ export async function addLedgerEntry(
     throw new Error('Invalid amount.');
   const id = crypto.randomUUID();
   const timestamp = now();
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO ledger_entries (id, user_id, journey_id, entry_type, label, amount_minor, currency, payee, status, legal_basis, receipt_document_id, created_at, updated_at) VALUES (?, ?, ?, 'requested', ?, ?, ?, ?, 'unverified', ?, NULL, ?, ?)`,
     )
@@ -849,7 +861,7 @@ export async function addDelegation(
 ): Promise<string> {
   await ensureOperationalSchema();
   const id = crypto.randomUUID();
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO delegations (id, user_id, journey_id, delegate_contact, relationship, permissions_json, status, created_at, revoked_at) VALUES (?, ?, ?, ?, ?, ?, 'active', ?, NULL)`,
     )
@@ -870,7 +882,7 @@ export async function addDelegation(
 export async function revokeDelegation(userId: string, delegationId: string): Promise<void> {
   await ensureOperationalSchema();
   const timestamp = now();
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare(
       "UPDATE delegations SET status = 'revoked', revoked_at = ? WHERE id = ? AND user_id = ? AND status = 'active'",
     )
@@ -888,7 +900,7 @@ export async function createVerificationRequest(
   await ensureOperationalSchema();
   const id = crypto.randomUUID();
   const timestamp = now();
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO verification_requests (id, user_id, kind, subject, evidence, status, result_json, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'submitted', '{}', ?, ?)`,
     )
@@ -919,7 +931,7 @@ export async function createSupportTicket(
   await ensureOperationalSchema();
   const id = crypto.randomUUID();
   const timestamp = now();
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO support_tickets (id, user_id, journey_id, priority, category, subject, message, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?)`,
     )
@@ -957,7 +969,7 @@ export async function createPartnerSubmission(
   await ensureOperationalSchema();
   const id = crypto.randomUUID();
   const timestamp = now();
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO partner_submissions
         (id, user_id, portal_type, organization_name, country_code, submission_type, title, evidence, fee_declaration, status, created_at, updated_at)
@@ -1001,7 +1013,7 @@ export async function createOutcomeReport(
   await ensureOperationalSchema();
   const id = crypto.randomUUID();
   const timestamp = now();
-  const result = await getD1()
+  const result = await getOperationalDatabase(userId)
     .prepare(
       `INSERT INTO outcome_reports
         (id, user_id, journey_id, path, reached_destination, primary_outcome, promise_matched, cost_matched, actual_cost_minor, currency, notes, consent_given, review_status, created_at, updated_at)
@@ -1036,23 +1048,37 @@ export async function storeDocument(
   userId: string,
   input: { file: File; category: string; label: string; journeyId?: string },
 ): Promise<string> {
+  const gateEvidenceId = requireSensitiveDocumentGate();
   await ensureOperationalSchema();
   const allowed = new Set(['application/pdf', 'image/jpeg', 'image/png', 'image/webp']);
   if (!allowed.has(input.file.type)) throw new Error('Unsupported file type.');
   if (input.file.size < 1 || input.file.size > 10 * 1024 * 1024)
     throw new Error('File must be 10 MB or smaller.');
+  const bytes = await input.file.arrayBuffer();
+  if (!hasExpectedFileSignature(new Uint8Array(bytes), input.file.type)) {
+    throw new Error('The file content does not match its declared type.');
+  }
+  const checksumSha256 = toHex(await crypto.subtle.digest('SHA-256', bytes));
   const id = crypto.randomUUID();
-  const safeName = input.file.name.replace(/[^a-zA-Z0-9._-]+/g, '-').slice(-120) || 'document';
-  const objectKey = `users/${userId}/documents/${id}/${safeName}`;
-  await getFiles().put(objectKey, await input.file.arrayBuffer(), {
+  const objectKey = `quarantine/${userId}/${id}`;
+  if (env.STORAGE_DRIVER === 'postgres') {
+    return storePostgresDocument(userId, input, {
+      bytes,
+      checksumSha256,
+      documentId: id,
+      objectKey,
+      gateEvidenceId,
+    });
+  }
+  await getFiles().put(objectKey, bytes, {
     httpMetadata: { contentType: input.file.type },
-    customMetadata: { owner: userId, documentId: id },
+    customMetadata: { owner: userId, documentId: id, checksumSha256 },
   });
   const timestamp = now();
   try {
-    await getD1()
+    await getOperationalDatabase(userId)
       .prepare(
-        `INSERT INTO documents (id, user_id, journey_id, category, label, filename, mime_type, size_bytes, object_key, verification_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending_review', ?, ?)`,
+        `INSERT INTO documents (id, user_id, journey_id, category, label, filename, mime_type, size_bytes, object_key, verification_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'quarantined', ?, ?)`,
       )
       .bind(
         id,
@@ -1072,44 +1098,369 @@ export async function storeDocument(
     await getFiles().delete(objectKey);
     throw error;
   }
-  await audit(userId, 'document.uploaded', 'document', id, {
+  await audit(userId, 'document.quarantined', 'document', id, {
     category: input.category,
     sizeBytes: input.file.size,
+    checksumSha256,
+    gateEvidenceId,
   });
+  await env.DOCUMENT_SCAN_QUEUE!.send({ jobId: id });
   return id;
 }
 
+async function storePostgresDocument(
+  userId: string,
+  input: { file: File; category: string; label: string; journeyId?: string },
+  prepared: {
+    bytes: ArrayBuffer;
+    checksumSha256: string;
+    documentId: string;
+    objectKey: string;
+    gateEvidenceId: string;
+  },
+): Promise<string> {
+  if (!env.HYPERDRIVE || !env.DOCUMENTS_QUARANTINE) {
+    throw new Error('The production document infrastructure is unavailable.');
+  }
+  const intentId = crypto.randomUUID();
+  const jobId = crypto.randomUUID();
+  const correlationId = crypto.randomUUID();
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+  const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+  let metadataCommitted = false;
+  await client.connect();
+  try {
+    await client.query('BEGIN');
+    await client.query("SELECT set_config('app.current_user_id', $1, true)", [userId]);
+    await client.query(
+      `INSERT INTO document_upload_intent
+        (id, owner_user_id, case_id, expected_content_type, maximum_bytes,
+         expected_sha256, object_key, status, expires_at)
+       VALUES ($1, $2, NULL, $3, $4, $5, $6, 'pending', $7)`,
+      [
+        intentId,
+        userId,
+        input.file.type,
+        input.file.size,
+        prepared.checksumSha256,
+        prepared.objectKey,
+        expiresAt,
+      ],
+    );
+    await client.query(
+      `INSERT INTO document
+        (id, owner_user_id, case_id, type, label, original_filename, storage_key, content_type,
+         byte_size, sha256, verification_level, malware_scan_status)
+       VALUES ($1, $2, NULL, $3, $4::jsonb, $5, $6, $7, $8, $9, 'unverified', 'pending')`,
+      [
+        prepared.documentId,
+        userId,
+        input.category.slice(0, 60),
+        JSON.stringify({ bn: input.label.slice(0, 180), en: input.label.slice(0, 180) }),
+        input.file.name.slice(-240),
+        prepared.objectKey,
+        input.file.type,
+        input.file.size,
+        prepared.checksumSha256,
+      ],
+    );
+    await client.query(
+      `INSERT INTO document_scan_job
+        (id, upload_intent_id, document_id, object_key, checksum_sha256, state, correlation_id)
+       VALUES ($1, $2, $3, $4, $5, 'pending', $6)`,
+      [
+        jobId,
+        intentId,
+        prepared.documentId,
+        prepared.objectKey,
+        prepared.checksumSha256,
+        correlationId,
+      ],
+    );
+    await client.query(
+      `INSERT INTO documents
+        (id, user_id, journey_id, category, label, filename, mime_type,
+         size_bytes, object_key, verification_status, created_at, updated_at)
+       VALUES ($1, $2, NULL, $3, $4, $5, $6, $7, $8, 'quarantined', now(), now())`,
+      [
+        prepared.documentId,
+        userId,
+        input.category.slice(0, 60),
+        input.label.slice(0, 180),
+        input.file.name.slice(-240),
+        input.file.type,
+        input.file.size,
+        prepared.objectKey,
+      ],
+    );
+    await client.query(
+      `INSERT INTO document_event
+        (id, document_id, upload_intent_id, owner_user_id, actor_user_id,
+         event_type, correlation_id, detail)
+       VALUES ($1, $2, $3, $4, $4, 'intent.created', $5, $6::jsonb)`,
+      [
+        crypto.randomUUID(),
+        prepared.documentId,
+        intentId,
+        userId,
+        correlationId,
+        JSON.stringify({ gateEvidenceId: prepared.gateEvidenceId }),
+      ],
+    );
+    await client.query('COMMIT');
+    metadataCommitted = true;
+
+    await env.DOCUMENTS_QUARANTINE.put(prepared.objectKey, prepared.bytes, {
+      httpMetadata: { contentType: input.file.type },
+      customMetadata: {
+        documentId: prepared.documentId,
+        checksumSha256: prepared.checksumSha256,
+      },
+    });
+
+    await client.query('BEGIN');
+    await client.query("SELECT set_config('app.current_user_id', $1, true)", [userId]);
+    await client.query(
+      `UPDATE document_upload_intent
+       SET status = 'queued', consumed_at = now()
+       WHERE id = $1 AND status = 'pending' AND expires_at > now()`,
+      [intentId],
+    );
+    await client.query(
+      "UPDATE document_scan_job SET state = 'queued', updated_at = now() WHERE id = $1",
+      [jobId],
+    );
+    await client.query(
+      `INSERT INTO document_event
+        (id, document_id, upload_intent_id, owner_user_id, actor_user_id,
+         event_type, correlation_id, detail)
+       VALUES ($1, $2, $3, $4, $4, 'scan.queued', $5, $6::jsonb)`,
+      [
+        crypto.randomUUID(),
+        prepared.documentId,
+        intentId,
+        userId,
+        correlationId,
+        JSON.stringify({ checksumSha256: prepared.checksumSha256 }),
+      ],
+    );
+    await client.query(
+      `INSERT INTO outbox_event (id, event_name, payload)
+       VALUES ($1, 'document.scan.requested', $2::jsonb)`,
+      [crypto.randomUUID(), JSON.stringify({ jobId })],
+    );
+    await client.query('COMMIT');
+    try {
+      await env.DOCUMENT_SCAN_QUEUE!.send({ jobId });
+    } catch {
+      // The committed outbox event is authoritative. Reconciliation republishes it
+      // without asking the user to upload the sensitive file a second time.
+      console.error(
+        JSON.stringify({
+          event: 'document.scan.enqueue_failed',
+          jobId,
+          correlationId,
+          errorCode: 'QUEUE_SEND_FAILED',
+        }),
+      );
+    }
+    return prepared.documentId;
+  } catch (error) {
+    try {
+      await client.query('ROLLBACK');
+    } catch {
+      // Preserve the original error; the outbox/reconciliation runbook handles partial state.
+    }
+    if (metadataCommitted) {
+      try {
+        await client.query('BEGIN');
+        await client.query("SELECT set_config('app.current_user_id', $1, true)", [userId]);
+        await client.query("UPDATE document_upload_intent SET status = 'revoked' WHERE id = $1", [
+          intentId,
+        ]);
+        await client.query(
+          `UPDATE document_scan_job
+           SET state = 'rejected', last_error_code = 'UPLOAD_COMMIT_FAILED', updated_at = now()
+           WHERE id = $1`,
+          [jobId],
+        );
+        await client.query("UPDATE document SET malware_scan_status = 'rejected' WHERE id = $1", [
+          prepared.documentId,
+        ]);
+        await client.query(
+          "UPDATE documents SET verification_status = 'rejected', updated_at = now() WHERE id = $1",
+          [prepared.documentId],
+        );
+        await client.query(
+          `INSERT INTO document_event
+            (id, document_id, upload_intent_id, owner_user_id, actor_user_id,
+             event_type, correlation_id, detail)
+           VALUES ($1, $2, $3, $4, $4, 'scan.rejected', $5,
+             '{"errorCode":"UPLOAD_COMMIT_FAILED"}'::jsonb)`,
+          [crypto.randomUUID(), prepared.documentId, intentId, userId, correlationId],
+        );
+        await client.query('COMMIT');
+      } catch {
+        await client.query('ROLLBACK');
+      }
+    }
+    await env.DOCUMENTS_QUARANTINE.delete(prepared.objectKey);
+    throw error;
+  } finally {
+    await client.end();
+  }
+}
+
 export async function getDocumentObject(userId: string, documentId: string) {
+  if (env.STORAGE_DRIVER === 'postgres') return getPostgresDocumentObject(userId, documentId);
   await ensureOperationalSchema();
-  const row = await getD1()
+  const row = await getOperationalDatabase(userId)
     .prepare(
-      'SELECT object_key, filename, mime_type FROM documents WHERE id = ? AND user_id = ? LIMIT 1',
+      "SELECT object_key, filename, mime_type FROM documents WHERE id = ? AND user_id = ? AND verification_status = 'clean' LIMIT 1",
     )
     .bind(documentId, userId)
     .first<{ object_key: string; filename: string; mime_type: string }>();
   if (!row) return null;
   const object = await getFiles().get(row.object_key);
-  return object ? { object, filename: row.filename, mimeType: row.mime_type } : null;
+  if (!object) return null;
+  await audit(userId, 'document.downloaded', 'document', documentId);
+  return { object, filename: row.filename, mimeType: row.mime_type };
+}
+
+async function getPostgresDocumentObject(userId: string, documentId: string) {
+  if (!env.HYPERDRIVE || !env.DOCUMENTS_CLEAN) return null;
+  const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+  await client.connect();
+  try {
+    await client.query('BEGIN');
+    await client.query("SELECT set_config('app.current_user_id', $1, true)", [userId]);
+    const result = await client.query<{
+      storage_key: string;
+      original_filename: string | null;
+      content_type: string;
+    }>(
+      `SELECT storage_key, original_filename, content_type
+       FROM document
+       WHERE id = $1 AND owner_user_id = $2
+         AND malware_scan_status = 'clean' AND storage_key LIKE 'clean/%'
+       LIMIT 1`,
+      [documentId, userId],
+    );
+    const row = result.rows[0];
+    if (!row) {
+      await client.query('ROLLBACK');
+      return null;
+    }
+    const object = await env.DOCUMENTS_CLEAN.get(row.storage_key);
+    if (!object) {
+      await client.query('ROLLBACK');
+      return null;
+    }
+    await client.query(
+      `INSERT INTO document_event
+        (id, document_id, owner_user_id, actor_user_id, event_type, correlation_id)
+       VALUES ($1, $2, $3, $3, 'downloaded', $4)`,
+      [crypto.randomUUID(), documentId, userId, crypto.randomUUID()],
+    );
+    await client.query('COMMIT');
+    return {
+      object,
+      filename: row.original_filename ?? 'document',
+      mimeType: row.content_type,
+    };
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    await client.end();
+  }
+}
+
+function hasExpectedFileSignature(bytes: Uint8Array, type: string): boolean {
+  if (type === 'application/pdf')
+    return bytes.length >= 5 && String.fromCharCode(...bytes.slice(0, 5)) === '%PDF-';
+  if (type === 'image/jpeg') return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  if (type === 'image/png')
+    return bytes
+      .slice(0, 8)
+      .every((value, index) => value === [137, 80, 78, 71, 13, 10, 26, 10][index]);
+  if (type === 'image/webp')
+    return (
+      String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF' &&
+      String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP'
+    );
+  return false;
+}
+
+function toHex(bytes: ArrayBuffer): string {
+  return [...new Uint8Array(bytes)].map((value) => value.toString(16).padStart(2, '0')).join('');
 }
 
 export async function deleteDocument(userId: string, documentId: string): Promise<void> {
+  if (env.STORAGE_DRIVER === 'postgres') {
+    await deletePostgresDocument(userId, documentId);
+    return;
+  }
   await ensureOperationalSchema();
-  const row = await getD1()
+  const row = await getOperationalDatabase(userId)
     .prepare('SELECT object_key FROM documents WHERE id = ? AND user_id = ? LIMIT 1')
     .bind(documentId, userId)
     .first<{ object_key: string }>();
   if (!row) return;
   await getFiles().delete(row.object_key);
-  await getD1()
+  await getOperationalDatabase(userId)
     .prepare('DELETE FROM documents WHERE id = ? AND user_id = ?')
     .bind(documentId, userId)
     .run();
   await audit(userId, 'document.deleted', 'document', documentId);
 }
 
+async function deletePostgresDocument(userId: string, documentId: string): Promise<void> {
+  if (!env.HYPERDRIVE || !env.DOCUMENTS_CLEAN || !env.DOCUMENTS_QUARANTINE) return;
+  const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+  await client.connect();
+  try {
+    await client.query('BEGIN');
+    await client.query("SELECT set_config('app.current_user_id', $1, true)", [userId]);
+    const result = await client.query<{ storage_key: string }>(
+      'SELECT storage_key FROM document WHERE id = $1 AND owner_user_id = $2 FOR UPDATE',
+      [documentId, userId],
+    );
+    const row = result.rows[0];
+    if (!row) {
+      await client.query('ROLLBACK');
+      return;
+    }
+    await client.query(
+      "UPDATE document SET malware_scan_status = 'revoked' WHERE id = $1 AND owner_user_id = $2",
+      [documentId, userId],
+    );
+    await client.query('DELETE FROM documents WHERE id = $1 AND user_id = $2', [
+      documentId,
+      userId,
+    ]);
+    await client.query(
+      `INSERT INTO document_event
+        (id, document_id, owner_user_id, actor_user_id, event_type, correlation_id)
+       VALUES ($1, $2, $3, $3, 'deleted', $4)`,
+      [crypto.randomUUID(), documentId, userId, crypto.randomUUID()],
+    );
+    await client.query('COMMIT');
+    const bucket = row.storage_key.startsWith('clean/')
+      ? env.DOCUMENTS_CLEAN
+      : env.DOCUMENTS_QUARANTINE;
+    await bucket.delete(row.storage_key);
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    await client.end();
+  }
+}
+
 export async function getWorkspace(userId: string): Promise<OperationalWorkspace> {
   await ensureOperationalSchema();
-  const db = getD1();
+  const db = getOperationalDatabase(userId);
   const [
     profile,
     journeyRows,

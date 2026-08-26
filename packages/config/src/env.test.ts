@@ -41,6 +41,24 @@ describe('environment loading', () => {
     expect(() => loadEnv({ STORAGE_DRIVER: 'postgres' })).toThrow(/DATABASE_URL/);
   });
 
+  it('requires the complete Clerk contract when Clerk owns identity', () => {
+    expect(() => loadEnv({ IDENTITY_PROVIDER: 'clerk' })).toThrow(/CLERK_PUBLISHABLE_KEY/);
+    expect(
+      loadEnv({
+        IDENTITY_PROVIDER: 'clerk',
+        CLERK_PUBLISHABLE_KEY: 'pk_test_example',
+        CLERK_SECRET_KEY: 'sk_test_example',
+        CLERK_AUTHORIZED_PARTIES: 'http://localhost:3000',
+      }).IDENTITY_PROVIDER,
+    ).toBe('clerk');
+  });
+
+  it('refuses to open document uploads without every Gate S3 control', () => {
+    expect(() => loadEnv({ DOCUMENT_UPLOADS_ENABLED: 'true' })).toThrow(
+      /Sensitive document uploads are fail-closed/,
+    );
+  });
+
   it('requires a 256-bit field encryption key for PostgreSQL records', () => {
     expect(() =>
       loadEnv({ STORAGE_DRIVER: 'postgres', DATABASE_URL: 'postgres://localhost/probash' }),

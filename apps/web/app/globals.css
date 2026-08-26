@@ -18,6 +18,59 @@
     U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
 }
 
+.auth-page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(22rem, 0.85fr);
+  background: linear-gradient(135deg, #ecf9f0 0%, #f8f6ef 56%, #f1efff 100%);
+}
+
+.auth-page-story,
+.auth-page-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 7vw, 7rem);
+}
+
+.auth-page-story h1 {
+  max-width: 13ch;
+  font-size: clamp(2.5rem, 5.5vw, 6.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+
+.auth-page-story p:last-child {
+  max-width: 42rem;
+  font-size: 1.1rem;
+}
+
+.auth-page-panel {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border-left: 1px solid rgba(24, 55, 40, 0.14);
+}
+
+@media (max-width: 800px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-page-story h1 {
+    font-size: clamp(2.4rem, 12vw, 4.5rem);
+  }
+
+  .auth-page-panel {
+    border-left: 0;
+    border-top: 1px solid rgba(24, 55, 40, 0.14);
+  }
+}
+
+main.auth-page {
+  padding-block: 0;
+}
+
 @font-face {
   font-family: 'Probash Latin';
   src: url('/fonts/space-grotesk.woff2') format('woff2');
@@ -2816,6 +2869,29 @@ html[lang='en'] body {
 
 /* The shared canvas primitive is intentionally unlayered, so this final override
    keeps the homepage hero square-edged regardless of cascade-layer precedence. */
+body:has(> #main > .experience-home) {
+  background: #edf8f0;
+}
+
+/* The homepage owns the first viewport. Override the generic page-column padding
+   and pull the hero beneath the floating header without leaving a white strip. */
+main#main:has(> .experience-home) {
+  max-width: none;
+  margin-block-start: calc(var(--experience-header-overlap) * -1);
+  padding: 0;
+}
+
+main#main > .experience-home,
+main#main > .experience-home > .experience-hero,
+.experience-home .experience-hero > .experience-shell,
+.experience-home .experience-hero-frame,
+.experience-home .experience-canvas {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
 .experience-home .experience-hero-frame,
 .experience-home .experience-canvas {
   border-radius: 0;

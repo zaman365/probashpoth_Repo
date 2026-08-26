@@ -7,6 +7,7 @@ import { canonicalMetadata } from '@/lib/seo';
 import { ConfirmSubmitButton, DocumentUploadForm } from '@/components/OperationalForms';
 import { WorkspacePageShell } from '@/components/WorkspacePageShell';
 import { deleteDocumentAction } from '../operational-actions';
+import { sensitiveDocumentGate } from '@/lib/release-gates';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +43,7 @@ export default async function DocumentsPage({
   const workspace = await getWorkspace(user.userId);
   const totalBytes = workspace.documents.reduce((sum, document) => sum + document.sizeBytes, 0);
   const journeys = workspace.journeys.map(({ id, title }) => ({ id, title }));
+  const documentGate = sensitiveDocumentGate();
 
   return (
     <WorkspacePageShell active="documents" enabled={workspaceMode === '1'} locale={locale}>
@@ -70,7 +72,23 @@ export default async function DocumentsPage({
         </Section>
         <Section surface="default">
           <Grid min={360}>
-            <DocumentUploadForm locale={locale} localeSegment={seg} journeys={journeys} />
+            {documentGate.enabled ? (
+              <DocumentUploadForm locale={locale} localeSegment={seg} journeys={journeys} />
+            ) : (
+              <Card tone="muted">
+                <Icon name="shield" size={28} />
+                <h2 className="card-title">
+                  {locale === 'bn-BD'
+                    ? 'নিরাপদ নথি ভল্ট প্রস্তুত হচ্ছে'
+                    : 'Secure document vault is preparing'}
+                </h2>
+                <p>
+                  {locale === 'bn-BD'
+                    ? 'পরিচয় যাচাই, ইউরোপীয় ডেটা সংরক্ষণ, কোয়ারেন্টাইন এবং ম্যালওয়্যার স্ক্যান সম্পূর্ণভাবে যাচাই না হওয়া পর্যন্ত সংবেদনশীল নথি গ্রহণ করা হবে না।'
+                    : 'Sensitive documents will not be accepted until identity, EU data residency, quarantine and malware scanning are fully verified.'}
+                </p>
+              </Card>
+            )}
             <Card tone="muted">
               <Icon name="shield" size={28} />
               <h2 className="card-title">{t('operations.documentSafetyTitle')}</h2>
@@ -95,9 +113,11 @@ export default async function DocumentsPage({
                   {document.category} · {(document.sizeBytes / 1024).toFixed(0)} KB
                 </p>
                 <div className="hub-actions">
-                  <a className="btn btn-secondary" href={`/api/files/${document.id}`}>
-                    {t('operations.download')}
-                  </a>
+                  {document.verificationStatus === 'clean' ? (
+                    <a className="btn btn-secondary" href={`/api/files/${document.id}`}>
+                      {t('operations.download')}
+                    </a>
+                  ) : null}
                   <form action={deleteDocumentAction}>
                     <input type="hidden" name="locale" value={seg} />
                     <input type="hidden" name="documentId" value={document.id} />

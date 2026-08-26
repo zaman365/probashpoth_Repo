@@ -3,7 +3,7 @@
   "name": "probashpoth-repo",
   "account_id": "48dd3aa43c937cea4bbb1840184461cc",
   "main": "vinext/server/fetch-handler",
-  "compatibility_date": "2026-05-22",
+  "compatibility_date": "2026-08-26",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "dist/client",
@@ -13,5 +13,6 @@
   "workers_dev": true,
   "observability": {
     "enabled": true,
+    "head_sampling_rate": 1,
   },
 }

@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bdos-document-pipeline-staging",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "REPLACE_WITH_STAGING_HYPERDRIVE_ID" }],
+  "r2_buckets": [
+    { "binding": "DOCUMENTS_QUARANTINE", "bucket_name": "bdos-staging-documents-quarantine" },
+    { "binding": "DOCUMENTS_CLEAN", "bucket_name": "bdos-staging-documents-clean" },
+  ],
+  "queues": {
+    "producers": [{ "binding": "DOCUMENT_SCAN_QUEUE", "queue": "bdos-staging-document-scan" }],
+    "consumers": [
+      {
+        "queue": "bdos-staging-document-scan",
+        "max_batch_size": 5,
+        "max_batch_timeout": 10,
+        "max_retries": 5,
+        "dead_letter_queue": "bdos-staging-document-scan-dlq",
+      },
+    ],
+  },
+  "services": [{ "binding": "SCANNER", "service": "REPLACE_WITH_ISOLATED_SCANNER_WORKER" }],
+  "triggers": { "crons": ["*/2 * * * *"] },
+}

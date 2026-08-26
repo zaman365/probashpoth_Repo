@@ -74,10 +74,7 @@
       "indexes": {
         "idx_alerts_user_read": {
           "name": "idx_alerts_user_read",
-          "columns": [
-            "user_id",
-            "read_at"
-          ],
+          "columns": ["user_id", "read_at"],
           "isUnique": false
         }
       },
@@ -142,10 +139,7 @@
       "indexes": {
         "idx_audit_user_created": {
           "name": "idx_audit_user_created",
-          "columns": [
-            "user_id",
-            "created_at"
-          ],
+          "columns": ["user_id", "created_at"],
           "isUnique": false
         }
       },
@@ -224,10 +218,7 @@
       "indexes": {
         "idx_delegations_user_status": {
           "name": "idx_delegations_user_status",
-          "columns": [
-            "user_id",
-            "status"
-          ],
+          "columns": ["user_id", "status"],
           "isUnique": false
         }
       },
@@ -327,17 +318,12 @@
       "indexes": {
         "idx_documents_user_created": {
           "name": "idx_documents_user_created",
-          "columns": [
-            "user_id",
-            "created_at"
-          ],
+          "columns": ["user_id", "created_at"],
           "isUnique": false
         },
         "idx_documents_object_key": {
           "name": "idx_documents_object_key",
-          "columns": [
-            "object_key"
-          ],
+          "columns": ["object_key"],
           "isUnique": true
         }
       },
@@ -437,18 +423,12 @@
       "indexes": {
         "idx_records_journey_status": {
           "name": "idx_records_journey_status",
-          "columns": [
-            "journey_id",
-            "status"
-          ],
+          "columns": ["journey_id", "status"],
           "isUnique": false
         },
         "idx_records_user_due": {
           "name": "idx_records_user_due",
-          "columns": [
-            "user_id",
-            "due_at"
-          ],
+          "columns": ["user_id", "due_at"],
           "isUnique": false
         }
       },
@@ -562,18 +542,12 @@
       "indexes": {
         "idx_tasks_journey_key": {
           "name": "idx_tasks_journey_key",
-          "columns": [
-            "journey_id",
-            "task_key"
-          ],
+          "columns": ["journey_id", "task_key"],
           "isUnique": true
         },
         "idx_tasks_user_status": {
           "name": "idx_tasks_user_status",
-          "columns": [
-            "user_id",
-            "status"
-          ],
+          "columns": ["user_id", "status"],
           "isUnique": false
         }
       },
@@ -673,18 +647,12 @@
       "indexes": {
         "idx_journeys_user_status": {
           "name": "idx_journeys_user_status",
-          "columns": [
-            "user_id",
-            "status"
-          ],
+          "columns": ["user_id", "status"],
           "isUnique": false
         },
         "idx_journeys_user_path": {
           "name": "idx_journeys_user_path",
-          "columns": [
-            "user_id",
-            "path"
-          ],
+          "columns": ["user_id", "path"],
           "isUnique": false
         }
       },
@@ -791,10 +759,7 @@
       "indexes": {
         "idx_ledger_user_created": {
           "name": "idx_ledger_user_created",
-          "columns": [
-            "user_id",
-            "created_at"
-          ],
+          "columns": ["user_id", "created_at"],
           "isUnique": false
         }
       },
@@ -915,10 +880,7 @@
       "indexes": {
         "idx_outcome_reports_user_review": {
           "name": "idx_outcome_reports_user_review",
-          "columns": [
-            "user_id",
-            "review_status"
-          ],
+          "columns": ["user_id", "review_status"],
           "isUnique": false
         }
       },
@@ -1018,10 +980,7 @@
       "indexes": {
         "idx_partner_submissions_user_status": {
           "name": "idx_partner_submissions_user_status",
-          "columns": [
-            "user_id",
-            "status"
-          ],
+          "columns": ["user_id", "status"],
           "isUnique": false
         }
       },
@@ -1093,11 +1052,7 @@
       "indexes": {
         "idx_saved_user_opportunity": {
           "name": "idx_saved_user_opportunity",
-          "columns": [
-            "user_id",
-            "opportunity_type",
-            "opportunity_id"
-          ],
+          "columns": ["user_id", "opportunity_type", "opportunity_id"],
           "isUnique": true
         }
       },
@@ -1183,10 +1138,7 @@
       "indexes": {
         "idx_support_user_status": {
           "name": "idx_support_user_status",
-          "columns": [
-            "user_id",
-            "status"
-          ],
+          "columns": ["user_id", "status"],
           "isUnique": false
         }
       },
@@ -1353,10 +1305,7 @@
       "indexes": {
         "idx_verification_user_status": {
           "name": "idx_verification_user_status",
-          "columns": [
-            "user_id",
-            "status"
-          ],
+          "columns": ["user_id", "status"],
           "isUnique": false
         }
       },

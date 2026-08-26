@@ -3,7 +3,7 @@
 
 BEGIN;
 
-CREATE TABLE complaint (
+CREATE TABLE complaint_case (
   id                    UUID PRIMARY KEY,
   complainant_user_id   UUID NOT NULL REFERENCES app_user (id) ON DELETE RESTRICT,
   path                  TEXT NOT NULL CHECK (path IN ('work','study','shared')),
@@ -24,12 +24,12 @@ CREATE TABLE complaint (
   created_at            TIMESTAMPTZ NOT NULL,
   updated_at            TIMESTAMPTZ NOT NULL
 );
-CREATE INDEX complaint_queue_idx ON complaint (status, priority, updated_at);
-CREATE INDEX complaint_organization_idx ON complaint (organization_id, safety_state);
+CREATE INDEX complaint_case_queue_idx ON complaint_case (status, priority, updated_at);
+CREATE INDEX complaint_case_organization_idx ON complaint_case (organization_id, safety_state);
 
 CREATE TABLE complaint_event (
   id                    UUID PRIMARY KEY,
-  complaint_id          UUID NOT NULL REFERENCES complaint (id) ON DELETE RESTRICT,
+  complaint_id          UUID NOT NULL REFERENCES complaint_case (id) ON DELETE RESTRICT,
   type                  TEXT NOT NULL,
   actor_user_id         UUID NOT NULL REFERENCES app_user (id) ON DELETE RESTRICT,
   note_ciphertext       BYTEA,

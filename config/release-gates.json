@@ -1,0 +1,30 @@
+{
+  "updatedAt": "2026-08-26",
+  "gates": {
+    "S0": {
+      "approved": true,
+      "evidence": ["docs/strategy.md", "data/seed"],
+      "approvals": ["product-preview-scope"]
+    },
+    "S1": {
+      "approved": false,
+      "evidence": [],
+      "approvals": []
+    },
+    "S2": {
+      "approved": false,
+      "evidence": [],
+      "approvals": []
+    },
+    "S3": {
+      "approved": false,
+      "evidence": [],
+      "approvals": []
+    },
+    "S4": {
+      "approved": false,
+      "evidence": [],
+      "approvals": []
+    }
+  }
+}

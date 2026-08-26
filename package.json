@@ -19,13 +19,14 @@
     "apps/api",
     "apps/ops-desktop",
     "apps/web",
+    "apps/document-worker",
     "apps/mobile"
   ],
   "engines": {
     "node": ">=22.11.0"
   },
   "scripts": {
-    "build": "npm run build --workspace=@probash/domain --workspace=@probash/design-tokens --workspace=@probash/analytics --workspace=@probash/config --workspace=@probash/contracts --workspace=@probash/auth --workspace=@probash/i18n --workspace=@probash/ledger --workspace=@probash/rules --workspace=@probash/testing --workspace=@probash/web-ui --workspace=@probash/api --workspace=@probash/web --if-present",
+    "build": "npm run build --workspace=@probash/domain --workspace=@probash/design-tokens --workspace=@probash/analytics --workspace=@probash/config --workspace=@probash/contracts --workspace=@probash/auth --workspace=@probash/i18n --workspace=@probash/ledger --workspace=@probash/rules --workspace=@probash/testing --workspace=@probash/web-ui --workspace=@probash/api --workspace=@probash/web --workspace=@probash/document-worker --if-present",
     "dev": "turbo run dev",
     "lint": "eslint .",
     "typecheck": "turbo run typecheck",
@@ -37,7 +38,10 @@
     "db:migrate": "pnpm --filter @probash/api db:migrate",
     "services:up": "docker compose -f infra/docker/docker-compose.yml up -d",
     "services:down": "docker compose -f infra/docker/docker-compose.yml down",
-    "e2e:web": "pnpm --filter @probash/web test:e2e"
+    "e2e:web": "pnpm --filter @probash/web test:e2e",
+    "release:gate": "node scripts/verify-release-gate.mjs",
+    "migration:inventory": "node scripts/migration/create-inventory.mjs",
+    "migration:reconcile": "node scripts/migration/reconcile-inventories.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.3.0",

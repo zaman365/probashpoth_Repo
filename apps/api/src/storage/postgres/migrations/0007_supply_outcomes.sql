@@ -2,6 +2,8 @@
 -- Runtime collections use the encrypted record store while these indexes make the
 -- durable ownership and review boundaries explicit for the normalized migration path.
 
+BEGIN;
+
 CREATE INDEX IF NOT EXISTS app_record_store_partner_submission_idx
   ON app_record_store ((payload ->> 'organizationId'))
   WHERE namespace = 'partner_submission';
@@ -13,3 +15,8 @@ CREATE INDEX IF NOT EXISTS app_record_store_partner_access_idx
 CREATE INDEX IF NOT EXISTS app_record_store_outcome_review_idx
   ON app_record_store ((payload ->> 'path'), (payload ->> 'outcomeId'))
   WHERE namespace = 'outcome_review';
+
+INSERT INTO schema_migration (filename) VALUES ('0007_supply_outcomes.sql')
+ON CONFLICT (filename) DO NOTHING;
+
+COMMIT;
