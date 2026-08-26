@@ -24,7 +24,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
   const links = [
     { href: `/${seg}/countries`, label: t('nav.countries') },
     { href: `/${seg}/occupations`, label: t('nav.occupations') },
-    { href: `/${seg}/jobs`, label: t('nav.work') },
+    { href: `/${seg}/work`, label: t('nav.work') },
     { href: `/${seg}/study`, label: t('nav.study') },
     { href: `/${seg}/safety`, label: t('nav.safety') },
   ];
@@ -72,6 +72,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
           <nav aria-label={t('common.menu')}>
             <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
             <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
+            <Link href={`/${seg}/work`}>{t('intent.work')}</Link>
             <Link href={`/${seg}/jobs`}>{t('home.findWork')}</Link>
             <Link href={`/${seg}/study`}>{t('home.findStudy')}</Link>
             <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>

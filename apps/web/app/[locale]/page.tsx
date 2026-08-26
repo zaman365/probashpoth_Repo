@@ -18,6 +18,7 @@ import {
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { IntentChooser, IntentComparison, parseIntent } from '@/components/IntentChooser';
 import { ListenButton } from '@/components/ListenButton';
 
 export const dynamic = 'force-dynamic';
@@ -38,13 +39,18 @@ export async function generateMetadata({
   });
 }
 
-async function countOrZero(path: string): Promise<number> {
+async function listOrEmpty<T>(path: string): Promise<T[]> {
   try {
-    const rows = await apiRequest<unknown[]>(path);
-    return Array.isArray(rows) ? rows.length : 0;
+    const rows = await apiRequest<T[]>(path);
+    return Array.isArray(rows) ? rows : [];
   } catch {
-    return 0;
+    // A landing page must render even when the API is unreachable.
+    return [];
   }
+}
+
+async function countOrZero(path: string): Promise<number> {
+  return (await listOrEmpty(path)).length;
 }
 
 /**
@@ -52,18 +58,32 @@ async function countOrZero(path: string): Promise<number> {
  * that explains and is indexable, and a worker's front door. So the seven primary
  * actions sit directly under the hero, above everything a visitor merely reads.
  */
-export default async function Landing({ params }: { params: Promise<{ locale: string }> }) {
+export default async function Landing({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ intent?: string }>;
+}) {
   const { locale: segment } = await params;
+  const { intent: intentParam } = await searchParams;
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
+  const intent = parseIntent(intentParam);
 
-  const [countries, routes, sources, jobs] = await Promise.all([
+  const [countries, routes, sources, jobs, workRoutes, studyRoutes, courses] = await Promise.all([
     countOrZero('/api/v1/countries'),
     countOrZero('/api/v1/routes'),
     countOrZero('/api/v1/sources'),
     countOrZero('/api/v1/jobs'),
+    listOrEmpty<{ destinationCountry: string }>('/api/v1/routes?purpose=work'),
+    listOrEmpty<{ destinationCountry: string }>('/api/v1/routes?purpose=study'),
+    countOrZero('/api/v1/courses'),
   ]);
+
+  const distinctCountries = (rows: { destinationCountry: string }[]) =>
+    new Set(rows.map((row) => row.destinationCountry)).size;
 
   const actions = [
     { href: `/${seg}/jobs`, icon: 'work' as const, key: 'home.findWork' },
@@ -240,6 +260,36 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
           </div>
         </CanvasPanel>
       </div>
+
+      {/*
+        §14.1 — work and study are the two top-level paths. Both are described here,
+        with the facts side by side, so the choice is informed rather than steered.
+      */}
+      <Section
+        surface="default"
+        eyebrow={t('site.tagline')}
+        title={t('intent.chooseTitle')}
+        lead={t('intent.chooseLead')}
+      >
+        <IntentChooser
+          locale={locale}
+          intent={intent}
+          workFacts={{
+            routes: workRoutes.length,
+            countries: distinctCountries(workRoutes),
+            opportunities: jobs,
+          }}
+          studyFacts={{
+            routes: studyRoutes.length,
+            countries: distinctCountries(studyRoutes),
+            opportunities: courses,
+          }}
+        />
+      </Section>
+
+      <Section surface="muted" title={t('intent.compareTitle')} lead={t('intent.compareLead')}>
+        <IntentComparison locale={locale} />
+      </Section>
 
       {/* §15 — the worker's own actions come before anything a visitor merely reads. */}
       <Section surface="default" title={t('site.actionsTitle')}>

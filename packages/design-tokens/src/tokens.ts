@@ -110,8 +110,11 @@ export const size = {
   iconLg: 32,
   /** Worker flows: one narrow column, one question per screen (§15). */
   maxContentWidth: 720,
-  /** Public website: wide enough for real multi-column layout (§14.1). */
-  maxSiteWidth: 1200,
+  /**
+   * Public website. Wide enough to use a large monitor properly; the reading measure
+   * is constrained separately, so long text never stretches with the container.
+   */
+  maxSiteWidth: 1520,
   /** Long-form reading measure — roughly 65 characters. */
   maxProseWidth: 680,
 } as const;

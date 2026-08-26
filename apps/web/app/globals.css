@@ -75,23 +75,17 @@ html[lang='en'] body {
     padding-inline: var(--space-lg);
   }
 
-  main > .wide-page {
-    max-width: var(--size-max-site-width);
-  }
-
+  /* Worker flows stay a narrow column; only the site surfaces use the full width. */
   /*
-   * The canvas shares the site measure so its edges line up with the header pill.
-   * A hero that is wider than the navigation above it reads as a mistake.
+   * The canvas and the guide pages share exactly the container of the header bar —
+   * same max-width, same fluid gutter — so their edges line up at every viewport. A
+   * hero wider than the navigation above it reads as a mistake even when you cannot
+   * name why.
    */
+  main > .wide-page,
   main > .hero-frame {
     max-width: var(--size-max-site-width);
-    padding-inline: var(--space-md);
-  }
-
-  @media (min-width: 760px) {
-    main > .hero-frame {
-      padding-inline: var(--space-lg);
-    }
+    padding-inline: clamp(var(--space-md), 3vw, var(--space-3xl));
   }
 
   main > * + *:not(.pui-section) {
@@ -472,14 +466,7 @@ html[lang='en'] body {
 
   /* The panel floats on the page with a small margin, like a framed canvas. */
   .hero-frame {
-    padding-inline: var(--space-md);
     padding-block-start: var(--space-md);
-  }
-
-  @media (min-width: 760px) {
-    .hero-frame {
-      padding-inline: var(--space-lg);
-    }
   }
 
   .hero-grid {
@@ -492,8 +479,18 @@ html[lang='en'] body {
 
   @media (min-width: 1024px) {
     .hero-grid {
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: var(--space-3xl);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .hero-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .hero-title {
+      max-width: 20ch;
     }
   }
 
@@ -690,6 +687,175 @@ html[lang='en'] body {
 
   .closing-block .hero-title {
     max-width: 22ch;
+  }
+
+  /* ------------------------------------------------- work / study chooser --- */
+
+  .intent-block {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .intent-switch {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    gap: 4px;
+    justify-self: start;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .intent-switch::-webkit-scrollbar {
+    display: none;
+  }
+
+  .intent-switch-option {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: var(--size-tap-target-min);
+    padding-inline: var(--space-lg);
+    border-radius: var(--radius-pill);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  .intent-switch-option.is-selected {
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  .intent-switch-option:not(.is-selected):hover {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+  }
+
+  .intent-card {
+    gap: var(--space-md);
+  }
+
+  .intent-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  .intent-card-title {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .intent-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .intent-facts dt {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+  }
+
+  .intent-facts dd {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* ------------------------------------------------------ comparison table --- */
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: var(--space-md);
+    border-block-end: 1px solid var(--color-border);
+    vertical-align: top;
+    text-align: start;
+  }
+
+  .compare-table thead th {
+    font-size: var(--font-size-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary);
+  }
+
+  .compare-table tbody th {
+    font-weight: var(--font-weight-semibold);
+    width: 18%;
+  }
+
+  .compare-table tbody tr:hover {
+    background: var(--color-surface-muted);
+  }
+
+  /* A table that scrolls sideways is unreadable on a phone: stack it instead. */
+  @media (max-width: 760px) {
+    .compare-table thead {
+      display: none;
+    }
+
+    .compare-table,
+    .compare-table tbody,
+    .compare-table tr,
+    .compare-table th,
+    .compare-table td {
+      display: block;
+      width: auto;
+    }
+
+    .compare-table tr {
+      margin-block-end: var(--space-md);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      background: var(--color-surface);
+      overflow: hidden;
+    }
+
+    .compare-table td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: var(--font-size-caption);
+      color: var(--color-text-secondary);
+      margin-block-end: 4px;
+    }
+
+    .compare-table tbody th {
+      background: var(--color-surface-muted);
+      border-block-end: 1px solid var(--color-border);
+    }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .hub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-xl);
   }
 
   .card-title {
