@@ -1,11 +1,11 @@
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { Badge, ButtonLink, Card, Grid, Icon, Section, Stat, StatGroup } from '@probash/web-ui';
-import type { StudyDashboardDto, WorkDashboardDto } from '@probash/contracts';
-import { tryAuthed } from '@/lib/api';
+import { Badge, ButtonLink, Card, Icon, Section } from '@probash/web-ui';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getWorkspace, type JourneyPath, type OperationalJourney } from '@/db/operations';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
-import { getChatGPTUser } from '@/app/chatgpt-auth';
-import { getWorkspace } from '@/db/operations';
 import { startBlankJourneyAction } from '../operational-actions';
 
 export const dynamic = 'force-dynamic';
@@ -26,47 +26,54 @@ export async function generateMetadata({
   });
 }
 
+const CHAPTER_ICONS = [
+  'search',
+  'route',
+  'work',
+  'verify',
+  'document',
+  'shield',
+  'globe',
+  'check',
+] as const;
+
+function journeyProgress(journey: OperationalJourney | null): {
+  done: number;
+  total: number;
+  percent: number;
+} {
+  if (!journey || journey.tasks.length === 0) return { done: 0, total: 0, percent: 0 };
+  const done = journey.tasks.filter((task) => task.status === 'done').length;
+  return {
+    done,
+    total: journey.tasks.length,
+    percent: Math.round((done / journey.tasks.length) * 100),
+  };
+}
+
+function fallbackChapter(stage: string): number {
+  if (stage === 'preparing') return 1;
+  if (stage === 'applying') return 4;
+  if (stage === 'progressing') return 6;
+  return 0;
+}
+
 export default async function JourneyDashboard({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ welcome?: string }>;
 }) {
   const { locale: segment } = await params;
+  const { welcome } = await searchParams;
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
   const user = await getChatGPTUser();
-  const [work, study, workspace] = await Promise.all([
-    tryAuthed<WorkDashboardDto>('/api/v1/work/dashboard', { locale }),
-    tryAuthed<StudyDashboardDto>('/api/v1/study/dashboard', { locale }),
-    user ? getWorkspace(user.userId) : Promise.resolve(null),
-  ]);
-  const connected = Boolean(user || work || study);
-  const applications =
-    workspace?.journeys.length ??
-    (work?.applications.length ?? 0) + (study?.applications.length ?? 0);
-  const cases =
-    workspace?.journeys.filter((journey) => journey.status === 'active').length ??
-    (work?.cases.length ?? 0) + (study?.cases.length ?? 0);
-  const nextActions = [...(work?.nextActions ?? []), ...(study?.nextActions ?? [])];
-  const operationalActions =
-    workspace?.journeys.flatMap((journey) =>
-      journey.tasks
-        .filter((task) => task.status !== 'done')
-        .slice(0, 1)
-        .map((task) => ({ journey, task })),
-    ) ?? [];
-  const safetyRail = [
-    ['search', 'os.stepMatch'],
-    ['verify', 'os.stepVerify'],
-    ['money', 'os.stepCost'],
-    ['document', 'os.stepPrepare'],
-    ['route', 'os.stepTrack'],
-    ['shield', 'os.stepProve'],
-  ] as const;
 
-  return (
-    <>
+  if (!user) {
+    return (
       <Section
         surface="warm"
         headingLevel={1}
@@ -74,203 +81,309 @@ export default async function JourneyDashboard({
         title={t('os.dashboardTitle')}
         lead={t('os.dashboardLead')}
       >
-        {connected ? (
-          <StatGroup>
-            <Stat label={t('os.applications')} value={String(applications)} />
-            <Stat label={t('os.activeCases')} value={String(cases)} />
-            <Stat
-              label={t('os.nextActions')}
-              value={String(operationalActions.length || nextActions.length)}
-            />
-            <Stat
-              label={t('workspace.documents')}
-              value={String(workspace?.documents.length ?? 0)}
-            />
-            <Stat label={t('operations.unread')} value={String(workspace?.unreadAlerts ?? 0)} />
-          </StatGroup>
-        ) : (
-          <Card tone="default" className="journey-signin-card">
-            <Badge tone="info">{t('os.signedOutTitle')}</Badge>
-            <p>{t('os.signedOutBody')}</p>
-            <div className="hub-actions">
-              <ButtonLink href={`/${seg}/passport`} icon={<Icon name="route" size={19} />}>
-                {t('passport.startPassport')}
-              </ButtonLink>
-              <ButtonLink href={`/${seg}/onboarding`} variant="outline">
-                {t('common.continue')}
-              </ButtonLink>
-            </div>
-          </Card>
-        )}
+        <Card tone="default" className="journey-signin-card">
+          <Badge tone="info">{t('os.signedOutTitle')}</Badge>
+          <p>{t('os.signedOutBody')}</p>
+          <div className="hub-actions">
+            <ButtonLink href={`/${seg}/onboarding`} icon={<Icon name="route" size={19} />}>
+              {t('account.signIn')}
+            </ButtonLink>
+            <ButtonLink href={`/${seg}/countries`} variant="outline">
+              {t('guide.browseCountries')}
+            </ButtonLink>
+          </div>
+        </Card>
       </Section>
+    );
+  }
 
-      <Section surface="default" title={t('os.sixSteps')}>
-        <ol className="journey-rail">
-          {safetyRail.map(([icon, label], index) => (
-            <li key={label}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <Icon name={icon} size={23} />
-              <strong>{t(label)}</strong>
-            </li>
-          ))}
-        </ol>
-      </Section>
+  const workspace = await getWorkspace(user.userId);
+  if (!workspace.profile?.onboardingCompletedAt) redirect(`/${seg}/onboarding`);
 
-      <Section surface="muted">
-        <Grid min={340}>
-          <Card className="journey-path-card">
-            <span className="step-icon">
-              <Icon name="work" size={26} />
-            </span>
-            <Badge tone="info">{t('intent.workTagline')}</Badge>
-            <h2 className="card-title">{t('os.workJourney')}</h2>
-            <p>{t('os.workJourneyBody')}</p>
-            <div className="hub-actions">
-              <ButtonLink href={`/${seg}/work`}>{t('intent.openWork')}</ButtonLink>
-              <ButtonLink href={`/${seg}/jobs`} variant="ghost">
-                {t('home.findWork')}
-              </ButtonLink>
-            </div>
-            {connected && !workspace?.journeys.some((journey) => journey.path === 'work') ? (
-              <form action={startBlankJourneyAction}>
-                <input type="hidden" name="locale" value={seg} />
-                <input type="hidden" name="path" value="work" />
-                <button type="submit" className="btn btn-secondary">
-                  {t('workspace.startWorkJourney')}
-                </button>
-              </form>
-            ) : null}
-          </Card>
-          <Card className="journey-path-card">
-            <span className="step-icon">
-              <Icon name="study" size={26} />
-            </span>
-            <Badge tone="neutral">{t('intent.studyTagline')}</Badge>
-            <h2 className="card-title">{t('os.studyJourney')}</h2>
-            <p>{t('os.studyJourneyBody')}</p>
-            <div className="hub-actions">
-              <ButtonLink href={`/${seg}/study`}>{t('intent.openStudy')}</ButtonLink>
-              <ButtonLink href={`/${seg}/countries`} variant="ghost">
-                {t('guide.browseCountries')}
-              </ButtonLink>
-            </div>
-            {connected && !workspace?.journeys.some((journey) => journey.path === 'study') ? (
-              <form action={startBlankJourneyAction}>
-                <input type="hidden" name="locale" value={seg} />
-                <input type="hidden" name="path" value="study" />
-                <button type="submit" className="btn btn-secondary">
-                  {t('workspace.startStudyJourney')}
-                </button>
-              </form>
-            ) : null}
-          </Card>
-        </Grid>
-      </Section>
+  const profile = workspace.profile;
+  const path: JourneyPath = profile.activePath === 'study' ? 'study' : 'work';
+  const otherPath: JourneyPath = path === 'work' ? 'study' : 'work';
+  const pathJourneys = workspace.journeys.filter((journey) => journey.path === path);
+  const primaryJourney =
+    pathJourneys.find((journey) => journey.status === 'active') ?? pathJourneys[0] ?? null;
+  const progress = journeyProgress(primaryJourney);
+  const currentChapter = primaryJourney
+    ? Math.min(7, Math.floor((progress.percent / 100) * 8))
+    : fallbackChapter(profile.journeyStage);
+  const nextTask = primaryJourney?.tasks.find((task) => task.status !== 'done') ?? null;
+  const pathJourneyIds = new Set(pathJourneys.map((journey) => journey.id));
+  const nextDeadline = workspace.records.find(
+    (record) =>
+      pathJourneyIds.has(record.journeyId) && record.dueAt && record.status !== 'completed',
+  );
+  const chapters = Array.from({ length: 8 }, (_, index) => ({
+    title: t(`journey.${path}.chapter${index + 1}`),
+    index,
+  }));
+  const firstName = user.displayName.split(/\s+/)[0] || user.displayName;
+  const journeyGoal = profile.goalTitle || t(`journey.${path}.defaultGoal`);
+  const needsCount = [
+    nextTask,
+    workspace.unreadAlerts > 0,
+    workspace.pendingVerifications > 0,
+    nextDeadline,
+  ].filter(Boolean).length;
 
-      {connected ? (
-        <Section surface="warm" title={t('workspace.toolsTitle')} lead={t('workspace.toolsLead')}>
-          <Grid min={220}>
-            <Card>
-              <Icon name="document" size={24} />
-              <h3 className="card-title">{t('workspace.documents')}</h3>
-              <p>{t('workspace.documentsBody')}</p>
-              <ButtonLink href={`/${seg}/documents`} variant="outline">
-                {t('workspace.openDocuments')}
-              </ButtonLink>
-            </Card>
-            <Card>
-              <Icon name="money" size={24} />
-              <h3 className="card-title">{t('workspace.money')}</h3>
-              <p>{t('workspace.moneyBody')}</p>
-              <ButtonLink href={`/${seg}/money`} variant="outline">
-                {t('workspace.openMoney')}
-              </ButtonLink>
-            </Card>
-            <Card>
-              <Icon name="family" size={24} />
-              <h3 className="card-title">{t('workspace.family')}</h3>
-              <p>{t('workspace.familyBody')}</p>
-              <ButtonLink href={`/${seg}/family`} variant="outline">
-                {t('workspace.openFamily')}
-              </ButtonLink>
-            </Card>
-            <Card>
-              <Icon name="verify" size={24} />
-              <h3 className="card-title">{t('workspace.review')}</h3>
-              <p>{t('workspace.reviewBody')}</p>
-              <ButtonLink href={`/${seg}/verify`} variant="outline">
-                {t('workspace.openReview')}
-              </ButtonLink>
-            </Card>
-            <Card>
-              <Icon name="warning" size={24} />
-              <h3 className="card-title">{t('operations.alertsTitle')}</h3>
-              <p>{t('operations.alertsLead')}</p>
-              <ButtonLink href={`/${seg}/alerts`} variant="outline">
-                {t('common.continue')}
-              </ButtonLink>
-            </Card>
-            <Card>
-              <Icon name="document" size={24} />
-              <h3 className="card-title">{t('materials.title')}</h3>
-              <p>{t('materials.lead')}</p>
-              <ButtonLink href={`/${seg}/materials`} variant="outline">
-                {t('common.continue')}
-              </ButtonLink>
-            </Card>
-          </Grid>
-        </Section>
+  return (
+    <div className={`journey-command-page wide-page journey-${path}`}>
+      {welcome === '1' ? (
+        <div className="journey-welcome" role="status">
+          <Icon name="check" size={18} />
+          <span>{t('journey.welcome')}</span>
+          <Link href={`/${seg}/account`}>{t('account.myAccount')} →</Link>
+        </div>
       ) : null}
 
-      <Section surface="default" title={t('os.ecosystemTitle')}>
-        <Grid min={340}>
-          <Card>
-            <Badge tone="success">{t('outcomeIntelligence.privacyProtected')}</Badge>
-            <h2 className="card-title">{t('outcomeIntelligence.title')}</h2>
-            <p>{t('outcomeIntelligence.dashboardBody')}</p>
-            <ButtonLink href={`/${seg}/outcomes`} variant="outline">
-              {t('outcomeIntelligence.open')}
+      <section className="journey-command-hero">
+        <div className="journey-command-copy">
+          <div className="journey-identity-line">
+            <Badge tone={path === 'work' ? 'success' : 'info'}>
+              {t(path === 'work' ? 'account.workTalent' : 'account.studyTalent')}
+            </Badge>
+            <span>{t(`onboarding.stage.${profile.journeyStage}`)}</span>
+          </div>
+          <p className="talent-kicker">{t('journey.commandCenter')}</p>
+          <h1>{t('journey.greeting', { name: firstName })}</h1>
+          <p className="journey-goal">{journeyGoal}</p>
+          <div className="journey-hero-actions">
+            {primaryJourney && nextTask ? (
+              <ButtonLink
+                href={`/${seg}/cases/${primaryJourney.id}`}
+                icon={<Icon name="arrow" size={19} />}
+              >
+                {t('journey.continueChapter')}
+              </ButtonLink>
+            ) : primaryJourney ? (
+              <ButtonLink
+                href={`/${seg}/cases/${primaryJourney.id}`}
+                icon={<Icon name="check" size={19} />}
+              >
+                {t('journey.openJourney')}
+              </ButtonLink>
+            ) : (
+              <form action={startBlankJourneyAction}>
+                <input type="hidden" name="locale" value={seg} />
+                <input type="hidden" name="path" value={path} />
+                <button className="btn btn-primary" type="submit">
+                  <Icon name="route" size={19} /> {t('journey.startJourney')}
+                </button>
+              </form>
+            )}
+            <ButtonLink href={`/${seg}/passport`} variant="outline">
+              {t('passport.title')}
             </ButtonLink>
-          </Card>
-          <Card>
-            <Badge tone="neutral">{t('supply.evidenceGate')}</Badge>
-            <h2 className="card-title">{t('supply.title')}</h2>
-            <p>{t('supply.dashboardBody')}</p>
-            <ButtonLink href={`/${seg}/partners`} variant="outline">
-              {t('supply.open')}
-            </ButtonLink>
-          </Card>
-        </Grid>
-      </Section>
+          </div>
+        </div>
 
-      <Section surface="default" title={t('os.nextActions')}>
-        {operationalActions.length === 0 && nextActions.length === 0 ? (
-          <p className="muted">{t('os.noNextActions')}</p>
-        ) : null}
-        <Grid min={300}>
-          {operationalActions.map(({ journey, task }) => (
-            <Card key={`${journey.id}:${task.id}`}>
-              <Badge tone={journey.path === 'work' ? 'info' : 'neutral'}>
-                {t(journey.path === 'work' ? 'intent.work' : 'intent.study')}
-              </Badge>
-              <h3 className="card-title">{pick(task.title, locale)}</h3>
-              <p>{pick(task.detail, locale)}</p>
-              <ButtonLink href={`/${seg}/cases/${journey.id}`} variant="outline">
-                {t('common.continue')}
-              </ButtonLink>
-            </Card>
+        <aside className="journey-next-card">
+          <header>
+            <span>{t('journey.nextBestAction')}</span>
+            <small>
+              {needsCount} {t('journey.needsYouCount')}
+            </small>
+          </header>
+          <span className="journey-next-icon">
+            <Icon name={nextTask ? 'arrow' : 'route'} size={25} />
+          </span>
+          <h2>{nextTask ? pick(nextTask.title, locale) : t('journey.createFirstTitle')}</h2>
+          <p>{nextTask ? pick(nextTask.detail, locale) : t(`journey.${path}.createFirstBody`)}</p>
+          <div className="journey-why">
+            <strong>{t('journey.whyThisMatters')}</strong>
+            <span>{t(`journey.${path}.whyNow`)}</span>
+          </div>
+          {primaryJourney ? (
+            <Link href={`/${seg}/cases/${primaryJourney.id}`}>{t('common.continue')} →</Link>
+          ) : null}
+        </aside>
+      </section>
+
+      <section className="journey-chapter-panel" aria-labelledby="journey-chapters-title">
+        <header>
+          <div>
+            <span>{t('journey.yourStory')}</span>
+            <h2 id="journey-chapters-title">{t(`journey.${path}.storyTitle`)}</h2>
+          </div>
+          <div className="journey-progress-copy">
+            <strong>{progress.percent}%</strong>
+            <small>
+              {progress.done} / {progress.total || 8} {t('journey.stepsComplete')}
+            </small>
+          </div>
+        </header>
+        <ol className="journey-chapter-rail">
+          {chapters.map((chapter) => {
+            const state =
+              chapter.index < currentChapter
+                ? 'complete'
+                : chapter.index === currentChapter
+                  ? 'current'
+                  : 'upcoming';
+            return (
+              <li key={chapter.title} className={state}>
+                <span className="journey-chapter-marker">
+                  {state === 'complete' ? (
+                    <Icon name="check" size={16} />
+                  ) : (
+                    String(chapter.index + 1).padStart(2, '0')
+                  )}
+                </span>
+                <Icon name={CHAPTER_ICONS[chapter.index] ?? 'route'} size={20} />
+                <strong>{chapter.title}</strong>
+                <small>{t(`journey.state.${state}`)}</small>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+
+      <section className="journey-attention-section" aria-labelledby="journey-attention-title">
+        <header>
+          <div>
+            <span>{t('journey.attentionKicker')}</span>
+            <h2 id="journey-attention-title">{t('journey.needsYou')}</h2>
+          </div>
+          <p>{t('journey.needsYouLead')}</p>
+        </header>
+        <div className="journey-signal-grid">
+          <Link
+            href={primaryJourney ? `/${seg}/cases/${primaryJourney.id}` : `/${seg}/passport`}
+            className="journey-signal primary"
+          >
+            <span>
+              <Icon name="arrow" size={20} />
+            </span>
+            <div>
+              <small>{t('journey.nextAction')}</small>
+              <strong>
+                {nextTask ? pick(nextTask.title, locale) : t('passport.startPassport')}
+              </strong>
+              <p>{nextTask ? pick(nextTask.detail, locale) : t('journey.profileSignal')}</p>
+            </div>
+            <b>→</b>
+          </Link>
+          <Link
+            href={`/${seg}/alerts`}
+            className={workspace.unreadAlerts > 0 ? 'journey-signal warning' : 'journey-signal'}
+          >
+            <span>
+              <Icon name="warning" size={20} />
+            </span>
+            <div>
+              <small>{t('operations.alertsTitle')}</small>
+              <strong>
+                {workspace.unreadAlerts} {t('operations.unread')}
+              </strong>
+              <p>{t('journey.alertSignal')}</p>
+            </div>
+            <b>→</b>
+          </Link>
+          <Link
+            href={`/${seg}/verify`}
+            className={
+              workspace.pendingVerifications > 0 ? 'journey-signal review' : 'journey-signal'
+            }
+          >
+            <span>
+              <Icon name="verify" size={20} />
+            </span>
+            <div>
+              <small>{t('workspace.review')}</small>
+              <strong>
+                {workspace.pendingVerifications} {t('journey.pendingReview')}
+              </strong>
+              <p>{t('journey.reviewSignal')}</p>
+            </div>
+            <b>→</b>
+          </Link>
+          <Link
+            href={nextDeadline ? `/${seg}/cases/${nextDeadline.journeyId}` : `/${seg}/cases`}
+            className="journey-signal"
+          >
+            <span>
+              <Icon name="document" size={20} />
+            </span>
+            <div>
+              <small>{t('journey.nextDeadline')}</small>
+              <strong>{nextDeadline?.dueAt ?? t('journey.noDeadline')}</strong>
+              <p>{nextDeadline?.title ?? t('journey.deadlineSignal')}</p>
+            </div>
+            <b>→</b>
+          </Link>
+        </div>
+      </section>
+
+      <section className="journey-workspace-section" aria-labelledby="journey-tools-title">
+        <header>
+          <div>
+            <span>{t('workspace.toolsTitle')}</span>
+            <h2 id="journey-tools-title">{t('journey.evidenceDesk')}</h2>
+          </div>
+          <p>{t('workspace.toolsLead')}</p>
+        </header>
+        <div className="journey-tool-grid">
+          {(
+            [
+              [
+                'document',
+                'workspace.documents',
+                'workspace.documentsBody',
+                'documents',
+                String(workspace.documents.length),
+              ],
+              [
+                'money',
+                'workspace.money',
+                'workspace.moneyBody',
+                'money',
+                String(workspace.ledger.length),
+              ],
+              [
+                'verify',
+                'workspace.review',
+                'workspace.reviewBody',
+                'verify',
+                String(workspace.pendingVerifications),
+              ],
+              [
+                'family',
+                'workspace.family',
+                'workspace.familyBody',
+                'family',
+                String(workspace.activeDelegations),
+              ],
+            ] as const
+          ).map(([icon, title, body, href, count]) => (
+            <Link key={href} href={`/${seg}/${href}`} className="journey-tool-card">
+              <span>
+                <Icon name={icon} size={23} />
+              </span>
+              <small>{count}</small>
+              <h3>{t(title)}</h3>
+              <p>{t(body)}</p>
+              <b>{t('common.continue')} →</b>
+            </Link>
           ))}
-          {nextActions.map((action) => (
-            <Card key={`${action.caseId}:${action.taskId}`}>
-              <Badge tone="warning">{action.status}</Badge>
-              <h3 className="card-title">{pick(action.label, locale)}</h3>
-              <ButtonLink href={`/${seg}/cases/${action.caseId}`} variant="outline">
-                {t('common.continue')}
-              </ButtonLink>
-            </Card>
-          ))}
-        </Grid>
-      </Section>
-    </>
+        </div>
+      </section>
+
+      <section className="journey-secondary-path">
+        <span>
+          <Icon name={otherPath === 'work' ? 'work' : 'study'} size={24} />
+        </span>
+        <div>
+          <small>{t('journey.secondaryKicker')}</small>
+          <h2>{t(`journey.${otherPath}.secondaryTitle`)}</h2>
+          <p>{t('journey.secondaryBody')}</p>
+        </div>
+        <Link href={`/${seg}/${otherPath}`}>
+          {t(otherPath === 'work' ? 'intent.openWork' : 'intent.openStudy')} →
+        </Link>
+      </section>
+    </div>
   );
 }

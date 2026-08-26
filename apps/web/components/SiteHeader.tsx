@@ -3,6 +3,9 @@ import type { Locale } from '@probash/domain';
 import { Container, Icon, LogoMark } from '@probash/web-ui';
 import { localeSegment, otherLocale, translator } from '@/lib/i18n';
 import { OfflineBanner } from './OfflineBanner';
+import { AccountControl } from './AccountControl';
+import type { ChatGPTUser } from '@/app/chatgpt-auth';
+import type { OperationalProfile } from '@/db/operations';
 
 /**
  * §14.1 — site chrome. The whole public surface is reachable from every page, and the
@@ -11,7 +14,17 @@ import { OfflineBanner } from './OfflineBanner';
  * The small-screen menu is a `<details>` disclosure: it opens with no JavaScript, so
  * navigation still works on a cheap phone with a failed bundle or a dead connection.
  */
-export function SiteHeader({ locale, productName }: { locale: Locale; productName: string }) {
+export function SiteHeader({
+  locale,
+  productName,
+  user,
+  profile,
+}: {
+  locale: Locale;
+  productName: string;
+  user: ChatGPTUser | null;
+  profile: OperationalProfile | null;
+}) {
   const t = translator(locale);
   const seg = localeSegment(locale);
   const target = otherLocale(locale);
@@ -70,10 +83,11 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
                 {target === 'en' ? t('common.switchToEnglish') : t('common.switchToBangla')}
               </span>
             </Link>
-            <Link href={`/${seg}/help`} className="pui-btn pui-btn-outline pui-btn-md">
+            <Link href={`/${seg}/help`} className="header-help pui-btn pui-btn-outline pui-btn-md">
               <Icon name="phone" size={20} />
               <span>{t('common.help')}</span>
             </Link>
+            <AccountControl locale={locale} user={user} profile={profile} />
           </div>
         </div>
 
@@ -103,6 +117,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             <Link href={`/${seg}/alerts`}>{t('operations.alertsTitle')}</Link>
             <Link href={`/${seg}/verify`}>{t('workspace.review')}</Link>
             <Link href={`/${seg}/help`}>{t('common.help')}</Link>
+            {user ? <Link href={`/${seg}/account`}>{t('account.myAccount')}</Link> : null}
           </nav>
         </details>
 

@@ -299,6 +299,47 @@ export default async function Landing({
         </div>
       </section>
 
+      <section className="experience-talent-os" aria-labelledby="talent-os-title">
+        <div className="experience-shell">
+          <div className="talent-os-intro">
+            <div>
+              <p className="experience-section-kicker">{t('talentOs.eyebrow')}</p>
+              <h2 id="talent-os-title">{t('talentOs.title')}</h2>
+            </div>
+            <div>
+              <p>{t('talentOs.lead')}</p>
+              <Link href={`/${seg}/onboarding`} className="experience-btn experience-btn-dark">
+                <span>{t('talentOs.cta')}</span>
+                <Icon name="arrow" size={19} />
+              </Link>
+            </div>
+          </div>
+          <div className="talent-os-principles">
+            {(
+              [
+                ['01', 'route', 'talentOs.oneProfile', 'talentOs.oneProfileBody'],
+                [
+                  '02',
+                  intent === 'study' ? 'study' : 'work',
+                  'talentOs.oneJourney',
+                  'talentOs.oneJourneyBody',
+                ],
+                ['03', 'verify', 'talentOs.oneTruth', 'talentOs.oneTruthBody'],
+              ] as const
+            ).map(([number, icon, title, body]) => (
+              <article key={number}>
+                <header>
+                  <span>{number}</span>
+                  <Icon name={icon} size={22} />
+                </header>
+                <h3>{t(title)}</h3>
+                <p>{t(body)}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section
         className="experience-section experience-questions"
         aria-labelledby="questions-title"

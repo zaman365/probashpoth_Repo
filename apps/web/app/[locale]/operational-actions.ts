@@ -9,6 +9,7 @@ import {
   addJourneyRecord,
   addLedgerEntry,
   completeJourneyTask,
+  completeOnboarding,
   createJourney,
   createPartnerSubmission,
   createOutcomeReport,
@@ -20,7 +21,9 @@ import {
   savePassport,
   storeDocument,
   setJourneyRecordStatus,
+  updateProfileDirection,
   type JourneyPath,
+  type JourneyStage,
 } from '@/db/operations';
 import { localeSegment, parseLocaleParam } from '@/lib/i18n';
 
@@ -74,6 +77,47 @@ const RECORD_STATUSES = new Set([
   'rejected',
   'withdrawn',
 ]);
+
+const JOURNEY_STAGES = new Set<JourneyStage>(['exploring', 'preparing', 'applying', 'progressing']);
+
+function journeyDirection(formData: FormData): {
+  path: JourneyPath;
+  stage: JourneyStage;
+  goalTitle?: string;
+} {
+  const pathValue = textField(formData, 'path');
+  if (pathValue !== 'work' && pathValue !== 'study') {
+    throw new Error('Choose one primary journey.');
+  }
+  const stageValue = textField(formData, 'stage') as JourneyStage;
+  if (!JOURNEY_STAGES.has(stageValue)) throw new Error('Choose your current stage.');
+  return {
+    path: pathValue,
+    stage: stageValue,
+    goalTitle: textField(formData, 'goalTitle', 180) || undefined,
+  };
+}
+
+export async function completeOnboardingAction(formData: FormData): Promise<void> {
+  const seg = segment(formData);
+  const user = await requireChatGPTUser(`/${seg}/onboarding`);
+  if (formData.get('consent') !== 'yes') throw new Error('Consent is required.');
+  await completeOnboarding(user, seg === 'bn' ? 'bn-BD' : 'en', journeyDirection(formData));
+  revalidatePath(`/${seg}`);
+  revalidatePath(`/${seg}/dashboard`);
+  revalidatePath(`/${seg}/account`);
+  redirect(`/${seg}/dashboard?welcome=1`);
+}
+
+export async function updateProfileDirectionAction(formData: FormData): Promise<void> {
+  const seg = segment(formData);
+  const user = await requireChatGPTUser(`/${seg}/account`);
+  await updateProfileDirection(user.userId, journeyDirection(formData));
+  revalidatePath(`/${seg}`);
+  revalidatePath(`/${seg}/dashboard`);
+  revalidatePath(`/${seg}/account`);
+  redirect(`/${seg}/account?saved=1`);
+}
 
 export async function savePassportAction(
   _previous: OperationalActionState,

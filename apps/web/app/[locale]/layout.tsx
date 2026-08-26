@@ -4,6 +4,8 @@ import '../globals.css';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { getChatGPTUser } from '@/app/chatgpt-auth';
+import { getProfile } from '@/db/operations';
 
 const productName = {
   'bn-BD': process.env['PUBLIC_PRODUCT_NAME_BN'] ?? 'প্রবাসযাত্রা',
@@ -40,6 +42,8 @@ export default async function LocaleLayout({
   const locale = parseLocaleParam(segment);
   const t = translator(locale);
   const seg = localeSegment(locale);
+  const user = await getChatGPTUser();
+  const profile = user ? await getProfile(user.userId) : null;
 
   return (
     <html lang={seg} dir="ltr">
@@ -47,7 +51,12 @@ export default async function LocaleLayout({
         <a href="#main" className="skip-link">
           {t('common.next')}
         </a>
-        <SiteHeader locale={locale} productName={productName[locale]} />
+        <SiteHeader
+          locale={locale}
+          productName={productName[locale]}
+          user={user}
+          profile={profile}
+        />
         <main id="main">{children}</main>
         <SiteFooter locale={locale} productName={productName[locale]} />
       </body>
