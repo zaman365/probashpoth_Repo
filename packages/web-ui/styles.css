@@ -9,7 +9,7 @@
 .pui-container {
   margin-inline: auto;
   /* Gutters grow with the viewport so a wide screen is used, not just padded. */
-  padding-inline: clamp(var(--space-md), 3vw, var(--space-3xl));
+  padding-inline: clamp(14px, 2vw, var(--space-xl));
   width: 100%;
 }
 
@@ -120,7 +120,7 @@
 
 .pui-card {
   border: 1px solid var(--color-border);
-  border-radius: 18px;
+  border-radius: var(--radius-sm);
   padding: var(--space-lg);
   background: var(--color-surface);
   box-shadow: var(--elevation-low);

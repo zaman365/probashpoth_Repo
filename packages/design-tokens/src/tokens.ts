@@ -135,7 +135,7 @@ export const size = {
    * Public website. Wide enough to use a large monitor properly; the reading measure
    * is constrained separately, so long text never stretches with the container.
    */
-  maxSiteWidth: 1520,
+  maxSiteWidth: 1920,
   /** Long-form reading measure — roughly 65 characters. */
   maxProseWidth: 680,
 } as const;

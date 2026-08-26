@@ -7205,6 +7205,107 @@ html[lang='bn'] .talent-os-intro h2 {
   background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
 }
 
+/* ------------------------------------------------ responsive product canvas ---
+ * Public and signed-in surfaces now use nearly the full viewport. Structure is
+ * communicated with spacing, rules and tone; rounding is reserved for controls,
+ * status pills, avatars and a small number of focused action surfaces.
+ */
+main > .wide-page,
+main > .hero-frame,
+main > .passport-page,
+.experience-shell {
+  padding-inline: clamp(14px, 2vw, var(--space-xl));
+}
+
+main > .journey-workspace-shell {
+  width: 100%;
+  max-width: var(--size-max-site-width);
+  padding-inline: clamp(12px, 1.6vw, 28px);
+}
+
+.talent-onboarding-page,
+.account-page,
+.account-empty {
+  width: min(1760px, calc(100% - clamp(24px, 4vw, 64px)));
+}
+
+.site-header-row {
+  border-radius: var(--radius-md);
+}
+
+.card,
+.card-muted,
+.pui-card,
+.journey-workspace-sidebar,
+.journey-command-hero,
+.journey-next-card,
+.journey-why,
+.journey-chapter-panel,
+.journey-attention-section,
+.journey-opportunities-section,
+.journey-workspace-section,
+.journey-chapter-rail,
+.journey-signal,
+.journey-opportunity-card,
+.journey-tool-card,
+.journey-secondary-path,
+.talent-onboarding-form,
+.account-direction-card,
+.account-privacy-card,
+.account-overview-grid article,
+.talent-os-principles article,
+.journey-rail,
+.partner-workflow,
+.programme-limit,
+.source-stack .source-link,
+.country-index-card,
+.country-command-bar,
+.journey-progress-summary,
+.operational-timeline > li,
+.record-list,
+.scholarship-checklist,
+.scholarship-profile-panel > a,
+.scholarship-filters,
+.scholarship-empty,
+.scholarship-card,
+.scholarship-source-network > div > a,
+.scholarship-fit-card,
+.scholarship-detail-panel,
+.scholarship-factor-list article,
+.scholarship-profile-empty,
+.scholarship-preparation-section > aside {
+  border-radius: var(--radius-sm);
+}
+
+.journey-command-hero,
+.journey-chapter-panel,
+.journey-attention-section,
+.journey-opportunities-section,
+.journey-workspace-section,
+.journey-chapter-rail,
+.journey-rail,
+.partner-workflow,
+.record-list {
+  border-radius: 2px;
+}
+
+@media (min-width: 1720px) {
+  .journey-workspace-shell {
+    grid-template-columns: 270px minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .journey-command-hero {
+    grid-template-columns: minmax(0, 1.55fr) minmax(360px, 0.45fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .journey-command-hero {
+    border-radius: 2px;
+  }
+}
+
 .compact-list {
   display: grid;
   gap: var(--space-sm);
