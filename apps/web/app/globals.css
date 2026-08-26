@@ -79,6 +79,18 @@ html[lang='en'] body {
     max-width: var(--size-max-site-width);
   }
 
+  /* The hero frame spans the viewport; it manages its own inset. */
+  main > .hero-frame {
+    max-width: none;
+    padding-inline: var(--space-md);
+  }
+
+  @media (min-width: 760px) {
+    main > .hero-frame {
+      padding-inline: var(--space-lg);
+    }
+  }
+
   main > * + *:not(.pui-section) {
     margin-block-start: var(--space-lg);
   }
@@ -109,19 +121,44 @@ html[lang='en'] body {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
-    backdrop-filter: blur(8px);
-    border-block-end: 1px solid var(--color-border);
+    padding-block: var(--space-md) var(--space-sm);
+    background: transparent;
+  }
+
+  /* A floating pill bar, not a full-width band. */
+  .site-header > .pui-container {
+    display: grid;
+    gap: var(--space-sm);
   }
 
   .site-header-row {
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    box-shadow: var(--elevation-float);
+    border: 1px solid var(--color-border);
+    padding-inline: var(--space-md);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-sm) var(--space-lg);
-    min-height: 68px;
+    min-height: 64px;
     padding-block: var(--space-sm);
+  }
+
+  @media (min-width: 760px) {
+    .site-header-row {
+      padding-inline: var(--space-lg);
+    }
+  }
+
+  .site-nav-mobile,
+  .site-nav-mobile[open] {
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--elevation-low);
+    padding-inline: var(--space-sm);
   }
 
   .site-brand {
@@ -142,8 +179,8 @@ html[lang='en'] body {
   }
 
   .site-nav-desktop a {
-    padding: 10px var(--space-md);
-    border-radius: var(--radius-md);
+    padding: 9px var(--space-md);
+    border-radius: var(--radius-pill);
     color: var(--color-text-secondary);
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
@@ -372,7 +409,7 @@ html[lang='en'] body {
     padding: var(--space-lg);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: 18px;
     font-size: var(--font-size-body-large);
     font-weight: var(--font-weight-semibold);
     text-align: start;
@@ -387,26 +424,40 @@ html[lang='en'] body {
     box-shadow: var(--elevation-medium);
   }
 
+  /* The icon sits in a tinted chip, matching the step and guide cards. */
   .action-tile .pui-icon {
     color: var(--color-accent);
+    box-sizing: content-box;
+    padding: 9px;
+    border-radius: 12px;
+    background: var(--color-surface-accent);
   }
 
   /* ------------------------------------------------------------- landing --- */
 
-  .hero-section {
-    padding-block: var(--space-3xl);
-    border-block-end: 1px solid var(--color-border);
+  /* The panel floats on the page with a small margin, like a framed canvas. */
+  .hero-frame {
+    padding-inline: var(--space-md);
+    padding-block-start: var(--space-md);
+  }
+
+  @media (min-width: 760px) {
+    .hero-frame {
+      padding-inline: var(--space-lg);
+    }
   }
 
   .hero-grid {
     display: grid;
     gap: var(--space-2xl);
     align-items: center;
+    max-width: var(--size-max-site-width);
+    margin-inline: auto;
   }
 
   @media (min-width: 1024px) {
     .hero-grid {
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: var(--space-3xl);
     }
   }
@@ -417,27 +468,168 @@ html[lang='en'] body {
     justify-items: start;
   }
 
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(242, 247, 244, 0.3);
+    background: rgba(242, 247, 244, 0.08);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
   .hero-title {
-    font-size: clamp(var(--font-size-heading), 5.5vw, var(--font-size-display3));
+    /* Tight, large display type — but fluid, so it stays sane at 360px. */
+    font-size: clamp(var(--font-size-heading), 6vw, var(--font-size-display3));
     font-weight: var(--font-weight-bold);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-    max-width: 20ch;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+
+  /* Bangla conjuncts need more room than Latin at the same size. */
+  html[lang='bn'] .hero-title {
+    line-height: 1.28;
+  }
+
+  .hero-lead {
+    font-size: var(--font-size-body-large);
+    line-height: 1.65;
+    max-width: 52ch;
   }
 
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
+    margin-block-start: var(--space-xs);
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .hero-note-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .hero-note {
+    font-size: var(--font-size-caption);
+  }
+
+  /* The listen control has to stay legible on the dark canvas. */
+  .hero-note-row .btn-secondary,
+  .hero-note-row .btn {
+    background: rgba(242, 247, 244, 0.1);
+    border-color: rgba(242, 247, 244, 0.35);
+    color: var(--color-text-on-canvas);
+  }
+
+  .hero-side {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .hero-side-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  .hero-side-title {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .hero-verify-form {
+    display: grid;
+    gap: var(--space-xs);
     margin-block-start: var(--space-sm);
   }
 
-  .hero-art {
-    width: 100%;
-    height: auto;
-    max-width: 460px;
-    justify-self: center;
-    filter: drop-shadow(var(--elevation-medium));
+  .hero-verify-label {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-on-canvas-muted);
+  }
+
+  .hero-verify-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .hero-verify-input {
+    flex: 1 1 200px;
+    min-height: var(--size-tap-target-min);
+    padding-inline: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(242, 247, 244, 0.35);
+    background: rgba(11, 31, 24, 0.5);
+    color: var(--color-text-on-canvas);
+    font-size: var(--font-size-body);
+    font-family: inherit;
+  }
+
+  .hero-verify-input::placeholder {
+    color: rgba(185, 207, 197, 0.7);
+  }
+
+  .hero-side-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-block-start: var(--space-sm);
+    padding-block-start: var(--space-md);
+    border-block-start: 1px solid rgba(242, 247, 244, 0.18);
+  }
+
+  .hero-side-stats dt {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-on-canvas-muted);
+  }
+
+  .hero-side-stats dd {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .hero-quote {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .closing-frame {
+    padding-block: var(--space-2xl) var(--space-md);
+  }
+
+  .closing-block {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: center;
+    text-align: center;
+    max-width: var(--size-max-prose-width);
+    margin-inline: auto;
+    padding-block: var(--space-lg);
+  }
+
+  .closing-block .hero-title {
+    max-width: 22ch;
   }
 
   .card-title {

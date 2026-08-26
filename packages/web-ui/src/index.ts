@@ -5,3 +5,4 @@
 export * from './primitives';
 export * from './controls';
 export * from './icon';
+export * from './canvas';

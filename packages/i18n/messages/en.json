@@ -445,6 +445,9 @@
     "orgGovernmentNeed": "A legal basis for data sharing, access scoped to your authority, and an audit record of every access.",
     "studyStatus": "This section has the structure for verified institutions and courses, but all of the data is demo. Do not make a real admission or tuition decision from it.",
     "studyInstitutions": "Institutions",
-    "studyCourses": "Courses"
+    "studyCourses": "Courses",
+    "pill1": "Verified opportunities",
+    "pill2": "Transparent costs",
+    "pill3": "Milestone payments"
   }
 }

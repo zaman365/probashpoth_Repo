@@ -19,6 +19,18 @@ describe('accessibility of the palette', () => {
     expect(meetsContrast(semanticDark.textOnAccent, semanticDark.accent)).toBe(true);
   });
 
+  it('keeps hero text readable on the dark canvas — the reference design used a photo, we use a fixed ground', () => {
+    expect(contrastRatio(semanticLight.textOnCanvas, semanticLight.canvas)).toBeGreaterThanOrEqual(
+      7,
+    );
+    expect(
+      contrastRatio(semanticLight.textOnCanvasMuted, semanticLight.canvas),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(semanticLight.textOnCanvas, semanticLight.canvasRaised),
+    ).toBeGreaterThanOrEqual(7);
+  });
+
   it('keeps status colours readable on their own backgrounds', () => {
     for (const status of [color.success, color.warning, color.danger, color.info]) {
       expect(contrastRatio(status.fg, status.bg)).toBeGreaterThanOrEqual(4.5);

@@ -1,6 +1,29 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { Noto_Sans_Bengali, Space_Grotesk } from 'next/font/google';
 import '../globals.css';
+
+/*
+ * §52 — a production-grade Bangla face paired with a compatible Latin family.
+ * `next/font` downloads and self-hosts both at build time, so there is no runtime
+ * request to a font CDN and no layout shift on a slow connection.
+ *
+ * Bangla is the display face, not an afterthought: it carries the headline on every
+ * page a worker sees (ADR 0002).
+ */
+const bengali = Noto_Sans_Bengali({
+  subsets: ['bengali'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-bengali',
+  display: 'swap',
+});
+
+const latin = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-latin',
+  display: 'swap',
+});
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
@@ -42,7 +65,7 @@ export default async function LocaleLayout({
   const seg = localeSegment(locale);
 
   return (
-    <html lang={seg} dir="ltr">
+    <html lang={seg} dir="ltr" className={`${bengali.variable} ${latin.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           {t('common.next')}

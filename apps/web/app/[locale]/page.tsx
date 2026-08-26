@@ -2,12 +2,15 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   Badge,
-  ButtonLink,
+  CanvasPanel,
   Card,
-  Container,
+  ChipLink,
   Disclosure,
+  FeaturePill,
+  GlassCard,
   Grid,
   Icon,
+  Reveal,
   Section,
   Stat,
   StatGroup,
@@ -15,7 +18,6 @@ import {
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
-import { HeroArt } from '@/components/HeroArt';
 import { ListenButton } from '@/components/ListenButton';
 
 export const dynamic = 'force-dynamic';
@@ -124,36 +126,114 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
 
   return (
     <>
-      <section className="pui-section pui-surface-warm hero-section">
-        <Container width="site">
+      {/*
+        The framed canvas hero: a rounded panel floating on the page, glass cards over
+        a painted ground. Adapted from a photographic hero — the ground is painted
+        instead so contrast is testable and nothing has to be downloaded.
+      */}
+      <div className="hero-frame">
+        <CanvasPanel>
           <div className="hero-grid">
             <div className="hero-copy">
-              <p className="pui-eyebrow">{t('site.tagline')}</p>
-              <h1 className="hero-title">{t('site.heroTitle')}</h1>
-              <p className="pui-lead">{t('site.heroLead')}</p>
-              <div className="hero-actions">
-                <ButtonLink
-                  href={`/${seg}/verify`}
-                  size="lg"
-                  icon={<Icon name="verify" size={22} />}
-                >
-                  {t('site.heroVerifyCta')}
-                </ButtonLink>
-                <ButtonLink href={`/${seg}/jobs`} size="lg" variant="secondary">
-                  {t('site.heroExploreCta')}
-                </ButtonLink>
-              </div>
-              <p className="muted">{t('site.heroNote')}</p>
-              <ListenButton
-                text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
-                label={t('common.listen')}
-                lang={locale}
-              />
+              <Reveal index={0}>
+                <span className="hero-eyebrow">{t('site.tagline')}</span>
+              </Reveal>
+              <Reveal index={1}>
+                <h1 className="hero-title">{t('site.heroTitle')}</h1>
+              </Reveal>
+              <Reveal index={2}>
+                <p className="hero-lead">{t('site.heroLead')}</p>
+              </Reveal>
+              <Reveal index={3}>
+                <div className="hero-actions">
+                  <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
+                    {t('site.heroVerifyCta')}
+                  </ChipLink>
+                  <ChipLink
+                    href={`/${seg}/jobs`}
+                    tone="glass"
+                    chip={<Icon name="arrow" size={18} />}
+                  >
+                    {t('site.heroExploreCta')}
+                  </ChipLink>
+                </div>
+              </Reveal>
+              <Reveal index={4}>
+                <ul className="hero-pills">
+                  <FeaturePill icon={<Icon name="check" size={16} />}>
+                    {t('site.pill1')}
+                  </FeaturePill>
+                  <FeaturePill icon={<Icon name="check" size={16} />}>
+                    {t('site.pill2')}
+                  </FeaturePill>
+                  <FeaturePill icon={<Icon name="check" size={16} />}>
+                    {t('site.pill3')}
+                  </FeaturePill>
+                </ul>
+              </Reveal>
+              <Reveal index={5}>
+                <div className="hero-note-row">
+                  <p className="hero-note">{t('site.heroNote')}</p>
+                  <ListenButton
+                    text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
+                    label={t('common.listen')}
+                    lang={locale}
+                  />
+                </div>
+              </Reveal>
             </div>
-            <HeroArt />
+
+            <Reveal index={2} className="hero-side">
+              <GlassCard>
+                <span className="hero-side-icon" aria-hidden="true">
+                  <Icon name="verify" size={22} />
+                </span>
+                <h2 className="hero-side-title">{t('scanner.title')}</h2>
+                <p>{t('guide.verifyCtaHelp')}</p>
+
+                {/*
+                  A plain GET form: the verify page checks the id server-side, so this
+                  works with no JavaScript at all.
+                */}
+                <form action={`/${seg}/verify`} method="get" className="hero-verify-form">
+                  <label htmlFor="hero-public-id" className="hero-verify-label">
+                    {t('scanner.publicIdLabel')}
+                  </label>
+                  <div className="hero-verify-row">
+                    <input
+                      id="hero-public-id"
+                      name="publicId"
+                      className="hero-verify-input"
+                      placeholder="BD-QA-2026-00000000"
+                      autoComplete="off"
+                    />
+                    <button type="submit" className="pui-btn pui-btn-primary pui-btn-md">
+                      {t('scanner.checkNow')}
+                    </button>
+                  </div>
+                </form>
+                <dl className="hero-side-stats">
+                  <div>
+                    <dt>{t('site.statCountries')}</dt>
+                    <dd>{countries}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('site.statRoutes')}</dt>
+                    <dd>{routes}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('site.statSources')}</dt>
+                    <dd>{sources}</dd>
+                  </div>
+                </dl>
+              </GlassCard>
+              <GlassCard>
+                <p className="hero-quote">{t('cost.payOnlyHere')}</p>
+              </GlassCard>
+            </Reveal>
           </div>
-        </Container>
-      </section>
+        </CanvasPanel>
+      </div>
 
       {/* §15 — the worker's own actions come before anything a visitor merely reads. */}
       <Section surface="default" title={t('site.actionsTitle')}>
@@ -256,15 +336,18 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
         </div>
       </Section>
 
-      <Section surface="accent" width="prose">
-        <div className="cta-block">
-          <h2 className="pui-section-title">{t('site.ctaTitle')}</h2>
-          <p className="pui-lead">{t('site.ctaLead')}</p>
-          <ButtonLink href={`/${seg}/verify`} size="lg" icon={<Icon name="verify" size={22} />}>
-            {t('scanner.checkNow')}
-          </ButtonLink>
-        </div>
-      </Section>
+      {/* The page closes on the same dark ground it opened with. */}
+      <div className="hero-frame closing-frame">
+        <CanvasPanel>
+          <div className="closing-block">
+            <h2 className="hero-title">{t('site.ctaTitle')}</h2>
+            <p className="hero-lead">{t('site.ctaLead')}</p>
+            <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
+              {t('scanner.checkNow')}
+            </ChipLink>
+          </div>
+        </CanvasPanel>
+      </div>
     </>
   );
 }

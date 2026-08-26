@@ -38,6 +38,17 @@ export const color = {
     100: '#f3efe7',
     200: '#e8e1d4',
   },
+  /**
+   * The hero canvas. A deep ink-green ground rather than a photograph: it is
+   * license-clean, weighs nothing on a slow connection, and — unlike white text over
+   * a picture — its contrast is a fixed, testable number (§52).
+   */
+  canvas: {
+    base: '#0b1f18',
+    raised: '#123026',
+    glow: '#1f7a52',
+    haze: '#0d4a34',
+  },
   success: { bg: '#e6f4ea', fg: '#125c2e', border: '#8ccfa4' },
   warning: { bg: '#fdf3e2', fg: '#7a4d05', border: '#e6bd77' },
   danger: { bg: '#fdeceb', fg: '#8a1c14', border: '#e79c96' },
@@ -46,6 +57,11 @@ export const color = {
 
 export const semanticLight = {
   background: color.neutral[50],
+  /** Inverted surface used by the hero and other full-bleed feature bands. */
+  canvas: color.canvas.base,
+  canvasRaised: color.canvas.raised,
+  textOnCanvas: '#f2f7f4',
+  textOnCanvasMuted: '#b9cfc5',
   surface: color.neutral[0],
   surfaceMuted: color.neutral[100],
   surfaceWarm: color.sand[50],
@@ -61,6 +77,10 @@ export const semanticLight = {
 
 export const semanticDark = {
   background: color.neutral[900],
+  canvas: color.canvas.base,
+  canvasRaised: color.canvas.raised,
+  textOnCanvas: '#f2f7f4',
+  textOnCanvasMuted: '#b9cfc5',
   surface: color.neutral[800],
   surfaceMuted: color.neutral[700],
   surfaceWarm: color.neutral[800],
@@ -114,6 +134,8 @@ export const radius = {
   sm: 6,
   md: 10,
   lg: 14,
+  /** The framed-canvas radius: large enough to read as a panel, not a bubble. */
+  xl: 28,
   pill: 999,
 } as const;
 
@@ -122,8 +144,13 @@ export const radius = {
  * Fonts are self-hosted under their licence; no CDN dependency for the app shell.
  */
 export const typography = {
-  fontFamilyBangla: "'Noto Sans Bengali', 'Hind Siliguri', system-ui, sans-serif",
-  fontFamilyLatin: "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
+  /*
+   * The CSS variables are populated by next/font at build time; the quoted names are
+   * the fallback for surfaces that do not run Next (the operator desktop app).
+   */
+  fontFamilyBangla:
+    "var(--font-bengali), 'Noto Sans Bengali', 'Hind Siliguri', system-ui, sans-serif",
+  fontFamilyLatin: "var(--font-latin), 'Space Grotesk', system-ui, -apple-system, sans-serif",
   fontFamilyMono: "'JetBrains Mono', ui-monospace, monospace",
   /** Bangla conjuncts need more line height than Latin at the same size. */
   lineHeightBangla: 1.75,
@@ -163,6 +190,8 @@ export const elevation = {
   medium: '0 2px 10px rgba(23, 26, 24, 0.08)',
   /** Reserved for the hero card and sticky header — nothing else floats. */
   high: '0 12px 32px rgba(23, 26, 24, 0.10)',
+  /** The floating pill navigation sitting on the dark canvas. */
+  float: '0 8px 24px rgba(8, 37, 26, 0.28)',
 } as const;
 
 export const tokens = {

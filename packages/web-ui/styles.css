@@ -28,6 +28,12 @@
   padding-block: var(--space-3xl);
 }
 
+@media (min-width: 1024px) {
+  .pui-section {
+    padding-block: 88px;
+  }
+}
+
 .pui-section + .pui-section {
   padding-block-start: var(--space-3xl);
 }
@@ -65,7 +71,8 @@
   font-size: clamp(var(--font-size-heading), 4.5vw, var(--font-size-display2));
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 .pui-lead {
@@ -105,7 +112,7 @@
 
 .pui-card {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: 18px;
   padding: var(--space-lg);
   background: var(--color-surface);
   box-shadow: var(--elevation-low);
@@ -357,4 +364,181 @@
 
 .pui-icon {
   flex: none;
+}
+
+/* ==========================================================================
+   Framed canvas, glass and chip controls.
+   ========================================================================== */
+
+.pui-canvas {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--color-canvas);
+  color: var(--color-text-on-canvas);
+  box-shadow: var(--elevation-float);
+}
+
+/*
+ * Painted light instead of a photograph: two soft radial washes. Cheap to render,
+ * nothing to download, and it cannot fail an alt-text or licensing review.
+ */
+.pui-canvas-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 90% at 88% 8%, rgba(31, 122, 82, 0.55) 0%, transparent 58%),
+    radial-gradient(90% 70% at 6% 96%, rgba(13, 74, 52, 0.65) 0%, transparent 62%);
+}
+
+.pui-canvas-inner {
+  padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+}
+
+@media (min-width: 760px) {
+  .pui-canvas-inner {
+    padding: var(--space-2xl) var(--space-2xl) var(--space-3xl);
+  }
+}
+
+.pui-canvas :where(h1, h2, h3) {
+  color: var(--color-text-on-canvas);
+}
+
+.pui-canvas p {
+  color: var(--color-text-on-canvas-muted);
+}
+
+/* ------------------------------------------------------------------- glass --- */
+
+.pui-glass {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+  padding: var(--space-lg);
+  border-radius: 18px;
+  border: 1px solid rgba(242, 247, 244, 0.18);
+  background: rgba(242, 247, 244, 0.08);
+  color: var(--color-text-on-canvas);
+}
+
+/* Backdrop blur is a nice-to-have; skip it where the device cannot afford it. */
+@supports (backdrop-filter: blur(10px)) {
+  .pui-glass {
+    backdrop-filter: blur(10px);
+  }
+}
+
+.pui-glass p {
+  color: var(--color-text-on-canvas-muted);
+}
+
+/* --------------------------------------------------------------- chip link --- */
+
+.pui-chip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  /* §15 — the tap target rule holds for the prettiest control on the page. */
+  min-height: var(--size-tap-target-primary);
+  padding-inline: var(--space-lg) var(--space-xs);
+  border-radius: var(--radius-pill);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body);
+  border: 1px solid transparent;
+  transition:
+    background var(--motion-base) var(--motion-easing),
+    transform var(--motion-fast) var(--motion-easing);
+}
+
+.pui-chip-accent {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+.pui-chip-accent:hover {
+  background: var(--color-accent-hover);
+}
+
+.pui-chip-glass {
+  background: rgba(242, 247, 244, 0.1);
+  border-color: rgba(242, 247, 244, 0.35);
+  color: var(--color-text-on-canvas);
+}
+
+.pui-chip-glass:hover {
+  background: rgba(242, 247, 244, 0.18);
+}
+
+.pui-chip-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-accent);
+}
+
+.pui-chip-glass .pui-chip-badge {
+  background: rgba(242, 247, 244, 0.16);
+  color: var(--color-text-on-canvas);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pui-chip-link:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* ------------------------------------------------------------ feature pill --- */
+
+.pui-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 16px 8px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(242, 247, 244, 0.28);
+  background: rgba(11, 31, 24, 0.45);
+  color: var(--color-text-on-canvas);
+  font-size: var(--font-size-caption);
+}
+
+.pui-feature-pill-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+/* ---------------------------------------------------------------- entrance --- */
+
+/*
+ * A staggered entrance without a motion library: one keyframe, one custom property.
+ * Content is visible by default, so a failed stylesheet never hides the page.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .pui-reveal {
+    animation: pui-reveal-in 620ms var(--motion-easing) backwards;
+    animation-delay: calc(var(--pui-reveal-index, 0) * 90ms);
+  }
+
+  @keyframes pui-reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
