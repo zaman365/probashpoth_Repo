@@ -9,8 +9,6 @@
     "dev:next": "next dev --port 3000",
     "prebuild": "node scripts/generate-tokens-css.mjs",
     "build": "vinext build",
-    "build:cloudflare": "node scripts/generate-tokens-css.mjs && PROBASH_DIRECT_CLOUDFLARE=1 vinext build",
-    "deploy:cloudflare": "pnpm run build:cloudflare && wrangler deploy",
     "build:next": "next build --webpack",
     "start": "vinext start",
     "typecheck": "tsc -p tsconfig.json --noEmit",

@@ -10,16 +10,6 @@
     "not_found_handling": "none",
     "binding": "ASSETS",
   },
-  "routes": [
-    {
-      "pattern": "bdos.io/*",
-      "zone_name": "bdos.io",
-    },
-    {
-      "pattern": "www.bdos.io/*",
-      "zone_name": "bdos.io",
-    },
-  ],
   "workers_dev": true,
   "observability": {
     "enabled": true,
