@@ -9,6 +9,7 @@ import type {
   RouteDetailDto,
   RouteSummaryDto,
   ScanResultDto,
+  ServiceDirectoryEntryDto,
   SourceSummaryDto,
 } from '@probash/contracts';
 import { ApiRequestError } from '@probash/contracts';
@@ -93,8 +94,20 @@ interface DemoRoute {
 
 interface DemoOrganization {
   id: string;
+  type: string;
   legalName: Localized;
-  licences: { number: string; status: string; validTo?: string }[];
+  countryCode: string;
+  officialDomain?: string;
+  contactEmail?: string;
+  licences: { number: string; status: string; validTo?: string; sourceId?: string }[];
+  verification: {
+    level: string;
+    lastVerifiedAt?: string;
+    facets: { checked: boolean; method: string; sourceId?: string }[];
+  };
+  trustSignals?: { completedPlacements: number };
+  suspendedAt?: string;
+  isSyntheticDemoData: boolean;
 }
 
 interface DemoJob {
@@ -215,6 +228,50 @@ function organization(id: string | undefined): DemoOrganization | undefined {
   return id ? organizations.find((entry) => entry.id === id) : undefined;
 }
 
+function serviceDirectory(url: URL): ServiceDirectoryEntryDto[] {
+  const type = url.searchParams.get('type');
+  const country = url.searchParams.get('country')?.toUpperCase();
+  return organizations
+    .filter((item) => !type || item.type === type)
+    .filter((item) => !country || item.countryCode === country)
+    .map((item) => {
+      const checked = item.verification.facets.filter((facet) => facet.checked);
+      const officialStatus: ServiceDirectoryEntryDto['officialStatus'] = item.suspendedAt
+        ? 'suspended'
+        : checked.some((facet) =>
+              ['authority_confirmation', 'transaction_evidence'].includes(facet.method),
+            )
+          ? 'verified'
+          : checked.length > 0
+            ? 'partially_verified'
+            : 'unverified';
+      return {
+        id: item.id,
+        type: item.type,
+        legalName: item.legalName,
+        countryCode: item.countryCode,
+        officialStatus,
+        officialDomain: item.officialDomain,
+        officialContact: { email: item.contactEmail },
+        services: [],
+        licences: item.licences.map((licence) => ({
+          number: licence.number,
+          status: licence.status,
+          validTo: licence.validTo,
+        })),
+        complaintCount: 0,
+        publishedSafetyIncidentCount: 0,
+        outcomeCount: item.trustSignals?.completedPlacements ?? 0,
+        sources: resolveSources([
+          ...item.licences.flatMap((licence) => (licence.sourceId ? [licence.sourceId] : [])),
+          ...item.verification.facets.flatMap((facet) => (facet.sourceId ? [facet.sourceId] : [])),
+        ]),
+        lastVerifiedAt: item.verification.lastVerifiedAt,
+        isSyntheticDemoData: item.isSyntheticDemoData,
+      };
+    });
+}
+
 function jobSummary(job: DemoJob): JobSummaryDto {
   return {
     id: job.id,
@@ -285,7 +342,8 @@ function countrySummaries(url: URL): CountrySummaryDto[] {
   return rows
     .filter((country) => url.searchParams.get('withRoutes') !== 'true' || country.routeCount > 0)
     .sort(
-      (left, right) => right.routeCount - left.routeCount || left.name.en.localeCompare(right.name.en),
+      (left, right) =>
+        right.routeCount - left.routeCount || left.name.en.localeCompare(right.name.en),
     );
 }
 
@@ -298,7 +356,8 @@ function publicVerification(publicId: string): PublicJobVerificationDto {
     (entry) => entry.key === job.occupationKey,
   );
   const expired = Date.parse(job.demandValidTo) <= Date.now();
-  const status = job.publicationStatus === 'suspended' ? 'suspended' : expired ? 'expired' : 'verified';
+  const status =
+    job.publicationStatus === 'suspended' ? 'suspended' : expired ? 'expired' : 'verified';
 
   return {
     publicId: job.publicId,
@@ -326,7 +385,11 @@ function scan(body: unknown): ScanResultDto {
   const risky = /(?:personal account|bkash|nagad|cash|urgent|আজই|এখনই|ব্যক্তিগত|বিকাশ|নগদ)/i.test(
     message,
   );
-  const verdict = matched ? 'PARTIALLY_VERIFIED' : risky ? 'HIGH_RISK' : 'UNKNOWN_HUMAN_CHECK_REQUIRED';
+  const verdict = matched
+    ? 'PARTIALLY_VERIFIED'
+    : risky
+      ? 'HIGH_RISK'
+      : 'UNKNOWN_HUMAN_CHECK_REQUIRED';
 
   return {
     verdict,
@@ -470,16 +533,16 @@ export async function demoApiRequest<TResponse = unknown>(
     if (!job) throw new ApiRequestError(404, 'NOT_FOUND', 'Job not found');
     payload = jobDetail(job);
   } else if (pathname.startsWith('/api/v1/verify/job/')) {
-    payload = publicVerification(
-      decodeURIComponent(pathname.slice('/api/v1/verify/job/'.length)),
-    );
+    payload = publicVerification(decodeURIComponent(pathname.slice('/api/v1/verify/job/'.length)));
   } else if (pathname === '/api/v1/verify/offer') {
     payload = scan(requestOptions.body);
   } else if (pathname === '/api/v1/eligibility/evaluate') {
     payload = eligibility(requestOptions.body);
   } else if (pathname === '/api/v1/sources') {
     const country = url.searchParams.get('country')?.toUpperCase();
-    payload = sources.filter((source) => !country || source.countryCode === country).map(sourceSummary);
+    payload = sources
+      .filter((source) => !country || source.countryCode === country)
+      .map(sourceSummary);
   } else if (pathname === '/api/v1/institutions') {
     const country = url.searchParams.get('country')?.toUpperCase();
     payload = institutionsData.institutions.filter(
@@ -490,11 +553,11 @@ export async function demoApiRequest<TResponse = unknown>(
     payload = coursesData.courses.filter(
       (course) => !institution || course.institutionId === institution,
     );
+  } else if (pathname === '/api/v1/services') {
+    payload = serviceDirectory(url);
   } else {
     throw new ApiRequestError(503, 'API_UNAVAILABLE', 'This action requires the live API service');
   }
 
-  return requestOptions.schema
-    ? requestOptions.schema.parse(payload)
-    : (payload as TResponse);
+  return requestOptions.schema ? requestOptions.schema.parse(payload) : (payload as TResponse);
 }

@@ -12,6 +12,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
     {
       title: t('site.footerProduct'),
       links: [
+        { href: `/${seg}/dashboard`, label: t('nav.dashboard') },
         { href: `/${seg}/passport`, label: t('passport.title') },
         { href: `/${seg}/work`, label: t('intent.work') },
         { href: `/${seg}/study`, label: t('intent.study') },
@@ -28,6 +29,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         { href: `/${seg}/occupations`, label: t('guide.occupationsTitle') },
         { href: `/${seg}/safety`, label: t('guide.safetyTitle') },
         { href: `/${seg}/explore`, label: t('home.howMuchCost') },
+        { href: `/${seg}/services`, label: t('nav.services') },
       ],
     },
     {

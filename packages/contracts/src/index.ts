@@ -9,3 +9,7 @@ export * from './cases';
 export * from './payments';
 export * from './scanner';
 export * from './client';
+export * from './passport';
+export * from './work';
+export * from './study';
+export * from './operations';

@@ -28,10 +28,10 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
       icon: 'verify' as const,
       priority: true,
     },
-    { href: `/${seg}/passport`, label: t('passport.nav') },
-    { href: `/${seg}/countries`, label: t('nav.countries') },
+    { href: `/${seg}/dashboard`, label: t('nav.dashboard') },
     { href: `/${seg}/work`, label: t('nav.work') },
     { href: `/${seg}/study`, label: t('nav.study') },
+    { href: `/${seg}/countries`, label: t('nav.countries') },
   ];
 
   return (
@@ -83,6 +83,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             <span>{t('common.menu')}</span>
           </summary>
           <nav aria-label={t('common.menu')}>
+            <Link href={`/${seg}/dashboard`}>{t('nav.dashboard')}</Link>
             <Link href={`/${seg}/passport`}>{t('passport.title')}</Link>
             <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
             <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
@@ -90,6 +91,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             <Link href={`/${seg}/jobs`}>{t('home.findWork')}</Link>
             <Link href={`/${seg}/study`}>{t('home.findStudy')}</Link>
             <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>
+            <Link href={`/${seg}/services`}>{t('nav.services')}</Link>
             <Link href={`/${seg}/how-it-works`}>{t('site.howItWorksTitle')}</Link>
             <Link href={`/${seg}/cases`}>{t('home.myApplications')}</Link>
           </nav>

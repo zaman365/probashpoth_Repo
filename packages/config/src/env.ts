@@ -17,6 +17,7 @@ export const envSchema = z.object({
   STORAGE_DRIVER: z.enum(['memory', 'postgres']).default('memory'),
   DATABASE_URL: z.string().optional(),
   REDIS_URL: z.string().optional(),
+  FIELD_ENCRYPTION_KEY: z.string().optional(),
 
   SESSION_SIGNING_KEY: z.string().min(8).default('dev-only-session-key-change-me'),
   QR_SIGNING_KEY: z.string().min(8).default('dev-only-qr-key-change-me'),
@@ -83,6 +84,15 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): Env {
 
   if (env.STORAGE_DRIVER === 'postgres' && !env.DATABASE_URL) {
     throw new ConfigurationError('STORAGE_DRIVER=postgres requires DATABASE_URL');
+  }
+  if (env.STORAGE_DRIVER === 'postgres' && !env.FIELD_ENCRYPTION_KEY) {
+    throw new ConfigurationError('STORAGE_DRIVER=postgres requires FIELD_ENCRYPTION_KEY');
+  }
+  if (
+    env.FIELD_ENCRYPTION_KEY &&
+    Buffer.from(env.FIELD_ENCRYPTION_KEY, 'base64').byteLength !== 32
+  ) {
+    throw new ConfigurationError('FIELD_ENCRYPTION_KEY must decode to exactly 32 bytes');
   }
 
   return env;

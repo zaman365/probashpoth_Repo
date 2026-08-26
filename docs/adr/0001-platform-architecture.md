@@ -27,7 +27,7 @@ disagreeing about a fee or an eligibility answer is a worker-harm event, not a c
    orchestration, object storage for documents, Redis for ephemeral state only.
 6. **Persistence is a port.** The API depends on repository interfaces (`src/storage/ports.ts`),
    not on a driver. This lets the trust-rail slice run end-to-end on an in-memory store while the
-   PostgreSQL adapter is built behind `STORAGE_DRIVER`.
+   PostgreSQL adapter is selected behind `STORAGE_DRIVER`.
 7. **No premature infrastructure:** no Kubernetes, no search cluster, no microservice split, no
    vector store on the authoritative path (§82).
 
@@ -37,8 +37,8 @@ disagreeing about a fee or an eligibility answer is a worker-harm event, not a c
 - Apps stay thin and replaceable; a future government-hosted deployment can swap infrastructure
   without touching domain packages.
 - The cost is discipline: every PR that adds business logic to an app is a review failure.
-- `STORAGE_DRIVER=postgres` is a feature flag until the adapter is complete; the flag fails loudly
-  rather than silently degrading (§83, "no silent data migrations").
+- `STORAGE_DRIVER=postgres` connects through the durable adapter and fails loudly rather than
+  silently degrading (§83, "no silent data migrations").
 
 ## Alternatives considered
 

@@ -18,6 +18,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/work',
     '/study',
     '/passport',
+    '/dashboard',
+    '/services',
     '/verify',
     '/safety',
     '/explore',
@@ -40,15 +42,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   };
 
-  const [countries, occupations] = await Promise.all([
+  const [countries, occupations, courses] = await Promise.all([
     listOrEmpty<CountrySummaryDto>('/api/v1/countries?withRoutes=true'),
     listOrEmpty<OccupationSummaryDto>('/api/v1/occupations'),
+    listOrEmpty<{ id: string }>('/api/v1/courses'),
   ]);
 
   const paths = [
     ...staticPaths,
     ...countries.map((country) => `/countries/${country.code.toLowerCase()}`),
     ...occupations.map((occupation) => `/occupations/${occupation.key}`),
+    ...courses.map((course) => `/programs/${course.id}`),
   ];
 
   return paths.map((path) => ({

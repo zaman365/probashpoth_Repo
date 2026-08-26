@@ -8,10 +8,11 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadEnv } from '@probash/config';
+import { Client } from 'pg';
 
 const DESTRUCTIVE = /\b(drop\s+(table|column|schema)|truncate)\b/i;
 
-function main(): void {
+async function main(): Promise<void> {
   const env = loadEnv();
   const dir = join(__dirname, 'migrations');
   const files = readdirSync(dir)
@@ -22,6 +23,7 @@ function main(): void {
     throw new Error('DATABASE_URL is required to run migrations');
   }
 
+  const checked: { filename: string; sql: string }[] = [];
   for (const file of files) {
     const sql = readFileSync(join(dir, file), 'utf8');
     if (DESTRUCTIVE.test(sql) && env.APP_ENV === 'production') {
@@ -30,15 +32,42 @@ function main(): void {
           'Run it deliberately with an operator-approved change record.',
       );
     }
+    checked.push({ filename: file, sql });
   }
 
-  // eslint-disable-next-line no-console
-  console.log(
-    `[migrate] ${files.length} migration file(s) found and checked.\n` +
-      '[migrate] The PostgreSQL driver is not wired yet — see ' +
-      'apps/api/src/storage/postgres/README.md. No statements were executed.',
-  );
-  process.exitCode = 1;
+  const client = new Client({ connectionString: env.DATABASE_URL });
+  await client.connect();
+  try {
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS schema_migration (
+        filename TEXT PRIMARY KEY,
+        applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      )
+    `);
+    const appliedResult = await client.query<{ filename: string }>(
+      'SELECT filename FROM schema_migration',
+    );
+    const applied = new Set(appliedResult.rows.map((row) => row.filename));
+
+    let appliedCount = 0;
+    for (const migration of checked) {
+      if (applied.has(migration.filename)) continue;
+      await client.query(migration.sql);
+      appliedCount += 1;
+      // eslint-disable-next-line no-console
+      console.log(`[migrate] applied ${migration.filename}`);
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(
+      `[migrate] complete: ${appliedCount} applied, ${checked.length - appliedCount} already current`,
+    );
+  } finally {
+    await client.end();
+  }
 }
 
-main();
+void main().catch((error: unknown) => {
+  console.error('[migrate] failed', error);
+  process.exitCode = 1;
+});

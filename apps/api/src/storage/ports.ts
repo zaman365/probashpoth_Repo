@@ -2,6 +2,8 @@ import { NotFoundError } from '@probash/domain';
 import type { Ledger } from '@probash/ledger';
 import type {
   AuditEventRecord,
+  AcademicProfileRecord,
+  AlertSubscriptionRecord,
   CountryProfileRecord,
   CaseMilestoneRecord,
   CaseRecord,
@@ -23,14 +25,30 @@ import type {
   OtpChallengeRecord,
   OutboxRecord,
   PaymentIntentRecord,
+  MigrationPassportRecord,
+  PreparationTaskRecord,
   ProfileRecord,
   ProviderTransactionRecord,
   RouteVersionRecord,
   RuleVersionRecord,
+  ReadinessAssessmentRecord,
+  RecommendationSetRecord,
   ScanRecord,
   SessionRecord,
   SourceRecord,
   UserRecord,
+  WorkProfileRecord,
+  WorkApplicationRecord,
+  WorkOfferDecisionRecord,
+  WorkOutcomeRecord,
+  StudyApplicationRecord,
+  StudyOutcomeRecord,
+  StudyShortlistRecord,
+  ComplaintRecord,
+  ComplaintEventRecord,
+  HumanReviewRecord,
+  HumanReviewDecisionRecord,
+  PublicationChangeRecord,
 } from './records';
 
 /**
@@ -52,6 +70,24 @@ export interface Storage {
   otpChallenges: Collection<OtpChallengeRecord>;
   sessions: Collection<SessionRecord>;
   profiles: Collection<ProfileRecord>;
+  migrationPassports: Collection<MigrationPassportRecord>;
+  workProfiles: Collection<WorkProfileRecord>;
+  academicProfiles: Collection<AcademicProfileRecord>;
+  readinessAssessments: Collection<ReadinessAssessmentRecord>;
+  preparationTasks: Collection<PreparationTaskRecord>;
+  recommendations: Collection<RecommendationSetRecord>;
+  alertSubscriptions: Collection<AlertSubscriptionRecord>;
+  workApplications: Collection<WorkApplicationRecord>;
+  workOfferDecisions: Collection<WorkOfferDecisionRecord>;
+  workOutcomes: Collection<WorkOutcomeRecord>;
+  studyApplications: Collection<StudyApplicationRecord>;
+  studyOutcomes: Collection<StudyOutcomeRecord>;
+  studyShortlists: Collection<StudyShortlistRecord>;
+  complaints: Collection<ComplaintRecord>;
+  complaintEvents: Collection<ComplaintEventRecord>;
+  humanReviews: Collection<HumanReviewRecord>;
+  humanReviewDecisions: Collection<HumanReviewDecisionRecord>;
+  publicationChanges: Collection<PublicationChangeRecord>;
   consents: Collection<ConsentRecordRow>;
   delegations: Collection<DelegationRecord>;
   credentials: Collection<CredentialRecord>;
@@ -86,6 +122,9 @@ export interface Storage {
 
   /** Double-entry ledger (ADR 0004). Never a plain status column. */
   ledger: Ledger;
+
+  /** Production drivers persist the invariant engine after each balanced posting. */
+  flushLedger?(): Promise<void>;
 
   reset?(): Promise<void>;
 }

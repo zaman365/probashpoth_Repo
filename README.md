@@ -73,8 +73,8 @@ Rules of the architecture (ADR 0001):
 
 - **Domain logic lives in `packages/`, never in an app.** An app that re-implements an
   eligibility, cost or ledger rule is a review failure.
-- **Persistence is a port.** `STORAGE_DRIVER=memory` runs the slice today;
-  `postgres` is a feature flag that fails loudly until its adapter lands.
+- **Persistence is a port.** `STORAGE_DRIVER=memory` runs local/test slices;
+  `postgres` uses the durable adapter and explicit SQL migrations.
 - **AI never decides.** It may rephrase an explanation built from a decision trace; it
   cannot change a result or upgrade a verification level.
 
@@ -167,8 +167,7 @@ pnpm services:down
 | MinIO         | `http://localhost:9000`, console `:9001`            | bucket `probash-documents` is created and versioned |
 
 The slice runs **without** these services on `STORAGE_DRIVER=memory`. They are here so
-the next epics (durable workflows, PostgreSQL, document storage) start from a working
-local environment.
+durable workflows, PostgreSQL and document storage can be exercised locally.
 
 ### Migrations
 
@@ -177,10 +176,9 @@ pnpm db:migrate
 ```
 
 Migrations are explicit SQL in `apps/api/src/storage/postgres/migrations/`, applied in
-filename order. There are no ORM-generated or silent migrations (§83), and the runner
-refuses to auto-apply a destructive statement in production (§67). Today the command
-checks the migration set and then tells you the PostgreSQL adapter is not wired yet —
-see `apps/api/src/storage/postgres/README.md`.
+filename order and recorded in `schema_migration`. There are no ORM-generated or silent
+migrations (§83), and the runner refuses to auto-apply a destructive statement in
+production (§67). See `apps/api/src/storage/postgres/README.md`.
 
 ---
 

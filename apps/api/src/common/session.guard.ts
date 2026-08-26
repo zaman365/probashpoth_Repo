@@ -63,6 +63,9 @@ export class SessionGuard implements CanActivate {
       userId: user.id,
       roles: user.roles as Subject['roles'],
       sessionKind: session.kind,
+      mfaSatisfied:
+        Boolean(session.mfaSatisfiedAt) &&
+        this.clock.now().getTime() - Date.parse(session.mfaSatisfiedAt!) <= 12 * 60 * 60 * 1000,
       delegations: delegations.map((d) => ({
         principalUserId: d.principalUserId,
         permissions: d.permissions,

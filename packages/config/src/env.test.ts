@@ -16,7 +16,12 @@ describe('environment loading', () => {
 
   it('refuses development placeholder secrets in production', () => {
     expect(() =>
-      loadEnv({ APP_ENV: 'production', STORAGE_DRIVER: 'postgres', DATABASE_URL: 'postgres://x' }),
+      loadEnv({
+        APP_ENV: 'production',
+        STORAGE_DRIVER: 'postgres',
+        DATABASE_URL: 'postgres://x',
+        FIELD_ENCRYPTION_KEY: Buffer.from('probash-test-field-key-32-bytes!').toString('base64'),
+      }),
     ).toThrow(ConfigurationError);
   });
 
@@ -34,6 +39,19 @@ describe('environment loading', () => {
 
   it('requires DATABASE_URL when the postgres driver is selected', () => {
     expect(() => loadEnv({ STORAGE_DRIVER: 'postgres' })).toThrow(/DATABASE_URL/);
+  });
+
+  it('requires a 256-bit field encryption key for PostgreSQL records', () => {
+    expect(() =>
+      loadEnv({ STORAGE_DRIVER: 'postgres', DATABASE_URL: 'postgres://localhost/probash' }),
+    ).toThrow(/FIELD_ENCRYPTION_KEY/);
+    expect(() =>
+      loadEnv({
+        STORAGE_DRIVER: 'postgres',
+        DATABASE_URL: 'postgres://localhost/probash',
+        FIELD_ENCRYPTION_KEY: Buffer.from('short').toString('base64'),
+      }),
+    ).toThrow(/32 bytes/);
   });
 
   it('keeps unlicensed integrations switched off by default (ADR 0003, ADR 0004)', () => {

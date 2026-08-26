@@ -3298,3 +3298,157 @@ html[lang='bn'] .passport-section-heading h2 {
     width: 100%;
   }
 }
+
+/* Blueprint OS surfaces: one command centre, two journeys, one trust language. */
+.journey-signin-card {
+  max-width: 760px;
+  margin-block-start: var(--space-xl);
+  border-inline-start: 4px solid var(--color-accent);
+}
+
+.journey-signin-card p {
+  max-width: 68ch;
+}
+
+.journey-rail {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-border);
+}
+
+.journey-rail li {
+  display: grid;
+  min-height: 132px;
+  padding: var(--space-lg);
+  align-content: space-between;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+}
+
+.journey-rail li > span {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+.journey-rail li .pui-icon {
+  color: var(--color-accent);
+}
+
+.journey-path-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.journey-path-card::after {
+  position: absolute;
+  inset: auto -50px -70px auto;
+  width: 180px;
+  height: 180px;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 18%, transparent);
+  border-radius: 50%;
+  content: '';
+}
+
+.directory-card-head,
+.programme-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.directory-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  padding-block: var(--space-md);
+  margin: var(--space-lg) 0;
+  border-block: 1px solid var(--color-border);
+}
+
+.directory-metrics div {
+  min-width: 0;
+}
+
+.directory-metrics dt {
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.directory-metrics dd {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-bold);
+}
+
+.programme-badges {
+  justify-content: flex-start;
+  margin-block-start: var(--space-lg);
+}
+
+.programme-limit {
+  display: flex;
+  max-width: 78ch;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  padding: var(--space-md) var(--space-lg);
+  margin-block-start: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-warm);
+}
+
+.programme-limit .pui-icon {
+  flex: 0 0 auto;
+}
+
+.source-stack {
+  display: grid;
+  max-width: 860px;
+  gap: var(--space-sm);
+  margin-block-end: var(--space-xl);
+}
+
+.source-stack .source-link {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.source-stack .source-link span {
+  display: grid;
+}
+
+@media (max-width: 900px) {
+  .journey-rail {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .journey-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .journey-rail li {
+    min-height: 112px;
+    padding: var(--space-md);
+  }
+
+  .directory-metrics {
+    grid-template-columns: 1fr;
+  }
+}

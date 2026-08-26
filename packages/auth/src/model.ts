@@ -12,6 +12,9 @@ export type Role =
   | 'institution_staff'
   | 'gov_officer'
   | 'support_agent'
+  | 'researcher'
+  | 'compliance_reviewer'
+  | 'fraud_analyst'
   | 'platform_admin';
 
 export type SessionKind = 'self' | 'assisted' | 'delegated' | 'break_glass';

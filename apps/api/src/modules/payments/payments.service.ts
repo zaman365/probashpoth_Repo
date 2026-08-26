@@ -233,6 +233,7 @@ export class PaymentsService {
         occurredAt: payload.occurredAt,
         idempotencyKey: `confirm:${payload.providerTransactionId}`,
       });
+      await this.storage.flushLedger?.();
 
       await this.storage.paymentIntents.put({
         ...intent,
@@ -302,6 +303,7 @@ export class PaymentsService {
       idempotencyKey: `release:${intent.id}`,
       milestoneVerified: true,
     });
+    await this.storage.flushLedger?.();
 
     await this.audit.record({
       actorUserId: subject.userId,

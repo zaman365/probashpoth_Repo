@@ -3,6 +3,8 @@ import { MemoryCollection, type Storage } from '../ports';
 import { loadSeed, type SeedBundle } from '../seed/load-seed';
 import type {
   AuditEventRecord,
+  AcademicProfileRecord,
+  AlertSubscriptionRecord,
   CaseMilestoneRecord,
   CaseRecord,
   CaseTaskRecord,
@@ -16,11 +18,27 @@ import type {
   OtpChallengeRecord,
   OutboxRecord,
   PaymentIntentRecord,
+  MigrationPassportRecord,
+  PreparationTaskRecord,
   ProfileRecord,
   ProviderTransactionRecord,
   ScanRecord,
   SessionRecord,
   UserRecord,
+  ReadinessAssessmentRecord,
+  RecommendationSetRecord,
+  WorkProfileRecord,
+  WorkApplicationRecord,
+  WorkOfferDecisionRecord,
+  WorkOutcomeRecord,
+  StudyApplicationRecord,
+  StudyOutcomeRecord,
+  StudyShortlistRecord,
+  ComplaintRecord,
+  ComplaintEventRecord,
+  HumanReviewRecord,
+  HumanReviewDecisionRecord,
+  PublicationChangeRecord,
 } from '../records';
 
 /**
@@ -33,6 +51,30 @@ export class MemoryStorage implements Storage {
   readonly otpChallenges = new MemoryCollection<OtpChallengeRecord>('otp_challenge');
   readonly sessions = new MemoryCollection<SessionRecord>('session');
   readonly profiles = new MemoryCollection<ProfileRecord>('profile');
+  readonly migrationPassports = new MemoryCollection<MigrationPassportRecord>('migration_passport');
+  readonly workProfiles = new MemoryCollection<WorkProfileRecord>('work_profile');
+  readonly academicProfiles = new MemoryCollection<AcademicProfileRecord>('academic_profile');
+  readonly readinessAssessments = new MemoryCollection<ReadinessAssessmentRecord>(
+    'readiness_assessment',
+  );
+  readonly preparationTasks = new MemoryCollection<PreparationTaskRecord>('preparation_task');
+  readonly recommendations = new MemoryCollection<RecommendationSetRecord>('recommendation');
+  readonly alertSubscriptions = new MemoryCollection<AlertSubscriptionRecord>('alert_subscription');
+  readonly workApplications = new MemoryCollection<WorkApplicationRecord>('work_application');
+  readonly workOfferDecisions = new MemoryCollection<WorkOfferDecisionRecord>(
+    'work_offer_decision',
+  );
+  readonly workOutcomes = new MemoryCollection<WorkOutcomeRecord>('work_outcome');
+  readonly studyApplications = new MemoryCollection<StudyApplicationRecord>('study_application');
+  readonly studyOutcomes = new MemoryCollection<StudyOutcomeRecord>('study_outcome');
+  readonly studyShortlists = new MemoryCollection<StudyShortlistRecord>('study_shortlist');
+  readonly complaints = new MemoryCollection<ComplaintRecord>('complaint');
+  readonly complaintEvents = new MemoryCollection<ComplaintEventRecord>('complaint_event');
+  readonly humanReviews = new MemoryCollection<HumanReviewRecord>('human_review');
+  readonly humanReviewDecisions = new MemoryCollection<HumanReviewDecisionRecord>(
+    'human_review_decision',
+  );
+  readonly publicationChanges = new MemoryCollection<PublicationChangeRecord>('publication_change');
   readonly consents = new MemoryCollection<ConsentRecordRow>('consent');
   readonly delegations = new MemoryCollection<DelegationRecord>('delegation');
   readonly credentials = new MemoryCollection<CredentialRecord>('credential');
@@ -88,6 +130,24 @@ export class MemoryStorage implements Storage {
     this.otpChallenges.clear();
     this.sessions.clear();
     this.profiles.clear();
+    this.migrationPassports.clear();
+    this.workProfiles.clear();
+    this.academicProfiles.clear();
+    this.readinessAssessments.clear();
+    this.preparationTasks.clear();
+    this.recommendations.clear();
+    this.alertSubscriptions.clear();
+    this.workApplications.clear();
+    this.workOfferDecisions.clear();
+    this.workOutcomes.clear();
+    this.studyApplications.clear();
+    this.studyOutcomes.clear();
+    this.studyShortlists.clear();
+    this.complaints.clear();
+    this.complaintEvents.clear();
+    this.humanReviews.clear();
+    this.humanReviewDecisions.clear();
+    this.publicationChanges.clear();
     this.consents.clear();
     this.delegations.clear();
     this.credentials.clear();

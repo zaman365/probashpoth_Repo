@@ -22,6 +22,26 @@ import type {
   VerifiedJob,
 } from '@probash/domain';
 import type { RuleVersion } from '@probash/rules';
+import type {
+  AcademicProfileDto,
+  AlertSubscriptionDto,
+  MatchRecommendationDto,
+  MigrationPassportDto,
+  PreparationTaskDto,
+  ReadinessAssessmentDto,
+  WorkProfileDto,
+  WorkApplicationDto,
+  WorkOfferDecisionDto,
+  WorkOutcomeDto,
+  StudyApplicationDto,
+  StudyOutcomeDto,
+  StudyShortlistDto,
+  ComplaintDto,
+  ComplaintEventDto,
+  HumanReviewDto,
+  HumanReviewDecisionDto,
+  PublicationChangeDto,
+} from '@probash/contracts';
 
 /** Persistence-shaped records. The Postgres driver stores exactly these shapes. */
 
@@ -55,6 +75,8 @@ export interface SessionRecord {
   issuedAt: string;
   expiresAt: string;
   kind: 'self' | 'assisted' | 'delegated' | 'break_glass';
+  /** Set only after the external MFA ceremony succeeds; institutional actions expire it. */
+  mfaSatisfiedAt?: string;
   revokedAt?: string;
 }
 
@@ -78,6 +100,39 @@ export interface ProfileRecord {
   ageYears?: number;
   locale: Locale;
   updatedAt: string;
+}
+
+/** Blueprint §6/§127 — one shared Passport with independent Work and Study profiles. */
+export type MigrationPassportRecord = MigrationPassportDto;
+export type WorkProfileRecord = WorkProfileDto;
+export type AcademicProfileRecord = AcademicProfileDto;
+export type ReadinessAssessmentRecord = ReadinessAssessmentDto;
+export type PreparationTaskRecord = PreparationTaskDto;
+export type AlertSubscriptionRecord = AlertSubscriptionDto;
+export type WorkApplicationRecord = WorkApplicationDto;
+export type WorkOfferDecisionRecord = WorkOfferDecisionDto;
+export type WorkOutcomeRecord = WorkOutcomeDto;
+export type StudyApplicationRecord = StudyApplicationDto;
+export type StudyOutcomeRecord = StudyOutcomeDto;
+export type StudyShortlistRecord = StudyShortlistDto;
+export type ComplaintRecord = Omit<ComplaintDto, 'events'>;
+export type ComplaintEventRecord = ComplaintEventDto;
+export type HumanReviewRecord = HumanReviewDto;
+export type HumanReviewDecisionRecord = HumanReviewDecisionDto;
+export type PublicationChangeRecord = PublicationChangeDto;
+
+export interface RecommendationSetRecord {
+  id: string;
+  userId: string;
+  passportVersion: number;
+  engineVersion: string;
+  work: MatchRecommendationDto[];
+  study: MatchRecommendationDto[];
+  comparison: {
+    genericWinner: null;
+    noteKey: 'passport.comparisonNote';
+  };
+  createdAt: string;
 }
 
 export interface CountryRecord extends Country {

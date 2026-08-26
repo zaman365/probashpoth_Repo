@@ -1,7 +1,7 @@
 # Data model
 
 The full entity set is defined as explicit SQL in
-`apps/api/src/storage/postgres/migrations/0001_init.sql` (§45). The in-memory
+`apps/api/src/storage/postgres/migrations/` (§45). The in-memory
 development driver stores the same record shapes, defined in
 `apps/api/src/storage/records.ts`, behind the same `Storage` port (ADR 0001).
 
@@ -19,6 +19,11 @@ country ──< regulatory_source ──< source_snapshot        (provenance, ha
 occupation ──┴──< job ──< organization          │        (employer, recruiter + licence)
                     │                           │
 app_user ──< identity_profile                   │
+   │  ├── migration_passport ──< passport_fact  │        (shared, versioned facts)
+   │  ├── work_profile                          │        (independent Work evidence)
+   │  ├── academic_profile                      │        (independent Study evidence)
+   │  ├── readiness_assessment ──< preparation_task
+   │  ├── recommendation_set ──< alert_subscription
    │  │                                         │
    │  ├──< consent ──< delegation               │        (family co-pilot, revocable)
    │  ├──< document ──< document_share          │        (scoped, expiring, audited)

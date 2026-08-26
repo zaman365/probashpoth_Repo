@@ -12,6 +12,10 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { DocumentsModule } from './modules/documents/documents.module';
 import { ScannerModule } from './modules/scanner/scanner.module';
 import { DelegationsModule } from './modules/delegations/delegations.module';
+import { PassportModule } from './modules/passport/passport.module';
+import { WorkModule } from './modules/work/work.module';
+import { StudyModule } from './modules/study/study.module';
+import { OperationsModule } from './modules/operations/operations.module';
 
 /**
  * Bounded contexts as Nest modules (§44, ADR 0001). Modules talk through services
@@ -29,6 +33,10 @@ export class AppModule {
         DelegationsModule,
         CatalogueModule,
         EligibilityModule,
+        PassportModule,
+        WorkModule,
+        StudyModule,
+        OperationsModule,
         JobsModule,
         CasesModule,
         DocumentsModule,

@@ -16,6 +16,8 @@ describe('event taxonomy', () => {
       'MilestoneVerified',
       'SettlementReleased',
       'RiskSignalRaised',
+      'PassportReadinessAssessed',
+      'PassportMatchesGenerated',
     ]) {
       expect(EVENT_NAMES).toContain(name);
     }

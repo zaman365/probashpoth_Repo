@@ -3,17 +3,19 @@ import type { Env } from '@probash/config';
 import { InvariantViolatedError } from '@probash/domain';
 import { STORAGE, type Storage } from '../storage/ports';
 import { MemoryStorage } from '../storage/memory/memory-storage';
+import { PostgresStorage } from '../storage/postgres/postgres-storage';
 import { ENV } from './tokens';
 import { AuditService } from './audit.service';
 import { EventOutboxService } from './event-outbox.service';
 import { ClockService } from './clock.service';
 
-function createStorage(env: Env): Storage {
+async function createStorage(env: Env): Promise<Storage> {
   if (env.STORAGE_DRIVER === 'memory') return new MemoryStorage();
-  // ADR 0001: the flag fails loudly instead of silently degrading.
+  if (env.STORAGE_DRIVER === 'postgres' && env.DATABASE_URL && env.FIELD_ENCRYPTION_KEY) {
+    return PostgresStorage.connect(env.DATABASE_URL, env.FIELD_ENCRYPTION_KEY);
+  }
   throw new InvariantViolatedError(
-    'STORAGE_DRIVER=postgres is not wired yet — see apps/api/src/storage/postgres/README.md',
-    { driver: env.STORAGE_DRIVER },
+    'PostgreSQL storage requires valid DATABASE_URL and FIELD_ENCRYPTION_KEY values',
   );
 }
 
@@ -25,7 +27,9 @@ export class CoreModule {
       module: CoreModule,
       providers: [
         { provide: ENV, useValue: env },
-        { provide: STORAGE, useValue: storage ?? createStorage(env) },
+        storage
+          ? { provide: STORAGE, useValue: storage }
+          : { provide: STORAGE, useFactory: () => createStorage(env) },
         AuditService,
         EventOutboxService,
         ClockService,

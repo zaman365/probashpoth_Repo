@@ -157,21 +157,23 @@ export default async function StudyHub({ params }: { params: Promise<{ locale: s
       <Section surface="default" title={t('intent.coursesAvailable')}>
         <Grid min={300}>
           {courses.map((course) => (
-            <Card key={course.id}>
-              <h3 className="card-title">{pick(course.title, locale)}</h3>
-              <p className="muted">{institutionName(course.institutionId)}</p>
-              <div className="flex flex-wrap gap-2">
-                <Badge tone="neutral">{course.degreeLevel}</Badge>
-                <Badge tone="neutral">{course.durationMonths}</Badge>
-              </div>
-              <p className="amount" style={{ fontSize: 'var(--font-size-title)' }}>
-                {money(course.tuition, locale)}
-              </p>
-              {course.languageRequirement ? (
-                <p className="muted">{pick(course.languageRequirement, locale)}</p>
-              ) : null}
-              <Badge tone="danger">{t('common.demoDataWarning')}</Badge>
-            </Card>
+            <Link key={course.id} href={`/${seg}/programs/${course.id}`} className="guide-link">
+              <Card interactive>
+                <h3 className="card-title">{pick(course.title, locale)}</h3>
+                <p className="muted">{institutionName(course.institutionId)}</p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge tone="neutral">{course.degreeLevel}</Badge>
+                  <Badge tone="neutral">{course.durationMonths}</Badge>
+                </div>
+                <p className="amount" style={{ fontSize: 'var(--font-size-title)' }}>
+                  {money(course.tuition, locale)}
+                </p>
+                {course.languageRequirement ? (
+                  <p className="muted">{pick(course.languageRequirement, locale)}</p>
+                ) : null}
+                <Badge tone="danger">{t('common.demoDataWarning')}</Badge>
+              </Card>
+            </Link>
           ))}
         </Grid>
       </Section>
