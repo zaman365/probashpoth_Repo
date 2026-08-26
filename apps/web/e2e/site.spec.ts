@@ -8,10 +8,10 @@ import { expect, test } from '@playwright/test';
 
 test('the landing page leads with the product promise and both primary CTAs', async ({ page }) => {
   await page.goto('/bn');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('যাচাই করুন');
-  await expect(page.getByRole('link', { name: /একটি চাকরি বা ভিসা যাচাই করুন/ })).toBeVisible();
-  // The second call to action follows the selected path (work by default).
-  await expect(page.getByRole('link', { name: /কাজের পথ দেখুন/ }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('আপনার যাত্রা');
+  await expect(page.locator('.hero-choice-card-work')).toContainText('বিদেশে চাকরি');
+  await expect(page.locator('.hero-choice-card-study')).toContainText('বিদেশে উচ্চশিক্ষা');
+  await expect(page.getByRole('link', { name: /আমার যাত্রা শুরু করুন/ })).toBeVisible();
 });
 
 test('the seven worker actions sit above everything a visitor merely reads (§15)', async ({

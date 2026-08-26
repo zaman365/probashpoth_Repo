@@ -5,7 +5,6 @@ import {
   ChipLink,
   Disclosure,
   FeaturePill,
-  GlassCard,
   Icon,
   Reveal,
 } from '@probash/web-ui';
@@ -190,7 +189,7 @@ export default async function Landing({
               <div className="hero-grid">
                 <div className="hero-copy">
                   <Reveal index={0}>
-                    <span className="hero-eyebrow">{t('site.tagline')}</span>
+                    <span className="hero-eyebrow">{t('experience.heroWelcomeEyebrow')}</span>
                   </Reveal>
                   <Reveal index={1}>
                     <h1 id="experience-hero-title" className="hero-title">
@@ -203,15 +202,15 @@ export default async function Landing({
 
                   <Reveal index={3}>
                     <div className="hero-actions">
-                      <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
-                        {t('site.heroVerifyCta')}
+                      <ChipLink href={`/${seg}/onboarding`} chip={<Icon name="arrow" size={18} />}>
+                        {t('experience.heroStartCta')}
                       </ChipLink>
                       <Link
                         href={`/${seg}/countries`}
                         className="experience-btn experience-btn-ghost"
                       >
                         <Icon name="globe" size={20} />
-                        <span>{t('experience.exploreRoutes')}</span>
+                        <span>{t('experience.heroExploreCta')}</span>
                       </Link>
                     </div>
                   </Reveal>
@@ -243,53 +242,72 @@ export default async function Landing({
                 </div>
 
                 <Reveal index={2} className="hero-side">
-                  <GlassCard as="article">
-                    <span className="hero-side-icon" aria-hidden="true">
-                      <Icon name="verify" size={22} />
-                    </span>
-                    <h2 id="quick-check-title" className="hero-side-title">
-                      {t('experience.checkTitle')}
-                    </h2>
-                    <p>{t('experience.checkBody')}</p>
+                  <aside className="hero-journey-panel" aria-labelledby="hero-choice-title">
+                    <div className="hero-choice-heading">
+                      <span>{t('experience.heroChoiceEyebrow')}</span>
+                      <h2 id="hero-choice-title">{t('experience.heroChoiceTitle')}</h2>
+                    </div>
 
-                    <form action={`/${seg}/verify`} method="get" className="hero-verify-form">
-                      <label htmlFor="hero-public-id" className="hero-verify-label">
-                        {t('scanner.publicIdLabel')}
-                      </label>
-                      <div className="hero-verify-row">
-                        <input
-                          id="hero-public-id"
-                          name="publicId"
-                          className="hero-verify-input"
-                          placeholder="BD-QA-2026-00000000"
-                          autoComplete="off"
-                        />
-                        <button type="submit" className="pui-btn pui-btn-primary pui-btn-md">
-                          {t('scanner.checkNow')}
-                        </button>
-                      </div>
-                    </form>
+                    <div className="hero-choice-grid">
+                      <Link
+                        href={`/${seg}/work`}
+                        className="hero-choice-card hero-choice-card-work"
+                      >
+                        <span className="hero-choice-icon" aria-hidden="true">
+                          <Icon name="work" size={25} />
+                        </span>
+                        <span className="hero-choice-copy">
+                          <strong>{t('experience.heroWorkTitle')}</strong>
+                          <span>{t('experience.heroWorkBody')}</span>
+                          <span className="hero-choice-facts">
+                            <span>
+                              <b>{workRoutes.length}</b> {t('intent.routesFor')}
+                            </span>
+                            <span>
+                              <b>{distinctCountries(workRoutes)}</b> {t('site.statCountries')}
+                            </span>
+                            <span>
+                              <b>{jobs}</b> {t('site.statJobs')}
+                            </span>
+                          </span>
+                        </span>
+                        <span className="hero-choice-arrow" aria-hidden="true">
+                          <Icon name="arrow" size={20} />
+                        </span>
+                      </Link>
 
-                    <dl className="hero-side-stats">
-                      <div>
-                        <dt>{t('intent.routesFor')}</dt>
-                        <dd>{intent === 'study' ? studyRoutes.length : workRoutes.length}</dd>
-                      </div>
-                      <div>
-                        <dt>{t('site.statCountries')}</dt>
-                        <dd>{distinctCountries(intent === 'study' ? studyRoutes : workRoutes)}</dd>
-                      </div>
-                      <div>
-                        <dt>{intent === 'study' ? t('site.studyCourses') : t('site.statJobs')}</dt>
-                        <dd>{intent === 'study' ? courses : jobs}</dd>
-                      </div>
-                    </dl>
+                      <Link
+                        href={`/${seg}/study`}
+                        className="hero-choice-card hero-choice-card-study"
+                      >
+                        <span className="hero-choice-icon" aria-hidden="true">
+                          <Icon name="study" size={25} />
+                        </span>
+                        <span className="hero-choice-copy">
+                          <strong>{t('experience.heroStudyTitle')}</strong>
+                          <span>{t('experience.heroStudyBody')}</span>
+                          <span className="hero-choice-facts">
+                            <span>
+                              <b>{studyRoutes.length}</b> {t('intent.routesFor')}
+                            </span>
+                            <span>
+                              <b>{distinctCountries(studyRoutes)}</b> {t('site.statCountries')}
+                            </span>
+                            <span>
+                              <b>{courses}</b> {t('site.studyCourses')}
+                            </span>
+                          </span>
+                        </span>
+                        <span className="hero-choice-arrow" aria-hidden="true">
+                          <Icon name="arrow" size={20} />
+                        </span>
+                      </Link>
+                    </div>
 
-                    <p className="hero-warning">
-                      <Icon name="warning" size={18} />
-                      <span>{t('cost.payOnlyHere')}</span>
-                    </p>
-                  </GlassCard>
+                    <Link href={`/${seg}/onboarding`} className="hero-choice-both">
+                      {t('experience.heroBothCta')} <Icon name="arrow" size={17} />
+                    </Link>
+                  </aside>
                 </Reveal>
               </div>
 

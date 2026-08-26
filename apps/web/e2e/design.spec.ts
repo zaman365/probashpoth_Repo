@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
  * survive a phone with no JavaScript and a user who has asked for less motion.
  */
 
-test('the hero carries the work/study switch in its top corner', async ({ page }) => {
+test('the hero carries the compact work/study switch at its foot', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/bn?intent=study');
 
@@ -14,24 +14,14 @@ test('the hero carries the work/study switch in its top corner', async ({ page }
   const heroSwitch = canvas.locator('.intent-switch');
   await expect(heroSwitch).toHaveCount(1);
   await expect(heroSwitch.locator('.is-selected')).toContainText('বিদেশে পড়াশোনা');
-
-  // Top corner: right-aligned inside the canvas, above the headline.
-  const canvasBox = await canvas.boundingBox();
-  const switchBox = await heroSwitch.boundingBox();
-  const headline = await canvas.getByRole('heading', { level: 1 }).boundingBox();
-  const canvasRight = (canvasBox?.x ?? 0) + (canvasBox?.width ?? 0);
-  const switchRight = (switchBox?.x ?? 0) + (switchBox?.width ?? 0);
-  expect(canvasRight - switchRight).toBeLessThan(80);
-  expect(switchBox?.y ?? 0).toBeLessThan(headline?.y ?? 0);
 });
 
-test('the hero figures follow the selected path', async ({ page }) => {
-  await page.goto('/en?intent=work');
-  const stats = page.locator('.hero-side-stats');
-  await expect(stats).toContainText('Verified job');
-
-  await page.goto('/en?intent=study');
-  await expect(page.locator('.hero-side-stats')).toContainText('Courses');
+test('the hero keeps both destinations visible', async ({ page }) => {
+  await page.goto('/en');
+  await expect(page.locator('.hero-choice-card-work')).toContainText('Work abroad');
+  await expect(page.locator('.hero-choice-card-study')).toContainText('Study abroad');
+  await expect(page.locator('.hero-choice-card-work')).toContainText('Demo jobs');
+  await expect(page.locator('.hero-choice-card-study')).toContainText('Courses');
 });
 
 test('the hero renders on the painted canvas with its controls', async ({ page }) => {
@@ -39,10 +29,10 @@ test('the hero renders on the painted canvas with its controls', async ({ page }
   const canvas = page.locator('.pui-canvas').first();
   await expect(canvas).toBeVisible();
   await expect(canvas.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(canvas.locator('.pui-chip-link')).toHaveCount(2);
+  await expect(canvas.locator('.pui-chip-link')).toHaveCount(1);
   await expect(canvas.locator('.pui-feature-pill')).toHaveCount(3);
-  await expect(canvas.locator('.pui-glass')).toHaveCount(1);
-  await expect(canvas.locator('.hero-warning')).toBeVisible();
+  await expect(canvas.locator('.hero-choice-card')).toHaveCount(2);
+  await expect(canvas.locator('.hero-warning')).toHaveCount(0);
 });
 
 test('controls follow the device sizing rule', async ({ page }) => {
@@ -52,7 +42,7 @@ test('controls follow the device sizing rule', async ({ page }) => {
   const coarse = await page.evaluate(() => matchMedia('(pointer: coarse)').matches);
   const floor = coarse ? 48 : 44;
 
-  for (const selector of ['.pui-chip-link', '.hero-verify-input', '.hero-verify-row button']) {
+  for (const selector of ['.pui-chip-link', '.hero-choice-card', '.intent-switch-option']) {
     const box = await page.locator(selector).first().boundingBox();
     expect(
       box?.height ?? 0,
@@ -88,14 +78,11 @@ test('the worker action tiles keep their weight on every device (§15)', async (
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('the hero verification form still answers (§15)', async ({ page }) => {
+  test('the hero opens the work journey without scripting (§15)', async ({ page }) => {
     await page.goto('/bn');
-    await page.getByLabel('যাচাই নম্বর').fill('BD-QA-2026-00482915');
-    await page.getByRole('button', { name: 'এখনই যাচাই করুন' }).click();
-
-    // A well-formed id lands on the page built to answer it.
-    await expect(page).toHaveURL(/\/bn\/verify\/job\/BD-QA-2026-00482915$/);
-    await expect(page.getByText('যাচাইকৃত চাকরি').first()).toBeVisible();
+    await page.locator('.hero-choice-card-work').click();
+    await expect(page).toHaveURL(/\/bn\/work$/);
+    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
   });
 
   test('an id that is not in our records is still answered server-side', async ({ page }) => {
