@@ -39,7 +39,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
       <Container width="site">
         <div className="site-header-row">
           <Link href={`/${seg}`} className="site-brand">
-            <LogoMark />
+            <LogoMark size={40} />
             <span className="site-brand-copy">
               <strong>{productName}</strong>
               <small>{t('site.tagline')}</small>
