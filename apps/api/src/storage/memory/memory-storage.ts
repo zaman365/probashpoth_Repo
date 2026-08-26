@@ -46,6 +46,7 @@ export class MemoryStorage implements Storage {
   readonly jobs;
   readonly feeRules;
   readonly institutions;
+  readonly countryProfiles;
   readonly courses;
 
   readonly cases = new MemoryCollection<CaseRecord>('case');
@@ -78,6 +79,7 @@ export class MemoryStorage implements Storage {
     this.jobs = new MemoryCollection('job', seed.jobs);
     this.feeRules = new MemoryCollection('fee_rule', seed.feeRules);
     this.institutions = new MemoryCollection('institution', seed.institutions);
+    this.countryProfiles = new MemoryCollection('country_profile', seed.countryProfiles);
     this.courses = new MemoryCollection('course', seed.courses);
   }
 

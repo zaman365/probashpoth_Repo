@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { NotFoundError } from '@probash/domain';
 import { CatalogueService } from './catalogue.service';
 
 @ApiTags('catalogue')
@@ -34,6 +35,13 @@ export class CatalogueController {
   @Get('routes/:id')
   async route(@Param('id') id: string) {
     return this.catalogue.getRoute(id);
+  }
+
+  @Get('countries/:code/profile')
+  async countryProfile(@Param('code') code: string) {
+    const profile = await this.catalogue.getCountryProfile(code);
+    if (!profile) throw new NotFoundError('country_profile', code.toUpperCase());
+    return profile;
   }
 
   @Get('occupations')

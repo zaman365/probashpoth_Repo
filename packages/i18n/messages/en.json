@@ -499,5 +499,18 @@
     "coursesAvailable": "Courses and institutions",
     "testsNeeded": "Exams you may need",
     "testsNote": "Which exam applies depends on the route and the institution. This list is orientation only — confirm the requirement on the institution's own official source."
+  },
+  "vault": {
+    "title": "{country} — full information vault",
+    "visas": "Visa and permit types",
+    "keyFacts": "Key figures and thresholds",
+    "keyFactsLead": "Every figure carries the official source it came from and the year it applied to.",
+    "steps": "The process, step by step",
+    "documents": "Documents you will need",
+    "risks": "Risks on this path",
+    "asOf": "Applies to",
+    "notConfirmed": "Not confirmed yet",
+    "pathNotVerified": "This path has not been verified for this country yet.",
+    "researchNote": "This information was gathered from official sources but has not yet been reviewed by a person. Check the source link yourself before paying anyone."
   }
 }

@@ -30,7 +30,9 @@ test('a country guide shows routes, jobs and the official sources behind them', 
   await page.goto('/bn/countries/qa');
   const main = page.locator('#main');
   await expect(main.getByRole('heading', { name: 'কাতার', level: 1 })).toBeVisible();
-  await expect(main.getByRole('heading', { name: 'এই দেশে যাওয়ার পথ' })).toBeVisible();
+  await expect(
+    main.getByRole('heading', { name: 'এই দেশে যাওয়ার পথ', exact: true }),
+  ).toBeVisible();
   await expect(main.getByRole('heading', { name: 'এই দেশে যাচাইকৃত চাকরি' })).toBeVisible();
   await expect(main.getByRole('heading', { name: 'এই তথ্যের সরকারি উৎস' })).toBeVisible();
 });

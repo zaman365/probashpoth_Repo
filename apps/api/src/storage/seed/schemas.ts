@@ -341,6 +341,52 @@ export const feeRulesFileSchema = z.object({
   ),
 });
 
+/**
+ * §14.1 — the per-country information vault.
+ *
+ * A figure only exists here with the source it came from and the year it applied to.
+ * Anything that could not be confirmed is `needs_verification` with a null value, so
+ * the UI can say "we do not know this yet" instead of the platform guessing (ADR 0003).
+ */
+const vaultFactSchema = z.object({
+  label: localized,
+  value: z.string().min(1).nullable(),
+  sourceId: z.string(),
+  status: z.enum(['researched', 'needs_verification']),
+  asOf: z.string().optional(),
+  note: localized.optional(),
+});
+
+const vaultVisaSchema = z.object({
+  key: z.string(),
+  name: localized,
+  who: localized,
+  requirements: z.array(localized),
+  sourceId: z.string(),
+});
+
+const vaultPathSchema = z.object({
+  available: z.boolean(),
+  summary: localized,
+  visas: z.array(vaultVisaSchema),
+  keyFacts: z.array(vaultFactSchema),
+  steps: z.array(localized),
+  documents: z.array(localized),
+  risks: z.array(localized),
+});
+
+export const countryProfilesFileSchema = z.object({
+  profiles: z.array(
+    z.object({
+      countryCode: z.string().length(2),
+      verifiedAt: z.string(),
+      verifiedBy: z.string(),
+      sources: z.array(z.string()).min(1),
+      paths: z.object({ work: vaultPathSchema, study: vaultPathSchema }),
+    }),
+  ),
+});
+
 export const institutionsFileSchema = z.object({
   institutions: z.array(
     z.object({

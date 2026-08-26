@@ -2,6 +2,7 @@ import { NotFoundError } from '@probash/domain';
 import type { Ledger } from '@probash/ledger';
 import type {
   AuditEventRecord,
+  CountryProfileRecord,
   CaseMilestoneRecord,
   CaseRecord,
   CaseTaskRecord,
@@ -64,6 +65,7 @@ export interface Storage {
   jobs: Collection<JobRecord>;
   feeRules: Collection<FeeRuleRecord>;
   institutions: Collection<InstitutionRecord>;
+  countryProfiles: Collection<CountryProfileRecord>;
   courses: Collection<CourseRecord>;
 
   cases: Collection<CaseRecord>;

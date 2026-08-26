@@ -4,6 +4,17 @@
  */
 import { loadSeed } from './load-seed';
 
+type Seed = ReturnType<typeof loadSeed>;
+
+const allFacts = (seed: Seed) =>
+  seed.countryProfiles.flatMap((profile) =>
+    Object.values(profile.paths).flatMap((path) => path.keyFacts),
+  );
+
+const countedFacts = (seed: Seed) => allFacts(seed).filter((f) => f.status === 'researched').length;
+const pendingFacts = (seed: Seed) =>
+  allFacts(seed).filter((f) => f.status === 'needs_verification').length;
+
 function main(): void {
   const seed = loadSeed();
   const publishedRoutes = seed.routeVersions.filter((r) => r.publicationStatus === 'published');
@@ -21,6 +32,7 @@ function main(): void {
     `fee rules:        ${seed.feeRules.length}`,
     `institutions:     ${seed.institutions.length}`,
     `courses:          ${seed.courses.length}`,
+    `country vaults:   ${seed.countryProfiles.length} (${countedFacts(seed)} facts, ${pendingFacts(seed)} awaiting verification)`,
   ];
 
   console.log(

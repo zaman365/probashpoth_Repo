@@ -1,0 +1,2138 @@
+{
+  "$comment": "Country info vaults (§14.1). Figures are researched from the official source cited on each entry and carry the year they applied to; anything that could not be confirmed is status 'needs_verification' with no value rather than a guess (ADR 0003). verifiedBy is 'research:not-human-verified' until a human reviews it.",
+  "profiles": [
+    {
+      "countryCode": "DE",
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified",
+      "sources": [
+        "src_de_make_it",
+        "src_de_embassy_dhaka"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "জার্মানিতে কাজের পথ যোগ্যতার স্বীকৃতির উপর দাঁড়ানো। আপনার ডিপ্লোমা বা ডিগ্রি জার্মানিতে স্বীকৃত হলে দক্ষ কর্মীর ভিসা, উঁচু বেতনে ইইউ ব্লু কার্ড, আর চাকরি ছাড়া এসে খোঁজার জন্য সুযোগ কার্ড — তিনটি আলাদা দরজা।",
+            "en": "Germany's work path rests on recognition of your qualification. If your diploma or degree is recognised in Germany there is the skilled worker visa; at higher salaries the EU Blue Card; and the Opportunity Card for coming to look for work. Three separate doors."
+          },
+          "visas": [
+            {
+              "key": "skilled_worker",
+              "name": {
+                "bn": "দক্ষ কর্মী ভিসা",
+                "en": "Skilled worker visa"
+              },
+              "who": {
+                "bn": "যাঁদের বৃত্তিমূলক বা উচ্চশিক্ষার যোগ্যতা জার্মানিতে স্বীকৃত এবং হাতে চাকরির প্রস্তাব আছে।",
+                "en": "People whose vocational or academic qualification is recognised in Germany and who hold a job offer."
+              },
+              "requirements": [
+                {
+                  "bn": "যোগ্যতার স্বীকৃতি (Anerkennung)",
+                  "en": "Recognition of the qualification (Anerkennung)"
+                },
+                {
+                  "bn": "জার্মান নিয়োগকর্তার চাকরির চুক্তি",
+                  "en": "An employment contract with a German employer"
+                },
+                {
+                  "bn": "পেশা অনুযায়ী জার্মান ভাষার স্তর",
+                  "en": "The German level the occupation requires"
+                }
+              ],
+              "sourceId": "src_de_make_it"
+            },
+            {
+              "key": "eu_blue_card",
+              "name": {
+                "bn": "ইইউ ব্লু কার্ড",
+                "en": "EU Blue Card"
+              },
+              "who": {
+                "bn": "বিশ্ববিদ্যালয় ডিগ্রিধারী, যাঁদের চাকরির বেতন নির্ধারিত সীমার উপরে।",
+                "en": "University graduates whose job pays above the set salary threshold."
+              },
+              "requirements": [
+                {
+                  "bn": "স্বীকৃত বিশ্ববিদ্যালয় ডিগ্রি",
+                  "en": "A recognised university degree"
+                },
+                {
+                  "bn": "বেতনসীমা পূরণ করে এমন চাকরির চুক্তি",
+                  "en": "A contract meeting the salary threshold"
+                }
+              ],
+              "sourceId": "src_de_make_it"
+            },
+            {
+              "key": "opportunity_card",
+              "name": {
+                "bn": "সুযোগ কার্ড (Chancenkarte)",
+                "en": "Opportunity Card (Chancenkarte)"
+              },
+              "who": {
+                "bn": "চাকরি হাতে না থাকলেও যাঁরা জার্মানিতে এসে খুঁজতে চান — পয়েন্ট ব্যবস্থার শর্ত পূরণ সাপেক্ষে।",
+                "en": "People without a job offer who want to search from inside Germany, subject to the points system."
+              },
+              "requirements": [
+                {
+                  "bn": "স্বীকৃত যোগ্যতা, অথবা পয়েন্ট ব্যবস্থায় কমপক্ষে ৬ পয়েন্ট",
+                  "en": "A recognised qualification, or at least 6 points in the points system"
+                },
+                {
+                  "bn": "চাকরি খোঁজার সময়ের খরচের প্রমাণ",
+                  "en": "Proof of funds for the job-search period"
+                }
+              ],
+              "sourceId": "src_de_embassy_dhaka"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "ইইউ ব্লু কার্ড — সাধারণ বেতনসীমা",
+                "en": "EU Blue Card — standard salary threshold"
+              },
+              "value": "€50,700 / year",
+              "sourceId": "src_de_make_it",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "বছরে বদলায়। আবেদনের আগে সর্বশেষ অঙ্ক দেখে নিন।",
+                "en": "Changes yearly. Check the current figure before applying."
+              }
+            },
+            {
+              "label": {
+                "bn": "ইইউ ব্লু কার্ড — ঘাটতি পেশা ও নতুন স্নাতক",
+                "en": "EU Blue Card — shortage occupations and new entrants"
+              },
+              "value": "€45,934.20 / year",
+              "sourceId": "src_de_make_it",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "আইটি পেশায় প্রাসঙ্গিক অভিজ্ঞতা থাকলে ডিগ্রি ছাড়াও এই সীমা প্রযোজ্য হতে পারে।",
+                "en": "In IT roles this threshold can also apply on the basis of relevant experience."
+              }
+            },
+            {
+              "label": {
+                "bn": "সুযোগ কার্ড — পয়েন্ট",
+                "en": "Opportunity Card — points"
+              },
+              "value": "6+ points",
+              "sourceId": "src_de_make_it",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "বয়স, ভাষা, অভিজ্ঞতা ও জার্মানিতে আগের অবস্থান পয়েন্টে গণনা হয়।",
+                "en": "Age, language, experience and previous stays in Germany all count."
+              }
+            },
+            {
+              "label": {
+                "bn": "সুযোগ কার্ড — মাসিক খরচের প্রমাণ",
+                "en": "Opportunity Card — monthly funds"
+              },
+              "value": "€1,091 / month",
+              "sourceId": "src_de_embassy_dhaka",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "ব্লকড অ্যাকাউন্ট বা আনুষ্ঠানিক দায়বদ্ধতাপত্রের মাধ্যমে দেখানো যায়।",
+                "en": "Shown through a blocked account or a formal declaration of commitment."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "যোগ্যতার স্বীকৃতির পথ ঠিক করুন (Anerkennung)",
+              "en": "Establish the recognition route for your qualification"
+            },
+            {
+              "bn": "পেশার জন্য প্রয়োজনীয় জার্মান ভাষার স্তর অর্জন করুন",
+              "en": "Reach the German level your occupation requires"
+            },
+            {
+              "bn": "নিয়োগকর্তা খুঁজে চুক্তি নিন",
+              "en": "Find an employer and obtain a contract"
+            },
+            {
+              "bn": "ঢাকায় দূতাবাসের অ্যাপয়েন্টমেন্ট নিন",
+              "en": "Book the embassy appointment in Dhaka"
+            },
+            {
+              "bn": "ভিসা আবেদন ও কাগজপত্র জমা দিন",
+              "en": "Submit the visa application with the document set"
+            },
+            {
+              "bn": "পৌঁছে নিবন্ধন ও স্বাস্থ্যবিমা সম্পন্ন করুন",
+              "en": "Complete registration and health insurance after arrival"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "শিক্ষাগত ও বৃত্তিমূলক সনদ, ট্রান্সক্রিপ্টসহ",
+              "en": "Education and vocational certificates with transcripts"
+            },
+            {
+              "bn": "স্বীকৃতির সিদ্ধান্তপত্র বা আবেদনের প্রমাণ",
+              "en": "Recognition decision or proof of application"
+            },
+            {
+              "bn": "চাকরির চুক্তি",
+              "en": "Employment contract"
+            },
+            {
+              "bn": "ভাষার সনদ",
+              "en": "Language certificate"
+            },
+            {
+              "bn": "স্বাস্থ্যবিমার প্রমাণ",
+              "en": "Proof of health insurance"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "বেতনসীমা ও ব্লকড অ্যাকাউন্টের অঙ্ক প্রতি বছর বদলায় — পুরোনো তথ্যে সিদ্ধান্ত নেবেন না।",
+              "en": "Salary thresholds and blocked-account amounts change every year — do not decide on old figures."
+            },
+            {
+              "bn": "স্বীকৃতি ছাড়া “চাকরি নিশ্চিত” দাবি করে টাকা চাওয়া হলে সেটি প্রতারণার চিহ্ন।",
+              "en": "A promise of a guaranteed job without recognition, in exchange for money, is a fraud signal."
+            }
+          ]
+        },
+        "study": {
+          "available": true,
+          "summary": {
+            "bn": "জার্মানিতে বেশিরভাগ পাবলিক বিশ্ববিদ্যালয়ে টিউশন ফি নেই বা খুব কম, কিন্তু ভিসার জন্য জীবনযাত্রার খরচ আগেই দেখাতে হয় — সাধারণত ব্লকড অ্যাকাউন্টে।",
+            "en": "Most public universities in Germany charge little or no tuition, but the visa requires you to show living costs up front — usually in a blocked account."
+          },
+          "visas": [
+            {
+              "key": "student_visa",
+              "name": {
+                "bn": "স্টুডেন্ট ভিসা",
+                "en": "Student visa"
+              },
+              "who": {
+                "bn": "যাঁদের হাতে জার্মান বিশ্ববিদ্যালয়ের ভর্তির প্রস্তাব আছে।",
+                "en": "People holding an offer of admission from a German university."
+              },
+              "requirements": [
+                {
+                  "bn": "ভর্তির প্রস্তাব",
+                  "en": "Offer of admission"
+                },
+                {
+                  "bn": "অর্থায়নের প্রমাণ",
+                  "en": "Proof of financing"
+                },
+                {
+                  "bn": "প্রোগ্রামের ভাষা অনুযায়ী জার্মান বা ইংরেজি সনদ",
+                  "en": "German or English certificate, per the programme language"
+                }
+              ],
+              "sourceId": "src_de_embassy_dhaka"
+            },
+            {
+              "key": "language_course_visa",
+              "name": {
+                "bn": "ভাষা কোর্স ভিসা",
+                "en": "Language course visa"
+              },
+              "who": {
+                "bn": "যাঁরা আগে নিবিড় জার্মান কোর্স করতে যাচ্ছেন।",
+                "en": "People going first for an intensive German course."
+              },
+              "requirements": [
+                {
+                  "bn": "কোর্সে ভর্তির নিশ্চয়তা ও অর্থায়নের প্রমাণ",
+                  "en": "Confirmed course enrolment and proof of financing"
+                }
+              ],
+              "sourceId": "src_de_embassy_dhaka"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "ব্লকড অ্যাকাউন্টে ন্যূনতম জমা",
+                "en": "Blocked account — minimum balance"
+              },
+              "value": "€11,904",
+              "sourceId": "src_de_embassy_dhaka",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "১২ মাসের জন্য, ব্যাংক ফি সহ।",
+                "en": "Covers 12 months, including bank fees."
+              }
+            },
+            {
+              "label": {
+                "bn": "মাসিক উত্তোলনের সীমা",
+                "en": "Monthly amount you may withdraw"
+              },
+              "value": "€992 / month",
+              "sourceId": "src_de_embassy_dhaka",
+              "status": "researched",
+              "asOf": "2026"
+            },
+            {
+              "label": {
+                "bn": "বিশ্ববিদ্যালয়ে আবেদন",
+                "en": "University application"
+              },
+              "value": "uni-assist / university portal",
+              "sourceId": "src_de_make_it",
+              "status": "researched",
+              "note": {
+                "bn": "অনেক বিশ্ববিদ্যালয় uni-assist-এর মাধ্যমে বিদেশি সনদ যাচাই করায়।",
+                "en": "Many universities verify foreign certificates through uni-assist."
+              },
+              "asOf": "2026"
+            }
+          ],
+          "steps": [
+            {
+              "bn": "ডিগ্রির সমতা ও ভর্তির যোগ্যতা যাচাই করুন",
+              "en": "Check degree equivalence and admission eligibility"
+            },
+            {
+              "bn": "প্রোগ্রামের ভাষা অনুযায়ী পরীক্ষা দিন",
+              "en": "Take the exam the programme language requires"
+            },
+            {
+              "bn": "বিশ্ববিদ্যালয়ে আবেদন করে ভর্তির প্রস্তাব নিন",
+              "en": "Apply and obtain the offer of admission"
+            },
+            {
+              "bn": "ব্লকড অ্যাকাউন্ট খুলে টাকা জমা দিন",
+              "en": "Open a blocked account and deposit the funds"
+            },
+            {
+              "bn": "দূতাবাসের অ্যাপয়েন্টমেন্ট ও ভিসা আবেদন",
+              "en": "Embassy appointment and visa application"
+            },
+            {
+              "bn": "পৌঁছে নিবন্ধন, বিমা ও এনরোলমেন্ট",
+              "en": "Registration, insurance and enrolment after arrival"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "এসএসসি, এইচএসসি ও স্নাতকের সনদ ও ট্রান্সক্রিপ্ট",
+              "en": "SSC, HSC and degree certificates with transcripts"
+            },
+            {
+              "bn": "ভর্তির প্রস্তাব",
+              "en": "Offer of admission"
+            },
+            {
+              "bn": "ব্লকড অ্যাকাউন্টের নিশ্চয়তাপত্র",
+              "en": "Blocked account confirmation"
+            },
+            {
+              "bn": "ভাষার সনদ",
+              "en": "Language certificate"
+            },
+            {
+              "bn": "স্বাস্থ্যবিমা",
+              "en": "Health insurance"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "টিউশন বা ব্লকড অ্যাকাউন্টের টাকা কখনো ব্যক্তিগত অ্যাকাউন্টে পাঠাবেন না।",
+              "en": "Never send tuition or blocked-account money to a personal account."
+            },
+            {
+              "bn": "ব্যাংক স্টেটমেন্ট বানিয়ে দেওয়ার প্রস্তাব প্রতারণা এবং ভিসা প্রত্যাখ্যানের কারণ।",
+              "en": "Offers to fabricate a bank statement are fraud, and grounds for refusal."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "countryCode": "GB",
+      "sources": [
+        "src_uk_gov"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "যুক্তরাজ্যে কাজের পথ পুরোপুরি স্পনসরনির্ভর: অনুমোদিত লাইসেন্সধারী নিয়োগকর্তা ছাড়া স্কিলড ওয়ার্কার ভিসা হয় না।",
+            "en": "The UK work path is entirely sponsor-based: without a licensed, approved employer there is no Skilled Worker visa."
+          },
+          "visas": [
+            {
+              "key": "skilled_worker",
+              "name": {
+                "bn": "স্কিলড ওয়ার্কার ভিসা",
+                "en": "Skilled Worker visa"
+              },
+              "who": {
+                "bn": "যাঁদের হাতে অনুমোদিত স্পনসরের সার্টিফিকেট অব স্পনসরশিপ আছে।",
+                "en": "People holding a Certificate of Sponsorship from a licensed sponsor."
+              },
+              "requirements": [
+                {
+                  "bn": "যোগ্য পেশা কোড",
+                  "en": "An eligible occupation code"
+                },
+                {
+                  "bn": "সার্টিফিকেট অব স্পনসরশিপ (CoS)",
+                  "en": "A Certificate of Sponsorship (CoS)"
+                },
+                {
+                  "bn": "বেতনসীমা ও পেশার going rate পূরণ",
+                  "en": "Meeting the salary floor and the occupation's going rate"
+                },
+                {
+                  "bn": "ইংরেজি ভাষার শর্ত",
+                  "en": "The English language requirement"
+                }
+              ],
+              "sourceId": "src_uk_gov"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "সাধারণ বেতনসীমা",
+                "en": "Standard salary requirement"
+              },
+              "value": "£41,700 / year",
+              "sourceId": "src_uk_gov",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "অথবা পেশার going rate — যেটি বেশি।",
+                "en": "Or the occupation's going rate, whichever is higher."
+              }
+            },
+            {
+              "label": {
+                "bn": "সর্বনিম্ন বেতন মেঝে",
+                "en": "Absolute salary floor"
+              },
+              "value": "£25,000 / year",
+              "sourceId": "src_uk_gov",
+              "status": "researched",
+              "asOf": "2025",
+              "note": {
+                "bn": "৯ এপ্রিল ২০২৫ থেকে কার্যকর।",
+                "en": "In force since 9 April 2025."
+              }
+            },
+            {
+              "label": {
+                "bn": "ছাড়যোগ্য হার (নতুন স্নাতক/প্রশিক্ষণার্থী)",
+                "en": "Discounted rate (new entrant / trainee)"
+              },
+              "value": "£33,400 / year",
+              "sourceId": "src_uk_gov",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "শর্ত পূরণ হলে going rate-এর ৭০–৯০% পর্যন্ত দেওয়া যায়।",
+                "en": "Where the criteria are met, 70–90% of the going rate may be paid."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "অনুমোদিত স্পনসর প্রতিষ্ঠানে চাকরি খুঁজুন",
+              "en": "Find a job with a licensed sponsor"
+            },
+            {
+              "bn": "সার্টিফিকেট অব স্পনসরশিপ নিন",
+              "en": "Obtain the Certificate of Sponsorship"
+            },
+            {
+              "bn": "ইংরেজি পরীক্ষা সম্পন্ন করুন",
+              "en": "Complete the English test"
+            },
+            {
+              "bn": "অনলাইনে ভিসা আবেদন ও বায়োমেট্রিক",
+              "en": "Apply online and give biometrics"
+            },
+            {
+              "bn": "স্বাস্থ্য সারচার্জ ও ফি পরিশোধ",
+              "en": "Pay the healthcare surcharge and fee"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "সার্টিফিকেট অব স্পনসরশিপ কেনাবেচার প্রস্তাব অবৈধ — এতে ভিসাও বাতিল হয়।",
+              "en": "Being asked to buy a Certificate of Sponsorship is unlawful, and it voids the visa too."
+            },
+            {
+              "bn": "বেতনসীমা ও পেশার তালিকা নিয়মিত বদলায়।",
+              "en": "Salary thresholds and the occupation list change regularly."
+            }
+          ]
+        },
+        "study": {
+          "available": true,
+          "summary": {
+            "bn": "যুক্তরাজ্যে পড়তে হলে লাইসেন্সধারী স্টুডেন্ট স্পনসরের CAS লাগে, আর টিউশনের পাশাপাশি নির্দিষ্ট সময়ের জীবনযাত্রার খরচ দেখাতে হয়।",
+            "en": "Studying in the UK needs a CAS from a licensed student sponsor, plus evidence of living costs alongside tuition."
+          },
+          "visas": [
+            {
+              "key": "student",
+              "name": {
+                "bn": "স্টুডেন্ট ভিসা",
+                "en": "Student visa"
+              },
+              "who": {
+                "bn": "লাইসেন্সধারী প্রতিষ্ঠানে ভর্তি হওয়া শিক্ষার্থীরা।",
+                "en": "Students admitted to a licensed student sponsor."
+              },
+              "requirements": [
+                {
+                  "bn": "CAS (Confirmation of Acceptance for Studies)",
+                  "en": "CAS (Confirmation of Acceptance for Studies)"
+                },
+                {
+                  "bn": "টিউশন ও জীবনযাত্রার খরচের প্রমাণ",
+                  "en": "Proof of tuition and living costs"
+                },
+                {
+                  "bn": "ইংরেজি ভাষার শর্ত",
+                  "en": "The English language requirement"
+                }
+              ],
+              "sourceId": "src_uk_gov"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "জীবনযাত্রার খরচের নির্ধারিত অঙ্ক",
+                "en": "Maintenance funds required"
+              },
+              "value": null,
+              "sourceId": "src_uk_gov",
+              "status": "needs_verification",
+              "note": {
+                "bn": "লন্ডনে ও লন্ডনের বাইরে অঙ্ক আলাদা এবং সময়ে সময়ে বদলায়। আবেদনের আগে GOV.UK থেকে সর্বশেষ অঙ্ক দেখে নিন।",
+                "en": "The amount differs inside and outside London and changes over time. Check the current figure on GOV.UK before applying."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "লাইসেন্সধারী প্রতিষ্ঠানে আবেদন করুন",
+              "en": "Apply to a licensed student sponsor"
+            },
+            {
+              "bn": "অফার গ্রহণ করে CAS নিন",
+              "en": "Accept the offer and obtain the CAS"
+            },
+            {
+              "bn": "ইংরেজি পরীক্ষা ও আর্থিক প্রমাণ প্রস্তুত করুন",
+              "en": "Complete the English test and prepare financial evidence"
+            },
+            {
+              "bn": "ভিসা আবেদন, ফি ও স্বাস্থ্য সারচার্জ",
+              "en": "Apply, and pay the fee and healthcare surcharge"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "শিক্ষাগত সনদ ও ট্রান্সক্রিপ্ট",
+              "en": "Education certificates and transcripts"
+            },
+            {
+              "bn": "ভাষার পরীক্ষার ফল",
+              "en": "Language test result"
+            },
+            {
+              "bn": "আর্থিক সক্ষমতার প্রমাণ",
+              "en": "Proof of financial capacity"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "প্রতিষ্ঠান লাইসেন্সধারী স্পনসর কি না তা GOV.UK-এর তালিকা থেকে যাচাই করুন।",
+              "en": "Check on GOV.UK that the institution is a licensed sponsor."
+            },
+            {
+              "bn": "এজেন্ট “ভিসা নিশ্চিত” বললে সেটিই সবচেয়ে বড় সতর্কতা।",
+              "en": "An agent promising a guaranteed visa is the clearest warning sign."
+            }
+          ]
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "CA",
+      "sources": [
+        "src_ca_ircc"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "কানাডায় কাজের বেশিরভাগ পথ হয় নিয়োগকর্তা-নির্দিষ্ট ওয়ার্ক পারমিট, নয়তো এক্সপ্রেস এন্ট্রির মাধ্যমে স্থায়ী অভিবাসন।",
+            "en": "Most work routes to Canada are either an employer-specific work permit or permanent migration through Express Entry."
+          },
+          "visas": [
+            {
+              "key": "express_entry",
+              "name": {
+                "bn": "এক্সপ্রেস এন্ট্রি",
+                "en": "Express Entry"
+              },
+              "who": {
+                "bn": "যাঁদের শিক্ষা, অভিজ্ঞতা ও ভাষার স্কোর মিলিয়ে পয়েন্ট যথেষ্ট।",
+                "en": "People whose education, experience and language scores add up."
+              },
+              "requirements": [
+                {
+                  "bn": "শিক্ষাগত সনদের মূল্যায়ন (ECA)",
+                  "en": "Educational Credential Assessment (ECA)"
+                },
+                {
+                  "bn": "ভাষার পরীক্ষা",
+                  "en": "Language test"
+                },
+                {
+                  "bn": "NOC/TEER অনুযায়ী কাজের অভিজ্ঞতা",
+                  "en": "Work experience under NOC/TEER"
+                },
+                {
+                  "bn": "তহবিলের প্রমাণ",
+                  "en": "Proof of funds"
+                }
+              ],
+              "sourceId": "src_ca_ircc"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "এক্সপ্রেস এন্ট্রির তহবিলের অঙ্ক",
+                "en": "Express Entry proof of funds"
+              },
+              "value": null,
+              "sourceId": "src_ca_ircc",
+              "status": "needs_verification",
+              "note": {
+                "bn": "পরিবারের সদস্যসংখ্যা অনুযায়ী আলাদা এবং প্রতি বছর হালনাগাদ হয়।",
+                "en": "Varies by family size and is updated every year."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "সনদের মূল্যায়ন (ECA) করান",
+              "en": "Get your credentials assessed (ECA)"
+            },
+            {
+              "bn": "ভাষার পরীক্ষা দিন",
+              "en": "Take the language test"
+            },
+            {
+              "bn": "প্রোফাইল তৈরি করে পুলে ঢুকুন",
+              "en": "Create a profile and enter the pool"
+            },
+            {
+              "bn": "আমন্ত্রণ পেলে আবেদন জমা দিন",
+              "en": "Apply if you receive an invitation"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "চাকরির প্রস্তাব বা পয়েন্ট বাড়িয়ে দেওয়ার বিনিময়ে টাকা চাওয়া প্রতারণা।",
+              "en": "Money demanded in exchange for a job offer or extra points is fraud."
+            }
+          ]
+        },
+        "study": {
+          "available": true,
+          "summary": {
+            "bn": "কানাডায় পড়তে হলে স্বীকৃত (designated) প্রতিষ্ঠানে ভর্তি লাগে, আর টিউশনের বাইরে জীবনযাত্রার খরচ আলাদাভাবে দেখাতে হয়।",
+            "en": "Studying in Canada needs admission to a designated institution, and living costs must be shown separately from tuition."
+          },
+          "visas": [
+            {
+              "key": "study_permit",
+              "name": {
+                "bn": "স্টাডি পারমিট",
+                "en": "Study permit"
+              },
+              "who": {
+                "bn": "স্বীকৃত প্রতিষ্ঠানে ভর্তি হওয়া শিক্ষার্থীরা।",
+                "en": "Students admitted to a designated institution."
+              },
+              "requirements": [
+                {
+                  "bn": "স্বীকৃত প্রতিষ্ঠানের ভর্তি পত্র",
+                  "en": "Letter of acceptance from a designated institution"
+                },
+                {
+                  "bn": "তহবিলের প্রমাণ",
+                  "en": "Proof of funds"
+                },
+                {
+                  "bn": "প্রয়োজনে প্রাদেশিক সত্যায়ন পত্র",
+                  "en": "A provincial attestation letter where required"
+                },
+                {
+                  "bn": "বায়োমেট্রিক ও মেডিকেল",
+                  "en": "Biometrics and medical where required"
+                }
+              ],
+              "sourceId": "src_ca_ircc"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "জীবনযাত্রার খরচ (কুইবেক ছাড়া)",
+                "en": "Living costs (outside Quebec)"
+              },
+              "value": "CAD 20,635 / year",
+              "sourceId": "src_ca_ircc",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "টিউশনের অতিরিক্ত। এক বছরের বেশি প্রোগ্রামে পুরো সময়ের পরিকল্পনাও দেখাতে হয়।",
+                "en": "On top of tuition. Programmes longer than a year also require a plan for the full duration."
+              }
+            },
+            {
+              "label": {
+                "bn": "পড়া শেষে ওয়ার্ক পারমিট (PGWP)",
+                "en": "Post-graduation work permit (PGWP)"
+              },
+              "value": "8+ month programme",
+              "sourceId": "src_ca_ircc",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "প্রোগ্রাম শেষের ১৮০ দিনের মধ্যে আবেদন করতে হয়; ভাষার ফল ও যোগ্য বিষয়ের শর্তও প্রযোজ্য।",
+                "en": "Apply within 180 days of completion; language results and eligible-field rules also apply."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "স্বীকৃত প্রতিষ্ঠান ও প্রোগ্রাম বাছুন",
+              "en": "Choose a designated institution and programme"
+            },
+            {
+              "bn": "ভাষার পরীক্ষা দিন",
+              "en": "Take the language test"
+            },
+            {
+              "bn": "ভর্তি পত্র নিন",
+              "en": "Obtain the letter of acceptance"
+            },
+            {
+              "bn": "তহবিল ও প্রয়োজনীয় প্রাদেশিক কাগজ প্রস্তুত করুন",
+              "en": "Prepare funds and any provincial documents"
+            },
+            {
+              "bn": "স্টাডি পারমিটের আবেদন, বায়োমেট্রিক ও মেডিকেল",
+              "en": "Apply for the study permit, give biometrics and medical"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "শিক্ষাগত সনদ ও ট্রান্সক্রিপ্ট",
+              "en": "Education certificates and transcripts"
+            },
+            {
+              "bn": "ভাষার পরীক্ষার ফল",
+              "en": "Language test result"
+            },
+            {
+              "bn": "আর্থিক সক্ষমতার প্রমাণ",
+              "en": "Proof of financial capacity"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "PGWP-এর যোগ্যতা প্রোগ্রামভেদে আলাদা — ভর্তির আগেই যাচাই করুন।",
+              "en": "PGWP eligibility varies by programme — check before you enrol."
+            },
+            {
+              "bn": "ভুয়া ভর্তি পত্র শনাক্ত হলে দীর্ঘমেয়াদি নিষেধাজ্ঞা আসতে পারে।",
+              "en": "A fake letter of acceptance can lead to a long-term ban."
+            }
+          ]
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "JP",
+      "sources": [
+        "src_jp_isa"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "জাপানে কাজের প্রধান গণপথ নির্দিষ্ট দক্ষ কর্মী (SSW): ক্ষেত্রভিত্তিক দক্ষতা পরীক্ষা ও জাপানি ভাষা — দুটোই লাগে।",
+            "en": "Japan's main work route at scale is Specified Skilled Worker: a field skills test and Japanese language, both required."
+          },
+          "visas": [
+            {
+              "key": "ssw",
+              "name": {
+                "bn": "নির্দিষ্ট দক্ষ কর্মী (SSW)",
+                "en": "Specified Skilled Worker (SSW)"
+              },
+              "who": {
+                "bn": "যাঁরা নির্ধারিত ক্ষেত্রের দক্ষতা পরীক্ষা ও ভাষার শর্ত পূরণ করেন।",
+                "en": "People who pass the field skills test and meet the language requirement."
+              },
+              "requirements": [
+                {
+                  "bn": "ক্ষেত্রভিত্তিক দক্ষতা পরীক্ষা",
+                  "en": "The field-specific skills evaluation test"
+                },
+                {
+                  "bn": "জাপানি ভাষা: JLPT N4 বা JFT-Basic A2",
+                  "en": "Japanese: JLPT N4 or JFT-Basic A2"
+                },
+                {
+                  "bn": "নিয়োগকর্তা ও নিবন্ধিত সহায়তা সংস্থা",
+                  "en": "An employer and a registered support organisation"
+                }
+              ],
+              "sourceId": "src_jp_isa"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "নির্ধারিত ক্ষেত্র",
+                "en": "Specified industry fields"
+              },
+              "value": "19 fields",
+              "sourceId": "src_jp_isa",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "নার্সিং কেয়ার, নির্মাণ, কৃষি, খাদ্য ও পানীয় উৎপাদন, আবাসন, লজিস্টিকসহ মোট ১৯টি ক্ষেত্র।",
+                "en": "Nursing care, construction, agriculture, food and beverage manufacturing, accommodation, logistics and others — 19 in total."
+              }
+            },
+            {
+              "label": {
+                "bn": "ভাষার শর্ত",
+                "en": "Language requirement"
+              },
+              "value": "JLPT N4 or JFT-Basic A2",
+              "sourceId": "src_jp_isa",
+              "status": "researched",
+              "asOf": "2026"
+            }
+          ],
+          "steps": [
+            {
+              "bn": "কোন ক্ষেত্রে যাবেন ঠিক করুন",
+              "en": "Decide which field you are entering"
+            },
+            {
+              "bn": "জাপানি ভাষা JLPT N4 / JFT-Basic A2 অর্জন করুন",
+              "en": "Reach JLPT N4 or JFT-Basic A2"
+            },
+            {
+              "bn": "ক্ষেত্রভিত্তিক দক্ষতা পরীক্ষায় উত্তীর্ণ হন",
+              "en": "Pass the field skills evaluation test"
+            },
+            {
+              "bn": "নিয়োগকর্তা ও সহায়তা সংস্থা নিশ্চিত করুন",
+              "en": "Secure the employer and support organisation"
+            },
+            {
+              "bn": "ভিসা আবেদন ও যাত্রা",
+              "en": "Apply for the visa and travel"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "নিবন্ধিত সহায়তা সংস্থা ছাড়া এই রুটে কাজ করা যায় না — সংস্থার নিবন্ধন যাচাই করুন।",
+              "en": "This route requires a registered support organisation — verify its registration."
+            },
+            {
+              "bn": "পরীক্ষা ছাড়াই SSW ভিসা পাইয়ে দেওয়ার প্রতিশ্রুতি প্রতারণা।",
+              "en": "A promise of an SSW visa without the tests is fraud."
+            }
+          ]
+        },
+        "study": {
+          "available": true,
+          "summary": {
+            "bn": "জাপানে পড়তে হলে প্রতিষ্ঠানের ভর্তি ও খরচ বহনের প্রমাণ লাগে; বেশিরভাগ প্রোগ্রামে জাপানি ভাষার প্রস্তুতি লাগে।",
+            "en": "Studying in Japan needs admission and proof you can cover costs; most programmes need Japanese preparation."
+          },
+          "visas": [
+            {
+              "key": "student",
+              "name": {
+                "bn": "স্টুডেন্ট ভিসা",
+                "en": "Student visa"
+              },
+              "who": {
+                "bn": "জাপানি ভাষা স্কুল, ভোকেশনাল কলেজ বা বিশ্ববিদ্যালয়ে ভর্তি শিক্ষার্থীরা।",
+                "en": "Students admitted to a language school, vocational college or university."
+              },
+              "requirements": [
+                {
+                  "bn": "যোগ্যতার সনদ (COE)",
+                  "en": "Certificate of Eligibility (COE)"
+                },
+                {
+                  "bn": "খরচ বহনের প্রমাণ",
+                  "en": "Proof of ability to cover costs"
+                }
+              ],
+              "sourceId": "src_jp_isa"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "টিউশন ও জীবনযাত্রার আনুমানিক খরচ",
+                "en": "Tuition and living costs"
+              },
+              "value": null,
+              "sourceId": "src_jp_isa",
+              "status": "needs_verification",
+              "note": {
+                "bn": "প্রতিষ্ঠান ও শহরভেদে আলাদা। প্রতিষ্ঠানের অফিসিয়াল তথ্য দেখুন।",
+                "en": "Varies by institution and city. Check the institution's official information."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "প্রতিষ্ঠান ও প্রোগ্রাম বাছুন",
+              "en": "Choose an institution and programme"
+            },
+            {
+              "bn": "জাপানি ভাষার প্রস্তুতি নিন",
+              "en": "Prepare Japanese to the required level"
+            },
+            {
+              "bn": "ভর্তি ও COE-এর আবেদন",
+              "en": "Apply for admission and the COE"
+            },
+            {
+              "bn": "ভিসা আবেদন",
+              "en": "Apply for the visa"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "শিক্ষাগত সনদ ও ট্রান্সক্রিপ্ট",
+              "en": "Education certificates and transcripts"
+            },
+            {
+              "bn": "ভাষার পরীক্ষার ফল",
+              "en": "Language test result"
+            },
+            {
+              "bn": "আর্থিক সক্ষমতার প্রমাণ",
+              "en": "Proof of financial capacity"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "এজেন্টের মাধ্যমে COE “নিশ্চিত” করার দাবি যাচাই করুন — COE ইমিগ্রেশন কর্তৃপক্ষ দেয়।",
+              "en": "Treat any agent guarantee of a COE with suspicion — the COE is issued by the immigration authority."
+            }
+          ]
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "SG",
+      "sources": [
+        "src_sg_mom"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "সিঙ্গাপুরে ওয়ার্ক পারমিট খাতভিত্তিক: নিয়োগকর্তার কোটা ও লেভি, উৎস-দেশের যোগ্যতা এবং পেশার তালিকা — সব একসাথে মিলতে হয়।",
+            "en": "Singapore Work Permits are sector-based: employer quota and levy, source-country eligibility and the occupation list must all line up."
+          },
+          "visas": [
+            {
+              "key": "work_permit",
+              "name": {
+                "bn": "ওয়ার্ক পারমিট",
+                "en": "Work Permit"
+              },
+              "who": {
+                "bn": "নির্মাণ, উৎপাদন, মেরিন, সেবা ইত্যাদি খাতে নিয়োগকর্তার আবেদনে।",
+                "en": "Applied for by the employer in construction, manufacturing, marine, services and similar sectors."
+              },
+              "requirements": [
+                {
+                  "bn": "যোগ্য নিয়োগকর্তা ও কোটা",
+                  "en": "An eligible employer with quota"
+                },
+                {
+                  "bn": "খাতভিত্তিক দক্ষতা পরীক্ষা",
+                  "en": "The sector skills test"
+                },
+                {
+                  "bn": "মেডিকেল ও বিমা",
+                  "en": "Medical and insurance"
+                }
+              ],
+              "sourceId": "src_sg_mom"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "NTS পেশা তালিকার ন্যূনতম বেতন",
+                "en": "NTS Occupation List minimum salary"
+              },
+              "value": "S$2,000 / month",
+              "sourceId": "src_sg_mom",
+              "status": "researched",
+              "asOf": "2026",
+              "note": {
+                "bn": "নন-ট্র্যাডিশনাল সোর্স পেশা তালিকার আওতায় থাকা কর্মীদের জন্য নির্ধারিত মাসিক বেতন।",
+                "en": "The fixed monthly salary set for workers under the Non-Traditional Sources Occupation List."
+              }
+            },
+            {
+              "label": {
+                "bn": "খাতভিত্তিক কোটা ও লেভির হার",
+                "en": "Sector quota and levy rates"
+              },
+              "value": null,
+              "sourceId": "src_sg_mom",
+              "status": "needs_verification",
+              "note": {
+                "bn": "খাত, কর্মীর ধরন ও নিয়োগকর্তার নির্ভরতা অনুপাতে বদলায়। MOM-এর সর্বশেষ তালিকা দেখুন।",
+                "en": "Varies by sector, worker profile and the employer's dependency ratio. Check MOM's current tables."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "খাত ও পেশা যাচাই করুন",
+              "en": "Check the sector and occupation"
+            },
+            {
+              "bn": "দক্ষতা পরীক্ষা সম্পন্ন করুন",
+              "en": "Complete the skills test"
+            },
+            {
+              "bn": "নিয়োগকর্তার আবেদন ও কোটা নিশ্চিত হন",
+              "en": "Confirm the employer's application and quota"
+            },
+            {
+              "bn": "মেডিকেল ও যাত্রা",
+              "en": "Medical and travel"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "অনুমোদিত পেশার তালিকা বদলায় — আবেদনের আগে সর্বশেষ অবস্থা দেখুন।",
+              "en": "The permitted occupation list changes — check the current position before applying."
+            },
+            {
+              "bn": "কোটা ছাড়া নিয়োগকর্তা কর্মী নিতে পারে না; “কোটা কিনে দেব” প্রস্তাব প্রতারণা।",
+              "en": "An employer cannot hire without quota; an offer to buy quota is fraud."
+            }
+          ]
+        },
+        "study": {
+          "available": false,
+          "summary": {
+            "bn": "সিঙ্গাপুরে পড়াশোনার রুট এখনো এই প্ল্যাটফর্মে যাচাই করা হয়নি।",
+            "en": "Study routes for Singapore have not been verified on this platform yet."
+          },
+          "visas": [],
+          "keyFacts": [],
+          "steps": [],
+          "documents": [],
+          "risks": []
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "SA",
+      "sources": [
+        "src_sa_hrsd",
+        "src_bd_oep",
+        "src_ilo_fair_recruitment"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "সৌদি আরব-এ কাজের পথ নিয়োগকর্তার চাহিদাপত্র দিয়ে শুরু হয় এবং লাইসেন্সপ্রাপ্ত বাংলাদেশি এজেন্সির মাধ্যমে প্রক্রিয়া হয়। চুক্তি, বেতন ও কে কোন খরচ বহন করবে — সবকিছু যাওয়ার আগেই লিখিত থাকতে হয়।",
+            "en": "The work path to Saudi Arabia starts with an employer's demand and is processed through a licensed Bangladeshi agency. The contract, the salary and who bears which cost must all be in writing before you travel."
+          },
+          "visas": [
+            {
+              "key": "employer_sponsored",
+              "name": {
+                "bn": "নিয়োগকর্তা স্পনসরড ওয়ার্ক পারমিট",
+                "en": "Employer-sponsored work permit"
+              },
+              "who": {
+                "bn": "যাঁদের জন্য নিয়োগকর্তা চাহিদাপত্র দিয়েছে এবং লাইসেন্সপ্রাপ্ত এজেন্সি প্রক্রিয়া করছে।",
+                "en": "Workers named on an employer demand and processed by a licensed agency."
+              },
+              "requirements": [
+                {
+                  "bn": "যাচাইকৃত চাহিদাপত্র ও চুক্তি",
+                  "en": "A verified job demand and contract"
+                },
+                {
+                  "bn": "বিএমইটি নিবন্ধন ও ছাড়পত্র",
+                  "en": "BMET registration and clearance"
+                },
+                {
+                  "bn": "মেডিকেল পরীক্ষা",
+                  "en": "Medical examination"
+                }
+              ],
+              "sourceId": "src_sa_hrsd"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "নিয়োগ খরচের বৈধ সীমা",
+                "en": "Lawful limit on recruitment cost"
+              },
+              "value": null,
+              "sourceId": "src_bd_probashi",
+              "status": "needs_verification",
+              "note": {
+                "bn": "করিডর ও পেশাভেদে আলাদা। এই প্ল্যাটফর্মে প্রতিটি যাচাইকৃত চাকরির সাথে আপনার সর্বোচ্চ বৈধ খরচ দেখানো হয়।",
+                "en": "Varies by corridor and occupation. On this platform every verified job shows your maximum lawful cost."
+              }
+            },
+            {
+              "label": {
+                "bn": "নিয়োগকর্তার বহন করার কথা এমন খরচ",
+                "en": "Costs the employer is expected to bear"
+              },
+              "value": null,
+              "sourceId": "src_sa_hrsd",
+              "status": "needs_verification",
+              "note": {
+                "bn": "অনেক করিডরে বিমান ভাড়া, ওয়ার্ক পারমিট ও রেসিডেন্সি খরচ নিয়োগকর্তার। চুক্তিতে স্পষ্ট লেখা আছে কি না দেখুন।",
+                "en": "In many corridors airfare, work permit and residency costs belong to the employer. Check the contract states it explicitly."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "যাচাইকৃত চাকরি ও এজেন্সির লাইসেন্স মিলিয়ে দেখুন",
+              "en": "Check the verified job and the agency licence"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন সম্পন্ন করুন",
+              "en": "Complete BMET registration"
+            },
+            {
+              "bn": "মেডিকেল পরীক্ষা দিন",
+              "en": "Take the medical examination"
+            },
+            {
+              "bn": "চুক্তি পড়ে ও বুঝে সই করুন",
+              "en": "Read and understand the contract before signing"
+            },
+            {
+              "bn": "ভিসা/পারমিট ও ছাড়পত্রের পর যাত্রা",
+              "en": "Travel after the visa/permit and clearance"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "ভিজিট বা “ফ্রি ভিসা”-য় গিয়ে কাজ করা যায় না — এটি সবচেয়ে সাধারণ ফাঁদ।",
+              "en": "You cannot work on a visit or so-called free visa — this is the most common trap."
+            },
+            {
+              "bn": "যাওয়ার আগে দেখানো চুক্তির সাথে চূড়ান্ত চুক্তি না মিললে সই করার আগে সাহায্য নিন।",
+              "en": "If the final contract differs from the one you were shown, get help before signing."
+            },
+            {
+              "bn": "পাসপোর্ট কারও কাছে জমা রাখা যাবে না।",
+              "en": "Nobody may hold your passport."
+            }
+          ]
+        },
+        "study": {
+          "available": false,
+          "summary": {
+            "bn": "সৌদি আরব-এ পড়াশোনার রুট এখনো এই প্ল্যাটফর্মে যাচাই করা হয়নি।",
+            "en": "Study routes for Saudi Arabia have not been verified on this platform yet."
+          },
+          "visas": [],
+          "keyFacts": [],
+          "steps": [],
+          "documents": [],
+          "risks": []
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "QA",
+      "sources": [
+        "src_qa_adlsa",
+        "src_bd_oep",
+        "src_ilo_fair_recruitment"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "কাতার-এ কাজের পথ নিয়োগকর্তার চাহিদাপত্র দিয়ে শুরু হয় এবং লাইসেন্সপ্রাপ্ত বাংলাদেশি এজেন্সির মাধ্যমে প্রক্রিয়া হয়। চুক্তি, বেতন ও কে কোন খরচ বহন করবে — সবকিছু যাওয়ার আগেই লিখিত থাকতে হয়।",
+            "en": "The work path to Qatar starts with an employer's demand and is processed through a licensed Bangladeshi agency. The contract, the salary and who bears which cost must all be in writing before you travel."
+          },
+          "visas": [
+            {
+              "key": "employer_sponsored",
+              "name": {
+                "bn": "নিয়োগকর্তা স্পনসরড ওয়ার্ক পারমিট",
+                "en": "Employer-sponsored work permit"
+              },
+              "who": {
+                "bn": "যাঁদের জন্য নিয়োগকর্তা চাহিদাপত্র দিয়েছে এবং লাইসেন্সপ্রাপ্ত এজেন্সি প্রক্রিয়া করছে।",
+                "en": "Workers named on an employer demand and processed by a licensed agency."
+              },
+              "requirements": [
+                {
+                  "bn": "যাচাইকৃত চাহিদাপত্র ও চুক্তি",
+                  "en": "A verified job demand and contract"
+                },
+                {
+                  "bn": "বিএমইটি নিবন্ধন ও ছাড়পত্র",
+                  "en": "BMET registration and clearance"
+                },
+                {
+                  "bn": "মেডিকেল পরীক্ষা",
+                  "en": "Medical examination"
+                }
+              ],
+              "sourceId": "src_qa_adlsa"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "নিয়োগ খরচের বৈধ সীমা",
+                "en": "Lawful limit on recruitment cost"
+              },
+              "value": null,
+              "sourceId": "src_bd_probashi",
+              "status": "needs_verification",
+              "note": {
+                "bn": "করিডর ও পেশাভেদে আলাদা। এই প্ল্যাটফর্মে প্রতিটি যাচাইকৃত চাকরির সাথে আপনার সর্বোচ্চ বৈধ খরচ দেখানো হয়।",
+                "en": "Varies by corridor and occupation. On this platform every verified job shows your maximum lawful cost."
+              }
+            },
+            {
+              "label": {
+                "bn": "নিয়োগকর্তার বহন করার কথা এমন খরচ",
+                "en": "Costs the employer is expected to bear"
+              },
+              "value": null,
+              "sourceId": "src_qa_adlsa",
+              "status": "needs_verification",
+              "note": {
+                "bn": "অনেক করিডরে বিমান ভাড়া, ওয়ার্ক পারমিট ও রেসিডেন্সি খরচ নিয়োগকর্তার। চুক্তিতে স্পষ্ট লেখা আছে কি না দেখুন।",
+                "en": "In many corridors airfare, work permit and residency costs belong to the employer. Check the contract states it explicitly."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "যাচাইকৃত চাকরি ও এজেন্সির লাইসেন্স মিলিয়ে দেখুন",
+              "en": "Check the verified job and the agency licence"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন সম্পন্ন করুন",
+              "en": "Complete BMET registration"
+            },
+            {
+              "bn": "মেডিকেল পরীক্ষা দিন",
+              "en": "Take the medical examination"
+            },
+            {
+              "bn": "চুক্তি পড়ে ও বুঝে সই করুন",
+              "en": "Read and understand the contract before signing"
+            },
+            {
+              "bn": "ভিসা/পারমিট ও ছাড়পত্রের পর যাত্রা",
+              "en": "Travel after the visa/permit and clearance"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "ভিজিট বা “ফ্রি ভিসা”-য় গিয়ে কাজ করা যায় না — এটি সবচেয়ে সাধারণ ফাঁদ।",
+              "en": "You cannot work on a visit or so-called free visa — this is the most common trap."
+            },
+            {
+              "bn": "যাওয়ার আগে দেখানো চুক্তির সাথে চূড়ান্ত চুক্তি না মিললে সই করার আগে সাহায্য নিন।",
+              "en": "If the final contract differs from the one you were shown, get help before signing."
+            },
+            {
+              "bn": "পাসপোর্ট কারও কাছে জমা রাখা যাবে না।",
+              "en": "Nobody may hold your passport."
+            }
+          ]
+        },
+        "study": {
+          "available": false,
+          "summary": {
+            "bn": "কাতার-এ পড়াশোনার রুট এখনো এই প্ল্যাটফর্মে যাচাই করা হয়নি।",
+            "en": "Study routes for Qatar have not been verified on this platform yet."
+          },
+          "visas": [],
+          "keyFacts": [],
+          "steps": [],
+          "documents": [],
+          "risks": []
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "AE",
+      "sources": [
+        "src_ae_mohre",
+        "src_bd_oep",
+        "src_ilo_fair_recruitment"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "সংযুক্ত আরব আমিরাত-এ কাজের পথ নিয়োগকর্তার চাহিদাপত্র দিয়ে শুরু হয় এবং লাইসেন্সপ্রাপ্ত বাংলাদেশি এজেন্সির মাধ্যমে প্রক্রিয়া হয়। চুক্তি, বেতন ও কে কোন খরচ বহন করবে — সবকিছু যাওয়ার আগেই লিখিত থাকতে হয়।",
+            "en": "The work path to United Arab Emirates starts with an employer's demand and is processed through a licensed Bangladeshi agency. The contract, the salary and who bears which cost must all be in writing before you travel."
+          },
+          "visas": [
+            {
+              "key": "employer_sponsored",
+              "name": {
+                "bn": "নিয়োগকর্তা স্পনসরড ওয়ার্ক পারমিট",
+                "en": "Employer-sponsored work permit"
+              },
+              "who": {
+                "bn": "যাঁদের জন্য নিয়োগকর্তা চাহিদাপত্র দিয়েছে এবং লাইসেন্সপ্রাপ্ত এজেন্সি প্রক্রিয়া করছে।",
+                "en": "Workers named on an employer demand and processed by a licensed agency."
+              },
+              "requirements": [
+                {
+                  "bn": "যাচাইকৃত চাহিদাপত্র ও চুক্তি",
+                  "en": "A verified job demand and contract"
+                },
+                {
+                  "bn": "বিএমইটি নিবন্ধন ও ছাড়পত্র",
+                  "en": "BMET registration and clearance"
+                },
+                {
+                  "bn": "মেডিকেল পরীক্ষা",
+                  "en": "Medical examination"
+                }
+              ],
+              "sourceId": "src_ae_mohre"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "নিয়োগ খরচের বৈধ সীমা",
+                "en": "Lawful limit on recruitment cost"
+              },
+              "value": null,
+              "sourceId": "src_bd_probashi",
+              "status": "needs_verification",
+              "note": {
+                "bn": "করিডর ও পেশাভেদে আলাদা। এই প্ল্যাটফর্মে প্রতিটি যাচাইকৃত চাকরির সাথে আপনার সর্বোচ্চ বৈধ খরচ দেখানো হয়।",
+                "en": "Varies by corridor and occupation. On this platform every verified job shows your maximum lawful cost."
+              }
+            },
+            {
+              "label": {
+                "bn": "নিয়োগকর্তার বহন করার কথা এমন খরচ",
+                "en": "Costs the employer is expected to bear"
+              },
+              "value": null,
+              "sourceId": "src_ae_mohre",
+              "status": "needs_verification",
+              "note": {
+                "bn": "অনেক করিডরে বিমান ভাড়া, ওয়ার্ক পারমিট ও রেসিডেন্সি খরচ নিয়োগকর্তার। চুক্তিতে স্পষ্ট লেখা আছে কি না দেখুন।",
+                "en": "In many corridors airfare, work permit and residency costs belong to the employer. Check the contract states it explicitly."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "যাচাইকৃত চাকরি ও এজেন্সির লাইসেন্স মিলিয়ে দেখুন",
+              "en": "Check the verified job and the agency licence"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন সম্পন্ন করুন",
+              "en": "Complete BMET registration"
+            },
+            {
+              "bn": "মেডিকেল পরীক্ষা দিন",
+              "en": "Take the medical examination"
+            },
+            {
+              "bn": "চুক্তি পড়ে ও বুঝে সই করুন",
+              "en": "Read and understand the contract before signing"
+            },
+            {
+              "bn": "ভিসা/পারমিট ও ছাড়পত্রের পর যাত্রা",
+              "en": "Travel after the visa/permit and clearance"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "ভিজিট বা “ফ্রি ভিসা”-য় গিয়ে কাজ করা যায় না — এটি সবচেয়ে সাধারণ ফাঁদ।",
+              "en": "You cannot work on a visit or so-called free visa — this is the most common trap."
+            },
+            {
+              "bn": "যাওয়ার আগে দেখানো চুক্তির সাথে চূড়ান্ত চুক্তি না মিললে সই করার আগে সাহায্য নিন।",
+              "en": "If the final contract differs from the one you were shown, get help before signing."
+            },
+            {
+              "bn": "পাসপোর্ট কারও কাছে জমা রাখা যাবে না।",
+              "en": "Nobody may hold your passport."
+            }
+          ]
+        },
+        "study": {
+          "available": false,
+          "summary": {
+            "bn": "সংযুক্ত আরব আমিরাত-এ পড়াশোনার রুট এখনো এই প্ল্যাটফর্মে যাচাই করা হয়নি।",
+            "en": "Study routes for United Arab Emirates have not been verified on this platform yet."
+          },
+          "visas": [],
+          "keyFacts": [],
+          "steps": [],
+          "documents": [],
+          "risks": []
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "KR",
+      "sources": [
+        "src_kr_eps",
+        "src_bd_oep"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "কোরিয়ার ই-৯ রুট সম্পূর্ণ সরকারি ব্যবস্থার ভেতরে চলে: ইপিএস-টপিক, দক্ষতা পরীক্ষা, কর্মী পুল, তারপর নিয়োগকর্তার বাছাই। কোনো দালাল এই বাছাই বদলাতে পারে না।",
+            "en": "Korea's E-9 route runs entirely inside the official system: EPS-TOPIK, a skills test, the worker roster, then employer selection. No broker can change that selection."
+          },
+          "visas": [
+            {
+              "key": "eps_e9",
+              "name": {
+                "bn": "ইপিএস ই-৯",
+                "en": "EPS E-9"
+              },
+              "who": {
+                "bn": "সরকারি ব্যবস্থার মাধ্যমে নির্বাচিত কর্মীরা।",
+                "en": "Workers selected through the official system."
+              },
+              "requirements": [
+                {
+                  "bn": "ইপিএস-টপিক উত্তীর্ণ",
+                  "en": "Pass EPS-TOPIK"
+                },
+                {
+                  "bn": "দক্ষতা পরীক্ষা",
+                  "en": "Skills test"
+                },
+                {
+                  "bn": "কর্মী পুলে অন্তর্ভুক্তি ও নিয়োগকর্তার বাছাই",
+                  "en": "Inclusion in the roster and selection by an employer"
+                }
+              ],
+              "sourceId": "src_kr_eps"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "বয়সসীমা ও নিবন্ধনের সময়সূচি",
+                "en": "Age limit and registration schedule"
+              },
+              "value": null,
+              "sourceId": "src_kr_eps",
+              "status": "needs_verification",
+              "note": {
+                "bn": "প্রতি বছরের ঘোষণায় নির্ধারিত হয় এবং বাংলাদেশে বোয়েসেলের মাধ্যমে জানানো হয়।",
+                "en": "Set in each year's announcement, communicated in Bangladesh through BOESL."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "ইপিএস-টপিকের ঘোষণার জন্য অপেক্ষা করুন",
+              "en": "Wait for the EPS-TOPIK announcement"
+            },
+            {
+              "bn": "নিবন্ধন করে পরীক্ষা দিন",
+              "en": "Register and sit the test"
+            },
+            {
+              "bn": "দক্ষতা পরীক্ষা সম্পন্ন করুন",
+              "en": "Complete the skills test"
+            },
+            {
+              "bn": "কর্মী পুলে অপেক্ষা ও নিয়োগকর্তার বাছাই",
+              "en": "Wait in the roster for an employer to select you"
+            },
+            {
+              "bn": "প্রশিক্ষণ, ভিসা ও যাত্রা",
+              "en": "Training, visa and travel"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "টাকার বিনিময়ে ইপিএস-এ চাকরি পাইয়ে দেওয়ার প্রতিশ্রুতি প্রতারণা — বাছাই কেবল সরকারি ব্যবস্থায় হয়।",
+              "en": "A paid promise of an EPS job is fraud — selection happens only inside the official system."
+            }
+          ]
+        },
+        "study": {
+          "available": true,
+          "summary": {
+            "bn": "কোরিয়ায় পড়াশোনার রুট প্রতিষ্ঠানের ভর্তি ও তহবিলের প্রমাণের উপর নির্ভরশীল।",
+            "en": "Study routes to Korea depend on institutional admission and proof of funds."
+          },
+          "visas": [
+            {
+              "key": "d2",
+              "name": {
+                "bn": "ডি-২ স্টুডেন্ট ভিসা",
+                "en": "D-2 student visa"
+              },
+              "who": {
+                "bn": "কোরীয় বিশ্ববিদ্যালয়ে ভর্তি শিক্ষার্থীরা।",
+                "en": "Students admitted to a Korean university."
+              },
+              "requirements": [
+                {
+                  "bn": "ভর্তির প্রস্তাব",
+                  "en": "Offer of admission"
+                },
+                {
+                  "bn": "তহবিলের প্রমাণ",
+                  "en": "Proof of funds"
+                }
+              ],
+              "sourceId": "src_kr_eps"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "টিউশন, তহবিল ও ভাষার শর্ত",
+                "en": "Tuition, funds and language requirements"
+              },
+              "value": null,
+              "sourceId": "src_kr_eps",
+              "status": "needs_verification",
+              "note": {
+                "bn": "প্রতিষ্ঠানভেদে আলাদা; TOPIK-এর স্তর প্রোগ্রামের উপর নির্ভর করে।",
+                "en": "Varies by institution; the TOPIK level depends on the programme."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "প্রতিষ্ঠান ও প্রোগ্রাম বাছুন",
+              "en": "Choose an institution and programme"
+            },
+            {
+              "bn": "TOPIK বা ইংরেজি শর্ত পূরণ করুন",
+              "en": "Meet the TOPIK or English requirement"
+            },
+            {
+              "bn": "ভর্তি ও ভিসার আবেদন",
+              "en": "Apply for admission and the visa"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "শিক্ষাগত সনদ ও ট্রান্সক্রিপ্ট",
+              "en": "Education certificates and transcripts"
+            },
+            {
+              "bn": "ভাষার পরীক্ষার ফল",
+              "en": "Language test result"
+            },
+            {
+              "bn": "আর্থিক সক্ষমতার প্রমাণ",
+              "en": "Proof of financial capacity"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "ভর্তি ও ভিসা আলাদা প্রক্রিয়া — একটির নিশ্চয়তা অন্যটির নিশ্চয়তা নয়।",
+              "en": "Admission and the visa are separate processes — one does not guarantee the other."
+            }
+          ]
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "AU",
+      "sources": [
+        "src_au_homeaffairs"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "অস্ট্রেলিয়ায় কাজের প্রধান পথ নিয়োগকর্তা-স্পনসরড স্কিলস ইন ডিমান্ড ভিসা, পাশাপাশি পয়েন্টভিত্তিক দক্ষ অভিবাসন।",
+            "en": "Australia's main work route is the employer-sponsored Skills in Demand visa, alongside points-based skilled migration."
+          },
+          "visas": [
+            {
+              "key": "sid_482",
+              "name": {
+                "bn": "স্কিলস ইন ডিমান্ড (সাবক্লাস ৪৮২)",
+                "en": "Skills in Demand (subclass 482)"
+              },
+              "who": {
+                "bn": "যাঁদের অনুমোদিত স্পনসর নিয়োগকর্তা আছে।",
+                "en": "People with an approved sponsoring employer."
+              },
+              "requirements": [
+                {
+                  "bn": "অনুমোদিত স্পনসর ও মনোনয়ন",
+                  "en": "An approved sponsor and nomination"
+                },
+                {
+                  "bn": "দক্ষতা মূল্যায়ন ও অভিজ্ঞতা",
+                  "en": "Skills assessment and experience"
+                },
+                {
+                  "bn": "ইংরেজি ও স্বাস্থ্য/চরিত্র শর্ত",
+                  "en": "English, health and character requirements"
+                }
+              ],
+              "sourceId": "src_au_homeaffairs"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "আয়ের ন্যূনতম সীমা (TSMIT)",
+                "en": "Income threshold (TSMIT)"
+              },
+              "value": null,
+              "sourceId": "src_au_homeaffairs",
+              "status": "needs_verification",
+              "note": {
+                "bn": "প্রতি বছর সূচকায়ন হয়। Home Affairs-এর সর্বশেষ ঘোষণা দেখুন।",
+                "en": "Indexed annually. Check the current Home Affairs figure."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "পেশা তালিকায় আছে কি না দেখুন",
+              "en": "Check the occupation list"
+            },
+            {
+              "bn": "দক্ষতা মূল্যায়ন করান",
+              "en": "Get a skills assessment"
+            },
+            {
+              "bn": "স্পনসর নিয়োগকর্তা খুঁজুন",
+              "en": "Find a sponsoring employer"
+            },
+            {
+              "bn": "ভিসা আবেদন",
+              "en": "Apply for the visa"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "স্পনসরশিপের বিনিময়ে টাকা চাওয়া অস্ট্রেলিয়ায় অবৈধ।",
+              "en": "Paying for sponsorship is unlawful in Australia."
+            }
+          ]
+        },
+        "study": {
+          "available": true,
+          "summary": {
+            "bn": "অস্ট্রেলিয়ায় পড়তে হলে প্রকৃত শিক্ষার্থী (Genuine Student) শর্ত ও আর্থিক সক্ষমতা — দুটোই দেখাতে হয়।",
+            "en": "Studying in Australia requires meeting the Genuine Student requirement and showing financial capacity."
+          },
+          "visas": [
+            {
+              "key": "subclass_500",
+              "name": {
+                "bn": "স্টুডেন্ট ভিসা (সাবক্লাস ৫০০)",
+                "en": "Student visa (subclass 500)"
+              },
+              "who": {
+                "bn": "নিবন্ধিত কোর্সে ভর্তি শিক্ষার্থীরা।",
+                "en": "Students enrolled in a registered course."
+              },
+              "requirements": [
+                {
+                  "bn": "CoE (Confirmation of Enrolment)",
+                  "en": "CoE (Confirmation of Enrolment)"
+                },
+                {
+                  "bn": "আর্থিক সক্ষমতা",
+                  "en": "Financial capacity"
+                },
+                {
+                  "bn": "ইংরেজি, স্বাস্থ্য ও বিমা",
+                  "en": "English, health and insurance"
+                }
+              ],
+              "sourceId": "src_au_homeaffairs"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "আর্থিক সক্ষমতার অঙ্ক",
+                "en": "Financial capacity amount"
+              },
+              "value": null,
+              "sourceId": "src_au_homeaffairs",
+              "status": "needs_verification",
+              "note": {
+                "bn": "১২ মাসের জীবনযাত্রা, কোর্স ও ভ্রমণ খরচ — অথবা বার্ষিক আয়ের শর্ত। অঙ্ক হালনাগাদ হয়।",
+                "en": "Twelve months of living, course and travel costs, or the annual income test. The figure is updated over time."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "নিবন্ধিত প্রতিষ্ঠান ও কোর্স বাছুন",
+              "en": "Choose a registered institution and course"
+            },
+            {
+              "bn": "ইংরেজি পরীক্ষা দিন",
+              "en": "Take the English test"
+            },
+            {
+              "bn": "CoE নিন",
+              "en": "Obtain the CoE"
+            },
+            {
+              "bn": "বিমা ও আর্থিক প্রমাণসহ ভিসা আবেদন",
+              "en": "Apply with insurance and financial evidence"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "শিক্ষাগত সনদ ও ট্রান্সক্রিপ্ট",
+              "en": "Education certificates and transcripts"
+            },
+            {
+              "bn": "ভাষার পরীক্ষার ফল",
+              "en": "Language test result"
+            },
+            {
+              "bn": "আর্থিক সক্ষমতার প্রমাণ",
+              "en": "Proof of financial capacity"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "এজেন্টের “ভিসা নিশ্চিত” দাবি বিশ্বাস করবেন না।",
+              "en": "Do not believe an agent's guarantee of a visa."
+            }
+          ]
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    },
+    {
+      "countryCode": "MY",
+      "sources": [
+        "src_my_imi",
+        "src_bd_oep"
+      ],
+      "paths": {
+        "work": {
+          "available": true,
+          "summary": {
+            "bn": "মালয়েশিয়ার কর্মী নিয়োগ নিয়োগকর্তার কোটা অনুমোদন দিয়ে শুরু হয় এবং সরকারি সিদ্ধান্তে রুটের অবস্থা বদলাতে পারে।",
+            "en": "Recruitment to Malaysia begins with the employer's quota approval, and the route's status can change by government decision."
+          },
+          "visas": [
+            {
+              "key": "tep",
+              "name": {
+                "bn": "অস্থায়ী কর্মসংস্থান পাস",
+                "en": "Temporary Employment Pass"
+              },
+              "who": {
+                "bn": "কোটা অনুমোদনসহ নিয়োগকর্তার আবেদনে।",
+                "en": "Applied for by an employer holding quota approval."
+              },
+              "requirements": [
+                {
+                  "bn": "নিয়োগকর্তার কোটা অনুমোদন",
+                  "en": "Employer quota approval"
+                },
+                {
+                  "bn": "মেডিকেল (আগে ও পরে)",
+                  "en": "Medical, before and after arrival"
+                },
+                {
+                  "bn": "ভিসা ও পাস",
+                  "en": "Entry visa and pass"
+                }
+              ],
+              "sourceId": "src_my_imi"
+            }
+          ],
+          "keyFacts": [
+            {
+              "label": {
+                "bn": "রুটের বর্তমান অবস্থা",
+                "en": "Current status of the route"
+              },
+              "value": null,
+              "sourceId": "src_my_imi",
+              "status": "needs_verification",
+              "note": {
+                "bn": "এই করিডর সরকারি সিদ্ধান্তে সাময়িকভাবে বন্ধ বা চালু হতে পারে। টাকা দেওয়ার আগে সর্বশেষ অবস্থা যাচাই করুন।",
+                "en": "This corridor can be paused or reopened by government decision. Verify the current position before paying anything."
+              }
+            }
+          ],
+          "steps": [
+            {
+              "bn": "রুট খোলা আছে কি না যাচাই করুন",
+              "en": "Check whether the route is open"
+            },
+            {
+              "bn": "কোটা অনুমোদনসহ যাচাইকৃত চাকরি নিন",
+              "en": "Obtain a verified job backed by quota approval"
+            },
+            {
+              "bn": "মেডিকেল ও বিএমইটি প্রক্রিয়া",
+              "en": "Medical and BMET process"
+            },
+            {
+              "bn": "পৌঁছে নির্ধারিত মেডিকেল সম্পন্ন করুন",
+              "en": "Complete the required medical after arrival"
+            }
+          ],
+          "documents": [
+            {
+              "bn": "বৈধ পাসপোর্ট",
+              "en": "Valid passport"
+            },
+            {
+              "bn": "বিএমইটি নিবন্ধন",
+              "en": "BMET registration"
+            },
+            {
+              "bn": "দক্ষতা বা অভিজ্ঞতার সনদ",
+              "en": "Skill or experience certificate"
+            },
+            {
+              "bn": "মেডিকেল রিপোর্ট",
+              "en": "Medical report"
+            },
+            {
+              "bn": "যাচাইকৃত চাকরির চুক্তি",
+              "en": "Verified employment contract"
+            }
+          ],
+          "risks": [
+            {
+              "bn": "রুট বন্ধ থাকা অবস্থায় টাকা নেওয়ার চেষ্টা সবচেয়ে সাধারণ প্রতারণা।",
+              "en": "Collecting money while the route is closed is the most common fraud here."
+            }
+          ]
+        },
+        "study": {
+          "available": false,
+          "summary": {
+            "bn": "মালয়েশিয়ায় পড়াশোনার রুট এখনো এই প্ল্যাটফর্মে যাচাই করা হয়নি।",
+            "en": "Study routes for Malaysia have not been verified on this platform yet."
+          },
+          "visas": [],
+          "keyFacts": [],
+          "steps": [],
+          "documents": [],
+          "risks": []
+        }
+      },
+      "verifiedAt": "2026-08-26T00:00:00.000Z",
+      "verifiedBy": "research:not-human-verified"
+    }
+  ]
+}

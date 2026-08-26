@@ -12,6 +12,8 @@ import { money } from '@/lib/format';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata, guideJsonLd, siteUrl } from '@/lib/seo';
 import { SourceCitation } from '@/components/SourceCitation';
+import { CountryVault, parseVaultPath, type CountryProfileDto } from '@/components/CountryVault';
+import { Badge } from '@probash/web-ui';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,10 +61,13 @@ const ROUTE_STATUS_KEY: Record<string, string> = {
  */
 export default async function CountryGuide({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; code: string }>;
+  searchParams: Promise<{ path?: string }>;
 }) {
   const { locale: segment, code } = await params;
+  const { path: pathParam } = await searchParams;
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
@@ -71,10 +76,15 @@ export default async function CountryGuide({
   if (!country) notFound();
 
   const upper = country.code.toUpperCase();
-  const [routes, jobs, sources] = await Promise.all([
+  const vaultPath = parseVaultPath(pathParam);
+  const [routes, jobs, sources, profile] = await Promise.all([
     apiRequest<RouteSummaryDto[]>(`/api/v1/countries/${upper}/routes`, { locale }),
     apiRequest<JobSummaryDto[]>(`/api/v1/jobs?country=${upper}`, { locale }),
     apiRequest<SourceSummaryDto[]>(`/api/v1/sources?country=${upper}`, { locale }),
+    // Not every country has a researched vault yet; the page works either way.
+    apiRequest<CountryProfileDto>(`/api/v1/countries/${upper}/profile`, { locale }).catch(
+      () => undefined,
+    ),
   ]);
 
   const name = pick(country.name, locale);
@@ -121,6 +131,21 @@ export default async function CountryGuide({
           </div>
         </dl>
       </header>
+
+      {profile ? (
+        <>
+          <p>
+            <Badge tone="warning">{t('vault.researchNote')}</Badge>
+          </p>
+          <CountryVault
+            profile={profile}
+            path={vaultPath}
+            locale={locale}
+            countryName={name}
+            countryCode={country.code}
+          />
+        </>
+      ) : null}
 
       <section className="stack" aria-labelledby="routes-heading">
         <h2 id="routes-heading" style={{ fontSize: 'var(--font-size-title)', fontWeight: 700 }}>

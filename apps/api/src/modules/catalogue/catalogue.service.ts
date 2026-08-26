@@ -193,6 +193,33 @@ export class CatalogueService {
     return sources.map((s) => this.toSourceSummary(s));
   }
 
+  /**
+   * §14.1 — the country vault. Sources are resolved to summaries with their freshness
+   * so the page can show where every figure came from and how old it is (§38).
+   */
+  async getCountryProfile(countryCode: string) {
+    const profile = await this.storage.countryProfiles.find(
+      (p) => p.countryCode === countryCode.toUpperCase(),
+    );
+    if (!profile) return undefined;
+
+    const citedSourceIds = [
+      ...profile.sources,
+      ...Object.values(profile.paths).flatMap((path) => [
+        ...path.visas.map((visa) => visa.sourceId),
+        ...path.keyFacts.map((fact) => fact.sourceId),
+      ]),
+    ];
+
+    return {
+      countryCode: profile.countryCode,
+      verifiedAt: profile.verifiedAt,
+      verifiedBy: profile.verifiedBy,
+      paths: profile.paths,
+      sources: await this.sourceSummaries(citedSourceIds),
+    };
+  }
+
   async listInstitutions(countryCode?: string) {
     const institutions = await this.storage.institutions.list(
       (i) => !countryCode || i.countryCode === countryCode,

@@ -247,6 +247,41 @@ export interface InstitutionRecord {
   isSyntheticDemoData: boolean;
 }
 
+/** §14.1 — the per-country information vault, one record per country. */
+export interface CountryVaultFact {
+  label: LocalizedText;
+  value: string | null;
+  sourceId: string;
+  status: 'researched' | 'needs_verification';
+  asOf?: string;
+  note?: LocalizedText;
+}
+
+export interface CountryVaultPath {
+  available: boolean;
+  summary: LocalizedText;
+  visas: {
+    key: string;
+    name: LocalizedText;
+    who: LocalizedText;
+    requirements: LocalizedText[];
+    sourceId: string;
+  }[];
+  keyFacts: CountryVaultFact[];
+  steps: LocalizedText[];
+  documents: LocalizedText[];
+  risks: LocalizedText[];
+}
+
+export interface CountryProfileRecord {
+  id: string;
+  countryCode: string;
+  verifiedAt: string;
+  verifiedBy: string;
+  sources: string[];
+  paths: { work: CountryVaultPath; study: CountryVaultPath };
+}
+
 export interface CourseRecord {
   id: string;
   institutionId: string;

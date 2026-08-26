@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { InvariantViolatedError } from '@probash/domain';
 import type {
+  CountryProfileRecord,
   CountryRecord,
   CourseRecord,
   FeeRuleRecord,
@@ -14,6 +15,7 @@ import type {
   SourceRecord,
 } from '../records';
 import {
+  countryProfilesFileSchema,
   countryStatusFileSchema,
   coursesFileSchema,
   feeRulesFileSchema,
@@ -38,6 +40,7 @@ export interface SeedBundle {
   feeRules: FeeRuleRecord[];
   institutions: InstitutionRecord[];
   courses: CourseRecord[];
+  countryProfiles: CountryProfileRecord[];
 }
 
 /** Walks up from this file to find the repository's `data/` directory. */
@@ -87,6 +90,9 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
     readJson(join(dataDir, 'seed', 'institutions.json')),
   );
   const coursesFile = coursesFileSchema.parse(readJson(join(dataDir, 'seed', 'courses.json')));
+  const profilesFile = countryProfilesFileSchema.parse(
+    readJson(join(dataDir, 'seed', 'country-profiles.json')),
+  );
 
   const routeVersionsByRouteId = new Map(routesFile.routeVersions.map((r) => [r.routeId, r]));
 
@@ -219,6 +225,39 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
     }
   }
 
+  const countryProfiles: CountryProfileRecord[] = profilesFile.profiles.map((profile) => ({
+    id: `profile_${profile.countryCode}`,
+    ...profile,
+  }));
+
+  for (const profile of countryProfiles) {
+    if (!countries.some((c) => c.code === profile.countryCode)) {
+      problems.push(`country profile ${profile.id} references unknown country`);
+    }
+    const cited = [
+      ...profile.sources,
+      ...Object.values(profile.paths).flatMap((p) => [
+        ...p.visas.map((v) => v.sourceId),
+        ...p.keyFacts.map((f) => f.sourceId),
+      ]),
+    ];
+    for (const id of cited) {
+      if (!sourceIds.has(id)) {
+        problems.push(`country profile ${profile.id} cites unknown source ${id}`);
+      }
+    }
+    // §38 — a figure without provenance is exactly what this platform exists to replace.
+    for (const [pathKey, pathValue] of Object.entries(profile.paths)) {
+      for (const factEntry of pathValue.keyFacts) {
+        if (factEntry.status === 'researched' && !factEntry.asOf && factEntry.value) {
+          problems.push(
+            `country profile ${profile.id} (${pathKey}) states "${factEntry.value}" with no year`,
+          );
+        }
+      }
+    }
+  }
+
   if (problems.length > 0) {
     throw new InvariantViolatedError('Seed data is inconsistent', { problems });
   }
@@ -234,5 +273,6 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
     feeRules,
     institutions,
     courses,
+    countryProfiles,
   };
 }
