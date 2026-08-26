@@ -17,9 +17,55 @@ export interface IntentFacts {
 }
 
 /**
+ * The segmented control itself: two links, never state. It appears twice — in the
+ * hero and above the cards — and both instances read and write the same URL, so they
+ * can never disagree about what is selected.
+ *
+ * `tone="canvas"` is the variant for the dark hero; `light` is for ordinary sections.
+ */
+export function IntentSwitch({
+  locale,
+  intent,
+  tone = 'light',
+}: {
+  locale: Locale;
+  intent: Intent;
+  tone?: 'light' | 'canvas';
+}) {
+  const t = translator(locale);
+  const seg = localeSegment(locale);
+
+  const options = [
+    { key: 'work' as const, icon: 'work' as const, label: t('intent.work') },
+    { key: 'study' as const, icon: 'study' as const, label: t('intent.study') },
+  ];
+
+  return (
+    <div
+      className={`intent-switch intent-switch-${tone}`}
+      role="group"
+      aria-label={t('intent.chooseTitle')}
+    >
+      {options.map((option) => (
+        <Link
+          key={option.key}
+          href={`/${seg}?intent=${option.key}`}
+          className={`intent-switch-option${intent === option.key ? ' is-selected' : ''}`}
+          aria-current={intent === option.key ? 'true' : undefined}
+          scroll={false}
+        >
+          <Icon name={option.icon} size={20} />
+          <span>{option.label}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+/**
  * §14.1 — work and study are the two top-level decisions, and a person has to be able
  * to weigh them *before* picking one. Both cards are always shown; the selection only
- * decides which path's detail is expanded below.
+ * decides which path is highlighted and which hub the primary button opens.
  *
  * The choice lives in the URL (`?intent=study`) rather than in component state, so it
  * is linkable, survives a reload, works with no JavaScript, and can be indexed.
@@ -65,21 +111,7 @@ export function IntentChooser({
 
   return (
     <div className="intent-block">
-      {/* A segmented control built from links: no state, no script, still shareable. */}
-      <div className="intent-switch" role="group" aria-label={t('intent.chooseTitle')}>
-        {paths.map((path) => (
-          <Link
-            key={path.key}
-            href={`/${seg}?intent=${path.key}`}
-            className={`intent-switch-option${intent === path.key ? ' is-selected' : ''}`}
-            aria-current={intent === path.key ? 'true' : undefined}
-            scroll={false}
-          >
-            <Icon name={path.icon} size={20} />
-            <span>{path.title}</span>
-          </Link>
-        ))}
-      </div>
+      <IntentSwitch locale={locale} intent={intent} />
 
       <Grid min={340}>
         {paths.map((path) => (

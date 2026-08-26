@@ -1,5 +1,6 @@
 import {
   breakpoint,
+  control,
   elevation,
   motion,
   radius,
@@ -27,6 +28,7 @@ export function cssVariables(): string {
   const light = [
     ...entries('color', semanticLight),
     ...entries('size', size, 'px'),
+    ...entries('control', control, 'px'),
     ...entries('space', space, 'px'),
     ...entries('radius', radius, 'px'),
     ...entries('font-size', typography.scale, 'px'),

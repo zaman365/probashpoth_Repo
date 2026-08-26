@@ -18,7 +18,12 @@ import {
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
-import { IntentChooser, IntentComparison, parseIntent } from '@/components/IntentChooser';
+import {
+  IntentChooser,
+  IntentComparison,
+  IntentSwitch,
+  parseIntent,
+} from '@/components/IntentChooser';
 import { ListenButton } from '@/components/ListenButton';
 
 export const dynamic = 'force-dynamic';
@@ -153,6 +158,11 @@ export default async function Landing({
       */}
       <div className="hero-frame">
         <CanvasPanel>
+          {/* The same control as the section below, reading the same URL state. */}
+          <div className="hero-topbar">
+            <IntentSwitch locale={locale} intent={intent} tone="canvas" />
+          </div>
+
           <div className="hero-grid">
             <div className="hero-copy">
               <Reveal index={0}>
@@ -172,11 +182,11 @@ export default async function Landing({
                     {t('site.heroVerifyCta')}
                   </ChipLink>
                   <ChipLink
-                    href={`/${seg}/jobs`}
+                    href={intent === 'study' ? `/${seg}/study` : `/${seg}/work`}
                     tone="glass"
                     chip={<Icon name="arrow" size={18} />}
                   >
-                    {t('site.heroExploreCta')}
+                    {intent === 'study' ? t('intent.openStudy') : t('intent.openWork')}
                   </ChipLink>
                 </div>
               </Reveal>
@@ -237,18 +247,19 @@ export default async function Landing({
                     </button>
                   </div>
                 </form>
+                {/* The figures follow the selected path, not a single global total. */}
                 <dl className="hero-side-stats">
                   <div>
+                    <dt>{t('intent.routesFor')}</dt>
+                    <dd>{intent === 'study' ? studyRoutes.length : workRoutes.length}</dd>
+                  </div>
+                  <div>
                     <dt>{t('site.statCountries')}</dt>
-                    <dd>{countries}</dd>
+                    <dd>{distinctCountries(intent === 'study' ? studyRoutes : workRoutes)}</dd>
                   </div>
                   <div>
-                    <dt>{t('site.statRoutes')}</dt>
-                    <dd>{routes}</dd>
-                  </div>
-                  <div>
-                    <dt>{t('site.statSources')}</dt>
-                    <dd>{sources}</dd>
+                    <dt>{intent === 'study' ? t('site.studyCourses') : t('job.verifiedJob')}</dt>
+                    <dd>{intent === 'study' ? courses : jobs}</dd>
                   </div>
                 </dl>
                 <p className="hero-warning">

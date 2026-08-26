@@ -163,14 +163,19 @@
 
 /* ------------------------------------------------------------------ button --- */
 
+/*
+ * One sizing rule for every control (see `control` in @probash/design-tokens):
+ * the visual scale is used on a mouse, and a coarse pointer raises everything to the
+ * §15 touch minimum. Buttons, inputs, switches and nav links all read from it, so
+ * nothing has to be sized by hand and nothing ends up as tall as the chrome.
+ */
 .pui-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  /* §15 — never below the 48px tap target. */
-  min-height: var(--size-tap-target-min);
-  padding-inline: var(--space-lg);
+  min-height: var(--control-md);
+  padding-inline: var(--space-md);
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   font-weight: var(--font-weight-semibold);
@@ -183,10 +188,28 @@
   transition: background var(--motion-fast) var(--motion-easing);
 }
 
+.pui-btn-sm {
+  min-height: var(--control-sm);
+  padding-inline: var(--space-sm);
+  font-size: var(--font-size-caption);
+}
+
 .pui-btn-lg {
-  min-height: var(--size-tap-target-primary);
+  min-height: var(--control-lg);
   font-size: var(--font-size-body-large);
-  padding-inline: var(--space-xl);
+  padding-inline: var(--space-lg);
+}
+
+/* A finger gets the §15 minimum, whatever size the design asked for. */
+@media (pointer: coarse) {
+  .pui-btn,
+  .pui-btn-sm {
+    min-height: var(--control-touch-min);
+  }
+
+  .pui-btn-lg {
+    min-height: var(--size-tap-target-primary);
+  }
 }
 
 .pui-btn-full {
@@ -376,7 +399,7 @@
 .pui-disclosure > summary {
   cursor: pointer;
   padding: var(--space-md);
-  min-height: var(--size-tap-target-min);
+  min-height: var(--control-md);
   display: flex;
   align-items: center;
   font-weight: var(--font-weight-medium);
@@ -467,9 +490,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  /* §15 — the tap target rule holds for the prettiest control on the page. */
-  min-height: var(--size-tap-target-primary);
-  padding-inline: var(--space-lg) var(--space-xs);
+  min-height: var(--control-lg);
+  padding-inline: var(--space-lg) 6px;
   border-radius: var(--radius-pill);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-body);
@@ -502,6 +524,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Sized off the control it sits inside, so the pill never looks padded out. */
   width: 40px;
   height: 40px;
   border-radius: var(--radius-pill);
@@ -512,6 +535,12 @@
 .pui-chip-glass .pui-chip-badge {
   background: rgba(242, 247, 244, 0.16);
   color: var(--color-text-on-canvas);
+}
+
+@media (pointer: coarse) {
+  .pui-chip-link {
+    min-height: var(--size-tap-target-primary);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

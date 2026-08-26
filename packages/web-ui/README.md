@@ -27,6 +27,24 @@ platforms already read.
 5. **Tokens only.** No hard-coded hex, px or font stacks — every value resolves to a
    CSS variable generated from `@probash/design-tokens`.
 
+## Control sizing
+
+One rule, applied everywhere: **height is chosen by the input device, not by taste.**
+
+| Step           | Mouse | Finger (`pointer: coarse`) | Used by                                                  |
+| -------------- | ----- | -------------------------- | -------------------------------------------------------- |
+| `sm`           | 36px  | 48px                       | nav links, dense chips                                   |
+| `md`           | 44px  | 48px                       | default buttons, inputs, segmented controls, disclosures |
+| `lg`           | 52px  | 56px                       | hero calls to action                                     |
+| worker primary | 56px  | 56px                       | the seven action tiles — always, on every device         |
+
+The navigation bar is 64px, and the scale is required to stay clear of it: a 52px
+button beside a 64px bar is what made the chrome look unfinished. A test in
+`@probash/design-tokens` asserts the ordering and the gap.
+
+React Native has no `pointer: coarse` — it is always coarse — so `@probash/mobile-ui`
+uses the touch column of that table and nothing else.
+
 ## The contract mobile will mirror
 
 | Component    | Props that must match in `mobile-ui`                                         |

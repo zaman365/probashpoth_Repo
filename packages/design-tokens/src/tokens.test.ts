@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contrastRatio, meetsContrast } from './contrast';
 import { cssVariables } from './css';
-import { color, semanticDark, semanticLight, size, typography } from './tokens';
+import { color, control, semanticDark, semanticLight, size, typography } from './tokens';
 
 describe('accessibility of the palette', () => {
   it('meets WCAG AA for body text in light mode', () => {
@@ -64,6 +64,18 @@ describe('low-literacy sizing rules (§15)', () => {
   it('never allows a tap target below 48px', () => {
     expect(size.tapTargetMin).toBeGreaterThanOrEqual(48);
     expect(size.tapTargetPrimary).toBeGreaterThanOrEqual(size.tapTargetMin);
+  });
+
+  it('keeps the touch minimum at the §15 rule whatever the visual scale does', () => {
+    expect(control.touchMin).toBe(size.tapTargetMin);
+  });
+
+  it('orders the control scale and keeps every step below the navigation bar', () => {
+    expect(control.sm).toBeLessThan(control.md);
+    expect(control.md).toBeLessThan(control.lg);
+    // A control as tall as the chrome it sits in is what made the header look broken.
+    expect(control.lg).toBeLessThan(size.navBar);
+    expect(size.navBar - control.lg).toBeGreaterThanOrEqual(8);
   });
 
   it('keeps body text large enough to read on a cheap phone', () => {

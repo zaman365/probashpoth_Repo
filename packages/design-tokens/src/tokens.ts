@@ -99,10 +99,31 @@ export const semanticDark = {
 } as const;
 
 /**
- * §15 — 48px minimum tap target, and a 56px "primary action" size for the
- * home screen actions a low-literacy user must never miss.
+ * Control sizing.
+ *
+ * The rule, in one sentence: **height is chosen by the input device, not by taste.**
+ *
+ * - On a coarse pointer (a finger), every interactive control is at least
+ *   `touchMin` — §15's 48px rule, which exists because the person tapping may be on a
+ *   moving bus with one hand.
+ * - On a fine pointer (a mouse), controls use the tighter `sm/md/lg` scale, because a
+ *   52px button next to a 64px navigation bar reads as an unfinished layout.
+ * - The worker's own primary actions keep `tapTargetPrimary` on every device: those
+ *   tiles are the one place where visual weight is the point.
+ *
+ * The scale is proportional to the navigation bar (`navBar`), so nothing inside the
+ * chrome ever approaches the height of the chrome itself.
  */
+export const control = {
+  sm: 36,
+  md: 44,
+  lg: 52,
+  /** Enforced on touch devices regardless of the size chosen (§15). */
+  touchMin: 48,
+} as const;
+
 export const size = {
+  navBar: 64,
   tapTargetMin: 48,
   tapTargetPrimary: 56,
   iconSm: 20,
@@ -206,6 +227,7 @@ export const tokens = {
   semanticLight,
   semanticDark,
   size,
+  control,
   breakpoint,
   space,
   radius,

@@ -6,6 +6,34 @@ import { expect, test } from '@playwright/test';
  * survive a phone with no JavaScript and a user who has asked for less motion.
  */
 
+test('the hero carries the work/study switch in its top corner', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/bn?intent=study');
+
+  const canvas = page.locator('.pui-canvas').first();
+  const heroSwitch = canvas.locator('.intent-switch');
+  await expect(heroSwitch).toHaveCount(1);
+  await expect(heroSwitch.locator('.is-selected')).toContainText('বিদেশে পড়াশোনা');
+
+  // Top corner: right-aligned inside the canvas, above the headline.
+  const canvasBox = await canvas.boundingBox();
+  const switchBox = await heroSwitch.boundingBox();
+  const headline = await canvas.getByRole('heading', { level: 1 }).boundingBox();
+  const canvasRight = (canvasBox?.x ?? 0) + (canvasBox?.width ?? 0);
+  const switchRight = (switchBox?.x ?? 0) + (switchBox?.width ?? 0);
+  expect(canvasRight - switchRight).toBeLessThan(80);
+  expect(switchBox?.y ?? 0).toBeLessThan(headline?.y ?? 0);
+});
+
+test('the hero figures follow the selected path', async ({ page }) => {
+  await page.goto('/en?intent=work');
+  const stats = page.locator('.hero-side-stats');
+  await expect(stats).toContainText('Verified job');
+
+  await page.goto('/en?intent=study');
+  await expect(page.locator('.hero-side-stats')).toContainText('Courses');
+});
+
 test('the hero renders on the painted canvas with its controls', async ({ page }) => {
   await page.goto('/bn');
   const canvas = page.locator('.pui-canvas').first();
@@ -17,11 +45,43 @@ test('the hero renders on the painted canvas with its controls', async ({ page }
   await expect(canvas.locator('.hero-warning')).toBeVisible();
 });
 
-test('hero controls keep the 48px tap target rule (§15)', async ({ page }) => {
+test('controls follow the device sizing rule', async ({ page }) => {
   await page.goto('/bn');
+
+  // A finger gets the §15 minimum; a mouse gets the tighter visual scale.
+  const coarse = await page.evaluate(() => matchMedia('(pointer: coarse)').matches);
+  const floor = coarse ? 48 : 44;
+
   for (const selector of ['.pui-chip-link', '.hero-verify-input', '.hero-verify-row button']) {
     const box = await page.locator(selector).first().boundingBox();
-    expect(box?.height ?? 0).toBeGreaterThanOrEqual(48);
+    expect(
+      box?.height ?? 0,
+      `${selector} on a ${coarse ? 'coarse' : 'fine'} pointer`,
+    ).toBeGreaterThanOrEqual(floor);
+  }
+});
+
+test('nothing in the chrome comes close to the height of the chrome', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/bn');
+
+  const bar = (await page.locator('.site-header-row').boundingBox())?.height ?? 0;
+  expect(bar).toBeGreaterThan(0);
+
+  for (const selector of ['.site-nav-desktop a', '.site-header-actions a']) {
+    const box = await page.locator(selector).first().boundingBox();
+    // A control as tall as the bar it sits in is what made the header look broken.
+    expect(bar - (box?.height ?? 0)).toBeGreaterThanOrEqual(8);
+  }
+});
+
+test('the worker action tiles keep their weight on every device (§15)', async ({ page }) => {
+  await page.goto('/bn');
+  const tiles = page.locator('.action-tile');
+  const count = await tiles.count();
+  for (let index = 0; index < count; index += 1) {
+    const box = await tiles.nth(index).boundingBox();
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(56);
   }
 });
 

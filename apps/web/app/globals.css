@@ -200,7 +200,10 @@ html[lang='en'] body {
   }
 
   .site-nav-desktop a {
-    padding: 9px 12px;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-sm);
+    padding: 0 12px;
     border-radius: var(--radius-pill);
     color: var(--color-text-secondary);
     font-weight: var(--font-weight-medium);
@@ -235,7 +238,7 @@ html[lang='en'] body {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    min-height: var(--size-tap-target-min);
+    min-height: var(--control-touch-min);
     padding-inline: var(--space-sm);
     border-radius: var(--radius-md);
     cursor: pointer;
@@ -251,7 +254,7 @@ html[lang='en'] body {
   .site-nav-mobile nav a {
     display: flex;
     align-items: center;
-    min-height: var(--size-tap-target-min);
+    min-height: var(--control-touch-min);
     padding-inline: var(--space-sm);
     border-block-start: 1px solid var(--color-border);
   }
@@ -391,6 +394,7 @@ html[lang='en'] body {
   }
 
   /* §15 — every tap target is at least 48px, text + icon, never icon-only. */
+  /* Worker-flow buttons stay at the touch minimum on every device (§15). */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -467,6 +471,20 @@ html[lang='en'] body {
   /* The panel floats on the page with a small margin, like a framed canvas. */
   .hero-frame {
     padding-block-start: var(--space-md);
+  }
+
+  /* Top-right on a wide screen; above the headline, full width, on a phone. */
+  .hero-topbar {
+    display: flex;
+    justify-content: flex-start;
+    margin-block-end: var(--space-lg);
+  }
+
+  @media (min-width: 760px) {
+    .hero-topbar {
+      justify-content: flex-end;
+      margin-block-end: var(--space-md);
+    }
   }
 
   .hero-grid {
@@ -622,7 +640,7 @@ html[lang='en'] body {
 
   .hero-verify-input {
     flex: 1 1 200px;
-    min-height: var(--size-tap-target-min);
+    min-height: var(--control-md);
     padding-inline: var(--space-md);
     border-radius: var(--radius-md);
     border: 1px solid rgba(242, 247, 244, 0.35);
@@ -700,13 +718,31 @@ html[lang='en'] body {
     display: inline-flex;
     padding: 4px;
     border-radius: var(--radius-pill);
-    background: var(--color-surface-muted);
-    border: 1px solid var(--color-border);
     gap: 4px;
     justify-self: start;
     max-width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
+  }
+
+  .intent-switch-light {
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+  }
+
+  /* The hero variant: translucent on the painted canvas rather than a light chip. */
+  .intent-switch-canvas {
+    background: rgba(11, 31, 24, 0.5);
+    border: 1px solid rgba(242, 247, 244, 0.28);
+  }
+
+  .intent-switch-canvas .intent-switch-option {
+    color: var(--color-text-on-canvas-muted);
+  }
+
+  .intent-switch-canvas .intent-switch-option:not(.is-selected):hover {
+    background: rgba(242, 247, 244, 0.12);
+    color: var(--color-text-on-canvas);
   }
 
   .intent-switch::-webkit-scrollbar {
@@ -717,8 +753,8 @@ html[lang='en'] body {
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    min-height: var(--size-tap-target-min);
-    padding-inline: var(--space-lg);
+    min-height: var(--control-md);
+    padding-inline: var(--space-md);
     border-radius: var(--radius-pill);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-secondary);
@@ -733,6 +769,12 @@ html[lang='en'] body {
   .intent-switch-option:not(.is-selected):hover {
     background: var(--color-surface);
     color: var(--color-text-primary);
+  }
+
+  @media (pointer: coarse) {
+    .intent-switch-option {
+      min-height: var(--control-touch-min);
+    }
   }
 
   .intent-card {
@@ -952,7 +994,7 @@ html[lang='en'] body {
   .field {
     display: block;
     width: 100%;
-    min-height: var(--size-tap-target-min);
+    min-height: var(--control-md);
     padding: var(--space-sm) var(--space-md);
     font-size: var(--font-size-body);
     border-radius: var(--radius-md);
@@ -976,5 +1018,22 @@ html[lang='en'] body {
   body {
     background: #fff;
     color: #000;
+  }
+}
+
+@layer components {
+  /*
+   * The device rule, applied last on purpose.
+   *
+   * These selectors have the same specificity as the base sizes above, so they only
+   * win by coming after them: under a thumb, every field and inline button is at
+   * least the §15 minimum, however tight the pointer layout is.
+   */
+  @media (pointer: coarse) {
+    .field,
+    .hero-verify-input,
+    .hero-verify-row button {
+      min-height: var(--control-touch-min);
+    }
   }
 }

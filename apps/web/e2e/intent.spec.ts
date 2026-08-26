@@ -20,17 +20,26 @@ test('the homepage describes both paths, whichever is selected', async ({ page }
 
 test('the selection lives in the URL and survives a reload', async ({ page }) => {
   await page.goto('/en?intent=study');
-  const selected = page.locator('.intent-switch-option.is-selected');
-  await expect(selected).toHaveCount(1);
-  await expect(selected).toContainText('Study abroad');
+
+  // The switch appears twice — in the hero and above the cards — and both read the
+  // same URL, so they can never disagree about what is selected.
+  const switches = page.locator('.intent-switch');
+  await expect(switches).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    const selected = switches.nth(index).locator('.is-selected');
+    await expect(selected).toHaveCount(1);
+    await expect(selected).toContainText('Study abroad');
+  }
 
   await page.reload();
-  await expect(page.locator('.intent-switch-option.is-selected')).toContainText('Study abroad');
+  await expect(page.locator('.intent-switch').first().locator('.is-selected')).toContainText(
+    'Study abroad',
+  );
 });
 
 test('the toggle is a pair of links, so it works with no JavaScript', async ({ page }) => {
   await page.goto('/en');
-  const options = page.locator('.intent-switch-option');
+  const options = page.locator('.intent-switch').first().locator('.intent-switch-option');
   await expect(options).toHaveCount(2);
   await expect(options.first()).toHaveAttribute('href', '/en?intent=work');
   await expect(options.last()).toHaveAttribute('href', '/en?intent=study');

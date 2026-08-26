@@ -10,7 +10,8 @@ test('the landing page leads with the product promise and both primary CTAs', as
   await page.goto('/bn');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('যাচাই করুন');
   await expect(page.getByRole('link', { name: /একটি চাকরি বা ভিসা যাচাই করুন/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /কাজের সুযোগ দেখুন/ })).toBeVisible();
+  // The second call to action follows the selected path (work by default).
+  await expect(page.getByRole('link', { name: /কাজের পথ দেখুন/ }).first()).toBeVisible();
 });
 
 test('the seven worker actions sit above everything a visitor merely reads (§15)', async ({
