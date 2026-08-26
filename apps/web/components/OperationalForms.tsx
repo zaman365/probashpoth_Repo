@@ -84,7 +84,7 @@ export function DocumentUploadForm({
   const t = translator(locale);
   const [state, action, pending] = useActionState(uploadDocumentAction, {});
   return (
-    <form action={action} className="card stack" encType="multipart/form-data">
+    <form action={action} className="card stack">
       <input type="hidden" name="locale" value={localeSegment} />
       <h2 className="card-title">{t('operations.uploadTitle')}</h2>
       <p>{t('operations.uploadLead')}</p>
