@@ -4,6 +4,7 @@ import type { CountrySummaryDto } from '@probash/contracts';
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { WorkspacePageShell } from '@/components/WorkspacePageShell';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,8 +37,15 @@ const STATUS_BADGE: Record<string, string> = {
  * §14.1 — the public country index. No login, indexable, and honest: a country is
  * listed with its operational status, not as an implied invitation to apply.
  */
-export default async function CountriesIndex({ params }: { params: Promise<{ locale: string }> }) {
+export default async function CountriesIndex({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ workspace?: string }>;
+}) {
   const { locale: segment } = await params;
+  const { workspace: workspaceMode } = await searchParams;
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
@@ -47,49 +55,53 @@ export default async function CountriesIndex({ params }: { params: Promise<{ loc
   });
 
   return (
-    <div className="wide-page stack-lg">
-      <header className="stack">
-        <h1 style={{ fontSize: 'var(--font-size-heading)', fontWeight: 700 }}>
-          {t('guide.countriesTitle')}
-        </h1>
-        <p style={{ maxWidth: '60ch' }}>{t('guide.countriesIntro')}</p>
-      </header>
+    <WorkspacePageShell active="countries" enabled={workspaceMode === '1'} locale={locale}>
+      <div className="wide-page stack-lg">
+        <header className="stack">
+          <h1 style={{ fontSize: 'var(--font-size-heading)', fontWeight: 700 }}>
+            {t('guide.countriesTitle')}
+          </h1>
+          <p style={{ maxWidth: '60ch' }}>{t('guide.countriesIntro')}</p>
+        </header>
 
-      <ul className="grid-cards">
-        {countries.map((country) => (
-          <li key={country.code}>
-            <Link
-              href={`/${seg}/countries/${country.code.toLowerCase()}`}
-              className="country-index-card"
-              aria-label={`${pick(country.name, locale)} — ${t('guide.openCountryGuide')}`}
-            >
-              <div className="country-index-card-topline">
-                <span className="country-code">{country.code}</span>
-                <span className="country-card-arrow" aria-hidden="true">
-                  →
-                </span>
-              </div>
-              <h2>{pick(country.name, locale)}</h2>
-              <p>{t('guide.countryCardLead')}</p>
-              <div className="flex flex-wrap gap-2">
-                <span className={`badge ${STATUS_BADGE[country.supportStatus] ?? 'badge-neutral'}`}>
-                  {country.supportStatus}
-                </span>
-                <span className="badge badge-neutral">
-                  {t('guide.routeCount', { count: country.routeCount })}
-                </span>
-                <span className="badge badge-info">{t('guide.workAndStudy')}</span>
-              </div>
-              {country.statusNotice ? (
-                <p className="badge badge-warning">{pick(country.statusNotice, locale)}</p>
-              ) : null}
-              <strong className="country-index-cta">{t('guide.openCountryGuide')}</strong>
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <ul className="grid-cards">
+          {countries.map((country) => (
+            <li key={country.code}>
+              <Link
+                href={`/${seg}/countries/${country.code.toLowerCase()}`}
+                className="country-index-card"
+                aria-label={`${pick(country.name, locale)} — ${t('guide.openCountryGuide')}`}
+              >
+                <div className="country-index-card-topline">
+                  <span className="country-code">{country.code}</span>
+                  <span className="country-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+                <h2>{pick(country.name, locale)}</h2>
+                <p>{t('guide.countryCardLead')}</p>
+                <div className="flex flex-wrap gap-2">
+                  <span
+                    className={`badge ${STATUS_BADGE[country.supportStatus] ?? 'badge-neutral'}`}
+                  >
+                    {country.supportStatus}
+                  </span>
+                  <span className="badge badge-neutral">
+                    {t('guide.routeCount', { count: country.routeCount })}
+                  </span>
+                  <span className="badge badge-info">{t('guide.workAndStudy')}</span>
+                </div>
+                {country.statusNotice ? (
+                  <p className="badge badge-warning">{pick(country.statusNotice, locale)}</p>
+                ) : null}
+                <strong className="country-index-cta">{t('guide.openCountryGuide')}</strong>
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-      <p className="muted">{t('guide.sourceNote')}</p>
-    </div>
+        <p className="muted">{t('guide.sourceNote')}</p>
+      </div>
+    </WorkspacePageShell>
   );
 }

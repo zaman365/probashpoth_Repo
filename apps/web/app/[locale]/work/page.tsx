@@ -11,6 +11,7 @@ import { apiRequest } from '@/lib/api';
 import { money } from '@/lib/format';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { WorkspacePageShell } from '@/components/WorkspacePageShell';
 
 export const dynamic = 'force-dynamic';
 
@@ -46,8 +47,15 @@ const ROUTE_STATUS_KEY: Record<string, string> = {
  * §14.1 — the work path in one place: what the route is, where the demand is, what it
  * costs you, and how to check an offer before paying anyone.
  */
-export default async function WorkHub({ params }: { params: Promise<{ locale: string }> }) {
+export default async function WorkHub({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ workspace?: string }>;
+}) {
   const { locale: segment } = await params;
+  const { workspace: workspaceMode } = await searchParams;
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
@@ -74,113 +82,115 @@ export default async function WorkHub({ params }: { params: Promise<{ locale: st
   ];
 
   return (
-    <>
-      <Section
-        headingLevel={1}
-        surface="warm"
-        eyebrow={t('intent.workTagline')}
-        title={t('intent.work')}
-        lead={t('intent.workHubLead')}
-      >
-        <div className="hub-actions">
-          <ButtonLink href={`/${seg}/passport`} size="lg" icon={<Icon name="route" size={20} />}>
-            {t('passport.startPassport')}
-          </ButtonLink>
-          <ButtonLink href={`/${seg}/jobs`} size="lg" icon={<Icon name="work" size={20} />}>
-            {t('home.findWork')}
-          </ButtonLink>
-          <ButtonLink href={`/${seg}/verify`} size="lg" variant="outline">
-            {t('home.verifyOffer')}
-          </ButtonLink>
-          <ButtonLink href={`/${seg}?intent=study`} size="lg" variant="ghost">
-            {t('intent.openStudy')}
-          </ButtonLink>
-        </div>
-        <StatGroup>
-          <Stat label={t('intent.routesFor')} value={String(routes.length)} />
-          <Stat label={t('site.statCountries')} value={String(workCountries.length)} />
-          <Stat label={t('job.verifiedJob')} value={String(jobs.length)} />
-          <Stat label={t('guide.occupationsTitle')} value={String(inDemand.length)} />
-        </StatGroup>
-      </Section>
+    <WorkspacePageShell active="work" enabled={workspaceMode === '1'} locale={locale}>
+      <>
+        <Section
+          headingLevel={1}
+          surface="warm"
+          eyebrow={t('intent.workTagline')}
+          title={t('intent.work')}
+          lead={t('intent.workHubLead')}
+        >
+          <div className="hub-actions">
+            <ButtonLink href={`/${seg}/passport`} size="lg" icon={<Icon name="route" size={20} />}>
+              {t('passport.startPassport')}
+            </ButtonLink>
+            <ButtonLink href={`/${seg}/jobs`} size="lg" icon={<Icon name="work" size={20} />}>
+              {t('home.findWork')}
+            </ButtonLink>
+            <ButtonLink href={`/${seg}/verify`} size="lg" variant="outline">
+              {t('home.verifyOffer')}
+            </ButtonLink>
+            <ButtonLink href={`/${seg}?intent=study`} size="lg" variant="ghost">
+              {t('intent.openStudy')}
+            </ButtonLink>
+          </div>
+          <StatGroup>
+            <Stat label={t('intent.routesFor')} value={String(routes.length)} />
+            <Stat label={t('site.statCountries')} value={String(workCountries.length)} />
+            <Stat label={t('job.verifiedJob')} value={String(jobs.length)} />
+            <Stat label={t('guide.occupationsTitle')} value={String(inDemand.length)} />
+          </StatGroup>
+        </Section>
 
-      <Section surface="default" title={t('intent.stepsWork')}>
-        <Grid min={280}>
-          {steps.map((step) => (
-            <Card key={step.title}>
-              <span className="step-icon" aria-hidden="true">
-                <Icon name={step.icon} size={24} />
-              </span>
-              <h3 className="card-title">{step.title}</h3>
-              <p>{step.body}</p>
-            </Card>
-          ))}
-        </Grid>
-      </Section>
-
-      <Section surface="muted" title={t('intent.routesFor')} lead={t('guide.sourceNote')}>
-        {routes.length === 0 ? <p>{t('guide.noRoutes')}</p> : null}
-        <Grid min={320}>
-          {routes.map((route) => (
-            <Link key={route.id} href={`/${seg}/routes/${route.id}`} className="guide-link">
-              <Card interactive>
-                <Badge tone="neutral">{countryName(route.destinationCountry)}</Badge>
-                <h3 className="card-title">{pick(route.officialName, locale)}</h3>
-                <p>{pick(route.summary, locale)}</p>
-                <Badge tone={route.acceptsApplications ? 'info' : 'danger'}>
-                  {t(ROUTE_STATUS_KEY[route.status] ?? 'route.statusUnknownNeedsReview')}
-                </Badge>
+        <Section surface="default" title={t('intent.stepsWork')}>
+          <Grid min={280}>
+            {steps.map((step) => (
+              <Card key={step.title}>
+                <span className="step-icon" aria-hidden="true">
+                  <Icon name={step.icon} size={24} />
+                </span>
+                <h3 className="card-title">{step.title}</h3>
+                <p>{step.body}</p>
               </Card>
-            </Link>
-          ))}
-        </Grid>
-      </Section>
+            ))}
+          </Grid>
+        </Section>
 
-      <Section surface="default" title={t('intent.occupationsInDemand')}>
-        <Grid min={260}>
-          {inDemand.map((occupation) => {
-            const example = jobs.find((job) => job.occupationKey === occupation.key);
-            return (
-              <Link
-                key={occupation.key}
-                href={`/${seg}/occupations/${occupation.key}`}
-                className="guide-link"
-              >
+        <Section surface="muted" title={t('intent.routesFor')} lead={t('guide.sourceNote')}>
+          {routes.length === 0 ? <p>{t('guide.noRoutes')}</p> : null}
+          <Grid min={320}>
+            {routes.map((route) => (
+              <Link key={route.id} href={`/${seg}/routes/${route.id}`} className="guide-link">
                 <Card interactive>
-                  <h3 className="card-title">{pick(occupation.title, locale)}</h3>
-                  {example ? (
-                    <>
-                      <p className="amount" style={{ fontSize: 'var(--font-size-title)' }}>
-                        {money(example.monthlySalary, locale)}
-                      </p>
-                      <p className="muted">
-                        {t('job.allowedWorkerCost')}: {money(example.allowedWorkerCost, locale)}
-                      </p>
-                    </>
-                  ) : null}
-                  <span className="link-more">
-                    {t('guide.readMore')} <Icon name="arrow" size={18} />
-                  </span>
+                  <Badge tone="neutral">{countryName(route.destinationCountry)}</Badge>
+                  <h3 className="card-title">{pick(route.officialName, locale)}</h3>
+                  <p>{pick(route.summary, locale)}</p>
+                  <Badge tone={route.acceptsApplications ? 'info' : 'danger'}>
+                    {t(ROUTE_STATUS_KEY[route.status] ?? 'route.statusUnknownNeedsReview')}
+                  </Badge>
                 </Card>
               </Link>
-            );
-          })}
-        </Grid>
-      </Section>
+            ))}
+          </Grid>
+        </Section>
 
-      <Section surface="accent" title={t('guide.safetyTitle')} lead={t('intent.compareRiskWork')}>
-        <div className="hub-actions">
-          <ButtonLink href={`/${seg}/safety`} size="lg" icon={<Icon name="warning" size={20} />}>
-            {t('guide.learnSafety')}
-          </ButtonLink>
-          <ButtonLink href={`/${seg}/verify`} size="lg" variant="secondary">
-            {t('scanner.checkNow')}
-          </ButtonLink>
-        </div>
-        <p style={{ marginBlockStart: 'var(--space-lg)' }}>
-          <Badge tone="warning">{t('cost.payOnlyHere')}</Badge>
-        </p>
-      </Section>
-    </>
+        <Section surface="default" title={t('intent.occupationsInDemand')}>
+          <Grid min={260}>
+            {inDemand.map((occupation) => {
+              const example = jobs.find((job) => job.occupationKey === occupation.key);
+              return (
+                <Link
+                  key={occupation.key}
+                  href={`/${seg}/occupations/${occupation.key}`}
+                  className="guide-link"
+                >
+                  <Card interactive>
+                    <h3 className="card-title">{pick(occupation.title, locale)}</h3>
+                    {example ? (
+                      <>
+                        <p className="amount" style={{ fontSize: 'var(--font-size-title)' }}>
+                          {money(example.monthlySalary, locale)}
+                        </p>
+                        <p className="muted">
+                          {t('job.allowedWorkerCost')}: {money(example.allowedWorkerCost, locale)}
+                        </p>
+                      </>
+                    ) : null}
+                    <span className="link-more">
+                      {t('guide.readMore')} <Icon name="arrow" size={18} />
+                    </span>
+                  </Card>
+                </Link>
+              );
+            })}
+          </Grid>
+        </Section>
+
+        <Section surface="accent" title={t('guide.safetyTitle')} lead={t('intent.compareRiskWork')}>
+          <div className="hub-actions">
+            <ButtonLink href={`/${seg}/safety`} size="lg" icon={<Icon name="warning" size={20} />}>
+              {t('guide.learnSafety')}
+            </ButtonLink>
+            <ButtonLink href={`/${seg}/verify`} size="lg" variant="secondary">
+              {t('scanner.checkNow')}
+            </ButtonLink>
+          </div>
+          <p style={{ marginBlockStart: 'var(--space-lg)' }}>
+            <Badge tone="warning">{t('cost.payOnlyHere')}</Badge>
+          </p>
+        </Section>
+      </>
+    </WorkspacePageShell>
   );
 }

@@ -7,7 +7,22 @@ import { localeSegment, translator, type Locale } from '@/lib/i18n';
 import { switchActiveWorkspaceAction } from '@/app/[locale]/operational-actions';
 import { DismissibleDetails } from './DismissibleDetails';
 
-type WorkspaceDestination = 'dashboard' | 'account';
+export type WorkspaceDestination =
+  | 'dashboard'
+  | 'passport'
+  | 'work'
+  | 'study'
+  | 'countries'
+  | 'jobs'
+  | 'occupations'
+  | 'scholarships'
+  | 'documents'
+  | 'money'
+  | 'verify'
+  | 'alerts'
+  | 'family'
+  | 'help'
+  | 'account';
 
 interface RailItem {
   href: string;
@@ -82,6 +97,8 @@ export function JourneyWorkspaceShell({
   const enabledPaths = new Set(profile.enabledPaths);
   const boundedProgress = Math.max(0, Math.min(100, progress));
   const dashboardHref = `/${seg}/dashboard`;
+  const workspaceHref = (destination: WorkspaceDestination, hash?: string) =>
+    `/${seg}/${destination}?workspace=1${hash ? `#${hash}` : ''}`;
   const groups: RailGroup[] = [
     {
       label: t('workspaceNav.journey'),
@@ -108,13 +125,24 @@ export function JourneyWorkspaceShell({
     {
       label: t('workspaceNav.prepare'),
       items: [
-        { href: `/${seg}/passport`, icon: 'document', label: t('passport.title') },
         {
-          href: `/${seg}/${path}`,
+          href: workspaceHref('passport'),
+          icon: 'document',
+          label: t('workspaceNav.readiness'),
+          active: active === 'passport',
+        },
+        {
+          href: workspaceHref(path),
           icon: path,
           label: t(path === 'work' ? 'intent.work' : 'intent.study'),
+          active: active === path,
         },
-        { href: `/${seg}/countries`, icon: 'globe', label: t('nav.countries') },
+        {
+          href: workspaceHref('countries'),
+          icon: 'globe',
+          label: t('nav.countries'),
+          active: active === 'countries',
+        },
       ],
     },
     {
@@ -126,37 +154,70 @@ export function JourneyWorkspaceShell({
           label: t('workspaceNav.matches'),
         },
         path === 'work'
-          ? { href: `/${seg}/jobs`, icon: 'work', label: t('workspaceNav.jobs') }
+          ? {
+              href: workspaceHref('jobs'),
+              icon: 'work',
+              label: t('workspaceNav.jobs'),
+              active: active === 'jobs',
+            }
           : {
-              href: `/${seg}/study#study-programmes`,
+              href: workspaceHref('study', 'study-programmes'),
               icon: 'study',
               label: t('workspaceNav.programmes'),
+              active: active === 'study',
             },
         {
-          href: path === 'work' ? `/${seg}/occupations` : `/${seg}/scholarships`,
+          href: workspaceHref(path === 'work' ? 'occupations' : 'scholarships'),
           icon: path === 'work' ? 'work' : 'money',
           label: t(path === 'work' ? 'guide.browseOccupations' : 'scholarships.nav'),
+          active: active === (path === 'work' ? 'occupations' : 'scholarships'),
         },
       ],
     },
     {
       label: t('workspaceNav.records'),
       items: [
-        { href: `/${seg}/documents`, icon: 'document', label: t('workspace.documents') },
-        { href: `/${seg}/money`, icon: 'money', label: t('workspace.money') },
-        { href: `/${seg}/verify`, icon: 'verify', label: t('workspace.review') },
         {
-          href: `/${seg}/alerts`,
+          href: workspaceHref('documents'),
+          icon: 'document',
+          label: t('workspace.documents'),
+          active: active === 'documents',
+        },
+        {
+          href: workspaceHref('money'),
+          icon: 'money',
+          label: t('workspace.money'),
+          active: active === 'money',
+        },
+        {
+          href: workspaceHref('verify'),
+          icon: 'verify',
+          label: t('workspace.review'),
+          active: active === 'verify',
+        },
+        {
+          href: workspaceHref('alerts'),
           icon: 'warning',
           label: t('operations.alertsTitle'),
+          active: active === 'alerts',
         },
       ],
     },
     {
       label: t('workspaceNav.support'),
       items: [
-        { href: `/${seg}/family`, icon: 'family', label: t('workspace.family') },
-        { href: `/${seg}/help`, icon: 'phone', label: t('common.help') },
+        {
+          href: workspaceHref('family'),
+          icon: 'family',
+          label: t('workspace.family'),
+          active: active === 'family',
+        },
+        {
+          href: workspaceHref('help'),
+          icon: 'phone',
+          label: t('common.help'),
+          active: active === 'help',
+        },
         {
           href: `/${seg}/account`,
           icon: 'shield',
@@ -168,6 +229,9 @@ export function JourneyWorkspaceShell({
   ];
   const pathLabel = t(path === 'work' ? 'account.workTalent' : 'account.studyTalent');
   const alternateLocale = seg === 'bn' ? 'en' : 'bn';
+  const persistentWorkspaceRoute = active !== 'dashboard' && active !== 'account';
+  const activeRoute = `/${seg}/${active}${persistentWorkspaceRoute ? '?workspace=1' : ''}`;
+  const alternateRoute = `/${alternateLocale}/${active}${persistentWorkspaceRoute ? '?workspace=1' : ''}`;
   const progressStyle = {
     '--journey-rail-progress': `${boundedProgress}%`,
   } as CSSProperties;
@@ -224,7 +288,7 @@ export function JourneyWorkspaceShell({
       aria-label={t('workspaceNav.switchWorkspace')}
     >
       <input type="hidden" name="locale" value={seg} />
-      <input type="hidden" name="returnTo" value={`/${seg}/${active}`} />
+      <input type="hidden" name="returnTo" value={activeRoute} />
       {(['work', 'study'] as const).map((workspacePath) => {
         const isEnabled = enabledPaths.has(workspacePath);
         const isActive = path === workspacePath;
@@ -283,7 +347,10 @@ export function JourneyWorkspaceShell({
                 <small>{t('workspaceNav.support')}</small>
                 <strong>{t('workspaceNav.chooseContact')}</strong>
               </header>
-              <Link href={`/${seg}/help?channel=ai#support-form`} className="journey-help-option">
+              <Link
+                href={`/${seg}/help?workspace=1&channel=ai#support-form`}
+                className="journey-help-option"
+              >
                 <span>
                   <Icon name="chat" size={19} />
                 </span>
@@ -294,7 +361,7 @@ export function JourneyWorkspaceShell({
                 <b aria-hidden="true">→</b>
               </Link>
               <Link
-                href={`/${seg}/help?channel=whatsapp#support-form`}
+                href={`/${seg}/help?workspace=1&channel=whatsapp#support-form`}
                 className="journey-help-option whatsapp"
               >
                 <span>
@@ -306,7 +373,7 @@ export function JourneyWorkspaceShell({
                 </span>
                 <b aria-hidden="true">→</b>
               </Link>
-              <Link href={`/${seg}/help#support-form`} className="journey-help-option">
+              <Link href={`/${seg}/help?workspace=1#support-form`} className="journey-help-option">
                 <span>
                   <Icon name="document" size={19} />
                 </span>
@@ -319,7 +386,7 @@ export function JourneyWorkspaceShell({
             </div>
           </DismissibleDetails>
           <Link
-            href={`/${alternateLocale}/${active}`}
+            href={alternateRoute}
             className="journey-toolbar-language"
             aria-label={t(seg === 'bn' ? 'common.switchToEnglish' : 'common.switchToBangla')}
           >

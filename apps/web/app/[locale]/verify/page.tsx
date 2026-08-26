@@ -7,6 +7,7 @@ import { VerificationRequestForm } from '@/components/OperationalForms';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { getWorkspace } from '@/db/operations';
 import { ScannerForm } from './scanner-form';
+import { WorkspacePageShell } from '@/components/WorkspacePageShell';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,10 +20,10 @@ export default async function VerifyPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ publicId?: string }>;
+  searchParams: Promise<{ publicId?: string; workspace?: string }>;
 }) {
   const { locale: segment } = await params;
-  const { publicId } = await searchParams;
+  const { publicId, workspace: workspaceMode } = await searchParams;
   const locale = parseLocaleParam(segment);
   const seg = localeSegment(locale);
   const t = translator(locale);
@@ -64,52 +65,54 @@ export default async function VerifyPage({
     : undefined;
 
   return (
-    <>
-      <h1 style={{ fontSize: 'var(--font-size-heading)', fontWeight: 700 }}>
-        {t('scanner.title')}
-      </h1>
-      <p>{t('scanner.help')}</p>
-      {serverResult ? <ScanResult result={serverResult} locale={locale} labels={labels} /> : null}
+    <WorkspacePageShell active="verify" enabled={workspaceMode === '1'} locale={locale}>
+      <>
+        <h1 style={{ fontSize: 'var(--font-size-heading)', fontWeight: 700 }}>
+          {t('scanner.title')}
+        </h1>
+        <p>{t('scanner.help')}</p>
+        {serverResult ? <ScanResult result={serverResult} locale={locale} labels={labels} /> : null}
 
-      <ScannerForm
-        locale={locale}
-        defaultPublicId={trimmed}
-        labels={{
-          publicIdLabel: t('scanner.publicIdLabel'),
-          pasteMessage: t('scanner.pasteMessage'),
-          checkNow: t('scanner.checkNow'),
-          error: t('common.errorTitle'),
-          ...labels,
-        }}
-      />
+        <ScannerForm
+          locale={locale}
+          defaultPublicId={trimmed}
+          labels={{
+            publicIdLabel: t('scanner.publicIdLabel'),
+            pasteMessage: t('scanner.pasteMessage'),
+            checkNow: t('scanner.checkNow'),
+            error: t('common.errorTitle'),
+            ...labels,
+          }}
+        />
 
-      <section className="stack" aria-labelledby="human-review-heading">
-        <VerificationRequestForm locale={locale} localeSegment={seg} />
-        {workspace ? (
-          <div className="card stack">
-            <h2 id="human-review-heading" className="card-title">
-              {t('operations.reviewHistory')}
-            </h2>
-            {workspace.verifications.length === 0 ? (
-              <p className="muted">{t('operations.noReviews')}</p>
-            ) : (
-              <ul className="record-list">
-                {workspace.verifications.map((request) => (
-                  <li key={request.id}>
-                    <div>
-                      <strong>{request.subject}</strong>
-                      <span className="muted">{t(`operations.kind.${request.kind}`)}</span>
-                    </div>
-                    <span className="badge badge-warning">{request.status}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ) : (
-          <p className="muted">{t('operations.signInToTrack')}</p>
-        )}
-      </section>
-    </>
+        <section className="stack" aria-labelledby="human-review-heading">
+          <VerificationRequestForm locale={locale} localeSegment={seg} />
+          {workspace ? (
+            <div className="card stack">
+              <h2 id="human-review-heading" className="card-title">
+                {t('operations.reviewHistory')}
+              </h2>
+              {workspace.verifications.length === 0 ? (
+                <p className="muted">{t('operations.noReviews')}</p>
+              ) : (
+                <ul className="record-list">
+                  {workspace.verifications.map((request) => (
+                    <li key={request.id}>
+                      <div>
+                        <strong>{request.subject}</strong>
+                        <span className="muted">{t(`operations.kind.${request.kind}`)}</span>
+                      </div>
+                      <span className="badge badge-warning">{request.status}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ) : (
+            <p className="muted">{t('operations.signInToTrack')}</p>
+          )}
+        </section>
+      </>
+    </WorkspacePageShell>
   );
 }
