@@ -1,0 +1,237 @@
+{
+  "$comment": "SYNTHETIC development organizations only (§64). Every record is flagged isSyntheticDemoData and the API refuses to serve synthetic records outside development.",
+  "organizations": [
+    {
+      "id": "org_emp_qa_alnahda",
+      "type": "foreign_employer",
+      "legalName": { "bn": "ডেমো — আল নাহদা কনস্ট্রাকশন ডব্লিউএলএল", "en": "DEMO — Al Nahda Construction WLL" },
+      "countryCode": "QA",
+      "registrationNumber": "DEMO-QA-CR-114582",
+      "officialDomain": "demo-alnahda.example",
+      "licences": [],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-18T00:00:00.000Z",
+        "facets": [
+          { "key": "legal_registration", "label": { "bn": "কোম্পানির নিবন্ধন", "en": "Company registration" }, "checked": true, "method": "registry_lookup", "sourceId": "src_qa_adlsa", "verifiedAt": "2026-08-18T00:00:00.000Z", "verifiedBy": "seed:demo" },
+          { "key": "labour_file_active", "label": { "bn": "শ্রম ফাইল সক্রিয়", "en": "Labour file active" }, "checked": true, "method": "registry_lookup", "sourceId": "src_qa_adlsa", "verifiedAt": "2026-08-18T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": [
+          { "key": "site_inspection", "label": { "bn": "কর্মস্থল পরিদর্শন", "en": "Worksite inspection" }, "checked": false, "method": "human_review", "note": { "bn": "সরেজমিন পরিদর্শন হয়নি।", "en": "No on-site inspection has been carried out." } }
+        ]
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_emp_sa_riyadh_facilities",
+      "type": "foreign_employer",
+      "legalName": { "bn": "ডেমো — রিয়াদ ফ্যাসিলিটিজ কোং", "en": "DEMO — Riyadh Facilities Co." },
+      "countryCode": "SA",
+      "registrationNumber": "DEMO-SA-CR-7781203",
+      "officialDomain": "demo-riyadhfacilities.example",
+      "licences": [],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-17T00:00:00.000Z",
+        "facets": [
+          { "key": "legal_registration", "label": { "bn": "কোম্পানির নিবন্ধন", "en": "Company registration" }, "checked": true, "method": "registry_lookup", "sourceId": "src_sa_qiwa", "verifiedAt": "2026-08-17T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": [
+          { "key": "establishment_compliance", "label": { "bn": "প্রতিষ্ঠানের কমপ্লায়েন্স রেটিং", "en": "Establishment compliance rating" }, "checked": false, "method": "authority_confirmation" }
+        ]
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_emp_sg_marine",
+      "type": "foreign_employer",
+      "legalName": { "bn": "ডেমো — কেপেল মেরিন সার্ভিসেস (ডেমো) পিটিই", "en": "DEMO — Harbour Marine Services Pte Ltd" },
+      "countryCode": "SG",
+      "registrationNumber": "DEMO-SG-UEN-201900123X",
+      "officialDomain": "demo-harbourmarine.example",
+      "licences": [],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-19T00:00:00.000Z",
+        "facets": [
+          { "key": "legal_registration", "label": { "bn": "কোম্পানির নিবন্ধন", "en": "Company registration" }, "checked": true, "method": "registry_lookup", "sourceId": "src_sg_mom", "verifiedAt": "2026-08-19T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": [
+          { "key": "quota_and_levy", "label": { "bn": "কোটা ও লেভি অবস্থা", "en": "Quota and levy status" }, "checked": false, "method": "authority_confirmation" }
+        ]
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_emp_de_elektro",
+      "type": "foreign_employer",
+      "legalName": { "bn": "ডেমো — নর্ডলিখট ইলেকট্রো জিএমবিএইচ", "en": "DEMO — Nordlicht Elektro GmbH" },
+      "countryCode": "DE",
+      "registrationNumber": "DEMO-DE-HRB-88123",
+      "officialDomain": "demo-nordlicht-elektro.example",
+      "licences": [],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-14T00:00:00.000Z",
+        "facets": [
+          { "key": "legal_registration", "label": { "bn": "বাণিজ্যিক নিবন্ধন", "en": "Commercial register entry" }, "checked": true, "method": "registry_lookup", "sourceId": "src_de_make_it", "verifiedAt": "2026-08-14T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": [
+          { "key": "qualification_recognition", "label": { "bn": "যোগ্যতা স্বীকৃতি প্রক্রিয়া", "en": "Qualification recognition pathway" }, "checked": false, "method": "authority_confirmation" }
+        ]
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_emp_my_electronics",
+      "type": "foreign_employer",
+      "legalName": { "bn": "ডেমো — পেনাং ইলেকট্রনিক্স এসডিএন বিএইচডি", "en": "DEMO — Penang Electronics Sdn Bhd" },
+      "countryCode": "MY",
+      "registrationNumber": "DEMO-MY-SSM-201801099",
+      "officialDomain": "demo-penangelectronics.example",
+      "licences": [],
+      "verification": {
+        "level": "identity_verified",
+        "lastVerifiedAt": "2026-08-12T00:00:00.000Z",
+        "facets": [
+          { "key": "contact_verified", "label": { "bn": "যোগাযোগ যাচাই", "en": "Contact verified" }, "checked": true, "method": "human_review", "verifiedAt": "2026-08-12T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": [
+          { "key": "legal_registration", "label": { "bn": "কোম্পানির নিবন্ধন", "en": "Company registration" }, "checked": false, "method": "registry_lookup", "note": { "bn": "সরকারি নিবন্ধন যাচাই এখনো হয়নি।", "en": "Official registry verification has not been carried out yet." } },
+          { "key": "quota_approval", "label": { "bn": "কোটা অনুমোদন", "en": "Quota approval" }, "checked": false, "method": "authority_confirmation" }
+        ]
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_agency_meghna",
+      "type": "recruiting_agency",
+      "legalName": { "bn": "ডেমো — মেঘনা ওভারসিজ লিমিটেড", "en": "DEMO — Meghna Overseas Ltd" },
+      "countryCode": "BD",
+      "registrationNumber": "DEMO-BD-RJSC-C-99001",
+      "officialDomain": "demo-meghnaoverseas.example",
+      "licences": [
+        {
+          "id": "lic_meghna",
+          "number": "DEMO-RL-1421",
+          "authority": { "bn": "জনশক্তি, কর্মসংস্থান ও প্রশিক্ষণ ব্যুরো", "en": "Bureau of Manpower, Employment and Training" },
+          "countryCode": "BD",
+          "status": "active",
+          "validFrom": "2024-01-01T00:00:00.000Z",
+          "validTo": "2027-12-31T00:00:00.000Z",
+          "sourceId": "src_bd_oep",
+          "lastVerifiedAt": "2026-08-20T00:00:00.000Z"
+        }
+      ],
+      "verification": {
+        "level": "authority_verified",
+        "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+        "facets": [
+          { "key": "licence_active", "label": { "bn": "লাইসেন্স সক্রিয়", "en": "Licence active" }, "checked": true, "method": "authority_confirmation", "sourceId": "src_bd_oep", "verifiedAt": "2026-08-20T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": []
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_agency_padma",
+      "type": "recruiting_agency",
+      "legalName": { "bn": "ডেমো — পদ্মা ম্যানপাওয়ার", "en": "DEMO — Padma Manpower" },
+      "countryCode": "BD",
+      "registrationNumber": "DEMO-BD-RJSC-C-99002",
+      "licences": [
+        {
+          "id": "lic_padma",
+          "number": "DEMO-RL-0876",
+          "authority": { "bn": "জনশক্তি, কর্মসংস্থান ও প্রশিক্ষণ ব্যুরো", "en": "Bureau of Manpower, Employment and Training" },
+          "countryCode": "BD",
+          "status": "expired",
+          "validFrom": "2019-01-01T00:00:00.000Z",
+          "validTo": "2025-06-30T00:00:00.000Z",
+          "sourceId": "src_bd_oep",
+          "lastVerifiedAt": "2026-08-20T00:00:00.000Z"
+        }
+      ],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+        "facets": [
+          { "key": "registry_entry", "label": { "bn": "নিবন্ধনে পাওয়া গেছে", "en": "Found in registry" }, "checked": true, "method": "registry_lookup", "sourceId": "src_bd_oep", "verifiedAt": "2026-08-20T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": [
+          { "key": "licence_active", "label": { "bn": "লাইসেন্স সক্রিয়", "en": "Licence active" }, "checked": false, "method": "authority_confirmation", "note": { "bn": "লাইসেন্সের মেয়াদ শেষ দেখাচ্ছে।", "en": "The licence appears to have expired." } }
+        ]
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 2 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_agency_shitalakshya",
+      "type": "recruiting_agency",
+      "legalName": { "bn": "ডেমো — শীতলক্ষ্যা ইন্টারন্যাশনাল", "en": "DEMO — Shitalakshya International" },
+      "countryCode": "BD",
+      "registrationNumber": "DEMO-BD-RJSC-C-99003",
+      "licences": [
+        {
+          "id": "lic_shitalakshya",
+          "number": "DEMO-RL-1907",
+          "authority": { "bn": "জনশক্তি, কর্মসংস্থান ও প্রশিক্ষণ ব্যুরো", "en": "Bureau of Manpower, Employment and Training" },
+          "countryCode": "BD",
+          "status": "active",
+          "validFrom": "2023-05-01T00:00:00.000Z",
+          "validTo": "2028-04-30T00:00:00.000Z",
+          "sourceId": "src_bd_oep",
+          "lastVerifiedAt": "2026-08-20T00:00:00.000Z"
+        }
+      ],
+      "verification": {
+        "level": "authority_verified",
+        "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+        "facets": [
+          { "key": "licence_active", "label": { "bn": "লাইসেন্স সক্রিয়", "en": "Licence active" }, "checked": true, "method": "authority_confirmation", "sourceId": "src_bd_oep", "verifiedAt": "2026-08-20T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": []
+      },
+      "trustSignals": { "completedPlacements": 0, "upheldComplaints": 0 },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_provider_medical_dhaka",
+      "type": "medical_provider",
+      "legalName": { "bn": "ডেমো — ঢাকা মেডিকেল চেকআপ সেন্টার", "en": "DEMO — Dhaka Medical Checkup Centre" },
+      "countryCode": "BD",
+      "licences": [],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-10T00:00:00.000Z",
+        "facets": [
+          { "key": "approved_centre", "label": { "bn": "অনুমোদিত কেন্দ্র", "en": "Approved centre" }, "checked": true, "method": "registry_lookup", "sourceId": "src_bd_oep", "verifiedAt": "2026-08-10T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": []
+      },
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "org_provider_training_tvet",
+      "type": "training_provider",
+      "legalName": { "bn": "ডেমো — কারিগরি প্রশিক্ষণ কেন্দ্র, নারায়ণগঞ্জ", "en": "DEMO — Technical Training Centre, Narayanganj" },
+      "countryCode": "BD",
+      "licences": [],
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-10T00:00:00.000Z",
+        "facets": [
+          { "key": "government_centre", "label": { "bn": "সরকারি প্রশিক্ষণ কেন্দ্র", "en": "Government training centre" }, "checked": true, "method": "registry_lookup", "sourceId": "src_bd_oep", "verifiedAt": "2026-08-10T00:00:00.000Z", "verifiedBy": "seed:demo" }
+        ],
+        "notChecked": []
+      },
+      "isSyntheticDemoData": true
+    }
+  ]
+}

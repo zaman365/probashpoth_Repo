@@ -1,0 +1,302 @@
+{
+  "$comment": "SYNTHETIC course seed (§12.2). Every record is flagged isSyntheticDemoData.",
+  "courses": [
+    {
+      "id": "crs_ca_electrical",
+      "institutionId": "inst_ca_maple",
+      "title": {
+        "bn": "ডেমো — ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং টেকনোলজি ডিপ্লোমা",
+        "en": "DEMO — Diploma in Electrical Engineering Technology"
+      },
+      "degreeLevel": "diploma",
+      "subjectIscedF": "0713",
+      "durationMonths": 24,
+      "tuition": {
+        "minorUnits": "1650000",
+        "currency": "CAD"
+      },
+      "intakes": [
+        "2027-01",
+        "2027-09"
+      ],
+      "languageRequirement": {
+        "bn": "আইইএলটিএস একাডেমিক ৬.০ বা প্রতিষ্ঠান-স্বীকৃত সমমান",
+        "en": "IELTS Academic 6.0 or institution-accepted equivalent"
+      },
+      "sourceIds": [
+        "src_ca_ircc"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "10000",
+        "currency": "CAD"
+      }
+    },
+    {
+      "id": "crs_ca_business",
+      "institutionId": "inst_ca_maple",
+      "title": {
+        "bn": "ডেমো — বিজনেস অ্যাডমিনিস্ট্রেশন ডিপ্লোমা",
+        "en": "DEMO — Diploma in Business Administration"
+      },
+      "degreeLevel": "diploma",
+      "subjectIscedF": "0413",
+      "durationMonths": 24,
+      "tuition": {
+        "minorUnits": "1500000",
+        "currency": "CAD"
+      },
+      "intakes": [
+        "2027-01",
+        "2027-09"
+      ],
+      "languageRequirement": {
+        "bn": "আইইএলটিএস একাডেমিক ৬.০",
+        "en": "IELTS Academic 6.0"
+      },
+      "sourceIds": [
+        "src_ca_ircc"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "10000",
+        "currency": "CAD"
+      }
+    },
+    {
+      "id": "crs_de_mech",
+      "institutionId": "inst_de_hochschule",
+      "title": {
+        "bn": "ডেমো — মেকানিক্যাল ইঞ্জিনিয়ারিং বিএসসি",
+        "en": "DEMO — BSc Mechanical Engineering"
+      },
+      "degreeLevel": "bachelor",
+      "subjectIscedF": "0715",
+      "durationMonths": 42,
+      "tuition": {
+        "minorUnits": "0",
+        "currency": "EUR"
+      },
+      "intakes": [
+        "2027-04",
+        "2027-10"
+      ],
+      "languageRequirement": {
+        "bn": "প্রোগ্রামের ভাষা অনুযায়ী জার্মান বি২ বা ইংরেজি বি২",
+        "en": "German B2 or English B2 depending on the programme language"
+      },
+      "sourceIds": [
+        "src_de_make_it"
+      ],
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "crs_de_nursing",
+      "institutionId": "inst_de_hochschule",
+      "title": {
+        "bn": "ডেমো — নার্সিং (Ausbildung)",
+        "en": "DEMO — Nursing (Ausbildung)"
+      },
+      "degreeLevel": "vocational",
+      "subjectIscedF": "0913",
+      "durationMonths": 36,
+      "tuition": {
+        "minorUnits": "0",
+        "currency": "EUR"
+      },
+      "intakes": [
+        "2027-09"
+      ],
+      "languageRequirement": {
+        "bn": "রাজ্যভেদে জার্মান বি১–বি২",
+        "en": "German B1–B2 depending on the state"
+      },
+      "sourceIds": [
+        "src_de_make_it"
+      ],
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "crs_gb_civil",
+      "institutionId": "inst_gb_city",
+      "title": {
+        "bn": "ডেমো — সিভিল ইঞ্জিনিয়ারিং এমএসসি",
+        "en": "DEMO — MSc Civil Engineering"
+      },
+      "degreeLevel": "master",
+      "subjectIscedF": "0732",
+      "durationMonths": 12,
+      "tuition": {
+        "minorUnits": "1800000",
+        "currency": "GBP"
+      },
+      "intakes": [
+        "2027-09"
+      ],
+      "languageRequirement": {
+        "bn": "আইইএলটিএস ইউকেভিআই ৬.৫",
+        "en": "IELTS UKVI 6.5"
+      },
+      "sourceIds": [
+        "src_uk_gov"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "5000",
+        "currency": "GBP"
+      }
+    },
+    {
+      "id": "crs_gb_computing",
+      "institutionId": "inst_gb_city",
+      "title": {
+        "bn": "ডেমো — কম্পিউটিং এমএসসি",
+        "en": "DEMO — MSc Computing"
+      },
+      "degreeLevel": "master",
+      "subjectIscedF": "0613",
+      "durationMonths": 12,
+      "tuition": {
+        "minorUnits": "1900000",
+        "currency": "GBP"
+      },
+      "intakes": [
+        "2027-01",
+        "2027-09"
+      ],
+      "languageRequirement": {
+        "bn": "আইইএলটিএস ইউকেভিআই ৬.৫",
+        "en": "IELTS UKVI 6.5"
+      },
+      "sourceIds": [
+        "src_uk_gov"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "5000",
+        "currency": "GBP"
+      }
+    },
+    {
+      "id": "crs_my_it",
+      "institutionId": "inst_my_tech",
+      "title": {
+        "bn": "ডেমো — ইনফরমেশন টেকনোলজি বিএসসি",
+        "en": "DEMO — BSc Information Technology"
+      },
+      "degreeLevel": "bachelor",
+      "subjectIscedF": "0613",
+      "durationMonths": 36,
+      "tuition": {
+        "minorUnits": "3600000",
+        "currency": "MYR"
+      },
+      "intakes": [
+        "2027-02",
+        "2027-09"
+      ],
+      "languageRequirement": {
+        "bn": "আইইএলটিএস ৫.৫ বা প্রতিষ্ঠানের পরীক্ষা",
+        "en": "IELTS 5.5 or institution test"
+      },
+      "sourceIds": [
+        "src_my_imi"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "2000",
+        "currency": "MYR"
+      }
+    },
+    {
+      "id": "crs_my_hospitality",
+      "institutionId": "inst_my_tech",
+      "title": {
+        "bn": "ডেমো — হসপিটালিটি ম্যানেজমেন্ট ডিপ্লোমা",
+        "en": "DEMO — Diploma in Hospitality Management"
+      },
+      "degreeLevel": "diploma",
+      "subjectIscedF": "1013",
+      "durationMonths": 30,
+      "tuition": {
+        "minorUnits": "2400000",
+        "currency": "MYR"
+      },
+      "intakes": [
+        "2027-02"
+      ],
+      "languageRequirement": {
+        "bn": "আইইএলটিএস ৫.০ বা প্রতিষ্ঠানের পরীক্ষা",
+        "en": "IELTS 5.0 or institution test"
+      },
+      "sourceIds": [
+        "src_my_imi"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "2000",
+        "currency": "MYR"
+      }
+    },
+    {
+      "id": "crs_jp_care",
+      "institutionId": "inst_jp_kokusai",
+      "title": {
+        "bn": "ডেমো — কেয়ারওয়ার্ক ডিপ্লোমা",
+        "en": "DEMO — Diploma in Care Work"
+      },
+      "degreeLevel": "diploma",
+      "subjectIscedF": "0921",
+      "durationMonths": 24,
+      "tuition": {
+        "minorUnits": "90000000",
+        "currency": "JPY"
+      },
+      "intakes": [
+        "2027-04"
+      ],
+      "languageRequirement": {
+        "bn": "জেএলপিটি এন৪ বা জেএফটি-বেসিক",
+        "en": "JLPT N4 or JFT-Basic"
+      },
+      "sourceIds": [
+        "src_jp_isa"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "30000",
+        "currency": "JPY"
+      }
+    },
+    {
+      "id": "crs_jp_mechatronics",
+      "institutionId": "inst_jp_kokusai",
+      "title": {
+        "bn": "ডেমো — মেকাট্রনিক্স ডিপ্লোমা",
+        "en": "DEMO — Diploma in Mechatronics"
+      },
+      "degreeLevel": "diploma",
+      "subjectIscedF": "0714",
+      "durationMonths": 24,
+      "tuition": {
+        "minorUnits": "95000000",
+        "currency": "JPY"
+      },
+      "intakes": [
+        "2027-04"
+      ],
+      "languageRequirement": {
+        "bn": "জেএলপিটি এন৪",
+        "en": "JLPT N4"
+      },
+      "sourceIds": [
+        "src_jp_isa"
+      ],
+      "isSyntheticDemoData": true,
+      "applicationFee": {
+        "minorUnits": "30000",
+        "currency": "JPY"
+      }
+    }
+  ]
+}

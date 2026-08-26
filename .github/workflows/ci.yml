@@ -1,0 +1,147 @@
+# §67 — PR gates. Nothing here deploys, and no job touches a production database.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  APP_ENV: test
+  STORAGE_DRIVER: memory
+
+jobs:
+  quality:
+    name: Format, lint, typecheck, unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm test
+
+      # §64 — the seed must stay internally consistent and fully labelled as synthetic.
+      - name: Verify development seed
+        run: pnpm seed
+
+      # §46 — the OpenAPI document is generated from source. If it drifts, the PR fails.
+      - name: Check OpenAPI is up to date
+        run: |
+          pnpm --filter @probash/api openapi
+          git diff --exit-code docs/api/openapi.json
+
+  e2e:
+    name: Web E2E (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm --filter @probash/web exec playwright install --with-deps chromium
+
+      - name: Start API and web
+        run: |
+          APP_ENV=test PORT=3001 node apps/api/dist/main.js &
+          API_BASE_URL=http://localhost:3001 pnpm --filter @probash/web exec next start --port 3000 &
+          npx --yes wait-on http://localhost:3001/api/v1/health http://localhost:3000/bn
+
+      - run: pnpm --filter @probash/web test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7
+
+  security:
+    name: Dependency and secret scanning
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # §50 — dependency scanning. High and critical advisories block the PR.
+      - name: Audit dependencies
+        run: pnpm audit --audit-level high
+
+      # §50 — no real credential may ever enter the repository.
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # §50 — an SBOM ships with every build so a future advisory can be traced.
+      - name: Generate SBOM
+        run: |
+          npx --yes @cyclonedx/cyclonedx-npm --output-file sbom.json --omit dev || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.json
+          retention-days: 30
+
+  no-real-data:
+    name: No real personal data
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      # §50/§64 — development and test data is synthetic. This check is deliberately
+      # blunt: it is cheaper to argue about a false positive than to leak a real NID.
+      - name: Scan seed and fixtures for real-looking identifiers
+        run: |
+          set -euo pipefail
+          if grep -rEn '"(nid|nidNumber|passportNumber)"\s*:\s*"[0-9A-Z]{6,}"' data/ ; then
+            echo "::error::Seed data contains a national identifier field with a concrete value"
+            exit 1
+          fi
+          if grep -rEn '\+?8801[3-9][0-9]{8}' data/ ; then
+            echo "::error::Seed data contains a Bangladeshi mobile number"
+            exit 1
+          fi
+          echo "No real-looking personal identifiers found in data/."
+
+      - name: Every synthetic record is labelled
+        run: |
+          set -euo pipefail
+          node -e '
+            const fs = require("fs");
+            for (const [file, key] of [["jobs.json","jobs"],["organizations.json","organizations"],["routes.json","routeVersions"]]) {
+              const data = JSON.parse(fs.readFileSync("data/seed/" + file, "utf8"));
+              const rows = data[key];
+              const unlabelled = rows.filter((row) => row.isSyntheticDemoData !== true);
+              if (unlabelled.length > 0) {
+                console.error("Unlabelled synthetic records in " + file + ": " + unlabelled.length);
+                process.exit(1);
+              }
+            }
+            console.log("All seeded records are labelled as synthetic demo data.");
+          '

@@ -1,0 +1,52 @@
+{
+  "terms": [
+    {
+      "key": "emigration_clearance",
+      "official": { "bn": "ইমিগ্রেশন ক্লিয়ারেন্স", "en": "Emigration clearance" },
+      "plain": {
+        "bn": "সরকারের অনুমতি, যা ছাড়া কাজের জন্য বিদেশে যাওয়া যায় না।",
+        "en": "The government permission you need before leaving for work abroad."
+      }
+    },
+    {
+      "key": "job_demand",
+      "official": { "bn": "চাহিদাপত্র", "en": "Job demand letter" },
+      "plain": {
+        "bn": "বিদেশি নিয়োগকর্তা কত জন লোক, কোন কাজে নেবে তার লিখিত চাহিদা।",
+        "en": "The employer's written request stating how many workers they need and for which job."
+      }
+    },
+    {
+      "key": "recruiting_licence",
+      "official": { "bn": "রিক্রুটিং লাইসেন্স (আরএল)", "en": "Recruiting licence (RL)" },
+      "plain": {
+        "bn": "সরকারের দেওয়া অনুমতি, যা থাকলে একটি এজেন্সি বিদেশে কর্মী পাঠাতে পারে।",
+        "en": "The government permission an agency must hold to send workers abroad."
+      }
+    },
+    {
+      "key": "work_permit",
+      "official": { "bn": "ওয়ার্ক পারমিট", "en": "Work permit" },
+      "plain": {
+        "bn": "যে দেশে যাচ্ছেন, সেই দেশের কাজ করার অনুমতি।",
+        "en": "The destination country's permission to work there."
+      }
+    },
+    {
+      "key": "milestone_settlement",
+      "official": { "bn": "ধাপভিত্তিক পরিশোধ", "en": "Milestone-controlled settlement" },
+      "plain": {
+        "bn": "কাজের একেকটি ধাপ যাচাই হলে তবেই টাকা ছাড় হয়।",
+        "en": "Money is released only after each step has been verified."
+      }
+    },
+    {
+      "key": "refundable",
+      "official": { "bn": "ফেরতযোগ্য", "en": "Refundable" },
+      "plain": {
+        "bn": "কাজ না হলে এই টাকা ফেরত পাওয়ার নিয়ম আছে।",
+        "en": "There is a rule that returns this money if the process fails."
+      }
+    }
+  ]
+}

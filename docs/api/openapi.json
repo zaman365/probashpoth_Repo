@@ -1,0 +1,926 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["health"]
+      }
+    },
+    "/api/v1/auth/request-otp": {
+      "post": {
+        "operationId": "IdentityController_requestOtp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["identity"]
+      }
+    },
+    "/api/v1/auth/verify-otp": {
+      "post": {
+        "operationId": "IdentityController_verifyOtp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["identity"]
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "operationId": "IdentityController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["identity"]
+      }
+    },
+    "/api/v1/me/profile": {
+      "patch": {
+        "operationId": "IdentityController_updateProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["identity"]
+      }
+    },
+    "/api/v1/me/skill-passport": {
+      "get": {
+        "operationId": "IdentityController_skillPassport",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["identity"]
+      }
+    },
+    "/api/v1/delegations": {
+      "get": {
+        "operationId": "DelegationsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["delegations"]
+      },
+      "post": {
+        "operationId": "DelegationsController_invite",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["delegations"]
+      }
+    },
+    "/api/v1/delegations/{id}": {
+      "delete": {
+        "operationId": "DelegationsController_revoke",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["delegations"]
+      }
+    },
+    "/api/v1/countries": {
+      "get": {
+        "operationId": "CatalogueController_countries",
+        "parameters": [
+          {
+            "name": "purpose",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "withRoutes",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/countries/{code}/routes": {
+      "get": {
+        "operationId": "CatalogueController_countryRoutes",
+        "parameters": [
+          {
+            "name": "code",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "purpose",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/routes": {
+      "get": {
+        "operationId": "CatalogueController_routes",
+        "parameters": [
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "purpose",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/routes/{id}": {
+      "get": {
+        "operationId": "CatalogueController_route",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/occupations": {
+      "get": {
+        "operationId": "CatalogueController_occupations",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/sources": {
+      "get": {
+        "operationId": "CatalogueController_sources",
+        "parameters": [
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/institutions": {
+      "get": {
+        "operationId": "CatalogueController_institutions",
+        "parameters": [
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/courses": {
+      "get": {
+        "operationId": "CatalogueController_courses",
+        "parameters": [
+          {
+            "name": "institution",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["catalogue"]
+      }
+    },
+    "/api/v1/eligibility/evaluate": {
+      "post": {
+        "operationId": "EligibilityController_evaluateAnonymous",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["eligibility"]
+      }
+    },
+    "/api/v1/eligibility/evaluate/me": {
+      "post": {
+        "operationId": "EligibilityController_evaluateForMe",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["eligibility"]
+      }
+    },
+    "/api/v1/jobs": {
+      "get": {
+        "operationId": "JobsController_list",
+        "parameters": [
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "occupation",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "employerPays",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["jobs"]
+      }
+    },
+    "/api/v1/jobs/{id}": {
+      "get": {
+        "operationId": "JobsController_detail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["jobs"]
+      }
+    },
+    "/api/v1/verify/job/{publicId}": {
+      "get": {
+        "operationId": "JobsController_publicVerify",
+        "parameters": [
+          {
+            "name": "publicId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["jobs"]
+      }
+    },
+    "/api/v1/verify/qr": {
+      "post": {
+        "operationId": "JobsController_verifyQr",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["jobs"]
+      }
+    },
+    "/api/v1/cases": {
+      "get": {
+        "operationId": "CasesController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["cases"]
+      },
+      "post": {
+        "operationId": "CasesController_create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["cases"]
+      }
+    },
+    "/api/v1/cases/{id}": {
+      "get": {
+        "operationId": "CasesController_detail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["cases"]
+      }
+    },
+    "/api/v1/cases/{id}/tasks": {
+      "get": {
+        "operationId": "CasesController_tasks",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["cases"]
+      }
+    },
+    "/api/v1/cases/{id}/cost-plan": {
+      "get": {
+        "operationId": "CasesController_costPlan",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["cases"]
+      }
+    },
+    "/api/v1/cases/{id}/actions": {
+      "post": {
+        "operationId": "CasesController_act",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["cases"]
+      }
+    },
+    "/api/v1/me/documents": {
+      "get": {
+        "operationId": "DocumentsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["documents"]
+      },
+      "post": {
+        "operationId": "DocumentsController_upload",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["documents"]
+      }
+    },
+    "/api/v1/me/documents/{id}/shares": {
+      "post": {
+        "operationId": "DocumentsController_share",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["documents"]
+      }
+    },
+    "/api/v1/me/documents/shares/{shareId}": {
+      "delete": {
+        "operationId": "DocumentsController_revoke",
+        "parameters": [
+          {
+            "name": "shareId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["documents"]
+      }
+    },
+    "/api/v1/cases/{caseId}/payment-intents": {
+      "post": {
+        "operationId": "PaymentsController_createIntent",
+        "parameters": [
+          {
+            "name": "caseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["payments"]
+      },
+      "get": {
+        "operationId": "PaymentsController_listIntents",
+        "parameters": [
+          {
+            "name": "caseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["payments"]
+      }
+    },
+    "/api/v1/payments/{id}/receipt": {
+      "get": {
+        "operationId": "PaymentsController_receipt",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["payments"]
+      }
+    },
+    "/api/v1/cases/{caseId}/payment-intents/{id}/settle": {
+      "post": {
+        "operationId": "PaymentsController_settle",
+        "parameters": [
+          {
+            "name": "caseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["payments"]
+      }
+    },
+    "/api/v1/cases/{caseId}/ledger": {
+      "get": {
+        "operationId": "PaymentsController_ledger",
+        "parameters": [
+          {
+            "name": "caseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": ["payments"]
+      }
+    },
+    "/api/v1/webhooks/payments/{provider}": {
+      "post": {
+        "operationId": "PaymentsController_webhook",
+        "parameters": [
+          {
+            "name": "provider",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-probash-signature",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["payments"]
+      }
+    },
+    "/api/v1/webhooks/payments/mock/sign": {
+      "post": {
+        "operationId": "PaymentsController_signMock",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["payments"]
+      }
+    },
+    "/api/v1/verify/offer": {
+      "post": {
+        "operationId": "ScannerController_scan",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["scanner"]
+      }
+    }
+  },
+  "info": {
+    "title": "ProbashOS API",
+    "description": "Safe migration and global opportunity platform API.\n\nGuarantees this API is built to keep:\n- eligibility answers are deterministic and source-backed, and \"unknown\" is a real answer;\n- a verification level is derived from checked facts, never asserted;\n- money moves only on provider-confirmed webhooks, and settles only against verified milestones;\n- synthetic development records are labelled and are not served outside development.",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "identity",
+      "description": "Phone OTP onboarding, profile and Skill Passport (§17, §18)"
+    },
+    {
+      "name": "catalogue",
+      "description": "Countries, routes, occupations and their official sources (§7, §9, §38)"
+    },
+    {
+      "name": "eligibility",
+      "description": "Deterministic eligibility with a decision trace (§19, §48)"
+    },
+    {
+      "name": "jobs",
+      "description": "Verified jobs and public verification (§21)"
+    },
+    {
+      "name": "scanner",
+      "description": "Offer / visa / document scanner (§23)"
+    },
+    {
+      "name": "cases",
+      "description": "Application workflow, tasks, milestones and cost plan (§24, §33)"
+    },
+    {
+      "name": "payments",
+      "description": "Milestone-controlled settlement and the double-entry ledger (§25)"
+    },
+    {
+      "name": "documents",
+      "description": "Document wallet and consented sharing (§29)"
+    },
+    {
+      "name": "delegations",
+      "description": "Family co-pilot (§28)"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {}
+  }
+}

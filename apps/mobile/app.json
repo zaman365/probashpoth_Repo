@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "ProbashOS",
+    "slug": "probash-os",
+    "scheme": "probash",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "platforms": ["android", "ios"],
+    "android": {
+      "package": "org.probash.os",
+      "permissions": ["CAMERA", "RECORD_AUDIO", "VIBRATE"]
+    },
+    "ios": {
+      "bundleIdentifier": "org.probash.os",
+      "supportsTablet": false
+    },
+    "plugins": ["expo-router", "expo-secure-store"],
+    "extra": {
+      "defaultLocale": "bn-BD"
+    }
+  }
+}

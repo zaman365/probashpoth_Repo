@@ -1,0 +1,28 @@
+{
+  "name": "@probash/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@probash/contracts": "workspace:*",
+    "@probash/design-tokens": "workspace:*",
+    "@probash/domain": "workspace:*",
+    "@probash/i18n": "workspace:*",
+    "expo": "~57.0.0",
+    "expo-router": "~6.0.0",
+    "expo-secure-store": "~15.0.0",
+    "expo-sqlite": "~16.0.0",
+    "react": "19.2.0",
+    "react-native": "0.86.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "typescript": "6.0.3"
+  }
+}

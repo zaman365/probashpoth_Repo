@@ -1,0 +1,205 @@
+{
+  "$comment": "Official source registry seed (§72, §86). URLs are real official portals. No bulk copyrighted text is copied; the platform stores snapshots and effective-dated extracts at runtime (§42.15).",
+  "sources": [
+    {
+      "id": "src_bd_oep",
+      "kind": "government_portal",
+      "countryCode": "BD",
+      "authority": { "bn": "জনশক্তি, কর্মসংস্থান ও প্রশিক্ষণ ব্যুরো (বিএমইটি)", "en": "Bureau of Manpower, Employment and Training (BMET)" },
+      "title": { "bn": "ওভারসিজ এমপ্লয়মেন্ট প্ল্যাটফর্ম", "en": "Overseas Employment Platform" },
+      "url": "https://www.oep.gov.bd/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-20T00:00:00.000Z"
+    },
+    {
+      "id": "src_bd_probashi",
+      "kind": "ministry",
+      "countryCode": "BD",
+      "authority": { "bn": "প্রবাসী কল্যাণ ও বৈদেশিক কর্মসংস্থান মন্ত্রণালয়", "en": "Ministry of Expatriates' Welfare and Overseas Employment" },
+      "title": { "bn": "আইন ও বিধিমালা", "en": "Laws and rules" },
+      "url": "https://probashi.gov.bd/",
+      "reviewCadenceDays": 30,
+      "lastReviewedAt": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "src_bd_wewb",
+      "kind": "government_portal",
+      "countryCode": "BD",
+      "authority": { "bn": "ওয়েজ আর্নার্স কল্যাণ বোর্ড", "en": "Wage Earners' Welfare Board" },
+      "title": { "bn": "কল্যাণ সেবা ও ফি", "en": "Welfare services and fees" },
+      "url": "https://wewb.gov.bd/",
+      "reviewCadenceDays": 30,
+      "lastReviewedAt": "2026-07-28T00:00:00.000Z"
+    },
+    {
+      "id": "src_bd_pkb",
+      "kind": "government_portal",
+      "countryCode": "BD",
+      "authority": { "bn": "প্রবাসী কল্যাণ ব্যাংক", "en": "Probashi Kallyan Bank" },
+      "title": { "bn": "অভিবাসন ঋণ", "en": "Migration loan products" },
+      "url": "https://pkb.gov.bd/",
+      "reviewCadenceDays": 60,
+      "lastReviewedAt": "2026-07-15T00:00:00.000Z"
+    },
+    {
+      "id": "src_bd_bb",
+      "kind": "government_portal",
+      "countryCode": "BD",
+      "authority": { "bn": "বাংলাদেশ ব্যাংক", "en": "Bangladesh Bank" },
+      "title": { "bn": "পেমেন্ট সার্ভিস ও এমএফএস নিয়ন্ত্রণ", "en": "Payment services and MFS regulation" },
+      "url": "https://www.bb.org.bd/",
+      "reviewCadenceDays": 30,
+      "lastReviewedAt": "2026-08-10T00:00:00.000Z"
+    },
+    {
+      "id": "src_ilo_fair_recruitment",
+      "kind": "international_organization",
+      "countryCode": "BD",
+      "authority": { "bn": "আন্তর্জাতিক শ্রম সংস্থা", "en": "International Labour Organization" },
+      "title": { "bn": "ন্যায্য নিয়োগের সাধারণ নীতিমালা", "en": "General principles and operational guidelines for fair recruitment" },
+      "url": "https://www.ilo.org/",
+      "reviewCadenceDays": 180,
+      "lastReviewedAt": "2026-06-01T00:00:00.000Z"
+    },
+    {
+      "id": "src_qa_adlsa",
+      "kind": "labour_authority",
+      "countryCode": "QA",
+      "authority": { "bn": "কাতার শ্রম মন্ত্রণালয়", "en": "Ministry of Labour, State of Qatar" },
+      "title": { "bn": "কর্মী নিয়োগ ও চুক্তি", "en": "Recruitment and employment contracts" },
+      "url": "https://www.adlsa.gov.qa/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-22T00:00:00.000Z"
+    },
+    {
+      "id": "src_sa_hrsd",
+      "kind": "labour_authority",
+      "countryCode": "SA",
+      "authority": { "bn": "সৌদি মানবসম্পদ ও সামাজিক উন্নয়ন মন্ত্রণালয়", "en": "Ministry of Human Resources and Social Development" },
+      "title": { "bn": "কর্মসংস্থান ও ওয়ার্ক পারমিট", "en": "Employment and work permits" },
+      "url": "https://www.hrsd.gov.sa/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-21T00:00:00.000Z"
+    },
+    {
+      "id": "src_sa_qiwa",
+      "kind": "official_registry",
+      "countryCode": "SA",
+      "authority": { "bn": "কিওয়া প্ল্যাটফর্ম", "en": "Qiwa platform" },
+      "title": { "bn": "নিয়োগকর্তা ও চুক্তি যাচাই", "en": "Employer and contract services" },
+      "url": "https://www.qiwa.sa/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-21T00:00:00.000Z"
+    },
+    {
+      "id": "src_ae_mohre",
+      "kind": "labour_authority",
+      "countryCode": "AE",
+      "authority": { "bn": "সংযুক্ত আরব আমিরাত মানবসম্পদ ও আমিরাতকরণ মন্ত্রণালয়", "en": "UAE Ministry of Human Resources and Emiratisation" },
+      "title": { "bn": "কাজের অনুমতি ও চাকরির প্রস্তাব", "en": "Work permits and job offers" },
+      "url": "https://www.mohre.gov.ae/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "src_sg_mom",
+      "kind": "labour_authority",
+      "countryCode": "SG",
+      "authority": { "bn": "সিঙ্গাপুর জনশক্তি মন্ত্রণালয়", "en": "Singapore Ministry of Manpower" },
+      "title": { "bn": "ওয়ার্ক পারমিট শর্তাবলি", "en": "Work Permit requirements" },
+      "url": "https://www.mom.gov.sg/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-19T00:00:00.000Z"
+    },
+    {
+      "id": "src_my_imi",
+      "kind": "immigration_authority",
+      "countryCode": "MY",
+      "authority": { "bn": "মালয়েশিয়া ইমিগ্রেশন বিভাগ", "en": "Immigration Department of Malaysia" },
+      "title": { "bn": "বিদেশি কর্মী প্রক্রিয়া", "en": "Foreign worker process" },
+      "url": "https://www.imi.gov.my/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-12T00:00:00.000Z"
+    },
+    {
+      "id": "src_kr_eps",
+      "kind": "government_portal",
+      "countryCode": "KR",
+      "authority": { "bn": "কোরিয়া এমপ্লয়মেন্ট পারমিট সিস্টেম", "en": "Employment Permit System (EPS), Korea" },
+      "title": { "bn": "ইপিএস-টপিক ও ই-৯ প্রক্রিয়া", "en": "EPS-TOPIK and E-9 process" },
+      "url": "https://www.eps.go.kr/",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-05T00:00:00.000Z"
+    },
+    {
+      "id": "src_jp_isa",
+      "kind": "immigration_authority",
+      "countryCode": "JP",
+      "authority": { "bn": "জাপান ইমিগ্রেশন সার্ভিসেস এজেন্সি", "en": "Immigration Services Agency of Japan" },
+      "title": { "bn": "নির্দিষ্ট দক্ষ কর্মী (এসএসডব্লিউ)", "en": "Specified Skilled Worker" },
+      "url": "https://www.moj.go.jp/",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "src_de_make_it",
+      "kind": "government_portal",
+      "countryCode": "DE",
+      "authority": { "bn": "জার্মান ফেডারেল সরকার", "en": "German Federal Government" },
+      "title": { "bn": "মেক ইট ইন জার্মানি — দক্ষ কর্মী", "en": "Make it in Germany — skilled workers" },
+      "url": "https://www.make-it-in-germany.com/",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-14T00:00:00.000Z"
+    },
+    {
+      "id": "src_de_embassy_dhaka",
+      "kind": "embassy_mission",
+      "countryCode": "DE",
+      "authority": { "bn": "ঢাকাস্থ জার্মান দূতাবাস", "en": "German Embassy Dhaka" },
+      "title": { "bn": "ভিসা আবেদন ও কাগজপত্র", "en": "Visa applications and documents" },
+      "url": "https://dhaka.diplo.de/",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-14T00:00:00.000Z"
+    },
+    {
+      "id": "src_uk_gov",
+      "kind": "immigration_authority",
+      "countryCode": "GB",
+      "authority": { "bn": "যুক্তরাজ্য সরকার", "en": "UK Government" },
+      "title": { "bn": "ভিসা ও ইমিগ্রেশন", "en": "Visas and immigration" },
+      "url": "https://www.gov.uk/browse/visas-immigration",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-23T00:00:00.000Z"
+    },
+    {
+      "id": "src_ca_ircc",
+      "kind": "immigration_authority",
+      "countryCode": "CA",
+      "authority": { "bn": "ইমিগ্রেশন, রিফিউজি অ্যান্ড সিটিজেনশিপ কানাডা", "en": "Immigration, Refugees and Citizenship Canada" },
+      "title": { "bn": "স্টাডি পারমিট ও ইমিগ্রেশন", "en": "Study permits and immigration" },
+      "url": "https://www.canada.ca/en/services/immigration-citizenship.html",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-23T00:00:00.000Z"
+    },
+    {
+      "id": "src_au_homeaffairs",
+      "kind": "immigration_authority",
+      "countryCode": "AU",
+      "authority": { "bn": "অস্ট্রেলিয়া স্বরাষ্ট্র দপ্তর", "en": "Australian Department of Home Affairs" },
+      "title": { "bn": "ভিসা তালিকা", "en": "Visa listings" },
+      "url": "https://immi.homeaffairs.gov.au/",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-11T00:00:00.000Z"
+    },
+    {
+      "id": "src_nz_immigration",
+      "kind": "immigration_authority",
+      "countryCode": "NZ",
+      "authority": { "bn": "ইমিগ্রেশন নিউজিল্যান্ড", "en": "Immigration New Zealand" },
+      "title": { "bn": "অ্যাক্রেডিটেড এমপ্লয়ার ওয়ার্ক ভিসা", "en": "Accredited Employer Work Visa" },
+      "url": "https://www.immigration.govt.nz/",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-16T00:00:00.000Z"
+    }
+  ]
+}

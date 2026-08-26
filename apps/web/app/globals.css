@@ -1,0 +1,292 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/*
+ * §52 — calm, high-contrast, public-service quality. Component classes live here so
+ * markup stays readable and every surface uses the same generated design tokens.
+ */
+
+@theme inline {
+  --font-sans: var(--font-family-bangla);
+  --color-surface: var(--color-surface);
+  --color-accent: var(--color-accent);
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-bangla);
+  line-height: var(--line-height-bangla);
+  font-size: var(--font-size-body);
+  -webkit-text-size-adjust: 100%;
+}
+
+html[lang='en'] body {
+  font-family: var(--font-family-latin);
+  line-height: var(--line-height-latin);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@layer components {
+  /*
+   * Two containers on purpose (§14.1 vs §14.2). Worker flows stay a single narrow
+   * column — one question per screen, readable one-handed. Public guide pages are a
+   * website: wider, multi-column on a large screen, and browsable without login.
+   */
+  .shell {
+    max-width: var(--size-max-content-width);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+    padding-block-end: var(--space-3xl);
+  }
+
+  .shell-wide {
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+    padding-block-end: var(--space-3xl);
+  }
+
+  .site-header {
+    border-block-end: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-tap-target-min);
+    padding-inline: var(--space-md);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .site-nav a:hover {
+    background: var(--color-surface-muted);
+  }
+
+  .grid-cards {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 760px) {
+    .grid-cards {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+  }
+
+  /*
+   * A public guide page opts into the wide container from inside, so the worker
+   * flows keep their single narrow column and no existing page needs a wrapper.
+   */
+  main.shell:has(.wide-page) {
+    max-width: 1120px;
+  }
+
+  .hero {
+    padding-block: var(--space-2xl);
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 900px) {
+    /*
+   * A public guide page opts into the wide container from inside, so the worker
+   * flows keep their single narrow column and no existing page needs a wrapper.
+   */
+    main.shell:has(.wide-page) {
+      max-width: 1120px;
+    }
+
+    .hero {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .hero h1 {
+    font-size: var(--font-size-display);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+  }
+
+  .stat {
+    display: grid;
+    gap: 2px;
+  }
+
+  .stat dt {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-secondary);
+  }
+
+  .stat dd {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .card-muted {
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+  }
+
+  /* §15 — every tap target is at least 48px, text + icon, never icon-only. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    min-height: var(--size-tap-target-min);
+    padding-inline: var(--space-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-body);
+    cursor: pointer;
+    text-align: center;
+    transition: background var(--motion-fast) var(--motion-easing);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-hover);
+  }
+
+  .btn-secondary {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+  }
+
+  .btn-danger {
+    background: #fdeceb;
+    color: #8a1c14;
+    border-color: #e79c96;
+  }
+
+  .action-tile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    min-height: var(--size-tap-target-primary);
+    width: 100%;
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+    text-align: start;
+  }
+
+  .action-tile:hover {
+    border-color: var(--color-accent);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-medium);
+    border: 1px solid transparent;
+  }
+
+  .badge-success {
+    background: #e6f4ea;
+    color: #125c2e;
+    border-color: #8ccfa4;
+  }
+  .badge-warning {
+    background: #fdf3e2;
+    color: #7a4d05;
+    border-color: #e6bd77;
+  }
+  .badge-danger {
+    background: #fdeceb;
+    color: #8a1c14;
+    border-color: #e79c96;
+  }
+  .badge-info {
+    background: #eaf1fb;
+    color: #1a457f;
+    border-color: #9dbbe6;
+  }
+  .badge-neutral {
+    background: var(--color-surface-muted);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+  }
+
+  .amount {
+    font-size: var(--font-size-amount);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.01em;
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-caption);
+  }
+
+  .field {
+    display: block;
+    width: 100%;
+    min-height: var(--size-tap-target-min);
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-body);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+  }
+
+  .stack > * + * {
+    margin-block-start: var(--space-md);
+  }
+  .stack-lg > * + * {
+    margin-block-start: var(--space-lg);
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

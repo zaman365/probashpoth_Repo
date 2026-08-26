@@ -1,0 +1,85 @@
+{
+  "$comment": "SYNTHETIC study seed (§64, §12.2). Tuition figures are development placeholders; production records require institution-official verification and effective dates.",
+  "institutions": [
+    {
+      "id": "inst_ca_maple",
+      "legalName": {
+        "bn": "ডেমো — মেপল পলিটেকনিক",
+        "en": "DEMO — Maple Polytechnic"
+      },
+      "countryCode": "CA",
+      "institutionType": "polytechnic",
+      "officialDomain": "demo-maplepoly.example",
+      "recognizedStatus": "designated_learning_institution",
+      "sourceIds": [
+        "src_ca_ircc"
+      ],
+      "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "inst_de_hochschule",
+      "legalName": {
+        "bn": "ডেমো — নর্ডসি হখশুলে",
+        "en": "DEMO — Nordsee Hochschule"
+      },
+      "countryCode": "DE",
+      "institutionType": "university_of_applied_sciences",
+      "officialDomain": "demo-nordsee-hs.example",
+      "recognizedStatus": "state_recognized",
+      "sourceIds": [
+        "src_de_make_it"
+      ],
+      "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "inst_gb_city",
+      "legalName": {
+        "bn": "ডেমো — সিটি কলেজ অব ইঞ্জিনিয়ারিং",
+        "en": "DEMO — City College of Engineering"
+      },
+      "countryCode": "GB",
+      "institutionType": "college",
+      "officialDomain": "demo-citycollege.example",
+      "recognizedStatus": "licensed_student_sponsor",
+      "sourceIds": [
+        "src_uk_gov"
+      ],
+      "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "inst_my_tech",
+      "legalName": {
+        "bn": "ডেমো — সেলাঙ্গর টেক ইউনিভার্সিটি",
+        "en": "DEMO — Selangor Tech University"
+      },
+      "countryCode": "MY",
+      "institutionType": "university",
+      "officialDomain": "demo-selangortech.example",
+      "recognizedStatus": "accredited",
+      "sourceIds": [
+        "src_my_imi"
+      ],
+      "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "inst_jp_kokusai",
+      "legalName": {
+        "bn": "ডেমো — কোকুসাই টেকনিক্যাল ইনস্টিটিউট",
+        "en": "DEMO — Kokusai Technical Institute"
+      },
+      "countryCode": "JP",
+      "institutionType": "vocational_college",
+      "officialDomain": "demo-kokusai.example",
+      "recognizedStatus": "accredited",
+      "sourceIds": [
+        "src_jp_isa"
+      ],
+      "lastVerifiedAt": "2026-08-20T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    }
+  ]
+}

@@ -1,0 +1,1749 @@
+{
+  "generatedBy": "data/iso/generate-countries.mjs",
+  "count": 249,
+  "countries": [
+    {
+      "code": "AD",
+      "name": {
+        "en": "Andorra",
+        "bn": "আন্ডোরা"
+      }
+    },
+    {
+      "code": "AE",
+      "name": {
+        "en": "United Arab Emirates",
+        "bn": "সংযুক্ত আরব আমিরাত"
+      }
+    },
+    {
+      "code": "AF",
+      "name": {
+        "en": "Afghanistan",
+        "bn": "আফগানিস্তান"
+      }
+    },
+    {
+      "code": "AG",
+      "name": {
+        "en": "Antigua & Barbuda",
+        "bn": "অ্যান্টিগুয়া ও বারবুডা"
+      }
+    },
+    {
+      "code": "AI",
+      "name": {
+        "en": "Anguilla",
+        "bn": "অ্যাঙ্গুইলা"
+      }
+    },
+    {
+      "code": "AL",
+      "name": {
+        "en": "Albania",
+        "bn": "আলবেনিয়া"
+      }
+    },
+    {
+      "code": "AM",
+      "name": {
+        "en": "Armenia",
+        "bn": "আর্মেনিয়া"
+      }
+    },
+    {
+      "code": "AO",
+      "name": {
+        "en": "Angola",
+        "bn": "অ্যাঙ্গোলা"
+      }
+    },
+    {
+      "code": "AQ",
+      "name": {
+        "en": "Antarctica",
+        "bn": "অ্যান্টার্কটিকা"
+      }
+    },
+    {
+      "code": "AR",
+      "name": {
+        "en": "Argentina",
+        "bn": "আর্জেন্টিনা"
+      }
+    },
+    {
+      "code": "AS",
+      "name": {
+        "en": "American Samoa",
+        "bn": "আমেরিকান সামোয়া"
+      }
+    },
+    {
+      "code": "AT",
+      "name": {
+        "en": "Austria",
+        "bn": "অস্ট্রিয়া"
+      }
+    },
+    {
+      "code": "AU",
+      "name": {
+        "en": "Australia",
+        "bn": "অস্ট্রেলিয়া"
+      }
+    },
+    {
+      "code": "AW",
+      "name": {
+        "en": "Aruba",
+        "bn": "আরুবা"
+      }
+    },
+    {
+      "code": "AX",
+      "name": {
+        "en": "Åland Islands",
+        "bn": "অলান্ড দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "AZ",
+      "name": {
+        "en": "Azerbaijan",
+        "bn": "আজারবাইজান"
+      }
+    },
+    {
+      "code": "BA",
+      "name": {
+        "en": "Bosnia & Herzegovina",
+        "bn": "বসনিয়া ও হার্জেগোভিনা"
+      }
+    },
+    {
+      "code": "BB",
+      "name": {
+        "en": "Barbados",
+        "bn": "বার্বাডোজ"
+      }
+    },
+    {
+      "code": "BD",
+      "name": {
+        "en": "Bangladesh",
+        "bn": "বাংলাদেশ"
+      }
+    },
+    {
+      "code": "BE",
+      "name": {
+        "en": "Belgium",
+        "bn": "বেলজিয়াম"
+      }
+    },
+    {
+      "code": "BF",
+      "name": {
+        "en": "Burkina Faso",
+        "bn": "বুরকিনা ফাসো"
+      }
+    },
+    {
+      "code": "BG",
+      "name": {
+        "en": "Bulgaria",
+        "bn": "বুলগেরিয়া"
+      }
+    },
+    {
+      "code": "BH",
+      "name": {
+        "en": "Bahrain",
+        "bn": "বাহারিন"
+      }
+    },
+    {
+      "code": "BI",
+      "name": {
+        "en": "Burundi",
+        "bn": "বুরুন্ডি"
+      }
+    },
+    {
+      "code": "BJ",
+      "name": {
+        "en": "Benin",
+        "bn": "বেনিন"
+      }
+    },
+    {
+      "code": "BL",
+      "name": {
+        "en": "St. Barthélemy",
+        "bn": "সেন্ট বার্থেলেমি"
+      }
+    },
+    {
+      "code": "BM",
+      "name": {
+        "en": "Bermuda",
+        "bn": "বারমুডা"
+      }
+    },
+    {
+      "code": "BN",
+      "name": {
+        "en": "Brunei",
+        "bn": "ব্রুনেই"
+      }
+    },
+    {
+      "code": "BO",
+      "name": {
+        "en": "Bolivia",
+        "bn": "বলিভিয়া"
+      }
+    },
+    {
+      "code": "BQ",
+      "name": {
+        "en": "Caribbean Netherlands",
+        "bn": "ক্যারিবিয়ান নেদারল্যান্ডস"
+      }
+    },
+    {
+      "code": "BR",
+      "name": {
+        "en": "Brazil",
+        "bn": "ব্রাজিল"
+      }
+    },
+    {
+      "code": "BS",
+      "name": {
+        "en": "Bahamas",
+        "bn": "বাহামা দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "BT",
+      "name": {
+        "en": "Bhutan",
+        "bn": "ভুটান"
+      }
+    },
+    {
+      "code": "BV",
+      "name": {
+        "en": "Bouvet Island",
+        "bn": "বোভেট দ্বীপ"
+      }
+    },
+    {
+      "code": "BW",
+      "name": {
+        "en": "Botswana",
+        "bn": "বতসোয়ানা"
+      }
+    },
+    {
+      "code": "BY",
+      "name": {
+        "en": "Belarus",
+        "bn": "বেলারুশ"
+      }
+    },
+    {
+      "code": "BZ",
+      "name": {
+        "en": "Belize",
+        "bn": "বেলিজ"
+      }
+    },
+    {
+      "code": "CA",
+      "name": {
+        "en": "Canada",
+        "bn": "কানাডা"
+      }
+    },
+    {
+      "code": "CC",
+      "name": {
+        "en": "Cocos (Keeling) Islands",
+        "bn": "কোকোস (কিলিং) দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "CD",
+      "name": {
+        "en": "Congo - Kinshasa",
+        "bn": "কঙ্গো-কিনশাসা"
+      }
+    },
+    {
+      "code": "CF",
+      "name": {
+        "en": "Central African Republic",
+        "bn": "মধ্য আফ্রিকার প্রজাতন্ত্র"
+      }
+    },
+    {
+      "code": "CG",
+      "name": {
+        "en": "Congo - Brazzaville",
+        "bn": "কঙ্গো - ব্রাজাভিল"
+      }
+    },
+    {
+      "code": "CH",
+      "name": {
+        "en": "Switzerland",
+        "bn": "সুইজারল্যান্ড"
+      }
+    },
+    {
+      "code": "CI",
+      "name": {
+        "en": "Côte d’Ivoire",
+        "bn": "কোট ডি‘আইভোর"
+      }
+    },
+    {
+      "code": "CK",
+      "name": {
+        "en": "Cook Islands",
+        "bn": "কুক দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "CL",
+      "name": {
+        "en": "Chile",
+        "bn": "চিলি"
+      }
+    },
+    {
+      "code": "CM",
+      "name": {
+        "en": "Cameroon",
+        "bn": "ক্যামেরুন"
+      }
+    },
+    {
+      "code": "CN",
+      "name": {
+        "en": "China",
+        "bn": "চীন"
+      }
+    },
+    {
+      "code": "CO",
+      "name": {
+        "en": "Colombia",
+        "bn": "কলম্বিয়া"
+      }
+    },
+    {
+      "code": "CR",
+      "name": {
+        "en": "Costa Rica",
+        "bn": "কোস্টারিকা"
+      }
+    },
+    {
+      "code": "CU",
+      "name": {
+        "en": "Cuba",
+        "bn": "কিউবা"
+      }
+    },
+    {
+      "code": "CV",
+      "name": {
+        "en": "Cape Verde",
+        "bn": "কেপ ভার্দে"
+      }
+    },
+    {
+      "code": "CW",
+      "name": {
+        "en": "Curaçao",
+        "bn": "কুরাসাও"
+      }
+    },
+    {
+      "code": "CX",
+      "name": {
+        "en": "Christmas Island",
+        "bn": "ক্রিসমাস দ্বীপ"
+      }
+    },
+    {
+      "code": "CY",
+      "name": {
+        "en": "Cyprus",
+        "bn": "সাইপ্রাস"
+      }
+    },
+    {
+      "code": "CZ",
+      "name": {
+        "en": "Czechia",
+        "bn": "চেকিয়া"
+      }
+    },
+    {
+      "code": "DE",
+      "name": {
+        "en": "Germany",
+        "bn": "জার্মানি"
+      }
+    },
+    {
+      "code": "DJ",
+      "name": {
+        "en": "Djibouti",
+        "bn": "জিবুতি"
+      }
+    },
+    {
+      "code": "DK",
+      "name": {
+        "en": "Denmark",
+        "bn": "ডেনমার্ক"
+      }
+    },
+    {
+      "code": "DM",
+      "name": {
+        "en": "Dominica",
+        "bn": "ডোমিনিকা"
+      }
+    },
+    {
+      "code": "DO",
+      "name": {
+        "en": "Dominican Republic",
+        "bn": "ডোমেনিকান প্রজাতন্ত্র"
+      }
+    },
+    {
+      "code": "DZ",
+      "name": {
+        "en": "Algeria",
+        "bn": "আলজেরিয়া"
+      }
+    },
+    {
+      "code": "EC",
+      "name": {
+        "en": "Ecuador",
+        "bn": "ইকুয়েডর"
+      }
+    },
+    {
+      "code": "EE",
+      "name": {
+        "en": "Estonia",
+        "bn": "এস্তোনিয়া"
+      }
+    },
+    {
+      "code": "EG",
+      "name": {
+        "en": "Egypt",
+        "bn": "মিশর"
+      }
+    },
+    {
+      "code": "EH",
+      "name": {
+        "en": "Western Sahara",
+        "bn": "পশ্চিম সাহারা"
+      }
+    },
+    {
+      "code": "ER",
+      "name": {
+        "en": "Eritrea",
+        "bn": "ইরিত্রিয়া"
+      }
+    },
+    {
+      "code": "ES",
+      "name": {
+        "en": "Spain",
+        "bn": "স্পেন"
+      }
+    },
+    {
+      "code": "ET",
+      "name": {
+        "en": "Ethiopia",
+        "bn": "ইথিওপিয়া"
+      }
+    },
+    {
+      "code": "FI",
+      "name": {
+        "en": "Finland",
+        "bn": "ফিনল্যান্ড"
+      }
+    },
+    {
+      "code": "FJ",
+      "name": {
+        "en": "Fiji",
+        "bn": "ফিজি"
+      }
+    },
+    {
+      "code": "FK",
+      "name": {
+        "en": "Falkland Islands",
+        "bn": "ফকল্যান্ড দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "FM",
+      "name": {
+        "en": "Micronesia",
+        "bn": "মাইক্রোনেশিয়া"
+      }
+    },
+    {
+      "code": "FO",
+      "name": {
+        "en": "Faroe Islands",
+        "bn": "ফ্যারো দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "FR",
+      "name": {
+        "en": "France",
+        "bn": "ফ্রান্স"
+      }
+    },
+    {
+      "code": "GA",
+      "name": {
+        "en": "Gabon",
+        "bn": "গ্যাবন"
+      }
+    },
+    {
+      "code": "GB",
+      "name": {
+        "en": "United Kingdom",
+        "bn": "যুক্তরাজ্য"
+      }
+    },
+    {
+      "code": "GD",
+      "name": {
+        "en": "Grenada",
+        "bn": "গ্রেনাডা"
+      }
+    },
+    {
+      "code": "GE",
+      "name": {
+        "en": "Georgia",
+        "bn": "জর্জিয়া"
+      }
+    },
+    {
+      "code": "GF",
+      "name": {
+        "en": "French Guiana",
+        "bn": "ফরাসী গায়ানা"
+      }
+    },
+    {
+      "code": "GG",
+      "name": {
+        "en": "Guernsey",
+        "bn": "গার্নসি"
+      }
+    },
+    {
+      "code": "GH",
+      "name": {
+        "en": "Ghana",
+        "bn": "ঘানা"
+      }
+    },
+    {
+      "code": "GI",
+      "name": {
+        "en": "Gibraltar",
+        "bn": "জিব্রাল্টার"
+      }
+    },
+    {
+      "code": "GL",
+      "name": {
+        "en": "Greenland",
+        "bn": "গ্রীনল্যান্ড"
+      }
+    },
+    {
+      "code": "GM",
+      "name": {
+        "en": "Gambia",
+        "bn": "গাম্বিয়া"
+      }
+    },
+    {
+      "code": "GN",
+      "name": {
+        "en": "Guinea",
+        "bn": "গিনি"
+      }
+    },
+    {
+      "code": "GP",
+      "name": {
+        "en": "Guadeloupe",
+        "bn": "গুয়াদেলৌপ"
+      }
+    },
+    {
+      "code": "GQ",
+      "name": {
+        "en": "Equatorial Guinea",
+        "bn": "নিরক্ষীয় গিনি"
+      }
+    },
+    {
+      "code": "GR",
+      "name": {
+        "en": "Greece",
+        "bn": "গ্রীস"
+      }
+    },
+    {
+      "code": "GS",
+      "name": {
+        "en": "South Georgia & South Sandwich Islands",
+        "bn": "দক্ষিণ জর্জিয়া ও দক্ষিণ স্যান্ডউইচ দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "GT",
+      "name": {
+        "en": "Guatemala",
+        "bn": "গুয়াতেমালা"
+      }
+    },
+    {
+      "code": "GU",
+      "name": {
+        "en": "Guam",
+        "bn": "গুয়াম"
+      }
+    },
+    {
+      "code": "GW",
+      "name": {
+        "en": "Guinea-Bissau",
+        "bn": "গিনি-বিসাউ"
+      }
+    },
+    {
+      "code": "GY",
+      "name": {
+        "en": "Guyana",
+        "bn": "গিয়ানা"
+      }
+    },
+    {
+      "code": "HK",
+      "name": {
+        "en": "Hong Kong SAR China",
+        "bn": "হংকং এসএআর চীনা"
+      }
+    },
+    {
+      "code": "HM",
+      "name": {
+        "en": "Heard & McDonald Islands",
+        "bn": "হার্ড এবং ম্যাকডোনাল্ড দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "HN",
+      "name": {
+        "en": "Honduras",
+        "bn": "হন্ডুরাস"
+      }
+    },
+    {
+      "code": "HR",
+      "name": {
+        "en": "Croatia",
+        "bn": "ক্রোয়েশিয়া"
+      }
+    },
+    {
+      "code": "HT",
+      "name": {
+        "en": "Haiti",
+        "bn": "হাইতি"
+      }
+    },
+    {
+      "code": "HU",
+      "name": {
+        "en": "Hungary",
+        "bn": "হাঙ্গেরি"
+      }
+    },
+    {
+      "code": "ID",
+      "name": {
+        "en": "Indonesia",
+        "bn": "ইন্দোনেশিয়া"
+      }
+    },
+    {
+      "code": "IE",
+      "name": {
+        "en": "Ireland",
+        "bn": "আয়ারল্যান্ড"
+      }
+    },
+    {
+      "code": "IL",
+      "name": {
+        "en": "Israel",
+        "bn": "ইজরায়েল"
+      }
+    },
+    {
+      "code": "IM",
+      "name": {
+        "en": "Isle of Man",
+        "bn": "আইল অফ ম্যান"
+      }
+    },
+    {
+      "code": "IN",
+      "name": {
+        "en": "India",
+        "bn": "ভারত"
+      }
+    },
+    {
+      "code": "IO",
+      "name": {
+        "en": "British Indian Ocean Territory",
+        "bn": "ব্রিটিশ ভারত মহাসাগরীয় অঞ্চল"
+      }
+    },
+    {
+      "code": "IQ",
+      "name": {
+        "en": "Iraq",
+        "bn": "ইরাক"
+      }
+    },
+    {
+      "code": "IR",
+      "name": {
+        "en": "Iran",
+        "bn": "ইরান"
+      }
+    },
+    {
+      "code": "IS",
+      "name": {
+        "en": "Iceland",
+        "bn": "আইসল্যান্ড"
+      }
+    },
+    {
+      "code": "IT",
+      "name": {
+        "en": "Italy",
+        "bn": "ইতালি"
+      }
+    },
+    {
+      "code": "JE",
+      "name": {
+        "en": "Jersey",
+        "bn": "জার্সি"
+      }
+    },
+    {
+      "code": "JM",
+      "name": {
+        "en": "Jamaica",
+        "bn": "জামাইকা"
+      }
+    },
+    {
+      "code": "JO",
+      "name": {
+        "en": "Jordan",
+        "bn": "জর্ডন"
+      }
+    },
+    {
+      "code": "JP",
+      "name": {
+        "en": "Japan",
+        "bn": "জাপান"
+      }
+    },
+    {
+      "code": "KE",
+      "name": {
+        "en": "Kenya",
+        "bn": "কেনিয়া"
+      }
+    },
+    {
+      "code": "KG",
+      "name": {
+        "en": "Kyrgyzstan",
+        "bn": "কিরগিজিস্তান"
+      }
+    },
+    {
+      "code": "KH",
+      "name": {
+        "en": "Cambodia",
+        "bn": "কম্বোডিয়া"
+      }
+    },
+    {
+      "code": "KI",
+      "name": {
+        "en": "Kiribati",
+        "bn": "কিরিবাতি"
+      }
+    },
+    {
+      "code": "KM",
+      "name": {
+        "en": "Comoros",
+        "bn": "কমোরোস"
+      }
+    },
+    {
+      "code": "KN",
+      "name": {
+        "en": "St. Kitts & Nevis",
+        "bn": "সেন্ট কিটস ও নেভিস"
+      }
+    },
+    {
+      "code": "KP",
+      "name": {
+        "en": "North Korea",
+        "bn": "উত্তর কোরিয়া"
+      }
+    },
+    {
+      "code": "KR",
+      "name": {
+        "en": "South Korea",
+        "bn": "দক্ষিণ কোরিয়া"
+      }
+    },
+    {
+      "code": "KW",
+      "name": {
+        "en": "Kuwait",
+        "bn": "কুয়েত"
+      }
+    },
+    {
+      "code": "KY",
+      "name": {
+        "en": "Cayman Islands",
+        "bn": "কেম্যান দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "KZ",
+      "name": {
+        "en": "Kazakhstan",
+        "bn": "কাজাখস্তান"
+      }
+    },
+    {
+      "code": "LA",
+      "name": {
+        "en": "Laos",
+        "bn": "লাওস"
+      }
+    },
+    {
+      "code": "LB",
+      "name": {
+        "en": "Lebanon",
+        "bn": "লেবানন"
+      }
+    },
+    {
+      "code": "LC",
+      "name": {
+        "en": "St. Lucia",
+        "bn": "সেন্ট লুসিয়া"
+      }
+    },
+    {
+      "code": "LI",
+      "name": {
+        "en": "Liechtenstein",
+        "bn": "লিচেনস্টেইন"
+      }
+    },
+    {
+      "code": "LK",
+      "name": {
+        "en": "Sri Lanka",
+        "bn": "শ্রীলঙ্কা"
+      }
+    },
+    {
+      "code": "LR",
+      "name": {
+        "en": "Liberia",
+        "bn": "লাইবেরিয়া"
+      }
+    },
+    {
+      "code": "LS",
+      "name": {
+        "en": "Lesotho",
+        "bn": "লেসোথো"
+      }
+    },
+    {
+      "code": "LT",
+      "name": {
+        "en": "Lithuania",
+        "bn": "লিথুয়ানিয়া"
+      }
+    },
+    {
+      "code": "LU",
+      "name": {
+        "en": "Luxembourg",
+        "bn": "লাক্সেমবার্গ"
+      }
+    },
+    {
+      "code": "LV",
+      "name": {
+        "en": "Latvia",
+        "bn": "লাটভিয়া"
+      }
+    },
+    {
+      "code": "LY",
+      "name": {
+        "en": "Libya",
+        "bn": "লিবিয়া"
+      }
+    },
+    {
+      "code": "MA",
+      "name": {
+        "en": "Morocco",
+        "bn": "মোরক্কো"
+      }
+    },
+    {
+      "code": "MC",
+      "name": {
+        "en": "Monaco",
+        "bn": "মোনাকো"
+      }
+    },
+    {
+      "code": "MD",
+      "name": {
+        "en": "Moldova",
+        "bn": "মলডোভা"
+      }
+    },
+    {
+      "code": "ME",
+      "name": {
+        "en": "Montenegro",
+        "bn": "মন্টিনিগ্রো"
+      }
+    },
+    {
+      "code": "MF",
+      "name": {
+        "en": "St. Martin",
+        "bn": "সেন্ট মার্টিন"
+      }
+    },
+    {
+      "code": "MG",
+      "name": {
+        "en": "Madagascar",
+        "bn": "মাদাগাস্কার"
+      }
+    },
+    {
+      "code": "MH",
+      "name": {
+        "en": "Marshall Islands",
+        "bn": "মার্শাল দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "MK",
+      "name": {
+        "en": "North Macedonia",
+        "bn": "উত্তর ম্যাসেডোনিয়া"
+      }
+    },
+    {
+      "code": "ML",
+      "name": {
+        "en": "Mali",
+        "bn": "মালি"
+      }
+    },
+    {
+      "code": "MM",
+      "name": {
+        "en": "Myanmar (Burma)",
+        "bn": "মায়ানমার (বার্মা)"
+      }
+    },
+    {
+      "code": "MN",
+      "name": {
+        "en": "Mongolia",
+        "bn": "মঙ্গোলিয়া"
+      }
+    },
+    {
+      "code": "MO",
+      "name": {
+        "en": "Macao SAR China",
+        "bn": "ম্যাকাও এসএআর চীন"
+      }
+    },
+    {
+      "code": "MP",
+      "name": {
+        "en": "Northern Mariana Islands",
+        "bn": "উত্তরাঞ্চলীয় মারিয়ানা দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "MQ",
+      "name": {
+        "en": "Martinique",
+        "bn": "মার্টিনিক"
+      }
+    },
+    {
+      "code": "MR",
+      "name": {
+        "en": "Mauritania",
+        "bn": "মরিতানিয়া"
+      }
+    },
+    {
+      "code": "MS",
+      "name": {
+        "en": "Montserrat",
+        "bn": "মন্টসেরাট"
+      }
+    },
+    {
+      "code": "MT",
+      "name": {
+        "en": "Malta",
+        "bn": "মাল্টা"
+      }
+    },
+    {
+      "code": "MU",
+      "name": {
+        "en": "Mauritius",
+        "bn": "মরিশাস"
+      }
+    },
+    {
+      "code": "MV",
+      "name": {
+        "en": "Maldives",
+        "bn": "মালদ্বীপ"
+      }
+    },
+    {
+      "code": "MW",
+      "name": {
+        "en": "Malawi",
+        "bn": "মালাউই"
+      }
+    },
+    {
+      "code": "MX",
+      "name": {
+        "en": "Mexico",
+        "bn": "মেক্সিকো"
+      }
+    },
+    {
+      "code": "MY",
+      "name": {
+        "en": "Malaysia",
+        "bn": "মালয়েশিয়া"
+      }
+    },
+    {
+      "code": "MZ",
+      "name": {
+        "en": "Mozambique",
+        "bn": "মোজাম্বিক"
+      }
+    },
+    {
+      "code": "NA",
+      "name": {
+        "en": "Namibia",
+        "bn": "নামিবিয়া"
+      }
+    },
+    {
+      "code": "NC",
+      "name": {
+        "en": "New Caledonia",
+        "bn": "নিউ ক্যালেডোনিয়া"
+      }
+    },
+    {
+      "code": "NE",
+      "name": {
+        "en": "Niger",
+        "bn": "নাইজার"
+      }
+    },
+    {
+      "code": "NF",
+      "name": {
+        "en": "Norfolk Island",
+        "bn": "নরফোক দ্বীপ"
+      }
+    },
+    {
+      "code": "NG",
+      "name": {
+        "en": "Nigeria",
+        "bn": "নাইজেরিয়া"
+      }
+    },
+    {
+      "code": "NI",
+      "name": {
+        "en": "Nicaragua",
+        "bn": "নিকারাগুয়া"
+      }
+    },
+    {
+      "code": "NL",
+      "name": {
+        "en": "Netherlands",
+        "bn": "নেদারল্যান্ডস"
+      }
+    },
+    {
+      "code": "NO",
+      "name": {
+        "en": "Norway",
+        "bn": "নরওয়ে"
+      }
+    },
+    {
+      "code": "NP",
+      "name": {
+        "en": "Nepal",
+        "bn": "নেপাল"
+      }
+    },
+    {
+      "code": "NR",
+      "name": {
+        "en": "Nauru",
+        "bn": "নাউরু"
+      }
+    },
+    {
+      "code": "NU",
+      "name": {
+        "en": "Niue",
+        "bn": "নিউয়ে"
+      }
+    },
+    {
+      "code": "NZ",
+      "name": {
+        "en": "New Zealand",
+        "bn": "নিউজিল্যান্ড"
+      }
+    },
+    {
+      "code": "OM",
+      "name": {
+        "en": "Oman",
+        "bn": "ওমান"
+      }
+    },
+    {
+      "code": "PA",
+      "name": {
+        "en": "Panama",
+        "bn": "পানামা"
+      }
+    },
+    {
+      "code": "PE",
+      "name": {
+        "en": "Peru",
+        "bn": "পেরু"
+      }
+    },
+    {
+      "code": "PF",
+      "name": {
+        "en": "French Polynesia",
+        "bn": "ফরাসী পলিনেশিয়া"
+      }
+    },
+    {
+      "code": "PG",
+      "name": {
+        "en": "Papua New Guinea",
+        "bn": "পাপুয়া নিউ গিনি"
+      }
+    },
+    {
+      "code": "PH",
+      "name": {
+        "en": "Philippines",
+        "bn": "ফিলিপাইন"
+      }
+    },
+    {
+      "code": "PK",
+      "name": {
+        "en": "Pakistan",
+        "bn": "পাকিস্তান"
+      }
+    },
+    {
+      "code": "PL",
+      "name": {
+        "en": "Poland",
+        "bn": "পোল্যান্ড"
+      }
+    },
+    {
+      "code": "PM",
+      "name": {
+        "en": "St. Pierre & Miquelon",
+        "bn": "সেন্ট পিয়ের ও মিকুয়েলন"
+      }
+    },
+    {
+      "code": "PN",
+      "name": {
+        "en": "Pitcairn Islands",
+        "bn": "পিটকেয়ার্ন দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "PR",
+      "name": {
+        "en": "Puerto Rico",
+        "bn": "পুয়ের্তো রিকো"
+      }
+    },
+    {
+      "code": "PS",
+      "name": {
+        "en": "Palestinian Territories",
+        "bn": "প্যালেস্টাইন ভূখণ্ড"
+      }
+    },
+    {
+      "code": "PT",
+      "name": {
+        "en": "Portugal",
+        "bn": "পর্তুগাল"
+      }
+    },
+    {
+      "code": "PW",
+      "name": {
+        "en": "Palau",
+        "bn": "পালাউ"
+      }
+    },
+    {
+      "code": "PY",
+      "name": {
+        "en": "Paraguay",
+        "bn": "প্যারাগুয়ে"
+      }
+    },
+    {
+      "code": "QA",
+      "name": {
+        "en": "Qatar",
+        "bn": "কাতার"
+      }
+    },
+    {
+      "code": "RE",
+      "name": {
+        "en": "Réunion",
+        "bn": "রিইউনিয়ন"
+      }
+    },
+    {
+      "code": "RO",
+      "name": {
+        "en": "Romania",
+        "bn": "রোমানিয়া"
+      }
+    },
+    {
+      "code": "RS",
+      "name": {
+        "en": "Serbia",
+        "bn": "সার্বিয়া"
+      }
+    },
+    {
+      "code": "RU",
+      "name": {
+        "en": "Russia",
+        "bn": "রাশিয়া"
+      }
+    },
+    {
+      "code": "RW",
+      "name": {
+        "en": "Rwanda",
+        "bn": "রুয়ান্ডা"
+      }
+    },
+    {
+      "code": "SA",
+      "name": {
+        "en": "Saudi Arabia",
+        "bn": "সৌদি আরব"
+      }
+    },
+    {
+      "code": "SB",
+      "name": {
+        "en": "Solomon Islands",
+        "bn": "সলোমন দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "SC",
+      "name": {
+        "en": "Seychelles",
+        "bn": "সিসিলি"
+      }
+    },
+    {
+      "code": "SD",
+      "name": {
+        "en": "Sudan",
+        "bn": "সুদান"
+      }
+    },
+    {
+      "code": "SE",
+      "name": {
+        "en": "Sweden",
+        "bn": "সুইডেন"
+      }
+    },
+    {
+      "code": "SG",
+      "name": {
+        "en": "Singapore",
+        "bn": "সিঙ্গাপুর"
+      }
+    },
+    {
+      "code": "SH",
+      "name": {
+        "en": "St. Helena",
+        "bn": "সেন্ট হেলেনা"
+      }
+    },
+    {
+      "code": "SI",
+      "name": {
+        "en": "Slovenia",
+        "bn": "স্লোভানিয়া"
+      }
+    },
+    {
+      "code": "SJ",
+      "name": {
+        "en": "Svalbard & Jan Mayen",
+        "bn": "স্বালবার্ড ও জান মেয়েন"
+      }
+    },
+    {
+      "code": "SK",
+      "name": {
+        "en": "Slovakia",
+        "bn": "স্লোভাকিয়া"
+      }
+    },
+    {
+      "code": "SL",
+      "name": {
+        "en": "Sierra Leone",
+        "bn": "সিয়েরা লিওন"
+      }
+    },
+    {
+      "code": "SM",
+      "name": {
+        "en": "San Marino",
+        "bn": "সান মারিনো"
+      }
+    },
+    {
+      "code": "SN",
+      "name": {
+        "en": "Senegal",
+        "bn": "সেনেগাল"
+      }
+    },
+    {
+      "code": "SO",
+      "name": {
+        "en": "Somalia",
+        "bn": "সোমালিয়া"
+      }
+    },
+    {
+      "code": "SR",
+      "name": {
+        "en": "Suriname",
+        "bn": "সুরিনাম"
+      }
+    },
+    {
+      "code": "SS",
+      "name": {
+        "en": "South Sudan",
+        "bn": "দক্ষিণ সুদান"
+      }
+    },
+    {
+      "code": "ST",
+      "name": {
+        "en": "São Tomé & Príncipe",
+        "bn": "সাওটোমা ও প্রিন্সিপি"
+      }
+    },
+    {
+      "code": "SV",
+      "name": {
+        "en": "El Salvador",
+        "bn": "এল সালভেদর"
+      }
+    },
+    {
+      "code": "SX",
+      "name": {
+        "en": "Sint Maarten",
+        "bn": "সিন্ট মার্টেন"
+      }
+    },
+    {
+      "code": "SY",
+      "name": {
+        "en": "Syria",
+        "bn": "সিরিয়া"
+      }
+    },
+    {
+      "code": "SZ",
+      "name": {
+        "en": "Eswatini",
+        "bn": "ইসওয়াতিনি"
+      }
+    },
+    {
+      "code": "TC",
+      "name": {
+        "en": "Turks & Caicos Islands",
+        "bn": "তুর্কস ও কাইকোস দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "TD",
+      "name": {
+        "en": "Chad",
+        "bn": "চাদ"
+      }
+    },
+    {
+      "code": "TF",
+      "name": {
+        "en": "French Southern Territories",
+        "bn": "ফরাসী দক্ষিণাঞ্চল"
+      }
+    },
+    {
+      "code": "TG",
+      "name": {
+        "en": "Togo",
+        "bn": "টোগো"
+      }
+    },
+    {
+      "code": "TH",
+      "name": {
+        "en": "Thailand",
+        "bn": "থাইল্যান্ড"
+      }
+    },
+    {
+      "code": "TJ",
+      "name": {
+        "en": "Tajikistan",
+        "bn": "তাজিকিস্তান"
+      }
+    },
+    {
+      "code": "TK",
+      "name": {
+        "en": "Tokelau",
+        "bn": "টোকেলাউ"
+      }
+    },
+    {
+      "code": "TL",
+      "name": {
+        "en": "Timor-Leste",
+        "bn": "তিমুর-লেস্তে"
+      }
+    },
+    {
+      "code": "TM",
+      "name": {
+        "en": "Turkmenistan",
+        "bn": "তুর্কমেনিস্তান"
+      }
+    },
+    {
+      "code": "TN",
+      "name": {
+        "en": "Tunisia",
+        "bn": "তিউনিসিয়া"
+      }
+    },
+    {
+      "code": "TO",
+      "name": {
+        "en": "Tonga",
+        "bn": "টোঙ্গা"
+      }
+    },
+    {
+      "code": "TR",
+      "name": {
+        "en": "Türkiye",
+        "bn": "তুরস্ক"
+      }
+    },
+    {
+      "code": "TT",
+      "name": {
+        "en": "Trinidad & Tobago",
+        "bn": "ত্রিনিনাদ ও টোব্যাগো"
+      }
+    },
+    {
+      "code": "TV",
+      "name": {
+        "en": "Tuvalu",
+        "bn": "টুভালু"
+      }
+    },
+    {
+      "code": "TW",
+      "name": {
+        "en": "Taiwan",
+        "bn": "তাইওয়ান"
+      }
+    },
+    {
+      "code": "TZ",
+      "name": {
+        "en": "Tanzania",
+        "bn": "তাঞ্জানিয়া"
+      }
+    },
+    {
+      "code": "UA",
+      "name": {
+        "en": "Ukraine",
+        "bn": "ইউক্রেন"
+      }
+    },
+    {
+      "code": "UG",
+      "name": {
+        "en": "Uganda",
+        "bn": "উগান্ডা"
+      }
+    },
+    {
+      "code": "UM",
+      "name": {
+        "en": "U.S. Outlying Islands",
+        "bn": "যুক্তরাষ্ট্রের পার্শ্ববর্তী দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "US",
+      "name": {
+        "en": "United States",
+        "bn": "মার্কিন যুক্তরাষ্ট্র"
+      }
+    },
+    {
+      "code": "UY",
+      "name": {
+        "en": "Uruguay",
+        "bn": "উরুগুয়ে"
+      }
+    },
+    {
+      "code": "UZ",
+      "name": {
+        "en": "Uzbekistan",
+        "bn": "উজবেকিস্তান"
+      }
+    },
+    {
+      "code": "VA",
+      "name": {
+        "en": "Vatican City",
+        "bn": "ভ্যাটিকান সিটি"
+      }
+    },
+    {
+      "code": "VC",
+      "name": {
+        "en": "St. Vincent & Grenadines",
+        "bn": "সেন্ট ভিনসেন্ট ও গ্রেনাডিনস"
+      }
+    },
+    {
+      "code": "VE",
+      "name": {
+        "en": "Venezuela",
+        "bn": "ভেনেজুয়েলা"
+      }
+    },
+    {
+      "code": "VG",
+      "name": {
+        "en": "British Virgin Islands",
+        "bn": "ব্রিটিশ ভার্জিন দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "VI",
+      "name": {
+        "en": "U.S. Virgin Islands",
+        "bn": "মার্কিন যুক্তরাষ্ট্রীয় ভার্জিন দ্বীপপুঞ্জ"
+      }
+    },
+    {
+      "code": "VN",
+      "name": {
+        "en": "Vietnam",
+        "bn": "ভিয়েতনাম"
+      }
+    },
+    {
+      "code": "VU",
+      "name": {
+        "en": "Vanuatu",
+        "bn": "ভানুয়াটু"
+      }
+    },
+    {
+      "code": "WF",
+      "name": {
+        "en": "Wallis & Futuna",
+        "bn": "ওয়ালিস ও ফুটুনা"
+      }
+    },
+    {
+      "code": "WS",
+      "name": {
+        "en": "Samoa",
+        "bn": "সামোয়া"
+      }
+    },
+    {
+      "code": "YE",
+      "name": {
+        "en": "Yemen",
+        "bn": "ইয়েমেন"
+      }
+    },
+    {
+      "code": "YT",
+      "name": {
+        "en": "Mayotte",
+        "bn": "মায়োত্তে"
+      }
+    },
+    {
+      "code": "ZA",
+      "name": {
+        "en": "South Africa",
+        "bn": "দক্ষিণ আফ্রিকা"
+      }
+    },
+    {
+      "code": "ZM",
+      "name": {
+        "en": "Zambia",
+        "bn": "জাম্বিয়া"
+      }
+    },
+    {
+      "code": "ZW",
+      "name": {
+        "en": "Zimbabwe",
+        "bn": "জিম্বাবোয়ে"
+      }
+    }
+  ]
+}

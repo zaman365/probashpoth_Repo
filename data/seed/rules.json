@@ -1,0 +1,249 @@
+{
+  "$comment": "Eligibility rule versions (§48). Expressions use the canonical fact keys from @probash/rules. A missing fact yields 'unknown', never a guess (ADR 0003). educationLevel is compared as a rank: ssc=3, hsc=4, diploma=5, bachelor=6.",
+  "ruleVersions": [
+    {
+      "id": "rvz_qat_work_v1",
+      "ruleId": "rule_qat_work",
+      "version": 1,
+      "title": { "bn": "কাতার — কাজের রুটের যোগ্যতা", "en": "Qatar — work route eligibility" },
+      "sourceIds": ["src_qa_adlsa", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-22T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-22T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "qat_root",
+        "label": { "bn": "কাতার রুটের সব শর্ত", "en": "All Qatar route requirements" },
+        "sources": [{ "sourceId": "src_qa_adlsa" }],
+        "nodes": [
+          { "type": "check", "id": "qat_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_bd_oep" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_qat_passport" },
+          { "type": "check", "id": "qat_passport_validity", "label": { "bn": "পাসপোর্টের মেয়াদ কমপক্ষে ৬ মাস", "en": "At least 6 months of passport validity" }, "sources": [{ "sourceId": "src_bd_oep" }], "condition": { "op": "gte", "fact": "applicant.passportValidMonths", "value": 6 }, "remediable": true, "preparation": { "bn": "পাসপোর্ট নবায়ন করুন।", "en": "Renew your passport." }, "requirementRefId": "req_qat_passport" },
+          { "type": "check", "id": "qat_bmet", "label": { "bn": "বিএমইটি নিবন্ধন আছে", "en": "Has BMET registration" }, "sources": [{ "sourceId": "src_bd_oep" }], "condition": { "op": "eq", "fact": "applicant.hasBmetRegistration", "value": true }, "remediable": true, "preparation": { "bn": "জেলা কর্মসংস্থান অফিস বা ওইপি-তে নিবন্ধন করুন।", "en": "Register at the district employment office or on OEP." }, "requirementRefId": "req_qat_bmet" },
+          { "type": "check", "id": "qat_offer", "label": { "bn": "যাচাইকৃত নিয়োগকর্তার প্রস্তাব আছে", "en": "Has a verified employer offer" }, "sources": [{ "sourceId": "src_qa_adlsa" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "যাচাইকৃত চাকরি খুঁজুন — অযাচাই প্রস্তাবে টাকা দেবেন না।", "en": "Find a verified job — never pay against an unverified offer." }, "requirementRefId": "req_qat_offer" },
+          { "type": "check", "id": "qat_route_status", "label": { "bn": "রুটটি এখন আবেদনের জন্য খোলা", "en": "The route currently accepts applications" }, "sources": [{ "sourceId": "src_qa_adlsa" }], "condition": { "op": "in", "fact": "target.routeStatus", "value": ["open", "limited", "quota", "seasonal", "employer_sponsored", "government_program"] }, "remediable": false }
+        ]
+      }
+    },
+    {
+      "id": "rvz_sau_work_v1",
+      "ruleId": "rule_sau_work",
+      "version": 1,
+      "title": { "bn": "সৌদি আরব — কাজের রুটের যোগ্যতা", "en": "Saudi Arabia — work route eligibility" },
+      "sourceIds": ["src_sa_hrsd", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-21T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-21T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "sau_root",
+        "label": { "bn": "সৌদি রুটের সব শর্ত", "en": "All Saudi route requirements" },
+        "sources": [{ "sourceId": "src_sa_hrsd" }],
+        "nodes": [
+          { "type": "check", "id": "sau_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_bd_oep" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_sau_passport" },
+          { "type": "check", "id": "sau_bmet", "label": { "bn": "বিএমইটি নিবন্ধন আছে", "en": "Has BMET registration" }, "sources": [{ "sourceId": "src_bd_oep" }], "condition": { "op": "eq", "fact": "applicant.hasBmetRegistration", "value": true }, "remediable": true, "preparation": { "bn": "বিএমইটি নিবন্ধন সম্পন্ন করুন।", "en": "Complete your BMET registration." }, "requirementRefId": "req_sau_bmet" },
+          { "type": "check", "id": "sau_offer", "label": { "bn": "কমপ্লায়েন্ট নিয়োগকর্তার চুক্তি আছে", "en": "Has a contract from a compliant employer" }, "sources": [{ "sourceId": "src_sa_qiwa" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "যাচাইকৃত চাকরির প্রস্তাব নিন।", "en": "Obtain a verified job offer." }, "requirementRefId": "req_sau_offer" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_sgp_wp_construction_v1",
+      "ruleId": "rule_sgp_wp_construction",
+      "version": 1,
+      "title": { "bn": "সিঙ্গাপুর — নির্মাণ ওয়ার্ক পারমিটের যোগ্যতা", "en": "Singapore — construction Work Permit eligibility" },
+      "sourceIds": ["src_sg_mom"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-19T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-19T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "sgp_root",
+        "label": { "bn": "সিঙ্গাপুর রুটের সব শর্ত", "en": "All Singapore route requirements" },
+        "sources": [{ "sourceId": "src_sg_mom" }],
+        "nodes": [
+          { "type": "check", "id": "sgp_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_sg_mom" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_sgp_passport" },
+          { "type": "check", "id": "sgp_employer", "label": { "bn": "যোগ্য নিয়োগকর্তার আবেদন আছে", "en": "An eligible employer is applying" }, "sources": [{ "sourceId": "src_sg_mom" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "যাচাইকৃত নিয়োগকর্তার প্রস্তাব নিন।", "en": "Obtain a verified employer offer." }, "requirementRefId": "req_sgp_employer" },
+          { "type": "check", "id": "sgp_skills_test", "label": { "bn": "খাতের দক্ষতা পরীক্ষা সম্পন্ন", "en": "Sector skills test completed" }, "sources": [{ "sourceId": "src_sg_mom" }], "condition": { "op": "includes", "fact": "applicant.skillCertificates", "value": "SG_SECTOR_SKILLS_TEST" }, "remediable": true, "preparation": { "bn": "অনুমোদিত কেন্দ্রে খাতভিত্তিক দক্ষতা পরীক্ষা দিন।", "en": "Take the sector skills test at an approved centre." }, "requirementRefId": "req_sgp_skills_test" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_mys_tep_v1",
+      "ruleId": "rule_mys_tep",
+      "version": 1,
+      "title": { "bn": "মালয়েশিয়া — অস্থায়ী কর্মসংস্থান পাসের যোগ্যতা", "en": "Malaysia — Temporary Employment Pass eligibility" },
+      "sourceIds": ["src_my_imi"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-12T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-12T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "mys_root",
+        "label": { "bn": "মালয়েশিয়া রুটের সব শর্ত", "en": "All Malaysia route requirements" },
+        "sources": [{ "sourceId": "src_my_imi" }],
+        "nodes": [
+          { "type": "check", "id": "mys_route_open", "label": { "bn": "রুটটি এখন আবেদনের জন্য খোলা", "en": "The route currently accepts applications" }, "sources": [{ "sourceId": "src_my_imi" }], "condition": { "op": "nin", "fact": "target.routeStatus", "value": ["temporarily_paused", "closed", "unknown_needs_review"] }, "remediable": false },
+          { "type": "check", "id": "mys_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_my_imi" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_mys_passport" },
+          { "type": "check", "id": "mys_quota", "label": { "bn": "নিয়োগকর্তার কোটা অনুমোদন আছে", "en": "Employer holds quota approval" }, "sources": [{ "sourceId": "src_my_imi" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "কোটা অনুমোদনসহ যাচাইকৃত প্রস্তাব নিন।", "en": "Obtain a verified offer backed by quota approval." }, "requirementRefId": "req_mys_quota" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_kor_eps_v1",
+      "ruleId": "rule_kor_eps",
+      "version": 1,
+      "title": { "bn": "দক্ষিণ কোরিয়া — ইপিএস (ই-৯) যোগ্যতা", "en": "South Korea — EPS (E-9) eligibility" },
+      "sourceIds": ["src_kr_eps"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-05T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-05T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "kor_root",
+        "label": { "bn": "ইপিএস রুটের সব শর্ত", "en": "All EPS route requirements" },
+        "sources": [{ "sourceId": "src_kr_eps" }],
+        "nodes": [
+          { "type": "check", "id": "kor_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_kr_eps" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_kor_passport" },
+          { "type": "check", "id": "kor_topik", "label": { "bn": "ইপিএস-টপিক উত্তীর্ণ", "en": "Passed EPS-TOPIK" }, "sources": [{ "sourceId": "src_kr_eps" }], "condition": { "op": "includes", "fact": "applicant.languageCertificates", "value": "EPS_TOPIK" }, "remediable": true, "preparation": { "bn": "সরকারি ঘোষণার সময় ইপিএস-টপিক পরীক্ষায় নিবন্ধন করুন ও প্রস্তুতি নিন।", "en": "Register for EPS-TOPIK when the official announcement opens, and prepare." }, "requirementRefId": "req_kor_topik" },
+          { "type": "check", "id": "kor_age", "label": { "bn": "বয়স ১৮ থেকে ৩৯ বছরের মধ্যে", "en": "Age between 18 and 39" }, "sources": [{ "sourceId": "src_kr_eps" }], "condition": { "op": "lte", "fact": "applicant.ageYears", "value": 39 }, "remediable": false }
+        ]
+      }
+    },
+    {
+      "id": "rvz_jpn_ssw_v1",
+      "ruleId": "rule_jpn_ssw",
+      "version": 1,
+      "title": { "bn": "জাপান — এসএসডব্লিউ (নির্মাণ) যোগ্যতা", "en": "Japan — SSW (construction) eligibility" },
+      "sourceIds": ["src_jp_isa"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-08T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-08T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "jpn_root",
+        "label": { "bn": "এসএসডব্লিউ রুটের সব শর্ত", "en": "All SSW route requirements" },
+        "sources": [{ "sourceId": "src_jp_isa" }],
+        "nodes": [
+          { "type": "check", "id": "jpn_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_jp_isa" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_jpn_passport" },
+          { "type": "check", "id": "jpn_skills", "label": { "bn": "ক্ষেত্রভিত্তিক দক্ষতা পরীক্ষায় উত্তীর্ণ", "en": "Passed the field skills evaluation test" }, "sources": [{ "sourceId": "src_jp_isa" }], "condition": { "op": "includes", "fact": "applicant.skillCertificates", "value": "JP_SSW_CONSTRUCTION_TEST" }, "remediable": true, "preparation": { "bn": "নির্মাণ ক্ষেত্রের দক্ষতা পরীক্ষায় নিবন্ধন করুন।", "en": "Register for the construction field skills test." }, "requirementRefId": "req_jpn_skills_test" },
+          { "type": "check", "id": "jpn_language", "label": { "bn": "জাপানি ভাষার শর্ত পূরণ", "en": "Meets the Japanese language requirement" }, "sources": [{ "sourceId": "src_jp_isa" }], "condition": { "op": "includes", "fact": "applicant.languageCertificates", "value": "JFT_BASIC" }, "remediable": true, "preparation": { "bn": "জেএফটি-বেসিক বা সমমানের জেএলপিটি পরীক্ষা দিন।", "en": "Take JFT-Basic or the equivalent JLPT level." }, "requirementRefId": "req_jpn_language" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_deu_skilled_v1",
+      "ruleId": "rule_deu_skilled",
+      "version": 1,
+      "title": { "bn": "জার্মানি — দক্ষ কর্মীর যোগ্যতা", "en": "Germany — skilled worker eligibility" },
+      "sourceIds": ["src_de_make_it", "src_de_embassy_dhaka"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-14T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-14T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "deu_root",
+        "label": { "bn": "জার্মানি দক্ষ কর্মী রুটের সব শর্ত", "en": "All German skilled worker requirements" },
+        "sources": [{ "sourceId": "src_de_make_it" }],
+        "nodes": [
+          { "type": "check", "id": "deu_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_de_embassy_dhaka" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_deu_passport" },
+          { "type": "check", "id": "deu_qualification", "label": { "bn": "কমপক্ষে ডিপ্লোমা বা সমমানের যোগ্যতা", "en": "At least a diploma-level qualification" }, "sources": [{ "sourceId": "src_de_make_it" }], "condition": { "op": "gte", "fact": "applicant.educationLevel", "value": 5 }, "remediable": true, "preparation": { "bn": "স্বীকৃতির জন্য আপনার সনদ ও ট্রান্সক্রিপ্ট প্রস্তুত করুন।", "en": "Prepare your certificates and transcripts for the recognition process." }, "requirementRefId": "req_deu_recognition" },
+          { "type": "check", "id": "deu_language", "label": { "bn": "জার্মান ভাষার সনদ (কমপক্ষে বি১)", "en": "German language certificate (at least B1)" }, "sources": [{ "sourceId": "src_de_make_it" }], "condition": { "op": "includes", "fact": "applicant.languageCertificates", "value": "GOETHE_B1" }, "remediable": true, "preparation": { "bn": "স্বীকৃত কেন্দ্রে বি১ স্তরের জার্মান কোর্স ও পরীক্ষা সম্পন্ন করুন।", "en": "Complete a B1-level German course and exam at a recognised centre." }, "requirementRefId": "req_deu_language" },
+          { "type": "check", "id": "deu_contract", "label": { "bn": "জার্মান নিয়োগকর্তার চুক্তি আছে", "en": "Has a German employment contract" }, "sources": [{ "sourceId": "src_de_make_it" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "যাচাইকৃত নিয়োগকর্তার চুক্তি নিন।", "en": "Obtain a verified employer contract." }, "requirementRefId": "req_deu_contract" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_deu_ausbildung_v1",
+      "ruleId": "rule_deu_ausbildung",
+      "version": 1,
+      "title": { "bn": "জার্মানি — Ausbildung যোগ্যতা", "en": "Germany — Ausbildung eligibility" },
+      "sourceIds": ["src_de_make_it"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-14T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-14T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "deu_aus_root",
+        "label": { "bn": "Ausbildung রুটের সব শর্ত", "en": "All Ausbildung requirements" },
+        "sources": [{ "sourceId": "src_de_make_it" }],
+        "nodes": [
+          { "type": "check", "id": "deu_aus_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_de_embassy_dhaka" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_deu_aus_passport" },
+          { "type": "check", "id": "deu_aus_education", "label": { "bn": "কমপক্ষে এইচএসসি বা সমমান", "en": "At least higher secondary education" }, "sources": [{ "sourceId": "src_de_make_it" }], "condition": { "op": "gte", "fact": "applicant.educationLevel", "value": 4 }, "remediable": true, "preparation": { "bn": "আপনার শিক্ষাগত সনদ প্রস্তুত করুন।", "en": "Prepare your education certificates." } },
+          { "type": "check", "id": "deu_aus_language", "label": { "bn": "জার্মান ভাষার সনদ (কমপক্ষে বি১)", "en": "German language certificate (at least B1)" }, "sources": [{ "sourceId": "src_de_make_it" }], "condition": { "op": "includes", "fact": "applicant.languageCertificates", "value": "GOETHE_B1" }, "remediable": true, "preparation": { "bn": "বি১ স্তরের জার্মান পরীক্ষা সম্পন্ন করুন।", "en": "Complete a B1-level German exam." }, "requirementRefId": "req_deu_aus_language" },
+          { "type": "check", "id": "deu_aus_contract", "label": { "bn": "প্রশিক্ষণ চুক্তি আছে", "en": "Has a training contract" }, "sources": [{ "sourceId": "src_de_make_it" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "প্রশিক্ষণ প্রতিষ্ঠানের সাথে চুক্তি নিশ্চিত করুন।", "en": "Secure a training contract with the training company." }, "requirementRefId": "req_deu_aus_contract" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_gbr_skilled_v1",
+      "ruleId": "rule_gbr_skilled",
+      "version": 1,
+      "title": { "bn": "যুক্তরাজ্য — স্কিলড ওয়ার্কার যোগ্যতা", "en": "United Kingdom — Skilled Worker eligibility" },
+      "sourceIds": ["src_uk_gov"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-23T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-23T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "gbr_root",
+        "label": { "bn": "স্কিলড ওয়ার্কার রুটের সব শর্ত", "en": "All Skilled Worker requirements" },
+        "sources": [{ "sourceId": "src_uk_gov" }],
+        "nodes": [
+          { "type": "check", "id": "gbr_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_uk_gov" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_gbr_passport" },
+          { "type": "check", "id": "gbr_cos", "label": { "bn": "অনুমোদিত স্পনসরের সিওএস আছে", "en": "Has a Certificate of Sponsorship from an approved sponsor" }, "sources": [{ "sourceId": "src_uk_gov" }], "condition": { "op": "eq", "fact": "applicant.hasEmployerOffer", "value": true }, "remediable": true, "preparation": { "bn": "অনুমোদিত স্পনসর প্রতিষ্ঠানে চাকরির প্রস্তাব নিন।", "en": "Secure a job offer from a licensed sponsor." }, "requirementRefId": "req_gbr_cos" },
+          { "type": "check", "id": "gbr_english", "label": { "bn": "ইংরেজি ভাষার শর্ত পূরণ", "en": "Meets the English language requirement" }, "sources": [{ "sourceId": "src_uk_gov" }], "condition": { "op": "includes", "fact": "applicant.languageCertificates", "value": "IELTS_UKVI" }, "remediable": true, "preparation": { "bn": "অনুমোদিত ইংরেজি পরীক্ষা দিন।", "en": "Take an approved English language test." }, "requirementRefId": "req_gbr_english" }
+        ]
+      }
+    },
+    {
+      "id": "rvz_can_study_v1",
+      "ruleId": "rule_can_study",
+      "version": 1,
+      "title": { "bn": "কানাডা — স্টাডি পারমিটের যোগ্যতা", "en": "Canada — study permit eligibility" },
+      "sourceIds": ["src_ca_ircc"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "publicationStatus": "published",
+      "verifiedAt": "2026-08-23T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-23T00:00:00.000Z",
+      "expression": {
+        "type": "all",
+        "id": "can_root",
+        "label": { "bn": "স্টাডি পারমিটের সব শর্ত", "en": "All study permit requirements" },
+        "sources": [{ "sourceId": "src_ca_ircc" }],
+        "nodes": [
+          { "type": "check", "id": "can_passport", "label": { "bn": "বৈধ পাসপোর্ট আছে", "en": "Has a valid passport" }, "sources": [{ "sourceId": "src_ca_ircc" }], "condition": { "op": "eq", "fact": "applicant.hasValidPassport", "value": true }, "remediable": true, "preparation": { "bn": "পাসপোর্ট করুন বা নবায়ন করুন।", "en": "Apply for or renew your passport." }, "requirementRefId": "req_can_passport" },
+          { "type": "check", "id": "can_education", "label": { "bn": "কমপক্ষে এইচএসসি বা সমমান", "en": "At least higher secondary education" }, "sources": [{ "sourceId": "src_ca_ircc" }], "condition": { "op": "gte", "fact": "applicant.educationLevel", "value": 4 }, "remediable": true, "preparation": { "bn": "শিক্ষাগত সনদ ও ট্রান্সক্রিপ্ট প্রস্তুত করুন।", "en": "Prepare your certificates and transcripts." } },
+          { "type": "check", "id": "can_language", "label": { "bn": "ভাষার পরীক্ষার ফল আছে", "en": "Has a language test result" }, "sources": [{ "sourceId": "src_ca_ircc" }], "condition": { "op": "includes", "fact": "applicant.languageCertificates", "value": "IELTS_ACADEMIC" }, "remediable": true, "preparation": { "bn": "আইইএলটিএস একাডেমিক বা প্রতিষ্ঠানের গ্রহণযোগ্য পরীক্ষা দিন।", "en": "Take IELTS Academic or another test the institution accepts." }, "requirementRefId": "req_can_language" }
+        ]
+      }
+    }
+  ]
+}

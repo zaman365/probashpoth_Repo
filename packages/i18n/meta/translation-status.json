@@ -1,0 +1,24 @@
+{
+  "$comment": "Translation review state per locale (§16). Critical keys must reach human_reviewed before a production release; see PENDING_BANGLA_REVIEW in src/critical.ts.",
+  "defaultStatus": "machine_draft",
+  "bn-BD": {
+    "common.": "machine_draft",
+    "home.": "machine_draft",
+    "onboarding.": "machine_draft",
+    "eligibility.": "machine_draft",
+    "route.": "machine_draft",
+    "job.": "machine_draft",
+    "verification.": "machine_draft",
+    "cost.": "machine_draft",
+    "payment.": "machine_draft",
+    "case.": "machine_draft",
+    "scanner.": "machine_draft",
+    "documents.": "machine_draft",
+    "family.": "machine_draft",
+    "risk.": "machine_draft",
+    "legal.": "machine_draft"
+  },
+  "en": {
+    "": "human_reviewed"
+  }
+}

@@ -1,0 +1,1045 @@
+{
+  "$comment": "SYNTHETIC demo jobs (§64). Every record is flagged isSyntheticDemoData and every title is prefixed DEMO. The API refuses to serve synthetic records outside development. allowedWorkerCost is the maximum lawful worker-paid amount for the route and is indicative development data.",
+  "jobs": [
+    {
+      "id": "job_qa_electrician",
+      "publicId": "BD-QA-2026-00482915",
+      "routeVersionId": "rv_qat_work_v1",
+      "destinationCountry": "QA",
+      "occupationKey": "electrician",
+      "title": {
+        "bn": "ডেমো — ইলেকট্রিশিয়ান (দোহা)",
+        "en": "DEMO — Electrician (Doha)"
+      },
+      "description": {
+        "bn": "বাণিজ্যিক ভবনের বৈদ্যুতিক স্থাপন ও রক্ষণাবেক্ষণ। থাকার ব্যবস্থা ও যাতায়াত নিয়োগকর্তা দেবে।",
+        "en": "Electrical installation and maintenance in commercial buildings. Accommodation and transport are provided by the employer."
+      },
+      "employerOrganizationId": "org_emp_qa_alnahda",
+      "recruiterOrganizationId": "org_agency_meghna",
+      "positions": 25,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "180000",
+          "currency": "QAR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": false,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1075000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "authority_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স",
+              "en": "Agency licence"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_bd_oep",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "job_demand",
+            "label": {
+              "bn": "চাহিদাপত্র",
+              "en": "Job demand"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "salary_and_terms",
+            "label": {
+              "bn": "বেতন ও শর্তাবলি",
+              "en": "Salary and terms"
+            },
+            "checked": true,
+            "method": "document_upload",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "worksite_inspection",
+            "label": {
+              "bn": "কর্মস্থল পরিদর্শন",
+              "en": "Worksite inspection"
+            },
+            "checked": false,
+            "method": "human_review",
+            "note": {
+              "bn": "সরেজমিন পরিদর্শন হয়নি।",
+              "en": "No on-site inspection has been carried out."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_qa_mason",
+      "publicId": "BD-QA-2026-00482916",
+      "routeVersionId": "rv_qat_work_v1",
+      "destinationCountry": "QA",
+      "occupationKey": "mason",
+      "title": {
+        "bn": "ডেমো — রাজমিস্ত্রি (দোহা)",
+        "en": "DEMO — Mason (Doha)"
+      },
+      "description": {
+        "bn": "নির্মাণ প্রকল্পে গাঁথুনির কাজ।",
+        "en": "Bricklaying work on construction projects."
+      },
+      "employerOrganizationId": "org_emp_qa_alnahda",
+      "recruiterOrganizationId": "org_agency_meghna",
+      "positions": 40,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "150000",
+          "currency": "QAR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": false,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1075000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "authority_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স",
+              "en": "Agency licence"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_bd_oep",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "job_demand",
+            "label": {
+              "bn": "চাহিদাপত্র",
+              "en": "Job demand"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "salary_and_terms",
+            "label": {
+              "bn": "বেতন ও শর্তাবলি",
+              "en": "Salary and terms"
+            },
+            "checked": true,
+            "method": "document_upload",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "worksite_inspection",
+            "label": {
+              "bn": "কর্মস্থল পরিদর্শন",
+              "en": "Worksite inspection"
+            },
+            "checked": false,
+            "method": "human_review",
+            "note": {
+              "bn": "সরেজমিন পরিদর্শন হয়নি।",
+              "en": "No on-site inspection has been carried out."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_qa_welder",
+      "publicId": "BD-QA-2026-00482917",
+      "routeVersionId": "rv_qat_work_v1",
+      "destinationCountry": "QA",
+      "occupationKey": "welder",
+      "title": {
+        "bn": "ডেমো — ওয়েল্ডার (দোহা)",
+        "en": "DEMO — Welder (Doha)"
+      },
+      "description": {
+        "bn": "কাঠামোগত ইস্পাত ওয়েল্ডিং; সনদ থাকলে অগ্রাধিকার।",
+        "en": "Structural steel welding; certification preferred."
+      },
+      "employerOrganizationId": "org_emp_qa_alnahda",
+      "recruiterOrganizationId": "org_agency_shitalakshya",
+      "positions": 15,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "200000",
+          "currency": "QAR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": false,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1075000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "authority_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স",
+              "en": "Agency licence"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_bd_oep",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "job_demand",
+            "label": {
+              "bn": "চাহিদাপত্র",
+              "en": "Job demand"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "salary_and_terms",
+            "label": {
+              "bn": "বেতন ও শর্তাবলি",
+              "en": "Salary and terms"
+            },
+            "checked": true,
+            "method": "document_upload",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "worksite_inspection",
+            "label": {
+              "bn": "কর্মস্থল পরিদর্শন",
+              "en": "Worksite inspection"
+            },
+            "checked": false,
+            "method": "human_review",
+            "note": {
+              "bn": "সরেজমিন পরিদর্শন হয়নি।",
+              "en": "No on-site inspection has been carried out."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_sa_hvac",
+      "publicId": "BD-SA-2026-00311204",
+      "routeVersionId": "rv_sau_work_v1",
+      "destinationCountry": "SA",
+      "occupationKey": "hvac_technician",
+      "title": {
+        "bn": "ডেমো — এসি টেকনিশিয়ান (রিয়াদ)",
+        "en": "DEMO — HVAC technician (Riyadh)"
+      },
+      "description": {
+        "bn": "বাণিজ্যিক ভবনে শীতাতপ নিয়ন্ত্রণ ব্যবস্থার রক্ষণাবেক্ষণ।",
+        "en": "Maintenance of air conditioning systems in commercial buildings."
+      },
+      "employerOrganizationId": "org_emp_sa_riyadh_facilities",
+      "recruiterOrganizationId": "org_agency_shitalakshya",
+      "positions": 12,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "200000",
+          "currency": "SAR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": false,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1200000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_sa_qiwa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স",
+              "en": "Agency licence"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_bd_oep",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "job_demand",
+            "label": {
+              "bn": "চাহিদাপত্র সত্যায়ন",
+              "en": "Job demand attestation"
+            },
+            "checked": false,
+            "method": "authority_confirmation",
+            "note": {
+              "bn": "মিশনের সত্যায়ন এখনো যাচাই করা হয়নি।",
+              "en": "Mission attestation has not been verified yet."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_sa_driver",
+      "publicId": "BD-SA-2026-00311205",
+      "routeVersionId": "rv_sau_work_v1",
+      "destinationCountry": "SA",
+      "occupationKey": "heavy_vehicle_driver",
+      "title": {
+        "bn": "ডেমো — ভারী গাড়ি চালক (রিয়াদ)",
+        "en": "DEMO — Heavy vehicle driver (Riyadh)"
+      },
+      "description": {
+        "bn": "ভারী যানবাহন চালনা; বৈধ লাইসেন্স প্রয়োজন।",
+        "en": "Driving heavy vehicles; a valid licence is required."
+      },
+      "employerOrganizationId": "org_emp_sa_riyadh_facilities",
+      "recruiterOrganizationId": "org_agency_meghna",
+      "positions": 8,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "220000",
+          "currency": "SAR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": false,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1200000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_sa_qiwa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "licence_requirement",
+            "label": {
+              "bn": "চালকের লাইসেন্স স্বীকৃতি",
+              "en": "Driving licence recognition"
+            },
+            "checked": false,
+            "method": "authority_confirmation"
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_sg_rigger",
+      "publicId": "BD-SG-2026-00099431",
+      "routeVersionId": "rv_sgp_wp_construction_v1",
+      "destinationCountry": "SG",
+      "occupationKey": "rigger",
+      "title": {
+        "bn": "ডেমো — রিগার (সিঙ্গাপুর)",
+        "en": "DEMO — Rigger (Singapore)"
+      },
+      "description": {
+        "bn": "শিপইয়ার্ডে রিগিং কাজ; খাতভিত্তিক দক্ষতা পরীক্ষা প্রয়োজন।",
+        "en": "Rigging work in a shipyard; the sector skills test is required."
+      },
+      "employerOrganizationId": "org_emp_sg_marine",
+      "recruiterOrganizationId": "org_agency_shitalakshya",
+      "positions": 20,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "160000",
+          "currency": "SGD"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 44,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": true,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1500000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_sg_mom",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স",
+              "en": "Agency licence"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_bd_oep",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "quota_and_levy",
+            "label": {
+              "bn": "কোটা ও লেভি",
+              "en": "Quota and levy"
+            },
+            "checked": false,
+            "method": "authority_confirmation"
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_sg_welder",
+      "publicId": "BD-SG-2026-00099432",
+      "routeVersionId": "rv_sgp_wp_construction_v1",
+      "destinationCountry": "SG",
+      "occupationKey": "welder",
+      "title": {
+        "bn": "ডেমো — ওয়েল্ডার (সিঙ্গাপুর)",
+        "en": "DEMO — Welder (Singapore)"
+      },
+      "description": {
+        "bn": "শিপইয়ার্ড ওয়েল্ডিং; পরীক্ষা ও নিয়োগকর্তার কোটা প্রযোজ্য।",
+        "en": "Shipyard welding; testing and employer quota apply."
+      },
+      "employerOrganizationId": "org_emp_sg_marine",
+      "recruiterOrganizationId": "org_agency_shitalakshya",
+      "positions": 10,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "180000",
+          "currency": "SGD"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 44,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": true,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1500000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_sg_mom",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "quota_and_levy",
+            "label": {
+              "bn": "কোটা ও লেভি",
+              "en": "Quota and levy"
+            },
+            "checked": false,
+            "method": "authority_confirmation"
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_de_electrician",
+      "publicId": "BD-DE-2026-00007712",
+      "routeVersionId": "rv_deu_skilled_v1",
+      "destinationCountry": "DE",
+      "occupationKey": "industrial_electrician",
+      "title": {
+        "bn": "ডেমো — ইন্ডাস্ট্রিয়াল ইলেকট্রিশিয়ান (হামবুর্গ)",
+        "en": "DEMO — Industrial electrician (Hamburg)"
+      },
+      "description": {
+        "bn": "শিল্প স্থাপনায় বৈদ্যুতিক কাজ; যোগ্যতার স্বীকৃতি ও বি১ জার্মান প্রয়োজন।",
+        "en": "Electrical work in industrial facilities; qualification recognition and German B1 are required."
+      },
+      "employerOrganizationId": "org_emp_de_elektro",
+      "recruiterOrganizationId": null,
+      "positions": 5,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "320000",
+          "currency": "EUR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 40,
+        "contractDurationMonths": 36,
+        "probationMonths": 6,
+        "accommodationProvided": false,
+        "foodProvided": false,
+        "transportProvided": false,
+        "insuranceProvided": true,
+        "annualLeaveDays": 24,
+        "airfarePaidBy": "worker",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "worker",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "2500000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "registry_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_de_make_it",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "salary_and_terms",
+            "label": {
+              "bn": "বেতন ও শর্তাবলি",
+              "en": "Salary and terms"
+            },
+            "checked": true,
+            "method": "document_upload",
+            "sourceId": "src_de_make_it",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "qualification_recognition",
+            "label": {
+              "bn": "যোগ্যতা স্বীকৃতি সম্পন্ন",
+              "en": "Qualification recognition completed"
+            },
+            "checked": false,
+            "method": "authority_confirmation",
+            "note": {
+              "bn": "স্বীকৃতি প্রক্রিয়া কর্মীভেদে আলাদা।",
+              "en": "Recognition is assessed individually for each worker."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_my_assembler",
+      "publicId": "BD-MY-2026-00220118",
+      "routeVersionId": "rv_mys_tep_v1",
+      "destinationCountry": "MY",
+      "occupationKey": "assembler",
+      "title": {
+        "bn": "ডেমো — অ্যাসেম্বলার (পেনাং)",
+        "en": "DEMO — Assembler (Penang)"
+      },
+      "description": {
+        "bn": "ইলেকট্রনিক্স উৎপাদন লাইনে সংযোজনের কাজ।",
+        "en": "Assembly work on an electronics production line."
+      },
+      "employerOrganizationId": "org_emp_my_electronics",
+      "recruiterOrganizationId": "org_agency_padma",
+      "positions": 30,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "170000",
+          "currency": "MYR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": true,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1000000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "identity_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_contact",
+            "label": {
+              "bn": "নিয়োগকর্তার যোগাযোগ",
+              "en": "Employer contact"
+            },
+            "checked": true,
+            "method": "human_review",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার সরকারি নিবন্ধন",
+              "en": "Employer official registration"
+            },
+            "checked": false,
+            "method": "registry_lookup",
+            "note": {
+              "bn": "সরকারি নিবন্ধন যাচাই হয়নি।",
+              "en": "Official registration has not been verified."
+            }
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স সক্রিয়",
+              "en": "Agency licence active"
+            },
+            "checked": false,
+            "method": "authority_confirmation",
+            "note": {
+              "bn": "এই এজেন্সির লাইসেন্সের মেয়াদ শেষ দেখাচ্ছে।",
+              "en": "This agency's licence appears to have expired."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "suspended",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-12-31T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "job_qa_cook",
+      "publicId": "BD-QA-2026-00482918",
+      "routeVersionId": "rv_qat_work_v1",
+      "destinationCountry": "QA",
+      "occupationKey": "cook",
+      "title": {
+        "bn": "ডেমো — কুক (দোহা)",
+        "en": "DEMO — Cook (Doha)"
+      },
+      "description": {
+        "bn": "প্রাতিষ্ঠানিক ক্যান্টিনে রান্নার কাজ।",
+        "en": "Cooking in an institutional canteen."
+      },
+      "employerOrganizationId": "org_emp_qa_alnahda",
+      "recruiterOrganizationId": "org_agency_meghna",
+      "positions": 6,
+      "terms": {
+        "monthlySalary": {
+          "minorUnits": "160000",
+          "currency": "QAR"
+        },
+        "overtimePolicy": {
+          "bn": "আইন অনুযায়ী ওভারটাইম ভাতা প্রযোজ্য।",
+          "en": "Overtime allowance applies as required by law."
+        },
+        "workingHoursPerWeek": 48,
+        "contractDurationMonths": 24,
+        "probationMonths": 3,
+        "accommodationProvided": true,
+        "foodProvided": true,
+        "transportProvided": true,
+        "insuranceProvided": true,
+        "annualLeaveDays": 21,
+        "airfarePaidBy": "employer",
+        "recruitmentFeePaidBy": "employer",
+        "workPermitPaidBy": "employer",
+        "cancellationTerms": {
+          "bn": "নিয়োগকর্তা বাতিল করলে কর্মীর দেওয়া ফেরতযোগ্য খরচ ফেরত পাবেন। শর্ত চুক্তিতে লেখা আছে।",
+          "en": "If the employer cancels, the worker's refundable costs are returned. The terms are stated in the contract."
+        }
+      },
+      "allowedWorkerCost": {
+        "minorUnits": "1075000",
+        "currency": "BDT"
+      },
+      "verification": {
+        "level": "authority_verified",
+        "lastVerifiedAt": "2026-08-22T00:00:00.000Z",
+        "facets": [
+          {
+            "key": "employer_identity",
+            "label": {
+              "bn": "নিয়োগকর্তার পরিচয়",
+              "en": "Employer identity"
+            },
+            "checked": true,
+            "method": "registry_lookup",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "agency_licence",
+            "label": {
+              "bn": "এজেন্সির লাইসেন্স",
+              "en": "Agency licence"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_bd_oep",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "job_demand",
+            "label": {
+              "bn": "চাহিদাপত্র",
+              "en": "Job demand"
+            },
+            "checked": true,
+            "method": "authority_confirmation",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          },
+          {
+            "key": "salary_and_terms",
+            "label": {
+              "bn": "বেতন ও শর্তাবলি",
+              "en": "Salary and terms"
+            },
+            "checked": true,
+            "method": "document_upload",
+            "sourceId": "src_qa_adlsa",
+            "verifiedAt": "2026-08-22T00:00:00.000Z",
+            "verifiedBy": "seed:demo"
+          }
+        ],
+        "notChecked": [
+          {
+            "key": "worksite_inspection",
+            "label": {
+              "bn": "কর্মস্থল পরিদর্শন",
+              "en": "Worksite inspection"
+            },
+            "checked": false,
+            "method": "human_review",
+            "note": {
+              "bn": "সরেজমিন পরিদর্শন হয়নি।",
+              "en": "No on-site inspection has been carried out."
+            }
+          }
+        ]
+      },
+      "publicationStatus": "published",
+      "demandValidFrom": "2026-08-01T00:00:00.000Z",
+      "demandValidTo": "2026-09-15T00:00:00.000Z",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "probash-os",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Safe migration and global opportunity operating system (working codename ProbashOS). Brand name is configurable, never hard-coded.",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "eslint .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:unit": "turbo run test --filter='./packages/*'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "seed": "pnpm --filter @probash/api seed",
+    "db:migrate": "pnpm --filter @probash/api db:migrate",
+    "services:up": "docker compose -f infra/docker/docker-compose.yml up -d",
+    "services:down": "docker compose -f infra/docker/docker-compose.yml down",
+    "e2e:web": "pnpm --filter @probash/web test:e2e"
+  },
+  "devDependencies": {
+    "@types/node": "^26.3.0",
+    "eslint": "^10.9.1",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.12",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.68.0",
+    "vitest": "^4.1.11",
+    "@eslint/js": "^10.0.1"
+  }
+}

@@ -1,0 +1,354 @@
+{
+  "$comment": "Route version seed (§9, §10). These are DEVELOPMENT records: every entry is flagged isSyntheticDemoData and verifiedBy 'seed:not-human-verified'. Requirements describe well-established, publicly documented steps and each carries the official source it must be re-verified against before any production publication (ADR 0003).",
+  "routeVersions": [
+    {
+      "id": "rv_qat_work_v1",
+      "routeId": "QAT_WORK_EMPLOYER_SPONSORED",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "QA",
+      "permitClass": "work_residence_permit",
+      "officialName": { "bn": "কাতার — নিয়োগকর্তা স্পনসরড কাজের রুট", "en": "Qatar — employer-sponsored work route" },
+      "summary": { "bn": "কাতারের একজন নিবন্ধিত নিয়োগকর্তা চাহিদাপত্র দেয়, লাইসেন্সপ্রাপ্ত এজেন্সি প্রক্রিয়া করে, এবং কর্মী চুক্তি ও ওয়ার্ক পারমিটসহ যান।", "en": "A registered Qatari employer issues a demand, a licensed Bangladeshi agency processes it, and the worker travels with a contract and a work permit." },
+      "status": "employer_sponsored",
+      "eligibilityRuleId": "rule_qat_work",
+      "requirements": [
+        { "id": "req_qat_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট (কমপক্ষে ৬ মাস মেয়াদ)", "en": "Valid passport with at least 6 months validity" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_bd_oep" }], "estimatedDays": 21, "performedAt": { "bn": "পাসপোর্ট অফিস", "en": "Passport office" } },
+        { "id": "req_qat_bmet", "kind": "document", "label": { "bn": "বিএমইটি নিবন্ধন", "en": "BMET registration" }, "mandatory": true, "factKey": "applicant.hasBmetRegistration", "sources": [{ "sourceId": "src_bd_oep" }], "estimatedDays": 7, "performedAt": { "bn": "জেলা কর্মসংস্থান ও জনশক্তি অফিস / ওইপি", "en": "District employment office / OEP" } },
+        { "id": "req_qat_offer", "kind": "sponsor", "label": { "bn": "যাচাইকৃত নিয়োগকর্তার চাকরির প্রস্তাব ও চুক্তি", "en": "Verified employer job offer and contract" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_qa_adlsa" }], "estimatedDays": 30 },
+        { "id": "req_qat_medical", "kind": "medical", "label": { "bn": "নির্ধারিত কেন্দ্রে মেডিকেল পরীক্ষা", "en": "Medical examination at an approved centre" }, "mandatory": true, "factKey": "applicant.medicallyFit", "sources": [{ "sourceId": "src_bd_oep" }], "estimatedDays": 5, "performedAt": { "bn": "অনুমোদিত মেডিকেল সেন্টার", "en": "Approved medical centre" } },
+        { "id": "req_qat_experience", "kind": "experience", "label": { "bn": "কাজের অভিজ্ঞতা (পদভেদে)", "en": "Relevant work experience (varies by role)" }, "mandatory": false, "factKey": "applicant.experienceMonths", "sources": [{ "sourceId": "src_qa_adlsa" }] }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_qat_post_residency", "kind": "post_arrival", "label": { "bn": "পৌঁছে রেসিডেন্স পারমিট ও স্বাস্থ্য কার্ড সম্পন্ন করা", "en": "Complete residence permit and health card after arrival" }, "mandatory": true, "sources": [{ "sourceId": "src_qa_adlsa" }] },
+        { "id": "req_qat_post_contract", "kind": "post_arrival", "label": { "bn": "স্বাক্ষরিত চুক্তির কপি নিজের কাছে রাখা", "en": "Keep your own copy of the signed contract" }, "mandatory": true, "sources": [{ "sourceId": "src_ilo_fair_recruitment" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_qat_passport_retention", "severity": "severe", "title": { "bn": "পাসপোর্ট কেউ রেখে দিতে পারবে না", "en": "Nobody may keep your passport" }, "body": { "bn": "নিয়োগকর্তা বা দালাল আপনার পাসপোর্ট আটকে রাখলে সেটি অন্যায়। অভিযোগ করুন।", "en": "It is wrong for an employer or broker to hold your passport. Report it." }, "sources": [{ "sourceId": "src_ilo_fair_recruitment" }] },
+        { "id": "risk_qat_cash", "severity": "warning", "title": { "bn": "রসিদ ছাড়া টাকা দেবেন না", "en": "Never pay without a receipt" }, "body": { "bn": "নিয়োগ সংক্রান্ত টাকা শুধু নির্ধারিত প্রক্রিয়ায় দিন এবং রসিদ নিন।", "en": "Pay recruitment-related costs only through the defined process, and always take a receipt." }, "sources": [{ "sourceId": "src_bd_probashi" }] }
+      ],
+      "expectedTimeline": { "minDays": 45, "maxDays": 120 },
+      "workRightsNote": { "bn": "কাজ শুধুমাত্র অনুমোদিত নিয়োগকর্তার অধীনে; পেশা ও নিয়োগকর্তা পরিবর্তনের নিয়ম আলাদা।", "en": "Work is tied to the approved employer; changing employer or occupation follows separate rules." },
+      "feeRuleIds": ["fee_bd_passport", "fee_bd_bmet_registration", "fee_bd_medical", "fee_bd_welfare_membership", "fee_qat_airfare_employer", "fee_qat_workpermit_employer", "fee_bd_agency_service"],
+      "sourceIds": ["src_qa_adlsa", "src_bd_oep", "src_ilo_fair_recruitment"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-22T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-22T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_sau_work_v1",
+      "routeId": "SAU_WORK_EMPLOYER_SPONSORED",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "SA",
+      "permitClass": "work_permit",
+      "officialName": { "bn": "সৌদি আরব — নিয়োগকর্তা স্পনসরড কাজের রুট", "en": "Saudi Arabia — employer-sponsored work route" },
+      "summary": { "bn": "নিয়োগকর্তার প্রতিষ্ঠান কমপ্লায়েন্ট হতে হয়, চুক্তি ডিজিটালি নথিভুক্ত হয় এবং পেশা অনুযায়ী যোগ্যতা লাগতে পারে।", "en": "The employer establishment must be compliant, the contract is recorded digitally, and the occupation may require a recognised qualification." },
+      "status": "employer_sponsored",
+      "eligibilityRuleId": "rule_sau_work",
+      "requirements": [
+        { "id": "req_sau_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_bd_oep" }], "estimatedDays": 21 },
+        { "id": "req_sau_bmet", "kind": "document", "label": { "bn": "বিএমইটি নিবন্ধন ও ছাড়পত্র", "en": "BMET registration and clearance" }, "mandatory": true, "factKey": "applicant.hasBmetRegistration", "sources": [{ "sourceId": "src_bd_oep" }], "estimatedDays": 7 },
+        { "id": "req_sau_offer", "kind": "sponsor", "label": { "bn": "কমপ্লায়েন্ট নিয়োগকর্তার চুক্তি", "en": "Contract from a compliant employer" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_sa_qiwa" }] },
+        { "id": "req_sau_skill", "kind": "skill", "label": { "bn": "পেশাভেদে দক্ষতা যাচাই বা সনদ", "en": "Occupation-specific skill verification or certificate" }, "mandatory": false, "factKey": "applicant.skillCertificates", "sources": [{ "sourceId": "src_sa_hrsd" }] },
+        { "id": "req_sau_medical", "kind": "medical", "label": { "bn": "মেডিকেল পরীক্ষা", "en": "Medical examination" }, "mandatory": true, "factKey": "applicant.medicallyFit", "sources": [{ "sourceId": "src_bd_oep" }], "estimatedDays": 5 }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_sau_post_iqama", "kind": "post_arrival", "label": { "bn": "ইকামা ও চুক্তি নিবন্ধন সম্পন্ন করা", "en": "Complete residence permit and contract registration" }, "mandatory": true, "sources": [{ "sourceId": "src_sa_hrsd" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_sau_contract_swap", "severity": "severe", "title": { "bn": "চুক্তি বদলে গেলে সই করবেন না", "en": "Do not sign if the contract has changed" }, "body": { "bn": "যাওয়ার আগে দেখানো বেতন ও কাজের সাথে চূড়ান্ত চুক্তি না মিললে সই করার আগে সাহায্য নিন।", "en": "If the final contract does not match the salary and role you were shown, get help before signing." }, "sources": [{ "sourceId": "src_ilo_fair_recruitment" }] }
+      ],
+      "expectedTimeline": { "minDays": 45, "maxDays": 150 },
+      "feeRuleIds": ["fee_bd_passport", "fee_bd_bmet_registration", "fee_bd_medical", "fee_bd_welfare_membership", "fee_bd_agency_service"],
+      "sourceIds": ["src_sa_hrsd", "src_sa_qiwa", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-21T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-21T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_sgp_wp_construction_v1",
+      "routeId": "SGP_WORK_PERMIT_CONSTRUCTION",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "SG",
+      "permitClass": "work_permit",
+      "officialName": { "bn": "সিঙ্গাপুর — নির্মাণ খাতে ওয়ার্ক পারমিট", "en": "Singapore — Work Permit (construction sector)" },
+      "summary": { "bn": "খাত, উৎস-দেশ যোগ্যতা, কোটা/লেভি ও নিয়োগকর্তার যোগ্যতা — সব শর্ত একসাথে মিলতে হয়।", "en": "Sector, source-country eligibility, quota/levy and employer eligibility must all line up." },
+      "status": "limited",
+      "eligibilityRuleId": "rule_sgp_wp_construction",
+      "requirements": [
+        { "id": "req_sgp_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_sg_mom" }] },
+        { "id": "req_sgp_employer", "kind": "sponsor", "label": { "bn": "যোগ্য নিয়োগকর্তার আবেদন", "en": "Application by an eligible employer" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_sg_mom" }] },
+        { "id": "req_sgp_skills_test", "kind": "skill", "label": { "bn": "খাত-নির্ধারিত দক্ষতা পরীক্ষা", "en": "Sector-specified skills test" }, "mandatory": true, "factKey": "applicant.skillCertificates", "sources": [{ "sourceId": "src_sg_mom" }], "estimatedDays": 30 },
+        { "id": "req_sgp_medical", "kind": "medical", "label": { "bn": "মেডিকেল পরীক্ষা", "en": "Medical examination" }, "mandatory": true, "factKey": "applicant.medicallyFit", "sources": [{ "sourceId": "src_sg_mom" }] }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_sgp_post_card", "kind": "post_arrival", "label": { "bn": "ওয়ার্ক পারমিট কার্ড ও বিমা নিশ্চিত করা", "en": "Confirm work permit card and insurance" }, "mandatory": true, "sources": [{ "sourceId": "src_sg_mom" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_sgp_occupation_list", "severity": "warning", "title": { "bn": "পেশার তালিকা বদলায়", "en": "Occupation lists change" }, "body": { "bn": "অনুমোদিত পেশার তালিকা ও শর্ত সময়ে সময়ে বদলায়। আবেদনের আগে সর্বশেষ অবস্থা যাচাই করুন।", "en": "Permitted occupation lists and conditions change. Check the current position before applying." }, "sources": [{ "sourceId": "src_sg_mom" }] }
+      ],
+      "expectedTimeline": { "minDays": 60, "maxDays": 150 },
+      "feeRuleIds": ["fee_bd_passport", "fee_bd_bmet_registration", "fee_bd_medical", "fee_bd_skills_test", "fee_bd_welfare_membership"],
+      "sourceIds": ["src_sg_mom", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-19T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-19T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_mys_tep_v1",
+      "routeId": "MYS_TEMPORARY_EMPLOYMENT_PASS",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "MY",
+      "permitClass": "temporary_employment_pass",
+      "officialName": { "bn": "মালয়েশিয়া — অস্থায়ী কর্মসংস্থান পাস", "en": "Malaysia — Temporary Employment Pass" },
+      "summary": { "bn": "নিয়োগকর্তার কোটা অনুমোদন, উৎস-দেশ ও খাতের অনুমতি, ভিসা এবং পৌঁছানোর পর মেডিকেল — ধাপগুলো ক্রমানুসারে হয়।", "en": "Employer quota approval, source-country and sector permission, entry visa, and a post-arrival medical follow in sequence." },
+      "status": "temporarily_paused",
+      "eligibilityRuleId": "rule_mys_tep",
+      "requirements": [
+        { "id": "req_mys_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_my_imi" }] },
+        { "id": "req_mys_quota", "kind": "sponsor", "label": { "bn": "নিয়োগকর্তার কোটা অনুমোদন", "en": "Employer quota approval" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_my_imi" }] },
+        { "id": "req_mys_medical", "kind": "medical", "label": { "bn": "মেডিকেল পরীক্ষা (আগে ও পরে)", "en": "Medical examination (before and after arrival)" }, "mandatory": true, "factKey": "applicant.medicallyFit", "sources": [{ "sourceId": "src_my_imi" }] }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_mys_post_medical", "kind": "post_arrival", "label": { "bn": "পৌঁছে নির্ধারিত মেডিকেল সম্পন্ন করা", "en": "Complete the required post-arrival medical" }, "mandatory": true, "sources": [{ "sourceId": "src_my_imi" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_mys_status", "severity": "severe", "title": { "bn": "এই রুট এখন সাময়িকভাবে বন্ধ", "en": "This route is temporarily paused" }, "body": { "bn": "সরকারি সিদ্ধান্তে এই রুট বদলাতে পারে। কেউ টাকা চাইলে দেবেন না — আগে সর্বশেষ অবস্থা যাচাই করুন।", "en": "Government decisions can change this route. Do not pay anyone who asks for money — check the current position first." }, "sources": [{ "sourceId": "src_my_imi" }] }
+      ],
+      "expectedTimeline": { "minDays": 60, "maxDays": 180 },
+      "feeRuleIds": ["fee_bd_passport", "fee_bd_bmet_registration", "fee_bd_medical", "fee_bd_welfare_membership"],
+      "sourceIds": ["src_my_imi", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-12T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-12T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_kor_eps_e9_v1",
+      "routeId": "KOR_EPS_E9",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "KR",
+      "visaClass": "E-9",
+      "officialName": { "bn": "দক্ষিণ কোরিয়া — এমপ্লয়মেন্ট পারমিট সিস্টেম (ই-৯)", "en": "South Korea — Employment Permit System (E-9)" },
+      "summary": { "bn": "সরকারি ব্যবস্থার মাধ্যমে পরীক্ষা, কর্মী পুল, নিয়োগকর্তার বাছাই ও চুক্তি — কোনো দালাল এই বাছাই বদলাতে পারে না।", "en": "Testing, worker pool, employer selection and contract all run through the official system — no broker can change that selection." },
+      "status": "government_program",
+      "eligibilityRuleId": "rule_kor_eps",
+      "requirements": [
+        { "id": "req_kor_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_kr_eps" }] },
+        { "id": "req_kor_topik", "kind": "language", "label": { "bn": "ইপিএস-টপিক পরীক্ষায় উত্তীর্ণ", "en": "Pass the EPS-TOPIK test" }, "mandatory": true, "factKey": "applicant.languageCertificates", "sources": [{ "sourceId": "src_kr_eps" }], "estimatedDays": 120 },
+        { "id": "req_kor_skills", "kind": "skill", "label": { "bn": "খাতভিত্তিক দক্ষতা পরীক্ষা", "en": "Sector skills test" }, "mandatory": true, "factKey": "applicant.skillCertificates", "sources": [{ "sourceId": "src_kr_eps" }] },
+        { "id": "req_kor_medical", "kind": "medical", "label": { "bn": "মেডিকেল পরীক্ষা", "en": "Medical examination" }, "mandatory": true, "factKey": "applicant.medicallyFit", "sources": [{ "sourceId": "src_kr_eps" }] }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_kor_post_training", "kind": "post_arrival", "label": { "bn": "পৌঁছানোর পর নির্ধারিত প্রশিক্ষণে অংশ নেওয়া", "en": "Attend the required post-arrival training" }, "mandatory": true, "sources": [{ "sourceId": "src_kr_eps" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_kor_broker", "severity": "severe", "title": { "bn": "কেউ ইপিএস বাছাই নিশ্চিত করতে পারে না", "en": "Nobody can guarantee EPS selection" }, "body": { "bn": "টাকার বিনিময়ে ইপিএস-এ চাকরি পাইয়ে দেওয়ার প্রতিশ্রুতি প্রতারণা। বাছাই সরকারি ব্যবস্থাতেই হয়।", "en": "A paid promise of an EPS job is fraud. Selection happens only inside the official system." }, "sources": [{ "sourceId": "src_kr_eps" }] }
+      ],
+      "expectedTimeline": { "minDays": 180, "maxDays": 540 },
+      "feeRuleIds": ["fee_bd_passport", "fee_bd_bmet_registration", "fee_bd_medical", "fee_bd_language_test", "fee_bd_welfare_membership"],
+      "sourceIds": ["src_kr_eps", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-05T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-05T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_jpn_ssw_construction_v1",
+      "routeId": "JPN_SSW_CONSTRUCTION",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "JP",
+      "visaClass": "specified_skilled_worker",
+      "officialName": { "bn": "জাপান — নির্দিষ্ট দক্ষ কর্মী (নির্মাণ ক্ষেত্র)", "en": "Japan — Specified Skilled Worker (construction field)" },
+      "summary": { "bn": "ক্ষেত্রভিত্তিক দক্ষতা পরীক্ষা ও জাপানি ভাষার শর্ত, নিয়োগকর্তা ও সহায়তা সংস্থার দায়িত্বসহ।", "en": "A field-specific skills test and a Japanese-language requirement, with employer and support-organisation obligations." },
+      "status": "employer_sponsored",
+      "eligibilityRuleId": "rule_jpn_ssw",
+      "requirements": [
+        { "id": "req_jpn_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_jp_isa" }] },
+        { "id": "req_jpn_skills_test", "kind": "skill", "label": { "bn": "ক্ষেত্রভিত্তিক দক্ষতা পরীক্ষায় উত্তীর্ণ", "en": "Pass the field-specific skills evaluation test" }, "mandatory": true, "factKey": "applicant.skillCertificates", "sources": [{ "sourceId": "src_jp_isa" }], "estimatedDays": 90 },
+        { "id": "req_jpn_language", "kind": "language", "label": { "bn": "জাপানি ভাষার নির্ধারিত স্তর (জেএফটি-বেসিক বা জেএলপিটি)", "en": "Required Japanese level (JFT-Basic or JLPT)" }, "mandatory": true, "factKey": "applicant.languageCertificates", "sources": [{ "sourceId": "src_jp_isa" }], "estimatedDays": 180 },
+        { "id": "req_jpn_employer", "kind": "sponsor", "label": { "bn": "নিয়োগকর্তা ও সহায়তা সংস্থার চুক্তি", "en": "Employer and support organisation arrangement" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_jp_isa" }] }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_jpn_post_support", "kind": "post_arrival", "label": { "bn": "সহায়তা পরিকল্পনার আওতায় ওরিয়েন্টেশন সম্পন্ন করা", "en": "Complete orientation under the support plan" }, "mandatory": true, "sources": [{ "sourceId": "src_jp_isa" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_jpn_support_org", "severity": "warning", "title": { "bn": "সহায়তা সংস্থা যাচাই করুন", "en": "Verify the support organisation" }, "body": { "bn": "নিবন্ধিত সহায়তা সংস্থা ছাড়া এই রুটে কাজ করা যায় না।", "en": "This route requires a registered support organisation." }, "sources": [{ "sourceId": "src_jp_isa" }] }
+      ],
+      "expectedTimeline": { "minDays": 180, "maxDays": 420 },
+      "feeRuleIds": ["fee_bd_passport", "fee_bd_bmet_registration", "fee_bd_medical", "fee_bd_language_test", "fee_bd_skills_test", "fee_bd_welfare_membership"],
+      "sourceIds": ["src_jp_isa", "src_bd_oep"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-08T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-08T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_deu_skilled_v1",
+      "routeId": "DEU_SKILLED_WORKER_RECOGNIZED_QUALIFICATION",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "DE",
+      "visaClass": "skilled_worker",
+      "officialName": { "bn": "জার্মানি — স্বীকৃত যোগ্যতাসম্পন্ন দক্ষ কর্মী", "en": "Germany — skilled worker with recognised qualification" },
+      "summary": { "bn": "বাংলাদেশি যোগ্যতার স্বীকৃতি, পেশাভেদে জার্মান ভাষার স্তর, নিয়োগকর্তার চুক্তি ও দূতাবাসে ভিসা আবেদন।", "en": "Recognition of the Bangladeshi qualification, an occupation-dependent German level, an employer contract, and a visa application at the mission." },
+      "status": "open",
+      "eligibilityRuleId": "rule_deu_skilled",
+      "requirements": [
+        { "id": "req_deu_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_de_embassy_dhaka" }] },
+        { "id": "req_deu_recognition", "kind": "education", "label": { "bn": "যোগ্যতার স্বীকৃতি (Anerkennung)", "en": "Recognition of your qualification" }, "mandatory": true, "factKey": "applicant.educationLevel", "sources": [{ "sourceId": "src_de_make_it" }], "estimatedDays": 120, "performedAt": { "bn": "সংশ্লিষ্ট রাজ্যের স্বীকৃতি কর্তৃপক্ষ", "en": "Competent recognition authority in the relevant federal state" } },
+        { "id": "req_deu_language", "kind": "language", "label": { "bn": "পেশা অনুযায়ী জার্মান ভাষার স্তর", "en": "German language level required for the occupation" }, "mandatory": true, "factKey": "applicant.languageCertificates", "sources": [{ "sourceId": "src_de_make_it" }], "estimatedDays": 240 },
+        { "id": "req_deu_contract", "kind": "sponsor", "label": { "bn": "জার্মান নিয়োগকর্তার চাকরির চুক্তি", "en": "Employment contract with a German employer" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_de_make_it" }] },
+        { "id": "req_deu_appointment", "kind": "document", "label": { "bn": "দূতাবাসে ভিসা অ্যাপয়েন্টমেন্ট ও কাগজপত্র", "en": "Embassy visa appointment and document set" }, "mandatory": true, "sources": [{ "sourceId": "src_de_embassy_dhaka" }], "estimatedDays": 90, "performedAt": { "bn": "ঢাকাস্থ জার্মান দূতাবাস", "en": "German Embassy Dhaka" } }
+      ],
+      "postArrivalObligations": [
+        { "id": "req_deu_post_registration", "kind": "post_arrival", "label": { "bn": "বসবাসের নিবন্ধন ও স্বাস্থ্যবিমা সম্পন্ন করা", "en": "Complete residence registration and health insurance" }, "mandatory": true, "sources": [{ "sourceId": "src_de_make_it" }] }
+      ],
+      "riskNotices": [
+        { "id": "risk_deu_thresholds", "severity": "caution", "title": { "bn": "বেতন ও আর্থিক শর্ত প্রতি বছর বদলায়", "en": "Salary and financial thresholds change every year" }, "body": { "bn": "বেতনসীমা ও ব্লকড অ্যাকাউন্টের অঙ্ক বছরে বদলায়। পুরোনো তথ্যে সিদ্ধান্ত নেবেন না।", "en": "Salary thresholds and blocked-account amounts change yearly. Do not rely on old figures." }, "sources": [{ "sourceId": "src_de_make_it" }] }
+      ],
+      "expectedTimeline": { "minDays": 180, "maxDays": 480 },
+      "feeRuleIds": ["fee_bd_passport", "fee_de_visa", "fee_bd_language_test", "fee_de_recognition", "fee_bd_welfare_membership"],
+      "sourceIds": ["src_de_make_it", "src_de_embassy_dhaka"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-14T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-14T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_deu_ausbildung_v1",
+      "routeId": "DEU_AUSBILDUNG",
+      "version": 1,
+      "purpose": "training",
+      "originCountry": "BD",
+      "destinationCountry": "DE",
+      "visaClass": "vocational_training",
+      "officialName": { "bn": "জার্মানি — বৃত্তিমূলক প্রশিক্ষণ (Ausbildung)", "en": "Germany — vocational training (Ausbildung)" },
+      "summary": { "bn": "প্রশিক্ষণ প্রতিষ্ঠানের চুক্তি, ভাষার স্তর ও জীবনযাত্রার খরচের প্রমাণসহ প্রশিক্ষণ ভিসা।", "en": "A training contract, a language level, and proof of living costs for the training visa." },
+      "status": "open",
+      "eligibilityRuleId": "rule_deu_ausbildung",
+      "requirements": [
+        { "id": "req_deu_aus_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_de_embassy_dhaka" }] },
+        { "id": "req_deu_aus_contract", "kind": "sponsor", "label": { "bn": "প্রশিক্ষণ চুক্তি (Ausbildungsvertrag)", "en": "Training contract" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_de_make_it" }] },
+        { "id": "req_deu_aus_language", "kind": "language", "label": { "bn": "জার্মান ভাষার নির্ধারিত স্তর", "en": "Required German language level" }, "mandatory": true, "factKey": "applicant.languageCertificates", "sources": [{ "sourceId": "src_de_make_it" }], "estimatedDays": 300 },
+        { "id": "req_deu_aus_funds", "kind": "financial", "label": { "bn": "জীবনযাত্রার খরচের প্রমাণ", "en": "Proof of living costs" }, "mandatory": true, "factKey": "applicant.fundsAvailableMinorUnits", "sources": [{ "sourceId": "src_de_embassy_dhaka" }] }
+      ],
+      "postArrivalObligations": [],
+      "riskNotices": [
+        { "id": "risk_deu_aus_agent_fee", "severity": "warning", "title": { "bn": "অতিরিক্ত এজেন্ট ফি নিয়ে সতর্ক থাকুন", "en": "Be careful with large agent fees" }, "body": { "bn": "প্রশিক্ষণ চুক্তি পাওয়ার জন্য বড় অঙ্কের অগ্রিম দাবি করা হলে যাচাই করুন।", "en": "Verify carefully if a large advance is demanded to obtain a training contract." }, "sources": [{ "sourceId": "src_ilo_fair_recruitment" }] }
+      ],
+      "expectedTimeline": { "minDays": 210, "maxDays": 540 },
+      "feeRuleIds": ["fee_bd_passport", "fee_de_visa", "fee_bd_language_test"],
+      "sourceIds": ["src_de_make_it", "src_de_embassy_dhaka"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-14T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 14,
+      "lastReviewedAt": "2026-08-14T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_gbr_skilled_worker_v1",
+      "routeId": "GBR_SKILLED_WORKER",
+      "version": 1,
+      "purpose": "work",
+      "originCountry": "BD",
+      "destinationCountry": "GB",
+      "visaClass": "skilled_worker",
+      "officialName": { "bn": "যুক্তরাজ্য — স্কিলড ওয়ার্কার", "en": "United Kingdom — Skilled Worker" },
+      "summary": { "bn": "অনুমোদিত স্পনসরের সার্টিফিকেট অব স্পনসরশিপ, যোগ্য পেশা, বেতনসীমা ও ইংরেজির শর্ত।", "en": "A Certificate of Sponsorship from an approved sponsor, an eligible occupation, salary rules and an English requirement." },
+      "status": "employer_sponsored",
+      "eligibilityRuleId": "rule_gbr_skilled",
+      "requirements": [
+        { "id": "req_gbr_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_uk_gov" }] },
+        { "id": "req_gbr_cos", "kind": "sponsor", "label": { "bn": "অনুমোদিত স্পনসরের সার্টিফিকেট অব স্পনসরশিপ", "en": "Certificate of Sponsorship from an approved sponsor" }, "mandatory": true, "factKey": "applicant.hasEmployerOffer", "sources": [{ "sourceId": "src_uk_gov" }] },
+        { "id": "req_gbr_english", "kind": "language", "label": { "bn": "ইংরেজি ভাষার শর্ত", "en": "English language requirement" }, "mandatory": true, "factKey": "applicant.languageCertificates", "sources": [{ "sourceId": "src_uk_gov" }], "estimatedDays": 60 }
+      ],
+      "postArrivalObligations": [],
+      "riskNotices": [
+        { "id": "risk_gbr_cos_sale", "severity": "severe", "title": { "bn": "স্পনসরশিপ কেনাবেচা অবৈধ", "en": "Buying sponsorship is unlawful" }, "body": { "bn": "সার্টিফিকেট অব স্পনসরশিপের বিনিময়ে টাকা চাওয়া হলে সেটি প্রতারণা বা অপব্যবহার।", "en": "Being asked to pay for a Certificate of Sponsorship is fraud or abuse." }, "sources": [{ "sourceId": "src_uk_gov" }] }
+      ],
+      "expectedTimeline": { "minDays": 60, "maxDays": 180 },
+      "feeRuleIds": ["fee_bd_passport", "fee_gb_visa", "fee_bd_language_test"],
+      "sourceIds": ["src_uk_gov"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-23T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-23T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    },
+    {
+      "id": "rv_can_study_permit_v1",
+      "routeId": "CAN_STUDY_PERMIT",
+      "version": 1,
+      "purpose": "study",
+      "originCountry": "BD",
+      "destinationCountry": "CA",
+      "visaClass": "study_permit",
+      "officialName": { "bn": "কানাডা — স্টাডি পারমিট", "en": "Canada — study permit" },
+      "summary": { "bn": "স্বীকৃত শিক্ষাপ্রতিষ্ঠানে ভর্তি, তহবিলের প্রমাণ, প্রয়োজনীয় প্রাদেশিক চিঠি ও বায়োমেট্রিক।", "en": "Admission to a designated institution, proof of funds, any required provincial letter, and biometrics." },
+      "status": "open",
+      "eligibilityRuleId": "rule_can_study",
+      "requirements": [
+        { "id": "req_can_passport", "kind": "document", "label": { "bn": "বৈধ পাসপোর্ট", "en": "Valid passport" }, "mandatory": true, "factKey": "applicant.hasValidPassport", "sources": [{ "sourceId": "src_ca_ircc" }] },
+        { "id": "req_can_admission", "kind": "education", "label": { "bn": "স্বীকৃত প্রতিষ্ঠানের ভর্তি পত্র", "en": "Letter of acceptance from a designated institution" }, "mandatory": true, "sources": [{ "sourceId": "src_ca_ircc" }] },
+        { "id": "req_can_funds", "kind": "financial", "label": { "bn": "টিউশন ও জীবনযাত্রার খরচের প্রমাণ", "en": "Proof of tuition and living funds" }, "mandatory": true, "factKey": "applicant.fundsAvailableMinorUnits", "sources": [{ "sourceId": "src_ca_ircc" }] },
+        { "id": "req_can_language", "kind": "language", "label": { "bn": "ভাষার পরীক্ষার ফল (প্রতিষ্ঠান অনুযায়ী)", "en": "Language test result (as required by the institution)" }, "mandatory": true, "factKey": "applicant.languageCertificates", "sources": [{ "sourceId": "src_ca_ircc" }], "estimatedDays": 60 }
+      ],
+      "postArrivalObligations": [],
+      "riskNotices": [
+        { "id": "risk_can_fake_offer", "severity": "severe", "title": { "bn": "ভুয়া ভর্তি পত্র", "en": "Fake letters of acceptance" }, "body": { "bn": "ভর্তি পত্র সরাসরি প্রতিষ্ঠানের অফিসিয়াল ঠিকানা থেকে যাচাই করুন। ব্যক্তিগত অ্যাকাউন্টে টিউশন পাঠাবেন না।", "en": "Verify the letter directly with the institution's official domain. Never send tuition to a personal account." }, "sources": [{ "sourceId": "src_ca_ircc" }] }
+      ],
+      "expectedTimeline": { "minDays": 90, "maxDays": 300 },
+      "studyRightsNote": { "bn": "পড়াশোনার সময় কাজের অধিকার আলাদা নিয়মে নির্ধারিত হয়।", "en": "Work rights during study are governed by separate rules." },
+      "feeRuleIds": ["fee_bd_passport", "fee_ca_study_permit", "fee_bd_language_test"],
+      "sourceIds": ["src_ca_ircc"],
+      "effectiveFrom": "2026-01-01T00:00:00.000Z",
+      "verifiedAt": "2026-08-23T00:00:00.000Z",
+      "verifiedBy": "seed:not-human-verified",
+      "publicationStatus": "published",
+      "reviewCadenceDays": 7,
+      "lastReviewedAt": "2026-08-23T00:00:00.000Z",
+      "isSyntheticDemoData": true
+    }
+  ]
+}
