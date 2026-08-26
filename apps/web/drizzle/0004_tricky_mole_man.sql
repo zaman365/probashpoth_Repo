@@ -1,1 +1,3 @@
-ALTER TABLE `user_profiles` ADD `enabled_paths` text DEFAULT '["work","study"]' NOT NULL;
+-- This column is part of the baseline schema and is also added conditionally
+-- by the runtime schema guard for databases created before this migration.
+SELECT 1;

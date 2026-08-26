@@ -137,6 +137,10 @@ CREATE TABLE `user_profiles` (
 	`display_name` text,
 	`locale` text NOT NULL,
 	`active_path` text NOT NULL,
+	`enabled_paths` text DEFAULT '["work","study"]' NOT NULL,
+	`journey_stage` text DEFAULT 'exploring' NOT NULL,
+	`goal_title` text,
+	`onboarding_completed_at` text,
 	`passport_json` text NOT NULL,
 	`created_at` text NOT NULL,
 	`updated_at` text NOT NULL

@@ -1,3 +1,3 @@
-ALTER TABLE `user_profiles` ADD `journey_stage` text DEFAULT 'exploring' NOT NULL;--> statement-breakpoint
-ALTER TABLE `user_profiles` ADD `goal_title` text;--> statement-breakpoint
-ALTER TABLE `user_profiles` ADD `onboarding_completed_at` text;
+-- These columns are part of the baseline schema and are also added conditionally
+-- by the runtime schema guard for databases created before this migration.
+SELECT 1;
