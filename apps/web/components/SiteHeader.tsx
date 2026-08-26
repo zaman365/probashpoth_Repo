@@ -22,8 +22,13 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
    * seen or clicked are worse than links that are not there.
    */
   const links = [
+    {
+      href: `/${seg}/verify`,
+      label: t('home.verifyOffer'),
+      icon: 'verify' as const,
+      priority: true,
+    },
     { href: `/${seg}/countries`, label: t('nav.countries') },
-    { href: `/${seg}/occupations`, label: t('nav.occupations') },
     { href: `/${seg}/work`, label: t('nav.work') },
     { href: `/${seg}/study`, label: t('nav.study') },
     { href: `/${seg}/safety`, label: t('nav.safety') },
@@ -35,12 +40,20 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
         <div className="site-header-row">
           <Link href={`/${seg}`} className="site-brand">
             <LogoMark />
-            <span>{productName}</span>
+            <span className="site-brand-copy">
+              <strong>{productName}</strong>
+              <small>{t('site.tagline')}</small>
+            </span>
           </Link>
 
           <nav className="site-nav-desktop" aria-label={t('site.tagline')}>
             {links.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <Link
+                key={link.href}
+                href={link.href}
+                className={'priority' in link && link.priority ? 'is-priority' : undefined}
+              >
+                {'icon' in link && link.icon ? <Icon name={link.icon} size={17} /> : null}
                 {link.label}
               </Link>
             ))}
@@ -59,7 +72,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             </Link>
             <Link href={`/${seg}/help`} className="pui-btn pui-btn-outline pui-btn-md">
               <Icon name="phone" size={20} />
-              <span>{t('common.emergency')}</span>
+              <span>{t('common.help')}</span>
             </Link>
           </div>
         </div>

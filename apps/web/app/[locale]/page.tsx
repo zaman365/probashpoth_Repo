@@ -1,29 +1,10 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import {
-  Badge,
-  CanvasPanel,
-  Card,
-  ChipLink,
-  Disclosure,
-  FeaturePill,
-  GlassCard,
-  Grid,
-  Icon,
-  Reveal,
-  Section,
-  Stat,
-  StatGroup,
-} from '@probash/web-ui';
+import { Disclosure, Icon } from '@probash/web-ui';
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
-import { canonicalMetadata } from '@/lib/seo';
-import {
-  IntentChooser,
-  IntentComparison,
-  IntentSwitch,
-  parseIntent,
-} from '@/components/IntentChooser';
+import { canonicalMetadata, siteUrl } from '@/lib/seo';
+import { IntentSwitch, parseIntent } from '@/components/IntentChooser';
 import { ListenButton } from '@/components/ListenButton';
 
 export const dynamic = 'force-dynamic';
@@ -36,12 +17,30 @@ export async function generateMetadata({
   const { locale: segment } = await params;
   const locale = parseLocaleParam(segment);
   const t = translator(locale);
-  return canonicalMetadata({
+
+  const title = t('site.heroTitle');
+  const description = t('site.heroLead');
+  const metadata = canonicalMetadata({
     locale,
     path: '',
-    title: `${t('site.heroTitle')}`,
-    description: t('site.heroLead'),
+    title,
+    description,
   });
+
+  return {
+    ...metadata,
+    openGraph: {
+      ...metadata.openGraph,
+      type: 'website',
+      images: [{ url: `${siteUrl}/og.png`, width: 1731, height: 909, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${siteUrl}/og.png`],
+    },
+  };
 }
 
 async function listOrEmpty<T>(path: string): Promise<T[]> {
@@ -49,7 +48,7 @@ async function listOrEmpty<T>(path: string): Promise<T[]> {
     const rows = await apiRequest<T[]>(path);
     return Array.isArray(rows) ? rows : [];
   } catch {
-    // A landing page must render even when the API is unreachable.
+    // The public front door must remain useful while the API is unavailable.
     return [];
   }
 }
@@ -58,11 +57,6 @@ async function countOrZero(path: string): Promise<number> {
   return (await listOrEmpty(path)).length;
 }
 
-/**
- * §14.1 + §15 — the landing page has to work as two things at once: a public website
- * that explains and is indexable, and a worker's front door. So the seven primary
- * actions sit directly under the hero, above everything a visitor merely reads.
- */
 export default async function Landing({
   params,
   searchParams,
@@ -90,331 +84,517 @@ export default async function Landing({
   const distinctCountries = (rows: { destinationCountry: string }[]) =>
     new Set(rows.map((row) => row.destinationCountry)).size;
 
-  const actions = [
-    { href: `/${seg}/jobs`, icon: 'work' as const, key: 'home.findWork' },
-    { href: `/${seg}/study`, icon: 'study' as const, key: 'home.findStudy' },
-    { href: `/${seg}/verify`, icon: 'verify' as const, key: 'home.verifyOffer' },
-    { href: `/${seg}/cases`, icon: 'document' as const, key: 'home.myApplications' },
-    { href: `/${seg}/explore`, icon: 'money' as const, key: 'home.howMuchCost' },
-    { href: `/${seg}/prepare`, icon: 'route' as const, key: 'home.howToPrepare' },
-    { href: `/${seg}/help`, icon: 'phone' as const, key: 'home.getHelp' },
-  ];
-
-  const steps = [
-    { icon: 'verify' as const, title: t('site.how1Title'), body: t('site.how1Body') },
-    { icon: 'money' as const, title: t('site.how2Title'), body: t('site.how2Body') },
-    { icon: 'route' as const, title: t('site.how3Title'), body: t('site.how3Body') },
-    { icon: 'shield' as const, title: t('site.how4Title'), body: t('site.how4Body') },
-  ];
-
-  const invariants = [1, 2, 3, 4, 5, 6].map((n) => t(`site.trust${n}`));
-
-  const guides = [
+  const questions = [
     {
-      href: `/${seg}/countries`,
-      icon: 'globe' as const,
-      title: t('site.guideCountries'),
-      body: t('site.guideCountriesBody'),
+      number: '01',
+      icon: 'verify' as const,
+      href: `/${seg}/verify`,
+      title: t('experience.q1Title'),
+      body: t('experience.q1Body'),
+      cta: t('experience.q1Cta'),
+      primary: true,
     },
     {
-      href: `/${seg}/occupations`,
-      icon: 'work' as const,
-      title: t('site.guideOccupations'),
-      body: t('site.guideOccupationsBody'),
+      number: '02',
+      icon: 'money' as const,
+      href: `/${seg}/explore`,
+      title: t('experience.q2Title'),
+      body: t('experience.q2Body'),
+      cta: t('experience.q2Cta'),
     },
     {
-      href: `/${seg}/safety`,
-      icon: 'warning' as const,
-      title: t('site.guideSafety'),
-      body: t('site.guideSafetyBody'),
+      number: '03',
+      icon: 'document' as const,
+      href: `/${seg}/how-it-works`,
+      title: t('experience.q3Title'),
+      body: t('experience.q3Body'),
+      cta: t('experience.q3Cta'),
+    },
+    {
+      number: '04',
+      icon: 'route' as const,
+      href: `/${seg}/prepare`,
+      title: t('experience.q4Title'),
+      body: t('experience.q4Body'),
+      cta: t('experience.q4Cta'),
     },
   ];
+
+  const journeySteps = [
+    {
+      icon: 'search' as const,
+      title: t('experience.step1Title'),
+      body: t('experience.step1Body'),
+    },
+    {
+      icon: 'shield' as const,
+      title: t('experience.step2Title'),
+      body: t('experience.step2Body'),
+    },
+    {
+      icon: 'money' as const,
+      title: t('experience.step3Title'),
+      body: t('experience.step3Body'),
+    },
+    {
+      icon: 'family' as const,
+      title: t('experience.step4Title'),
+      body: t('experience.step4Body'),
+    },
+  ];
+
+  const trustRules = [1, 2, 3, 4, 5, 6].map((number) => t(`site.trust${number}`));
 
   const organizations = [
     {
       href: `/${seg}/for-employers`,
+      number: '01',
       title: t('site.orgEmployers'),
       body: t('site.orgEmployersBody'),
     },
-    { href: `/${seg}/for-agencies`, title: t('site.orgAgencies'), body: t('site.orgAgenciesBody') },
+    {
+      href: `/${seg}/for-agencies`,
+      number: '02',
+      title: t('site.orgAgencies'),
+      body: t('site.orgAgenciesBody'),
+    },
     {
       href: `/${seg}/for-government`,
+      number: '03',
       title: t('site.orgGovernment'),
       body: t('site.orgGovernmentBody'),
     },
   ];
 
-  const faqs = [1, 2, 3, 4, 5, 6].map((n) => ({
-    question: t(`site.faq${n}Q`),
-    answer: t(`site.faq${n}A`),
+  const faqs = [1, 2, 4, 5].map((number) => ({
+    question: t(`site.faq${number}Q`),
+    answer: t(`site.faq${number}A`),
   }));
 
   return (
-    <>
-      {/*
-        The framed canvas hero: a rounded panel floating on the page, glass cards over
-        a painted ground. Adapted from a photographic hero — the ground is painted
-        instead so contrast is testable and nothing has to be downloaded.
-      */}
-      <div className="hero-frame">
-        <CanvasPanel>
-          {/* The same control as the section below, reading the same URL state. */}
-          <div className="hero-topbar">
-            <IntentSwitch locale={locale} intent={intent} tone="canvas" />
-          </div>
+    <div className="experience-home">
+      <section className="experience-hero" aria-labelledby="experience-hero-title">
+        <div className="experience-shell">
+          <div className="experience-hero-stage">
+            <div className="experience-route-mark" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
 
-          <div className="hero-grid">
-            <div className="hero-copy">
-              <Reveal index={0}>
-                <span className="hero-eyebrow">{t('site.tagline')}</span>
-              </Reveal>
-              <Reveal index={1}>
-                <h1 className="hero-title">{t('site.heroTitle')}</h1>
-              </Reveal>
-              <Reveal index={2}>
-                <p className="hero-lead">{t('site.heroLead')}</p>
-              </Reveal>
+            <div className="experience-hero-layout">
+              <div className="experience-hero-copy">
+                <p className="experience-kicker">
+                  <span className="experience-kicker-dot" aria-hidden="true" />
+                  {t('experience.heroEyebrow')}
+                </p>
+                <h1 id="experience-hero-title" className="experience-hero-title">
+                  <span>{t('experience.heroTitleLine')}</span>
+                  <strong>{t('experience.heroTitleAccent')}</strong>
+                </h1>
+                <p className="experience-hero-lead">{t('site.heroLead')}</p>
 
-              {/* One row of controls, weighted: act, browse, listen. */}
-              <Reveal index={3}>
-                <div className="hero-actions">
-                  <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
-                    {t('site.heroVerifyCta')}
-                  </ChipLink>
-                  <ChipLink
-                    href={intent === 'study' ? `/${seg}/study` : `/${seg}/work`}
-                    tone="glass"
-                    chip={<Icon name="arrow" size={18} />}
-                  >
-                    {intent === 'study' ? t('intent.openStudy') : t('intent.openWork')}
-                  </ChipLink>
+                <div className="experience-hero-actions">
+                  <Link href={`/${seg}/verify`} className="experience-btn experience-btn-light">
+                    <span>{t('site.heroVerifyCta')}</span>
+                    <Icon name="arrow" size={20} />
+                  </Link>
+                  <Link href={`/${seg}/countries`} className="experience-btn experience-btn-ghost">
+                    <Icon name="globe" size={20} />
+                    <span>{t('experience.exploreRoutes')}</span>
+                  </Link>
                 </div>
-              </Reveal>
 
-              {/* A quieter utility row: the listen affordance and the reassurance. */}
-              <Reveal index={4}>
-                <div className="hero-utility">
+                <div className="experience-hero-audio">
                   <ListenButton
                     text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
                     label={t('common.listen')}
                     lang={locale}
                   />
-                  <p className="hero-note">{t('site.heroNote')}</p>
+                  <span>{t('site.heroNote')}</span>
                 </div>
-              </Reveal>
+              </div>
 
-              <Reveal index={5}>
-                <ul className="hero-pills">
-                  <FeaturePill icon={<Icon name="check" size={16} />}>
-                    {t('site.pill1')}
-                  </FeaturePill>
-                  <FeaturePill icon={<Icon name="check" size={16} />}>
-                    {t('site.pill2')}
-                  </FeaturePill>
-                  <FeaturePill icon={<Icon name="check" size={16} />}>
-                    {t('site.pill3')}
-                  </FeaturePill>
-                </ul>
-              </Reveal>
-            </div>
+              <aside className="experience-check-card" aria-labelledby="quick-check-title">
+                <div className="experience-check-card-head">
+                  <span className="experience-check-icon" aria-hidden="true">
+                    <Icon name="verify" size={24} />
+                  </span>
+                  <p>{t('experience.checkEyebrow')}</p>
+                </div>
+                <h2 id="quick-check-title">{t('experience.checkTitle')}</h2>
+                <p className="experience-check-body">{t('experience.checkBody')}</p>
 
-            <Reveal index={2} className="hero-side">
-              <GlassCard>
-                <span className="hero-side-icon" aria-hidden="true">
-                  <Icon name="verify" size={22} />
-                </span>
-                <h2 className="hero-side-title">{t('scanner.title')}</h2>
-                <p>{t('guide.verifyCtaHelp')}</p>
-
-                {/*
-                  A plain GET form: the verify page checks the id server-side, so this
-                  works with no JavaScript at all.
-                */}
-                <form action={`/${seg}/verify`} method="get" className="hero-verify-form">
-                  <label htmlFor="hero-public-id" className="hero-verify-label">
-                    {t('scanner.publicIdLabel')}
-                  </label>
-                  <div className="hero-verify-row">
+                <form action={`/${seg}/verify`} method="get" className="experience-check-form">
+                  <label htmlFor="experience-public-id">{t('scanner.publicIdLabel')}</label>
+                  <div>
                     <input
-                      id="hero-public-id"
+                      id="experience-public-id"
                       name="publicId"
-                      className="hero-verify-input"
                       placeholder="BD-QA-2026-00000000"
                       autoComplete="off"
                     />
-                    <button type="submit" className="pui-btn pui-btn-primary pui-btn-md">
-                      {t('scanner.checkNow')}
+                    <button type="submit">
+                      <span>{t('scanner.checkNow')}</span>
+                      <Icon name="arrow" size={19} />
                     </button>
                   </div>
                 </form>
-                {/* The figures follow the selected path, not a single global total. */}
-                <dl className="hero-side-stats">
+
+                <div className="experience-check-note">
+                  <Icon name="shield" size={18} />
+                  <span>{t('experience.checkNote')}</span>
+                </div>
+              </aside>
+            </div>
+
+            <ul className="experience-hero-proof">
+              <li>
+                <Icon name="check" size={17} />
+                <span>{t('site.pill1')}</span>
+              </li>
+              <li>
+                <Icon name="check" size={17} />
+                <span>{t('site.pill2')}</span>
+              </li>
+              <li>
+                <Icon name="check" size={17} />
+                <span>{t('site.pill3')}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="experience-status-strip" role="note">
+            <div>
+              <span className="experience-status-pulse" aria-hidden="true" />
+              <strong>{t('experience.statusLabel')}</strong>
+            </div>
+            <p>{t('experience.statusBody')}</p>
+            <Link href={`/${seg}/about`}>
+              {t('experience.statusCta')} <Icon name="arrow" size={17} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="experience-section experience-questions" aria-labelledby="questions-title">
+        <div className="experience-shell">
+          <header className="experience-section-head experience-section-head-split">
+            <div>
+              <p className="experience-section-kicker">{t('experience.questionsEyebrow')}</p>
+              <h2 id="questions-title">{t('experience.questionsTitle')}</h2>
+            </div>
+            <p>{t('experience.questionsLead')}</p>
+          </header>
+
+          <div className="experience-question-grid">
+            {questions.map((question) => (
+              <Link
+                key={question.number}
+                href={question.href}
+                className={`experience-question-card${question.primary ? ' is-primary' : ''}`}
+              >
+                <div className="experience-card-topline">
+                  <span>{question.number}</span>
+                  <span className="experience-card-icon" aria-hidden="true">
+                    <Icon name={question.icon} size={24} />
+                  </span>
+                </div>
+                <h3>{question.title}</h3>
+                <p>{question.body}</p>
+                <span className="experience-text-link">
+                  {question.cta} <Icon name="arrow" size={18} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="experience-section experience-paths" aria-labelledby="paths-title">
+        <div className="experience-shell">
+          <header className="experience-section-head experience-section-head-centered">
+            <p className="experience-section-kicker">{t('experience.pathsEyebrow')}</p>
+            <h2 id="paths-title">{t('intent.chooseTitle')}</h2>
+            <p>{t('experience.pathsLead')}</p>
+          </header>
+
+          <div className="experience-intent-switch">
+            <IntentSwitch locale={locale} intent={intent} />
+          </div>
+
+          <div className="experience-path-grid">
+            <article className={`experience-path-card work${intent === 'work' ? ' is-selected' : ''}`}>
+              <div className="experience-path-visual" aria-hidden="true">
+                <span className="experience-path-orbit" />
+                <Icon name="work" size={38} />
+              </div>
+              <div className="experience-path-content">
+                <span className="experience-path-label">{t('intent.workTagline')}</span>
+                <h3>{t('intent.work')}</h3>
+                <p>{t('intent.workSummary')}</p>
+                <dl className="experience-path-facts">
                   <div>
                     <dt>{t('intent.routesFor')}</dt>
-                    <dd>{intent === 'study' ? studyRoutes.length : workRoutes.length}</dd>
+                    <dd>{workRoutes.length}</dd>
                   </div>
                   <div>
                     <dt>{t('site.statCountries')}</dt>
-                    <dd>{distinctCountries(intent === 'study' ? studyRoutes : workRoutes)}</dd>
+                    <dd>{distinctCountries(workRoutes)}</dd>
                   </div>
                   <div>
-                    <dt>{intent === 'study' ? t('site.studyCourses') : t('job.verifiedJob')}</dt>
-                    <dd>{intent === 'study' ? courses : jobs}</dd>
+                    <dt>{t('site.statJobs')}</dt>
+                    <dd>{jobs}</dd>
                   </div>
                 </dl>
-                <p className="hero-warning">
-                  <Icon name="warning" size={18} />
-                  <span>{t('cost.payOnlyHere')}</span>
-                </p>
-              </GlassCard>
-            </Reveal>
+                <Link href={`/${seg}/work`} className="experience-btn experience-btn-dark">
+                  <span>{t('intent.openWork')}</span>
+                  <Icon name="arrow" size={19} />
+                </Link>
+              </div>
+            </article>
+
+            <article className={`experience-path-card study${intent === 'study' ? ' is-selected' : ''}`}>
+              <div className="experience-path-visual" aria-hidden="true">
+                <span className="experience-path-orbit" />
+                <Icon name="study" size={38} />
+              </div>
+              <div className="experience-path-content">
+                <span className="experience-path-label">{t('intent.studyTagline')}</span>
+                <h3>{t('intent.study')}</h3>
+                <p>{t('intent.studySummary')}</p>
+                <dl className="experience-path-facts">
+                  <div>
+                    <dt>{t('intent.routesFor')}</dt>
+                    <dd>{studyRoutes.length}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('site.statCountries')}</dt>
+                    <dd>{distinctCountries(studyRoutes)}</dd>
+                  </div>
+                  <div>
+                    <dt>{t('site.studyCourses')}</dt>
+                    <dd>{courses}</dd>
+                  </div>
+                </dl>
+                <Link href={`/${seg}/study`} className="experience-btn experience-btn-dark">
+                  <span>{t('intent.openStudy')}</span>
+                  <Icon name="arrow" size={19} />
+                </Link>
+              </div>
+            </article>
           </div>
-        </CanvasPanel>
-      </div>
 
-      {/*
-        §14.1 — work and study are the two top-level paths. Both are described here,
-        with the facts side by side, so the choice is informed rather than steered.
-      */}
-      <Section
-        surface="default"
-        eyebrow={t('site.tagline')}
-        title={t('intent.chooseTitle')}
-        lead={t('intent.chooseLead')}
-      >
-        <IntentChooser
-          locale={locale}
-          intent={intent}
-          workFacts={{
-            routes: workRoutes.length,
-            countries: distinctCountries(workRoutes),
-            opportunities: jobs,
-          }}
-          studyFacts={{
-            routes: studyRoutes.length,
-            countries: distinctCountries(studyRoutes),
-            opportunities: courses,
-          }}
-        />
-      </Section>
+          <p className="experience-path-note">
+            <Icon name="warning" size={19} />
+            <span>{t('intent.notSure')}</span>
+          </p>
+        </div>
+      </section>
 
-      <Section surface="muted" title={t('intent.compareTitle')} lead={t('intent.compareLead')}>
-        <IntentComparison locale={locale} />
-      </Section>
+      <section className="experience-section experience-journey" aria-labelledby="journey-title">
+        <div className="experience-shell">
+          <header className="experience-section-head experience-section-head-split">
+            <div>
+              <p className="experience-section-kicker">{t('experience.journeyEyebrow')}</p>
+              <h2 id="journey-title">{t('experience.journeyTitle')}</h2>
+            </div>
+            <p>{t('experience.journeyLead')}</p>
+          </header>
 
-      {/* §15 — the worker's own actions come before anything a visitor merely reads. */}
-      <Section surface="default" title={t('site.actionsTitle')}>
-        <nav aria-label={t('site.actionsTitle')}>
-          <Grid min={260}>
-            {actions.map((action) => (
-              <Link key={action.key} href={action.href} className="action-tile">
-                <Icon name={action.icon} size={26} />
-                <span>{t(action.key)}</span>
+          <ol className="experience-journey-rail">
+            {journeySteps.map((step, index) => (
+              <li key={step.title}>
+                <div className="experience-journey-marker">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <Icon name={step.icon} size={24} />
+                </div>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="experience-proof" aria-labelledby="proof-title">
+        <div className="experience-shell">
+          <div className="experience-proof-layout">
+            <div className="experience-proof-intro">
+              <p className="experience-section-kicker">{t('experience.proofEyebrow')}</p>
+              <h2 id="proof-title">{t('experience.proofTitle')}</h2>
+              <p>{t('experience.proofLead')}</p>
+              <Link href={`/${seg}/how-it-works`} className="experience-btn experience-btn-light">
+                <span>{t('site.howItWorksTitle')}</span>
+                <Icon name="arrow" size={19} />
+              </Link>
+            </div>
+
+            <div className="experience-proof-data" aria-label={t('site.statsTitle')}>
+              <div className="experience-proof-number">
+                <strong>{sources}</strong>
+                <span>{t('site.statSources')}</span>
+              </div>
+              <div className="experience-proof-number">
+                <strong>{routes}</strong>
+                <span>{t('site.statRoutes')}</span>
+              </div>
+              <div className="experience-proof-number">
+                <strong>{countries}</strong>
+                <span>{t('site.statCountries')}</span>
+              </div>
+              <p className="experience-proof-disclosure">
+                <Icon name="warning" size={19} />
+                <span>{t('experience.proofDisclosure')}</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="experience-trust-grid">
+            {trustRules.map((rule, index) => (
+              <div key={rule}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <p>{rule}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="experience-section experience-guides" aria-labelledby="guides-title">
+        <div className="experience-shell">
+          <header className="experience-section-head experience-section-head-split">
+            <div>
+              <p className="experience-section-kicker">{t('experience.guidesEyebrow')}</p>
+              <h2 id="guides-title">{t('site.guidesTitle')}</h2>
+            </div>
+            <p>{t('site.guidesLead')}</p>
+          </header>
+
+          <div className="experience-guide-grid">
+            <Link href={`/${seg}/countries`} className="experience-guide-card countries">
+              <span className="experience-guide-icon" aria-hidden="true">
+                <Icon name="globe" size={30} />
+              </span>
+              <div>
+                <span className="experience-guide-count">{countries}</span>
+                <h3>{t('site.guideCountries')}</h3>
+                <p>{t('site.guideCountriesBody')}</p>
+                <span className="experience-text-link">
+                  {t('guide.readMore')} <Icon name="arrow" size={18} />
+                </span>
+              </div>
+            </Link>
+
+            <Link href={`/${seg}/occupations`} className="experience-guide-card occupations">
+              <span className="experience-guide-icon" aria-hidden="true">
+                <Icon name="work" size={30} />
+              </span>
+              <div>
+                <h3>{t('site.guideOccupations')}</h3>
+                <p>{t('site.guideOccupationsBody')}</p>
+                <span className="experience-text-link">
+                  {t('guide.readMore')} <Icon name="arrow" size={18} />
+                </span>
+              </div>
+            </Link>
+
+            <Link href={`/${seg}/safety`} className="experience-guide-card safety">
+              <span className="experience-guide-icon" aria-hidden="true">
+                <Icon name="warning" size={30} />
+              </span>
+              <div>
+                <h3>{t('site.guideSafety')}</h3>
+                <p>{t('site.guideSafetyBody')}</p>
+                <span className="experience-text-link">
+                  {t('guide.readMore')} <Icon name="arrow" size={18} />
+                </span>
+              </div>
+            </Link>
+
+            <article className="experience-guide-card family">
+              <span className="experience-guide-icon" aria-hidden="true">
+                <Icon name="family" size={30} />
+              </span>
+              <div>
+                <h3>{t('experience.familyTitle')}</h3>
+                <p>{t('experience.familyBody')}</p>
+                <Link href={`/${seg}/cases`} className="experience-text-link">
+                  {t('experience.familyCta')} <Icon name="arrow" size={18} />
+                </Link>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="experience-section experience-organizations" aria-labelledby="organizations-title">
+        <div className="experience-shell">
+          <header className="experience-section-head experience-section-head-split">
+            <div>
+              <p className="experience-section-kicker">{t('experience.organizationsEyebrow')}</p>
+              <h2 id="organizations-title">{t('site.orgTitle')}</h2>
+            </div>
+            <p>{t('site.orgLead')}</p>
+          </header>
+
+          <div className="experience-organization-list">
+            {organizations.map((organization) => (
+              <Link key={organization.number} href={organization.href}>
+                <span>{organization.number}</span>
+                <div>
+                  <h3>{organization.title}</h3>
+                  <p>{organization.body}</p>
+                </div>
+                <Icon name="arrow" size={22} />
               </Link>
             ))}
-          </Grid>
-        </nav>
-      </Section>
-
-      <Section surface="muted" title={t('site.statsTitle')} lead={t('site.statsNote')}>
-        <StatGroup>
-          <Stat label={t('site.statCountries')} value={String(countries)} />
-          <Stat label={t('site.statRoutes')} value={String(routes)} />
-          <Stat label={t('site.statSources')} value={String(sources)} />
-          <Stat label={t('site.statJobs')} value={String(jobs)} />
-        </StatGroup>
-      </Section>
-
-      <Section
-        surface="default"
-        eyebrow={t('site.tagline')}
-        title={t('site.howTitle')}
-        lead={t('site.howLead')}
-      >
-        <Grid min={260}>
-          {steps.map((step) => (
-            <Card key={step.title}>
-              <span className="step-icon" aria-hidden="true">
-                <Icon name={step.icon} size={24} />
-              </span>
-              <h3 className="card-title">{step.title}</h3>
-              <p>{step.body}</p>
-            </Card>
-          ))}
-        </Grid>
-      </Section>
-
-      <Section surface="accent" title={t('site.trustTitle')} lead={t('site.trustLead')}>
-        <Grid min={300}>
-          {invariants.map((line) => (
-            <Card key={line} tone="default">
-              <span className="check-mark" aria-hidden="true">
-                <Icon name="check" size={20} />
-              </span>
-              <p>{line}</p>
-            </Card>
-          ))}
-        </Grid>
-      </Section>
-
-      <Section surface="default" title={t('site.guidesTitle')} lead={t('site.guidesLead')}>
-        <Grid min={300}>
-          {guides.map((guide) => (
-            <Link key={guide.href} href={guide.href} className="guide-link">
-              <Card interactive>
-                <Icon name={guide.icon} size={26} />
-                <h3 className="card-title">{guide.title}</h3>
-                <p>{guide.body}</p>
-                <span className="link-more">
-                  {t('guide.readMore')} <Icon name="arrow" size={18} />
-                </span>
-              </Card>
-            </Link>
-          ))}
-        </Grid>
-      </Section>
-
-      <Section surface="muted" title={t('site.orgTitle')} lead={t('site.orgLead')}>
-        <Grid min={300}>
-          {organizations.map((org) => (
-            <Link key={org.href} href={org.href} className="guide-link">
-              <Card interactive>
-                <h3 className="card-title">{org.title}</h3>
-                <p>{org.body}</p>
-                <span className="link-more">
-                  {t('guide.readMore')} <Icon name="arrow" size={18} />
-                </span>
-              </Card>
-            </Link>
-          ))}
-        </Grid>
-        <p style={{ marginBlockStart: 'var(--space-lg)' }}>
-          <Badge tone="warning">{t('site.orgStatus')}</Badge>
-        </p>
-      </Section>
-
-      <Section surface="default" title={t('site.faqTitle')} width="prose">
-        <div className="pui-stack pui-stack-sm">
-          {faqs.map((faq) => (
-            <Disclosure key={faq.question} summary={faq.question}>
-              <p>{faq.answer}</p>
-            </Disclosure>
-          ))}
-        </div>
-      </Section>
-
-      {/* The page closes on the same dark ground it opened with. */}
-      <div className="hero-frame closing-frame">
-        <CanvasPanel>
-          <div className="closing-block">
-            <h2 className="hero-title">{t('site.ctaTitle')}</h2>
-            <p className="hero-lead">{t('site.ctaLead')}</p>
-            <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
-              {t('scanner.checkNow')}
-            </ChipLink>
           </div>
-        </CanvasPanel>
-      </div>
-    </>
+          <p className="experience-organization-note">{t('site.orgStatus')}</p>
+        </div>
+      </section>
+
+      <section className="experience-section experience-faq" aria-labelledby="faq-title">
+        <div className="experience-shell experience-faq-layout">
+          <header className="experience-section-head">
+            <p className="experience-section-kicker">{t('experience.faqEyebrow')}</p>
+            <h2 id="faq-title">{t('site.faqTitle')}</h2>
+            <p>{t('experience.faqLead')}</p>
+            <Link href={`/${seg}/faq`} className="experience-text-link experience-faq-more">
+              {t('site.faqPageTitle')} <Icon name="arrow" size={18} />
+            </Link>
+          </header>
+          <div className="experience-faq-list">
+            {faqs.map((faq, index) => (
+              <Disclosure key={faq.question} summary={`${String(index + 1).padStart(2, '0')}  ${faq.question}`}>
+                <p>{faq.answer}</p>
+              </Disclosure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="experience-final" aria-labelledby="final-title">
+        <div className="experience-shell">
+          <div className="experience-final-card">
+            <div>
+              <p className="experience-section-kicker">{t('experience.finalEyebrow')}</p>
+              <h2 id="final-title">{t('site.ctaTitle')}</h2>
+              <p>{t('site.ctaLead')}</p>
+            </div>
+            <div className="experience-final-actions">
+              <Link href={`/${seg}/verify`} className="experience-btn experience-btn-dark">
+                <span>{t('scanner.checkNow')}</span>
+                <Icon name="arrow" size={20} />
+              </Link>
+              <Link href={`/${seg}/help`} className="experience-btn experience-btn-outline-dark">
+                <Icon name="phone" size={20} />
+                <span>{t('common.help')}</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
