@@ -4,6 +4,7 @@ import { Icon, LogoMark, type IconName } from '@probash/web-ui';
 import type { ChatGPTUser } from '@/app/chatgpt-auth';
 import type { OperationalProfile } from '@/db/operations';
 import { localeSegment, translator, type Locale } from '@/lib/i18n';
+import { DismissibleDetails } from './DismissibleDetails';
 
 type WorkspaceDestination = 'dashboard' | 'account';
 
@@ -164,7 +165,6 @@ export function JourneyWorkspaceShell({
     },
   ];
   const pathLabel = t(path === 'work' ? 'account.workTalent' : 'account.studyTalent');
-  const activeLabel = t(active === 'account' ? 'account.myAccount' : 'nav.dashboard');
   const alternateLocale = seg === 'bn' ? 'en' : 'bn';
   const progressStyle = {
     '--journey-rail-progress': `${boundedProgress}%`,
@@ -219,24 +219,62 @@ export function JourneyWorkspaceShell({
     <div className={`journey-workspace-shell wide-page journey-rail-${path}`}>
       <header className="journey-workspace-toolbar">
         <div className="journey-toolbar-brand">{workspaceHead}</div>
-        <div className="journey-toolbar-context">
+        <Link href={`/${seg}`} className="journey-toolbar-context journey-toolbar-home">
           <span aria-hidden="true">
-            <Icon name={active === 'account' ? 'shield' : 'route'} size={18} />
+            <Icon name="globe" size={18} />
           </span>
           <span>
-            <small>{pathLabel}</small>
-            <strong>{activeLabel}</strong>
+            <strong>{t('workspaceNav.publicSite')}</strong>
           </span>
-        </div>
+        </Link>
         <nav className="journey-toolbar-actions" aria-label={t('workspaceNav.toolbarLabel')}>
-          <Link href={`/${seg}`} className="journey-toolbar-link">
-            <Icon name="globe" size={18} />
-            <span>{t('workspaceNav.publicSite')}</span>
-          </Link>
-          <Link href={`/${seg}/help`} className="journey-toolbar-link">
-            <Icon name="phone" size={18} />
-            <span>{t('common.help')}</span>
-          </Link>
+          <span className="journey-toolbar-vacancy" aria-hidden="true" />
+          <DismissibleDetails className="journey-toolbar-help">
+            <summary className="journey-toolbar-link">
+              <Icon name="phone" size={18} />
+              <span>{t('common.help')}</span>
+              <span className="journey-help-chevron" aria-hidden="true" />
+            </summary>
+            <div className="journey-help-menu" data-dismiss-details>
+              <header>
+                <small>{t('workspaceNav.support')}</small>
+                <strong>{t('workspaceNav.chooseContact')}</strong>
+              </header>
+              <Link href={`/${seg}/help?channel=ai#support-form`} className="journey-help-option">
+                <span>
+                  <Icon name="chat" size={19} />
+                </span>
+                <span>
+                  <strong>{t('workspaceNav.aiChat')}</strong>
+                  <small>{t('workspaceNav.aiChatHelp')}</small>
+                </span>
+                <b aria-hidden="true">→</b>
+              </Link>
+              <Link
+                href={`/${seg}/help?channel=whatsapp#support-form`}
+                className="journey-help-option whatsapp"
+              >
+                <span>
+                  <Icon name="phone" size={19} />
+                </span>
+                <span>
+                  <strong>{t('workspaceNav.whatsapp')}</strong>
+                  <small>{t('workspaceNav.whatsappHelp')}</small>
+                </span>
+                <b aria-hidden="true">→</b>
+              </Link>
+              <Link href={`/${seg}/help#support-form`} className="journey-help-option">
+                <span>
+                  <Icon name="document" size={19} />
+                </span>
+                <span>
+                  <strong>{t('workspaceNav.contactForm')}</strong>
+                  <small>{t('workspaceNav.contactFormHelp')}</small>
+                </span>
+                <b aria-hidden="true">→</b>
+              </Link>
+            </div>
+          </DismissibleDetails>
           <Link
             href={`/${alternateLocale}/${active}`}
             className="journey-toolbar-language"

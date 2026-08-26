@@ -20,6 +20,7 @@ export type IconName =
   | 'check'
   | 'listen'
   | 'search'
+  | 'chat'
   | 'menu'
   | 'shield';
 
@@ -42,6 +43,7 @@ const PATHS: Record<IconName, string> = {
   check: 'M5 12.5l4.5 4.5L19 7',
   listen: 'M4 9.5h3.5L12 5.5v13L7.5 14.5H4v-5zm11.5-1a5 5 0 010 7m3-10a9 9 0 010 13',
   search: 'M10.5 17a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm4.8-1.7L20 20',
+  chat: 'M4 5.5h16v11H9l-5 3v-14zm4 4h8M8 13h5',
   menu: 'M4 7h16M4 12h16M4 17h16',
   shield: 'M12 3l7.5 3v5.2c0 4.3-3 8.3-7.5 9.8-4.5-1.5-7.5-5.5-7.5-9.8V6L12 3z',
 };

@@ -7437,6 +7437,11 @@ main > .journey-workspace-shell {
   padding-inline: clamp(16px, 2vw, 32px);
 }
 
+.journey-toolbar-home:hover {
+  color: var(--journey-rail-accent);
+  background: color-mix(in srgb, var(--journey-rail-soft) 52%, transparent);
+}
+
 .journey-toolbar-context > span:first-child {
   width: 34px;
   height: 34px;
@@ -7475,6 +7480,125 @@ main > .journey-workspace-shell {
   align-items: center;
   gap: 4px;
   padding-inline: 8px 12px;
+}
+
+.journey-toolbar-vacancy {
+  width: 108px;
+  flex: 0 0 108px;
+}
+
+.journey-toolbar-help {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.journey-toolbar-help > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.journey-toolbar-help > summary::-webkit-details-marker {
+  display: none;
+}
+
+.journey-help-chevron {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  margin: 0 2px 0 1px;
+  border-inline-end: 1.4px solid currentColor;
+  border-block-end: 1.4px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.journey-toolbar-help[open] .journey-help-chevron {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.journey-help-menu {
+  position: absolute;
+  inset: calc(100% + 9px) 0 auto auto;
+  z-index: 45;
+  width: min(320px, calc(100vw - 24px));
+  padding: 9px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 22px 58px rgb(11 31 24 / 16%);
+}
+
+.journey-help-menu > header {
+  display: grid;
+  gap: 2px;
+  padding: 8px 9px 11px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.journey-help-menu > header small {
+  color: var(--journey-rail-accent);
+  font-size: 0.64rem;
+  font-weight: 720;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.journey-help-menu > header strong {
+  font-size: 0.9rem;
+}
+
+.journey-help-option {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 9px;
+  margin-top: 4px;
+  border-radius: 6px;
+}
+
+.journey-help-option:hover {
+  background: var(--journey-rail-soft);
+}
+
+.journey-help-option > span:first-child {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--journey-rail-accent);
+  background: var(--journey-rail-soft);
+}
+
+.journey-help-option.whatsapp > span:first-child {
+  color: #0d7d42;
+  background: #e4f6e9;
+}
+
+.journey-help-option > span:nth-child(2) {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.journey-help-option strong {
+  font-size: 0.78rem;
+}
+
+.journey-help-option small {
+  color: var(--color-text-secondary);
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+.journey-help-option b {
+  color: var(--journey-rail-accent);
+}
+
+.support-form-anchor {
+  scroll-margin-top: 24px;
 }
 
 .journey-toolbar-link,
@@ -7732,6 +7856,10 @@ main > .journey-workspace-shell {
     display: none;
   }
 
+  .journey-toolbar-vacancy {
+    display: none;
+  }
+
   .journey-workspace-sidebar {
     display: none;
   }
@@ -7752,7 +7880,7 @@ main > .journey-workspace-shell {
 }
 
 @media (max-width: 720px) {
-  .journey-toolbar-link span,
+  .journey-toolbar-help > summary > span:not(.journey-help-chevron),
   .journey-toolbar-language span,
   .journey-toolbar-account > span:last-child {
     position: absolute;
@@ -7764,6 +7892,7 @@ main > .journey-workspace-shell {
   }
 
   .journey-toolbar-link,
+  .journey-toolbar-help > summary,
   .journey-toolbar-language {
     width: 38px;
     justify-content: center;
@@ -7783,7 +7912,6 @@ main > .journey-workspace-shell {
 
 @media (max-width: 520px) {
   .journey-toolbar-brand .journey-rail-head > span:last-child,
-  .journey-toolbar-link:first-child,
   .journey-toolbar-language {
     display: none;
   }
@@ -7794,6 +7922,12 @@ main > .journey-workspace-shell {
 
   .journey-toolbar-actions {
     justify-content: flex-end;
+  }
+
+  .journey-help-menu {
+    position: fixed;
+    inset: 62px 8px auto;
+    width: auto;
   }
 
   .journey-workspace-content > .account-page,

@@ -720,7 +720,7 @@
   "workspaceNav": {
     "navigation": "Talent workspace navigation",
     "openNavigation": "Open workspace menu",
-    "privateWorkspace": "Private journey OS",
+    "privateWorkspace": "Private journey",
     "talentWorkspace": "Talent workspace",
     "journey": "Journey",
     "chapters": "Journey chapters",
@@ -734,6 +734,13 @@
     "support": "Support",
     "toolbarLabel": "Workspace tools",
     "publicSite": "Public website",
+    "chooseContact": "Choose how you want help",
+    "aiChat": "AI chat",
+    "aiChatHelp": "Start with a guided question",
+    "whatsapp": "WhatsApp",
+    "whatsappHelp": "Continue through messaging support",
+    "contactForm": "Contact form",
+    "contactFormHelp": "Send a detailed support request",
     "progress": "Journey progress",
     "progressHelp": "Each completed proof moves your journey forward."
   },
@@ -855,7 +862,7 @@
     }
   },
   "talentOs": {
-    "eyebrow": "Bangladesh's Human Talent Journey OS",
+    "eyebrow": "Bangladesh's Human Talent Journey",
     "title": "One profile. One clear journey. Every proof connected.",
     "lead": "ProbasJatra turns foreign work or higher study from scattered advice into an accountable personal journey—with the next action, cost, deadline, and evidence in one place.",
     "cta": "Create my talent profile",
@@ -994,9 +1001,9 @@
     "dashboardLead": "Move from match to verification, cost, preparation, tracking and evidence without losing the full picture.",
     "signedOutTitle": "Start with a private readiness plan",
     "signedOutBody": "Sign in to save your Migration Passport, applications, documents, costs and every next step in one protected workspace.",
-    "workJourney": "Work Abroad OS",
+    "workJourney": "Work Abroad Journey",
     "workJourneyBody": "Occupation and route match, verified jobs, costs, contract checks, visa case, departure, arrival and worker outcomes.",
-    "studyJourney": "Higher Study OS",
+    "studyJourney": "Higher Study Journey",
     "studyJourneyBody": "Programme fit, institution trust, funding, application materials, student visa, arrival and post-study Work handoff.",
     "applications": "Applications",
     "activeCases": "Active cases",

@@ -39,7 +39,9 @@ export default async function HelpPage({ params }: { params: Promise<{ locale: s
         <p>{t('payment.neverPayCash')}</p>
         <p>{t('legal.noVisaGuarantee')}</p>
       </section>
-      <SupportTicketForm locale={locale} localeSegment={seg} journeys={journeys} />
+      <section id="support-form" className="support-form-anchor">
+        <SupportTicketForm locale={locale} localeSegment={seg} journeys={journeys} />
+      </section>
       {workspace ? (
         <section className="card stack" aria-labelledby="support-history-heading">
           <h2 id="support-history-heading" className="card-title">
