@@ -130,9 +130,9 @@ export function JourneyWorkspaceShell({
               label: t('workspaceNav.programmes'),
             },
         {
-          href: path === 'work' ? `/${seg}/occupations` : `/${seg}/study`,
+          href: path === 'work' ? `/${seg}/occupations` : `/${seg}/scholarships`,
           icon: path === 'work' ? 'work' : 'money',
-          label: t(path === 'work' ? 'guide.browseOccupations' : 'workspaceNav.funding'),
+          label: t(path === 'work' ? 'guide.browseOccupations' : 'scholarships.nav'),
         },
       ],
     },

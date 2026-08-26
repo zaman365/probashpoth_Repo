@@ -146,6 +146,13 @@ export default async function ProgramPage({
         </div>
         <div className="hub-actions">
           <ButtonLink href={`/${seg}/passport`}>{t('passport.startPassport')}</ButtonLink>
+          <ButtonLink
+            href={`/${seg}/scholarships?country=${institution.countryCode}`}
+            variant="secondary"
+            icon={<Icon name="money" size={18} />}
+          >
+            {t('scholarships.heroCta')}
+          </ButtonLink>
           <form action={createOperationalJourneyAction}>
             <input type="hidden" name="locale" value={seg} />
             <input type="hidden" name="path" value="study" />

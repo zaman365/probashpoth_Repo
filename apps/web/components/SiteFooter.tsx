@@ -16,6 +16,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         { href: `/${seg}/passport`, label: t('passport.title') },
         { href: `/${seg}/work`, label: t('intent.work') },
         { href: `/${seg}/study`, label: t('intent.study') },
+        { href: `/${seg}/scholarships`, label: t('scholarships.nav') },
         { href: `/${seg}/jobs`, label: t('home.findWork') },
         { href: `/${seg}/verify`, label: t('home.verifyOffer') },
         { href: `/${seg}/cases`, label: t('home.myApplications') },

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { apiRequest } from '@/lib/api';
 import { siteUrl } from '@/lib/seo';
+import { SCHOLARSHIPS } from '@/lib/scholarships';
 import type { CountrySummaryDto, OccupationSummaryDto } from '@probash/contracts';
 
 export const dynamic = 'force-dynamic';
@@ -17,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/jobs',
     '/work',
     '/study',
+    '/scholarships',
     '/passport',
     '/dashboard',
     '/documents',
@@ -61,6 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...countries.map((country) => `/countries/${country.code.toLowerCase()}`),
     ...occupations.map((occupation) => `/occupations/${occupation.key}`),
     ...courses.map((course) => `/programs/${course.id}`),
+    ...SCHOLARSHIPS.map((scholarship) => `/scholarships/${scholarship.id}`),
   ];
 
   return paths.map((path) => ({

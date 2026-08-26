@@ -151,6 +151,15 @@ export default async function CountryGuide({
         >
           {t('guide.verifyForCountry')}
         </ButtonLink>
+        {vaultPath === 'study' ? (
+          <ButtonLink
+            href={`/${seg}/scholarships?country=${upper}`}
+            variant="secondary"
+            icon={<Icon name="study" size={18} />}
+          >
+            {t('scholarships.nav')}
+          </ButtonLink>
+        ) : null}
         <ButtonLink href={`/${seg}/help`} variant="ghost" icon={<Icon name="phone" size={18} />}>
           {t('common.help')}
         </ButtonLink>

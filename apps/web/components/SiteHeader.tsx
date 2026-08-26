@@ -93,6 +93,7 @@ export function SiteHeader({
             <Link href={`/${seg}/work`}>{t('intent.work')}</Link>
             <Link href={`/${seg}/jobs`}>{t('home.findWork')}</Link>
             <Link href={`/${seg}/study`}>{t('home.findStudy')}</Link>
+            <Link href={`/${seg}/scholarships`}>{t('scholarships.nav')}</Link>
             <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>
             <Link href={`/${seg}/services`}>{t('nav.services')}</Link>
             <Link href={`/${seg}/outcomes`}>{t('outcomeIntelligence.title')}</Link>

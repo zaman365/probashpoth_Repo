@@ -118,6 +118,14 @@ export default async function AccountPage({
             <strong>{workspace.documents.length}</strong>
             <Link href={`/${seg}/documents`}>{t('workspace.openDocuments')} →</Link>
           </article>
+          {path === 'study' ? (
+            <article className="account-scholarship-card">
+              <small>{t('scholarships.eyebrow')}</small>
+              <strong>{t('scholarships.accountTitle')}</strong>
+              <span>{t('scholarships.accountBody')}</span>
+              <Link href={`/${seg}/scholarships`}>{t('scholarships.heroCta')} →</Link>
+            </article>
+          ) : null}
         </div>
 
         <div className="account-settings-grid">

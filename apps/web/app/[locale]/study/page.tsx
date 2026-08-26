@@ -6,6 +6,8 @@ import { apiRequest } from '@/lib/api';
 import { money } from '@/lib/format';
 import { localeSegment, parseLocaleParam, pick, translator } from '@/lib/i18n';
 import { canonicalMetadata } from '@/lib/seo';
+import { ScholarshipCard } from '@/components/ScholarshipCard';
+import { SCHOLARSHIPS } from '@/lib/scholarships';
 
 export const dynamic = 'force-dynamic';
 
@@ -104,6 +106,14 @@ export default async function StudyHub({ params }: { params: Promise<{ locale: s
           <ButtonLink href={`/${seg}/countries`} size="lg" icon={<Icon name="globe" size={20} />}>
             {t('guide.browseCountries')}
           </ButtonLink>
+          <ButtonLink
+            href={`/${seg}/scholarships`}
+            size="lg"
+            variant="secondary"
+            icon={<Icon name="money" size={20} />}
+          >
+            {t('scholarships.heroCta')}
+          </ButtonLink>
           <ButtonLink href={`/${seg}/verify`} size="lg" variant="outline">
             {t('home.verifyOffer')}
           </ButtonLink>
@@ -135,6 +145,35 @@ export default async function StudyHub({ params }: { params: Promise<{ locale: s
           ))}
         </Grid>
       </Section>
+
+      <section
+        className="study-scholarship-section"
+        id="study-scholarships"
+        aria-labelledby="study-scholarships-title"
+      >
+        <header>
+          <div>
+            <p className="scholarship-kicker">{t('scholarships.studySectionEyebrow')}</p>
+            <h2 id="study-scholarships-title">{t('scholarships.studySectionTitle')}</h2>
+          </div>
+          <div>
+            <p>{t('scholarships.studySectionLead')}</p>
+            <ButtonLink href={`/${seg}/scholarships`} icon={<Icon name="arrow" size={18} />}>
+              {t('scholarships.heroCta')}
+            </ButtonLink>
+          </div>
+        </header>
+        <div className="scholarship-grid">
+          {SCHOLARSHIPS.slice(0, 3).map((scholarship) => (
+            <ScholarshipCard
+              key={scholarship.id}
+              locale={locale}
+              scholarship={scholarship}
+              compact
+            />
+          ))}
+        </div>
+      </section>
 
       <Section surface="muted" title={t('intent.routesFor')} lead={t('guide.sourceNote')}>
         {routes.length === 0 ? <p>{t('guide.noRoutes')}</p> : null}

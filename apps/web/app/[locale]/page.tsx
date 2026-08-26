@@ -14,6 +14,8 @@ import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata, siteUrl } from '@/lib/seo';
 import { IntentSwitch, parseIntent } from '@/components/IntentChooser';
 import { ListenButton } from '@/components/ListenButton';
+import { ScholarshipCard } from '@/components/ScholarshipCard';
+import { SCHOLARSHIPS } from '@/lib/scholarships';
 
 export const dynamic = 'force-dynamic';
 
@@ -298,6 +300,36 @@ export default async function Landing({
           </div>
         </div>
       </section>
+
+      {intent === 'study' ? (
+        <section className="experience-scholarship-story" aria-labelledby="home-scholarship-title">
+          <div className="experience-shell">
+            <header>
+              <div>
+                <p className="experience-section-kicker">{t('scholarships.homepageEyebrow')}</p>
+                <h2 id="home-scholarship-title">{t('scholarships.homepageTitle')}</h2>
+              </div>
+              <div>
+                <p>{t('scholarships.homepageLead')}</p>
+                <Link href={`/${seg}/scholarships`} className="experience-btn experience-btn-dark">
+                  <span>{t('scholarships.heroCta')}</span>
+                  <Icon name="arrow" size={19} />
+                </Link>
+              </div>
+            </header>
+            <div className="scholarship-grid">
+              {SCHOLARSHIPS.slice(0, 3).map((scholarship) => (
+                <ScholarshipCard
+                  key={scholarship.id}
+                  locale={locale}
+                  scholarship={scholarship}
+                  compact
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="experience-talent-os" aria-labelledby="talent-os-title">
         <div className="experience-shell">

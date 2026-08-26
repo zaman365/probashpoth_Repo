@@ -366,7 +366,7 @@ export default async function JourneyDashboard({
               <b>{t('common.continue')} →</b>
             </Link>
             <Link
-              href={path === 'work' ? `/${seg}/jobs` : `/${seg}/study#study-programmes`}
+              href={path === 'work' ? `/${seg}/jobs` : `/${seg}/scholarships`}
               className="journey-opportunity-card"
             >
               <span>
