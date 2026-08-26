@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost';
 export type ButtonSize = 'md' | 'lg';
 
 function buttonClass(variant: ButtonVariant, size: ButtonSize, full?: boolean): string {

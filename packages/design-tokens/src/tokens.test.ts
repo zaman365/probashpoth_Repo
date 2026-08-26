@@ -19,6 +19,20 @@ describe('accessibility of the palette', () => {
     expect(meetsContrast(semanticDark.textOnAccent, semanticDark.accent)).toBe(true);
   });
 
+  it('keeps the accent readable in every place it is actually used', () => {
+    // Buttons, link text, icons on the page ground, and icons on the accent tint.
+    expect(contrastRatio(semanticLight.textOnAccent, semanticLight.accent)).toBeGreaterThanOrEqual(
+      4.5,
+    );
+    expect(contrastRatio(semanticLight.accent, semanticLight.surface)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(semanticLight.accent, semanticLight.background)).toBeGreaterThanOrEqual(
+      4.5,
+    );
+    expect(contrastRatio(semanticLight.accent, semanticLight.surfaceAccent)).toBeGreaterThanOrEqual(
+      4.5,
+    );
+  });
+
   it('keeps hero text readable on the dark canvas — the reference design used a photo, we use a fixed ground', () => {
     expect(contrastRatio(semanticLight.textOnCanvas, semanticLight.canvas)).toBeGreaterThanOrEqual(
       7,

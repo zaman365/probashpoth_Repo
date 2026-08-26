@@ -13,7 +13,8 @@ test('the hero renders on the painted canvas with its controls', async ({ page }
   await expect(canvas.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(canvas.locator('.pui-chip-link')).toHaveCount(2);
   await expect(canvas.locator('.pui-feature-pill')).toHaveCount(3);
-  await expect(canvas.locator('.pui-glass')).toHaveCount(2);
+  await expect(canvas.locator('.pui-glass')).toHaveCount(1);
+  await expect(canvas.locator('.hero-warning')).toBeVisible();
 });
 
 test('hero controls keep the 48px tap target rule (§15)', async ({ page }) => {

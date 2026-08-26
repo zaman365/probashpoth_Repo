@@ -55,6 +55,13 @@ test('desktop shows the full navigation; small screens get a no-JS menu', async 
   await page.goto('/bn');
   await expect(page.locator('.site-nav-desktop')).toBeVisible();
   await expect(page.locator('.site-nav-mobile')).toBeHidden();
+  // Short labels in the bar; the descriptive ones live in the drawer and footer.
+  await expect(page.locator('.site-nav-desktop').getByRole('link', { name: 'দেশ' })).toBeVisible();
+  await expect(page.locator('.site-header-row')).toHaveCount(1);
+
+  // The bar must never wrap into a second row — that is what turned it into a lozenge.
+  const barHeight = (await page.locator('.site-header-row').boundingBox())?.height ?? 0;
+  expect(barHeight).toBeLessThan(88);
 
   await page.setViewportSize({ width: 380, height: 800 });
   await expect(page.locator('.site-nav-desktop')).toBeHidden();

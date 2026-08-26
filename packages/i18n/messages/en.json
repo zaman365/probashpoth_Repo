@@ -449,5 +449,12 @@
     "pill1": "Verified opportunities",
     "pill2": "Transparent costs",
     "pill3": "Milestone payments"
+  },
+  "nav": {
+    "countries": "Countries",
+    "occupations": "Occupations",
+    "work": "Work",
+    "study": "Study",
+    "safety": "Safety"
   }
 }

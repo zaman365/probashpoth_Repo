@@ -19,18 +19,22 @@ export const color = {
     800: '#2a302c',
     900: '#171a18',
   },
-  /** A single deep green accent: recognisably Bangladeshi without flag-waving. */
+  /**
+   * A single green accent: brighter and more saturated than a civic-service green, to
+   * match the reference theme, while keeping the deep end for the canvas and hovers.
+   * Contrast against white and against the canvas is asserted by tests.
+   */
   primary: {
-    50: '#e9f5ee',
-    100: '#c9e6d5',
-    200: '#9ed2b5',
-    300: '#6cb992',
-    400: '#3f9d72',
-    500: '#1f7a52',
-    600: '#166344',
-    700: '#124e36',
-    800: '#0d3a28',
-    900: '#08251a',
+    50: '#f0fdf4',
+    100: '#dcfce7',
+    200: '#bbf7d0',
+    300: '#86efac',
+    400: '#4ade80',
+    500: '#22c55e',
+    600: '#16a34a',
+    700: '#15803d',
+    800: '#166534',
+    900: '#0d3a28',
   },
   /** A warm sand tint used sparingly for marketing bands, never inside worker flows. */
   sand: {
@@ -65,14 +69,14 @@ export const semanticLight = {
   surface: color.neutral[0],
   surfaceMuted: color.neutral[100],
   surfaceWarm: color.sand[50],
-  surfaceAccent: color.primary[50],
+  surfaceAccent: color.primary[100],
   border: color.neutral[300],
   textPrimary: color.neutral[900],
   textSecondary: color.neutral[700],
   textOnAccent: color.neutral[0],
-  accent: color.primary[600],
-  accentHover: color.primary[700],
-  focusRing: color.primary[500],
+  accent: color.primary[700],
+  accentHover: color.primary[800],
+  focusRing: color.primary[600],
 } as const;
 
 export const semanticDark = {

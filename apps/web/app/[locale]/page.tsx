@@ -144,6 +144,8 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
               <Reveal index={2}>
                 <p className="hero-lead">{t('site.heroLead')}</p>
               </Reveal>
+
+              {/* One row of controls, weighted: act, browse, listen. */}
               <Reveal index={3}>
                 <div className="hero-actions">
                   <ChipLink href={`/${seg}/verify`} chip={<Icon name="arrow" size={18} />}>
@@ -158,7 +160,20 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
                   </ChipLink>
                 </div>
               </Reveal>
+
+              {/* A quieter utility row: the listen affordance and the reassurance. */}
               <Reveal index={4}>
+                <div className="hero-utility">
+                  <ListenButton
+                    text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
+                    label={t('common.listen')}
+                    lang={locale}
+                  />
+                  <p className="hero-note">{t('site.heroNote')}</p>
+                </div>
+              </Reveal>
+
+              <Reveal index={5}>
                 <ul className="hero-pills">
                   <FeaturePill icon={<Icon name="check" size={16} />}>
                     {t('site.pill1')}
@@ -170,16 +185,6 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
                     {t('site.pill3')}
                   </FeaturePill>
                 </ul>
-              </Reveal>
-              <Reveal index={5}>
-                <div className="hero-note-row">
-                  <p className="hero-note">{t('site.heroNote')}</p>
-                  <ListenButton
-                    text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
-                    label={t('common.listen')}
-                    lang={locale}
-                  />
-                </div>
               </Reveal>
             </div>
 
@@ -226,9 +231,10 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
                     <dd>{sources}</dd>
                   </div>
                 </dl>
-              </GlassCard>
-              <GlassCard>
-                <p className="hero-quote">{t('cost.payOnlyHere')}</p>
+                <p className="hero-warning">
+                  <Icon name="warning" size={18} />
+                  <span>{t('cost.payOnlyHere')}</span>
+                </p>
               </GlassCard>
             </Reveal>
           </div>

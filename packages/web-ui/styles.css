@@ -215,9 +215,21 @@
   border-color: #e79c96;
 }
 
+/* Outlined accent: used where an action must stand apart without shouting in red. */
+.pui-btn-outline {
+  background: var(--color-surface);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.pui-btn-outline:hover {
+  background: var(--color-surface-accent);
+}
+
 .pui-btn-ghost {
   background: transparent;
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
 }
 .pui-btn-ghost:hover {
   background: var(--color-surface-muted);

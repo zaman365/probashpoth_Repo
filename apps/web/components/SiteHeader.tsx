@@ -16,13 +16,17 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
   const seg = localeSegment(locale);
   const target = otherLocale(locale);
 
+  /*
+   * Short labels in the bar, full ones in the footer and on the pages themselves.
+   * Long labels overflowed the pill and were clipped — links that exist but cannot be
+   * seen or clicked are worse than links that are not there.
+   */
   const links = [
-    { href: `/${seg}/countries`, label: t('guide.browseCountries') },
-    { href: `/${seg}/occupations`, label: t('guide.browseOccupations') },
-    { href: `/${seg}/jobs`, label: t('home.findWork') },
-    { href: `/${seg}/study`, label: t('home.findStudy') },
-    { href: `/${seg}/safety`, label: t('guide.learnSafety') },
-    { href: `/${seg}/how-it-works`, label: t('site.howItWorksTitle') },
+    { href: `/${seg}/countries`, label: t('nav.countries') },
+    { href: `/${seg}/occupations`, label: t('nav.occupations') },
+    { href: `/${seg}/jobs`, label: t('nav.work') },
+    { href: `/${seg}/study`, label: t('nav.study') },
+    { href: `/${seg}/safety`, label: t('nav.safety') },
   ];
 
   return (
@@ -53,7 +57,7 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
                 {target === 'en' ? t('common.switchToEnglish') : t('common.switchToBangla')}
               </span>
             </Link>
-            <Link href={`/${seg}/help`} className="pui-btn pui-btn-danger pui-btn-md">
+            <Link href={`/${seg}/help`} className="pui-btn pui-btn-outline pui-btn-md">
               <Icon name="phone" size={20} />
               <span>{t('common.emergency')}</span>
             </Link>
@@ -66,11 +70,12 @@ export function SiteHeader({ locale, productName }: { locale: Locale; productNam
             <span>{t('common.menu')}</span>
           </summary>
           <nav aria-label={t('common.menu')}>
-            {links.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
+            <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
+            <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
+            <Link href={`/${seg}/jobs`}>{t('home.findWork')}</Link>
+            <Link href={`/${seg}/study`}>{t('home.findStudy')}</Link>
+            <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>
+            <Link href={`/${seg}/how-it-works`}>{t('site.howItWorksTitle')}</Link>
             <Link href={`/${seg}/cases`}>{t('home.myApplications')}</Link>
           </nav>
         </details>

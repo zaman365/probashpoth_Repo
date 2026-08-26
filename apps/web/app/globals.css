@@ -79,9 +79,12 @@ html[lang='en'] body {
     max-width: var(--size-max-site-width);
   }
 
-  /* The hero frame spans the viewport; it manages its own inset. */
+  /*
+   * The canvas shares the site measure so its edges line up with the header pill.
+   * A hero that is wider than the navigation above it reads as a mistake.
+   */
   main > .hero-frame {
-    max-width: none;
+    max-width: var(--size-max-site-width);
     padding-inline: var(--space-md);
   }
 
@@ -128,28 +131,42 @@ html[lang='en'] body {
   /* A floating pill bar, not a full-width band. */
   .site-header > .pui-container {
     display: grid;
+    /* `minmax(0, 1fr)`: a grid item defaults to min-width:auto and would otherwise
+       refuse to shrink below its content, pushing the bar past the viewport. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-sm);
   }
 
+  /*
+   * One row, always. A pill radius on a wrapping flex container turns into a lozenge
+   * the moment the nav needs a second line, so the bar never wraps: the brand and the
+   * actions hold their size and the link list is what gives way.
+   */
   .site-header-row {
-    border-radius: var(--radius-pill);
+    border-radius: 34px;
     background: var(--color-surface);
     box-shadow: var(--elevation-float);
     border: 1px solid var(--color-border);
     padding-inline: var(--space-md);
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-sm) var(--space-lg);
+    gap: var(--space-md);
     min-height: 64px;
-    padding-block: var(--space-sm);
+    padding-block: var(--space-xs);
+    min-width: 0;
   }
 
   @media (min-width: 760px) {
     .site-header-row {
       padding-inline: var(--space-lg);
     }
+  }
+
+  .site-brand,
+  .site-header-actions {
+    flex: 0 0 auto;
   }
 
   .site-nav-mobile,
@@ -174,21 +191,39 @@ html[lang='en'] body {
   .site-nav-desktop {
     display: none;
     align-items: center;
-    gap: var(--space-xs);
-    flex: 1;
+    justify-content: center;
+    gap: 2px;
+    /* Shrinkable: the links compress before the brand or the emergency action do. */
+    flex: 1 1 auto;
+    min-width: 0;
+    /* Scroll rather than clip: a hidden link is an invisible dead end. */
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-nav-desktop::-webkit-scrollbar {
+    display: none;
   }
 
   .site-nav-desktop a {
-    padding: 9px var(--space-md);
+    padding: 9px 12px;
     border-radius: var(--radius-pill);
     color: var(--color-text-secondary);
     font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-caption);
     white-space: nowrap;
   }
 
+  @media (min-width: 1200px) {
+    .site-nav-desktop a {
+      padding-inline: var(--space-md);
+      font-size: var(--font-size-body);
+    }
+  }
+
   .site-nav-desktop a:hover {
-    color: var(--color-text-primary);
-    background: var(--color-surface-muted);
+    color: var(--color-accent);
+    background: var(--color-surface-accent);
   }
 
   .site-header-actions {
@@ -466,6 +501,15 @@ html[lang='en'] body {
     display: grid;
     gap: var(--space-md);
     justify-items: start;
+    align-content: start;
+  }
+
+  /* The pill row closes the column, separated by a hairline rather than more gap. */
+  .hero-copy > *:last-child {
+    margin-block-start: var(--space-sm);
+    padding-block-start: var(--space-lg);
+    border-block-start: 1px solid rgba(242, 247, 244, 0.16);
+    width: 100%;
   }
 
   .hero-eyebrow {
@@ -518,7 +562,7 @@ html[lang='en'] body {
     list-style: none;
   }
 
-  .hero-note-row {
+  .hero-utility {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -529,12 +573,16 @@ html[lang='en'] body {
     font-size: var(--font-size-caption);
   }
 
-  /* The listen control has to stay legible on the dark canvas. */
-  .hero-note-row .btn-secondary,
-  .hero-note-row .btn {
-    background: rgba(242, 247, 244, 0.1);
+  /* The listen control is deliberately lighter than the two green CTAs above it. */
+  .hero-utility .btn {
+    border-radius: var(--radius-pill);
+    background: transparent;
     border-color: rgba(242, 247, 244, 0.35);
     color: var(--color-text-on-canvas);
+  }
+
+  .hero-utility .btn:hover {
+    background: rgba(242, 247, 244, 0.12);
   }
 
   .hero-side {
@@ -610,8 +658,20 @@ html[lang='en'] body {
     font-weight: var(--font-weight-bold);
   }
 
-  .hero-quote {
+  /* The money warning belongs to the verification card, not beside it. */
+  .hero-warning {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-md);
+    padding-block-start: var(--space-md);
+    border-block-start: 1px solid rgba(242, 247, 244, 0.18);
     font-weight: var(--font-weight-semibold);
+  }
+
+  .hero-warning .pui-icon {
+    color: #e6bd77;
+    flex: none;
   }
 
   .closing-frame {
