@@ -1138,13 +1138,16 @@ html[lang='en'] body {
   }
 
   main:has(> .experience-home) {
-    margin-block-start: -12px;
+    /* Pull the hero behind the transparent site chrome so its painted background
+       reaches the very top of the viewport and becomes the navbar's backdrop. */
+    --experience-header-overlap: 150px;
+    margin-block-start: calc(var(--experience-header-overlap) * -1);
     padding-block: 0;
   }
 
   @media (min-width: 1024px) {
     main:has(> .experience-home) {
-      margin-block-start: -36px;
+      --experience-header-overlap: 90px;
     }
   }
 
@@ -1429,7 +1432,7 @@ html[lang='en'] body {
 
   /* Hero */
   .experience-hero {
-    min-height: calc(100svh - 90px);
+    min-height: 100svh;
     padding: 0;
   }
 
@@ -1442,7 +1445,7 @@ html[lang='en'] body {
   .experience-hero-frame {
     display: flex;
     flex-direction: column;
-    min-height: calc(100svh - 90px);
+    min-height: 100svh;
     overflow: hidden;
     border-radius: 0;
     box-shadow: none;
@@ -1472,6 +1475,7 @@ html[lang='en'] body {
     width: 100%;
     min-height: 100%;
     padding-inline: clamp(var(--space-lg), 6vw, 96px);
+    padding-block-start: var(--experience-header-overlap);
     padding-block-end: clamp(96px, 12vh, 118px);
   }
 
@@ -2623,7 +2627,7 @@ html[lang='en'] body {
     }
 
     .experience-hero {
-      min-height: calc(100svh - 86px);
+      min-height: 100svh;
       padding: 0;
     }
 
@@ -2632,7 +2636,7 @@ html[lang='en'] body {
     }
 
     .experience-hero-frame {
-      min-height: calc(100svh - 86px);
+      min-height: 100svh;
     }
 
     .experience-canvas .pui-canvas-inner {
