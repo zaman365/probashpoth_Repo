@@ -35,16 +35,81 @@ export function SiteHeader({
    * seen or clicked are worse than links that are not there.
    */
   const links = [
-    { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
+    { href: `/${seg}/work`, label: t('nav.work') },
+    { href: `/${seg}/study`, label: t('nav.study') },
+    { href: `/${seg}/countries`, label: t('nav.countries') },
+    { href: `/${seg}/occupations`, label: t('nav.occupations') },
+    { href: `/${seg}/safety`, label: t('nav.safety') },
     {
       href: `/${seg}/verify`,
       label: t('home.verifyOffer'),
       icon: 'verify' as const,
     },
-    { href: `/${seg}/work`, label: t('nav.work') },
-    { href: `/${seg}/study`, label: t('nav.study') },
-    { href: `/${seg}/countries`, label: t('nav.countries') },
-    { href: `/${seg}/trust`, label: t('unified.trustCenter') },
+  ];
+
+  const mobileGroups = [
+    {
+      title: t('site.footerProduct'),
+      links: [
+        { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
+        { href: `/${seg}/work`, label: t('intent.work') },
+        { href: `/${seg}/study`, label: t('intent.study') },
+        { href: `/${seg}/jobs`, label: t('home.findWork') },
+        { href: `/${seg}/scholarships`, label: t('scholarships.nav') },
+        { href: `/${seg}/verify`, label: t('home.verifyOffer') },
+      ],
+    },
+    {
+      title: t('site.footerGuides'),
+      links: [
+        { href: `/${seg}/countries`, label: t('guide.browseCountries') },
+        { href: `/${seg}/occupations`, label: t('guide.browseOccupations') },
+        { href: `/${seg}/safety`, label: t('guide.learnSafety') },
+        { href: `/${seg}/explore`, label: t('home.howMuchCost') },
+        { href: `/${seg}/services`, label: t('nav.services') },
+        { href: `/${seg}/outcomes`, label: t('outcomeIntelligence.title') },
+      ],
+    },
+    {
+      title: t('unified.mobilityServices'),
+      links: [
+        { href: `/${seg}/visa`, label: t('unified.visa') },
+        { href: `/${seg}/departure`, label: t('unified.departure') },
+        { href: `/${seg}/arrival`, label: t('unified.arrival') },
+        { href: `/${seg}/intelligence`, label: t('unified.intelligence') },
+        { href: `/${seg}/learn`, label: t('unified.learn') },
+        { href: `/${seg}/advisors`, label: t('unified.advisors') },
+        { href: `/${seg}/events`, label: t('unified.events') },
+        { href: `/${seg}/community`, label: t('unified.community') },
+        { href: `/${seg}/return`, label: t('unified.return') },
+        { href: `/${seg}/mobility-services`, label: t('unified.mobilityServices') },
+      ],
+    },
+    {
+      title: t('unified.trustCenter'),
+      links: [
+        { href: `/${seg}/trust`, label: t('unified.trustCenter') },
+        { href: `/${seg}/official-actions`, label: t('unified.officialActions') },
+      ],
+    },
+    {
+      title: t('site.footerOrganizations'),
+      links: [
+        { href: `/${seg}/for-employers`, label: t('site.orgEmployers') },
+        { href: `/${seg}/for-agencies`, label: t('site.orgAgencies') },
+        { href: `/${seg}/for-government`, label: t('site.orgGovernment') },
+        { href: `/${seg}/partners`, label: t('supply.title') },
+      ],
+    },
+    {
+      title: t('site.footerAbout'),
+      links: [
+        { href: `/${seg}/about`, label: t('site.aboutTitle') },
+        { href: `/${seg}/how-it-works`, label: t('site.howItWorksTitle') },
+        { href: `/${seg}/faq`, label: t('site.faqPageTitle') },
+        { href: `/${seg}/help`, label: t('common.help') },
+      ],
+    },
   ];
 
   return (
@@ -69,61 +134,51 @@ export function SiteHeader({
           </nav>
 
           <div className="site-header-actions">
+            <Link href={`/${seg}/quick-check`} className="site-header-quickcheck">
+              <Icon name="search" size={18} />
+              <span>{t('unified.quickCheck')}</span>
+            </Link>
             <Link
               href={`/${localeSegment(target)}`}
-              className="pui-btn pui-btn-ghost pui-btn-md"
+              className="site-language-switch"
               hrefLang={localeSegment(target)}
             >
-              <Icon name="globe" size={20} />
+              <Icon name="globe" size={18} />
               <span>
                 {target === 'en' ? t('common.switchToEnglish') : t('common.switchToBangla')}
               </span>
             </Link>
             <AccountControl locale={locale} user={user} profile={profile} />
+
+            <details className="site-nav-mobile">
+              <summary aria-label={t('common.menu')}>
+                <Icon name="menu" size={22} />
+                <span>{t('common.menu')}</span>
+              </summary>
+              <div className="site-nav-mobile-panel">
+                <div className="site-nav-mobile-intro">
+                  <strong>{productName}</strong>
+                  <span>{t('site.tagline')}</span>
+                </div>
+                <nav aria-label={t('common.menu')}>
+                  {mobileGroups.map((group) => (
+                    <section key={group.title}>
+                      <h2>{group.title}</h2>
+                      <div>
+                        {group.links.map((link) => (
+                          <Link key={link.href} href={link.href}>
+                            {link.label}
+                            <Icon name="arrow" size={16} />
+                          </Link>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </nav>
+              </div>
+            </details>
           </div>
         </div>
-
-        <details className="site-nav-mobile">
-          <summary>
-            <Icon name="menu" size={22} />
-            <span>{t('common.menu')}</span>
-          </summary>
-          <nav aria-label={t('common.menu')}>
-            <Link href={`/${seg}/passport`}>{t('passport.title')}</Link>
-            <Link href={`/${seg}/quick-check`}>{t('unified.quickCheck')}</Link>
-            <Link href={`/${seg}/trust`}>{t('unified.trustCenter')}</Link>
-            <Link href={`/${seg}/official-actions`}>{t('unified.officialActions')}</Link>
-            <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
-            <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
-            <Link href={`/${seg}/work`}>{t('intent.work')}</Link>
-            <Link href={`/${seg}/jobs`}>{t('home.findWork')}</Link>
-            <Link href={`/${seg}/study`}>{t('home.findStudy')}</Link>
-            <Link href={`/${seg}/scholarships`}>{t('scholarships.nav')}</Link>
-            <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>
-            <Link href={`/${seg}/services`}>{t('nav.services')}</Link>
-            <Link href={`/${seg}/outcomes`}>{t('outcomeIntelligence.title')}</Link>
-            <Link href={`/${seg}/visa`}>{t('unified.visa')}</Link>
-            <Link href={`/${seg}/departure`}>{t('unified.departure')}</Link>
-            <Link href={`/${seg}/arrival`}>{t('unified.arrival')}</Link>
-            <Link href={`/${seg}/intelligence`}>{t('unified.intelligence')}</Link>
-            <Link href={`/${seg}/learn`}>{t('unified.learn')}</Link>
-            <Link href={`/${seg}/advisors`}>{t('unified.advisors')}</Link>
-            <Link href={`/${seg}/events`}>{t('unified.events')}</Link>
-            <Link href={`/${seg}/community`}>{t('unified.community')}</Link>
-            <Link href={`/${seg}/return`}>{t('unified.return')}</Link>
-            <Link href={`/${seg}/mobility-services`}>{t('unified.mobilityServices')}</Link>
-            <Link href={`/${seg}/partners`}>{t('supply.title')}</Link>
-            <Link href={`/${seg}/how-it-works`}>{t('site.howItWorksTitle')}</Link>
-            <Link href={`/${seg}/cases`}>{t('home.myApplications')}</Link>
-            <Link href={`/${seg}/documents`}>{t('workspace.documents')}</Link>
-            <Link href={`/${seg}/materials`}>{t('materials.title')}</Link>
-            <Link href={`/${seg}/money`}>{t('workspace.money')}</Link>
-            <Link href={`/${seg}/family`}>{t('workspace.family')}</Link>
-            <Link href={`/${seg}/alerts`}>{t('operations.alertsTitle')}</Link>
-            <Link href={`/${seg}/verify`}>{t('workspace.review')}</Link>
-            <Link href={`/${seg}/help`}>{t('common.help')}</Link>
-          </nav>
-        </details>
 
         <OfflineBanner label={t('common.offline')} />
       </Container>

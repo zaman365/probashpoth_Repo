@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import '../globals.css';
+import '@/app/redesign.css';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
@@ -101,7 +102,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={seg} dir="ltr">
-      <body>
+      <body className="site-root">
         <a href="#main" className="skip-link">
           {t('common.next')}
         </a>

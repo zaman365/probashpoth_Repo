@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import type { Locale } from '@probash/domain';
-import { Container } from '@probash/web-ui';
+import { Container, Icon, LogoMark } from '@probash/web-ui';
 import { localeSegment, translator } from '@/lib/i18n';
 
-/** The footer doubles as the site map: every public page is reachable from here. */
+/** A curated public site map; the complete route directory lives in the mobile menu. */
 export function SiteFooter({ locale, productName }: { locale: Locale; productName: string }) {
   const t = translator(locale);
   const seg = localeSegment(locale);
@@ -13,22 +13,11 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
       title: t('site.footerProduct'),
       links: [
         { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
-        { href: `/${seg}/trust`, label: t('unified.trustCenter') },
-        { href: `/${seg}/official-actions`, label: t('unified.officialActions') },
-        { href: `/${seg}/dashboard`, label: t('nav.dashboard') },
-        { href: `/${seg}/passport`, label: t('passport.title') },
         { href: `/${seg}/work`, label: t('intent.work') },
         { href: `/${seg}/study`, label: t('intent.study') },
-        { href: `/${seg}/scholarships`, label: t('scholarships.nav') },
         { href: `/${seg}/jobs`, label: t('home.findWork') },
+        { href: `/${seg}/scholarships`, label: t('scholarships.nav') },
         { href: `/${seg}/verify`, label: t('home.verifyOffer') },
-        { href: `/${seg}/cases`, label: t('home.myApplications') },
-        { href: `/${seg}/documents`, label: t('workspace.documents') },
-        { href: `/${seg}/materials`, label: t('materials.title') },
-        { href: `/${seg}/money`, label: t('workspace.money') },
-        { href: `/${seg}/family`, label: t('workspace.family') },
-        { href: `/${seg}/alerts`, label: t('operations.alertsTitle') },
-        { href: `/${seg}/prepare`, label: t('home.howToPrepare') },
       ],
     },
     {
@@ -40,16 +29,7 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         { href: `/${seg}/explore`, label: t('home.howMuchCost') },
         { href: `/${seg}/services`, label: t('nav.services') },
         { href: `/${seg}/outcomes`, label: t('outcomeIntelligence.title') },
-        { href: `/${seg}/visa`, label: t('unified.visa') },
-        { href: `/${seg}/departure`, label: t('unified.departure') },
-        { href: `/${seg}/arrival`, label: t('unified.arrival') },
-        { href: `/${seg}/intelligence`, label: t('unified.intelligence') },
-        { href: `/${seg}/learn`, label: t('unified.learn') },
-        { href: `/${seg}/advisors`, label: t('unified.advisors') },
-        { href: `/${seg}/events`, label: t('unified.events') },
-        { href: `/${seg}/community`, label: t('unified.community') },
-        { href: `/${seg}/return`, label: t('unified.return') },
-        { href: `/${seg}/mobility-services`, label: t('unified.mobilityServices') },
+        { href: `/${seg}/trust`, label: t('unified.trustCenter') },
       ],
     },
     {
@@ -76,6 +56,21 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
   return (
     <footer className="site-footer no-print">
       <Container width="site">
+        <div className="site-footer-intro">
+          <div className="site-footer-brand">
+            <LogoMark size={46} />
+            <span>
+              <strong>{productName}</strong>
+              <small>{t('site.tagline')}</small>
+            </span>
+          </div>
+          <p>{t('site.footerLegalNote')}</p>
+          <Link href={`/${seg}/quick-check`} className="site-footer-cta">
+            {t('unified.quickCheck')}
+            <Icon name="arrow" size={18} />
+          </Link>
+        </div>
+
         <div className="site-footer-columns">
           {columns.map((column) => (
             <nav key={column.title} aria-label={column.title}>
@@ -95,7 +90,6 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
           <p>
             <strong>{productName}</strong> — {t('site.tagline')}
           </p>
-          <p>{t('site.footerLegalNote')}</p>
           <p>{t('legal.notGovernment')}</p>
           <p>{t('legal.dataUse')}</p>
           <p className="pui-badge pui-badge-warning">{t('common.demoDataWarning')}</p>
