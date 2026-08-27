@@ -1,5 +1,6 @@
 import type { LocalizedText } from './localized';
 import type { SourceRef } from './sources';
+import type { BangladeshAccessibility, CoverageMaturity } from './unified-mobility';
 
 /** §9 — a route is a specific legal pathway, not a destination. */
 export type RoutePurpose = 'work' | 'study' | 'training' | 'business' | 'family' | 'other';
@@ -94,6 +95,12 @@ export interface MobilityRouteVersion {
   lastReviewedAt?: string;
   /** Development seed data. Never served outside development (§64). */
   isSyntheticDemoData?: boolean;
+  /** Additive unified-guide coverage metadata. Absence is treated as RESEARCH_ONLY. */
+  coverageMaturity?: CoverageMaturity;
+  nationalityScope?: string[];
+  bangladeshAccessibility?: BangladeshAccessibility;
+  officialActionIds?: string[];
+  coverageOwner?: string;
 }
 
 /** Routes that must never be presented as "apply now". */

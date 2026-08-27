@@ -12,6 +12,9 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
     {
       title: t('site.footerProduct'),
       links: [
+        { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
+        { href: `/${seg}/trust`, label: t('unified.trustCenter') },
+        { href: `/${seg}/official-actions`, label: t('unified.officialActions') },
         { href: `/${seg}/dashboard`, label: t('nav.dashboard') },
         { href: `/${seg}/passport`, label: t('passport.title') },
         { href: `/${seg}/work`, label: t('intent.work') },
@@ -37,6 +40,16 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         { href: `/${seg}/explore`, label: t('home.howMuchCost') },
         { href: `/${seg}/services`, label: t('nav.services') },
         { href: `/${seg}/outcomes`, label: t('outcomeIntelligence.title') },
+        { href: `/${seg}/visa`, label: t('unified.visa') },
+        { href: `/${seg}/departure`, label: t('unified.departure') },
+        { href: `/${seg}/arrival`, label: t('unified.arrival') },
+        { href: `/${seg}/intelligence`, label: t('unified.intelligence') },
+        { href: `/${seg}/learn`, label: t('unified.learn') },
+        { href: `/${seg}/advisors`, label: t('unified.advisors') },
+        { href: `/${seg}/events`, label: t('unified.events') },
+        { href: `/${seg}/community`, label: t('unified.community') },
+        { href: `/${seg}/return`, label: t('unified.return') },
+        { href: `/${seg}/mobility-services`, label: t('unified.mobilityServices') },
       ],
     },
     {

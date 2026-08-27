@@ -79,6 +79,16 @@ export class CatalogueService {
       expectedTimeline: route.expectedTimeline,
       lastReviewedAt: route.lastReviewedAt,
       freshness: this.freshness(route),
+      coverageMaturity:
+        route.coverageMaturity ??
+        (route.isSyntheticDemoData ? 'RESEARCH_ONLY' : 'INFORMATION_VERIFIED'),
+      bangladeshAccessibility:
+        route.bangladeshAccessibility ??
+        (!routeAcceptsApplications(route.status)
+          ? 'NOT_ELIGIBLE'
+          : route.purpose === 'work'
+            ? 'POTENTIALLY_ELIGIBLE'
+            : 'NOT_CONFIRMED'),
     };
   }
 
@@ -111,6 +121,8 @@ export class CatalogueService {
       kind: source.kind,
       lastReviewedAt: source.lastReviewedAt,
       freshness: freshnessOf(source.lastReviewedAt, source.reviewCadenceDays, this.clock.now()),
+      trustTier: source.trustTier,
+      status: source.status,
     };
   }
 
@@ -167,13 +179,22 @@ export class CatalogueService {
   async listOccupations(query?: string): Promise<OccupationSummaryDto[]> {
     const occupations = await this.storage.occupations.list();
     const q = query?.trim().toLowerCase();
+    const normalized = q
+      ?.replace(/\s+/g, ' ')
+      .replace(/electrician|ইলেকট্রিশিয়ান|ইলেক্ট্রিশিয়ান/g, 'electrician')
+      .replace(/nurse|নার্স/g, 'nurse')
+      .replace(/driver|ড্রাইভার|চালক/g, 'driver')
+      .replace(/care giver|caregiver|কেয়ারগিভার|কেয়ারগিভার/g, 'caregiver');
     return occupations
       .filter(
         (o) =>
           !q ||
-          o.key.includes(q) ||
-          o.title.en.toLowerCase().includes(q) ||
-          o.title.bn.includes(query ?? ''),
+          o.key.includes(normalized ?? q) ||
+          o.title.en.toLowerCase().includes(normalized ?? q) ||
+          o.title.bn.includes(query ?? '') ||
+          o.aliases.some(
+            (alias) => alias.en.toLowerCase().includes(q) || alias.bn.includes(query ?? ''),
+          ),
       )
       .map((o) => ({
         id: o.id,

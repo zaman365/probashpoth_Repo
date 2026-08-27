@@ -1,6 +1,7 @@
 import type { EligibilityResponseDto, RouteDetailDto } from '@probash/contracts';
 import { apiRequest } from '@/lib/api';
 import { parseLocaleParam, pick, translator } from '@/lib/i18n';
+import { coverageAtLeast } from '@probash/domain';
 import { SourceCitation } from '@/components/SourceCitation';
 import { RiskNotice } from '@/components/RiskNotice';
 import { EligibilityResult } from '@/components/EligibilityResult';
@@ -27,6 +28,10 @@ export default async function RoutePage({
     body: { routeVersionId: route.id },
     locale,
   });
+  const journeySupported = coverageAtLeast(
+    route.coverageMaturity ?? 'RESEARCH_ONLY',
+    'JOURNEY_SUPPORTED',
+  );
 
   const spoken = [
     pick(route.officialName, locale),
@@ -43,6 +48,13 @@ export default async function RoutePage({
         <ListenButton text={spoken} label={t('common.listen')} lang={locale} />
       </div>
       <p>{pick(route.summary, locale)}</p>
+
+      <div className="flex flex-wrap gap-2">
+        <span className="badge badge-neutral">{route.coverageMaturity ?? 'RESEARCH_ONLY'}</span>
+        {route.bangladeshAccessibility ? (
+          <span className="badge badge-info">{route.bangladeshAccessibility}</span>
+        ) : null}
+      </div>
 
       {!route.acceptsApplications ? (
         <p className="badge badge-danger">{t('route.statusTemporarilyPaused')}</p>
@@ -99,7 +111,7 @@ export default async function RoutePage({
 
       <EligibilityResult response={eligibility} locale={locale} />
 
-      {route.acceptsApplications ? (
+      {route.acceptsApplications && journeySupported ? (
         <StartCaseButton
           locale={locale}
           routeVersionId={route.id}
@@ -109,6 +121,12 @@ export default async function RoutePage({
           destinationCountry={route.destinationCountry}
           path={route.purpose === 'study' ? 'study' : 'work'}
         />
+      ) : route.acceptsApplications ? (
+        <p className="badge badge-warning">
+          {locale === 'bn-BD'
+            ? 'এই রুট এখন তথ্য/গবেষণা পর্যায়ে—পূর্ণ যাত্রা শুরু করা যাচ্ছে না।'
+            : 'This route is currently information/research only; a full journey cannot be started.'}
+        </p>
       ) : null}
 
       <SourceCitation sources={route.sources} locale={locale} />

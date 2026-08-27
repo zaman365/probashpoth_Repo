@@ -63,6 +63,21 @@ import type {
   PartnerPipelineEventRecord,
   OutcomeReviewRecord,
 } from '../records';
+import type {
+  ApplicationQaReviewRecord,
+  CaseApprovalRecord,
+  CaseEventRecord,
+  CaseParticipantRecord,
+  CaseRiskFlagRecord,
+  LifecycleResourceRecord,
+  MobilityRoiAssessmentRecord,
+  OfficialActionCompletionRecord,
+  OfficialActionRecord,
+  RouteCoverageRecord,
+  SavedItemRecord,
+  SubmissionSnapshotRecord,
+  UniversalDeadlineRecord,
+} from '../unified-records';
 
 interface PayloadRow {
   id: string;
@@ -100,6 +115,17 @@ const SENSITIVE_NAMESPACES = new Set([
   'consent',
   'delegation',
   'credential',
+  'official_action_completion',
+  'saved_item',
+  'universal_deadline',
+  'mobility_roi_assessment',
+  'submission_snapshot',
+  'application_qa_review',
+  'case_participant',
+  'case_event',
+  'case_approval',
+  'case_risk_flag',
+  'lifecycle_resource',
   'mobility_case',
   'case_task',
   'case_milestone',
@@ -242,6 +268,19 @@ export class PostgresStorage implements Storage {
   readonly partnerAccessGrants: PostgresCollection<PartnerAccessGrantRecord>;
   readonly partnerPipelineEvents: PostgresCollection<PartnerPipelineEventRecord>;
   readonly outcomeReviews: PostgresCollection<OutcomeReviewRecord>;
+  readonly officialActions: PostgresCollection<OfficialActionRecord>;
+  readonly officialActionCompletions: PostgresCollection<OfficialActionCompletionRecord>;
+  readonly routeCoverages: PostgresCollection<RouteCoverageRecord>;
+  readonly savedItems: PostgresCollection<SavedItemRecord>;
+  readonly universalDeadlines: PostgresCollection<UniversalDeadlineRecord>;
+  readonly mobilityRoiAssessments: PostgresCollection<MobilityRoiAssessmentRecord>;
+  readonly submissionSnapshots: PostgresCollection<SubmissionSnapshotRecord>;
+  readonly applicationQaReviews: PostgresCollection<ApplicationQaReviewRecord>;
+  readonly caseParticipants: PostgresCollection<CaseParticipantRecord>;
+  readonly caseEvents: PostgresCollection<CaseEventRecord>;
+  readonly caseApprovals: PostgresCollection<CaseApprovalRecord>;
+  readonly caseRiskFlags: PostgresCollection<CaseRiskFlagRecord>;
+  readonly lifecycleResources: PostgresCollection<LifecycleResourceRecord>;
   readonly consents: PostgresCollection<ConsentRecordRow>;
   readonly delegations: PostgresCollection<DelegationRecord>;
   readonly credentials: PostgresCollection<CredentialRecord>;
@@ -307,6 +346,19 @@ export class PostgresStorage implements Storage {
     this.partnerAccessGrants = collection('partner_access_grant');
     this.partnerPipelineEvents = collection('partner_pipeline_event');
     this.outcomeReviews = collection('outcome_review');
+    this.officialActions = collection('official_action');
+    this.officialActionCompletions = collection('official_action_completion');
+    this.routeCoverages = collection('route_coverage');
+    this.savedItems = collection('saved_item');
+    this.universalDeadlines = collection('universal_deadline');
+    this.mobilityRoiAssessments = collection('mobility_roi_assessment');
+    this.submissionSnapshots = collection('submission_snapshot');
+    this.applicationQaReviews = collection('application_qa_review');
+    this.caseParticipants = collection('case_participant');
+    this.caseEvents = collection('case_event');
+    this.caseApprovals = collection('case_approval');
+    this.caseRiskFlags = collection('case_risk_flag');
+    this.lifecycleResources = collection('lifecycle_resource');
     this.consents = collection('consent');
     this.delegations = collection('delegation');
     this.credentials = collection('credential');

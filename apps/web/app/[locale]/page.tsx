@@ -1,13 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import {
-  CanvasPanel,
-  ChipLink,
-  Disclosure,
-  FeaturePill,
-  Icon,
-  Reveal,
-} from '@probash/web-ui';
+import { CanvasPanel, Disclosure, FeaturePill, Icon, Reveal } from '@probash/web-ui';
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata, siteUrl } from '@/lib/seo';
@@ -186,6 +179,15 @@ export default async function Landing({
         <div className="experience-shell">
           <div className="experience-hero-frame">
             <CanvasPanel className="experience-canvas">
+              <Reveal index={1} className="hero-listen-control">
+                <ListenButton
+                  text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
+                  label={t('common.listen')}
+                  stopLabel={t('common.stopListening')}
+                  lang={locale}
+                  iconOnly
+                />
+              </Reveal>
               <div className="hero-grid">
                 <div className="hero-copy">
                   <Reveal index={0}>
@@ -202,9 +204,13 @@ export default async function Landing({
 
                   <Reveal index={3}>
                     <div className="hero-actions">
-                      <ChipLink href={`/${seg}/onboarding`} chip={<Icon name="arrow" size={18} />}>
-                        {t('experience.heroStartCta')}
-                      </ChipLink>
+                      <Link
+                        href={`/${seg}/onboarding`}
+                        className="experience-btn experience-btn-primary"
+                      >
+                        <span>{t('experience.heroStartCta')}</span>
+                        <Icon name="arrow" size={20} />
+                      </Link>
                       <Link
                         href={`/${seg}/countries`}
                         className="experience-btn experience-btn-ghost"
@@ -217,11 +223,6 @@ export default async function Landing({
 
                   <Reveal index={4}>
                     <div className="hero-utility">
-                      <ListenButton
-                        text={`${t('site.heroTitle')}। ${t('site.heroLead')}`}
-                        label={t('common.listen')}
-                        lang={locale}
-                      />
                       <p className="hero-note">{t('site.heroNote')}</p>
                     </div>
                   </Reveal>
@@ -310,14 +311,14 @@ export default async function Landing({
                   </aside>
                 </Reveal>
               </div>
-
-              <div className="hero-intent-dock">
-                <IntentSwitch locale={locale} intent={intent} tone="canvas" compact />
-              </div>
             </CanvasPanel>
           </div>
         </div>
       </section>
+
+      <div className="post-hero-intent-switch">
+        <IntentSwitch locale={locale} intent={intent} compact />
+      </div>
 
       {intent === 'study' ? (
         <section className="experience-scholarship-story" aria-labelledby="home-scholarship-title">

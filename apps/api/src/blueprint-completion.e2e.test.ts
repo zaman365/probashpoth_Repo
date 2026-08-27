@@ -45,7 +45,7 @@ describe('blueprint supply, mobile API and outcome moat', () => {
       issuedAt: now,
       expiresAt,
       kind: 'self',
-      mfaSatisfiedAt: input.mfa ? '2026-08-26T12:00:00.000Z' : undefined,
+      mfaSatisfiedAt: input.mfa ? new Date().toISOString() : undefined,
     });
     return token;
   }

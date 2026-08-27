@@ -93,6 +93,12 @@ export default async function ExplorePage({
                       >
                         {t(ROUTE_STATUS_KEY[route.status] ?? 'route.statusUnknownNeedsReview')}
                       </span>
+                      <span className="badge badge-neutral">
+                        {route.coverageMaturity ?? 'RESEARCH_ONLY'}
+                      </span>
+                      {route.bangladeshAccessibility ? (
+                        <span className="badge badge-info">{route.bangladeshAccessibility}</span>
+                      ) : null}
                       {route.expectedTimeline ? (
                         <span className="badge badge-neutral">
                           {t('route.timeline')}:{' '}

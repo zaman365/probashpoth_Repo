@@ -3,6 +3,7 @@ import type { VerificationLevel } from './verification';
 
 /** §29 — document wallet. Sensitive identifiers are encrypted at field level (§50). */
 export type DocumentType =
+  | 'photo'
   | 'nid'
   | 'passport'
   | 'birth_certificate'
@@ -11,8 +12,12 @@ export type DocumentType =
   | 'training_certificate'
   | 'skill_certificate'
   | 'education_certificate'
+  | 'degree'
   | 'transcript'
   | 'employment_letter'
+  | 'work_certificate'
+  | 'professional_license'
+  | 'language_certificate'
   | 'test_result'
   | 'medical_report'
   | 'visa'
@@ -23,6 +28,7 @@ export type DocumentType =
   | 'admission_letter'
   | 'scholarship_letter'
   | 'financial_proof'
+  | 'recognition'
   | 'other';
 
 /** Document types that must never be exposed to an employer before consent (§18, §49). */
@@ -58,6 +64,11 @@ export interface StoredDocument {
   malwareScanStatus: 'pending' | 'clean' | 'infected' | 'failed';
   /** Extracted metadata only. Never the document body, never in logs (§42.16). */
   extracted?: Record<string, string>;
+  countryCode?: string;
+  language?: string;
+  translationDocumentId?: string;
+  caseIds?: string[];
+  verificationEvidenceIds?: string[];
 }
 
 /** §29/§51 — sharing is explicit, scoped, expiring and revocable. */

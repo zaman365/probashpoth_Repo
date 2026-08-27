@@ -198,6 +198,28 @@ export interface CaseRecord {
   updatedAt: string;
   documentIds: string[];
   history: { at: string; from: CaseState; to: CaseState; actorUserId: string; reason?: string }[];
+  goalType?: 'WORK' | 'STUDY' | 'TRAINING' | 'EXPLORE';
+  lifecycleStage?:
+    | 'DISCOVER'
+    | 'QUALIFY'
+    | 'PREPARE'
+    | 'VERIFY'
+    | 'APPLY'
+    | 'VISA'
+    | 'DEPART'
+    | 'ARRIVE'
+    | 'SETTLE'
+    | 'GROW'
+    | 'RETURN_OR_NEXT_MOVE';
+  opportunityId?: string;
+  providerId?: string;
+  overallProgress?: number;
+  currentBlocker?: LocalizedText;
+  nextAction?: LocalizedText;
+  targetDepartureDate?: string;
+  actualDepartureDate?: string;
+  arrivalDate?: string;
+  closedAt?: string;
 }
 
 export type CaseTaskRecord = CaseTask;

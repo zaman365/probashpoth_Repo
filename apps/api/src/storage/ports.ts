@@ -55,6 +55,21 @@ import type {
   PartnerPipelineEventRecord,
   OutcomeReviewRecord,
 } from './records';
+import type {
+  ApplicationQaReviewRecord,
+  CaseApprovalRecord,
+  CaseEventRecord,
+  CaseParticipantRecord,
+  CaseRiskFlagRecord,
+  LifecycleResourceRecord,
+  MobilityRoiAssessmentRecord,
+  OfficialActionCompletionRecord,
+  OfficialActionRecord,
+  RouteCoverageRecord,
+  SavedItemRecord,
+  SubmissionSnapshotRecord,
+  UniversalDeadlineRecord,
+} from './unified-records';
 
 /**
  * ADR 0001 — persistence is a port. The in-memory driver runs the trust-rail slice;
@@ -113,6 +128,20 @@ export interface Storage {
   institutions: Collection<InstitutionRecord>;
   countryProfiles: Collection<CountryProfileRecord>;
   courses: Collection<CourseRecord>;
+
+  officialActions: Collection<OfficialActionRecord>;
+  officialActionCompletions: Collection<OfficialActionCompletionRecord>;
+  routeCoverages: Collection<RouteCoverageRecord>;
+  savedItems: Collection<SavedItemRecord>;
+  universalDeadlines: Collection<UniversalDeadlineRecord>;
+  mobilityRoiAssessments: Collection<MobilityRoiAssessmentRecord>;
+  submissionSnapshots: Collection<SubmissionSnapshotRecord>;
+  applicationQaReviews: Collection<ApplicationQaReviewRecord>;
+  caseParticipants: Collection<CaseParticipantRecord>;
+  caseEvents: Collection<CaseEventRecord>;
+  caseApprovals: Collection<CaseApprovalRecord>;
+  caseRiskFlags: Collection<CaseRiskFlagRecord>;
+  lifecycleResources: Collection<LifecycleResourceRecord>;
 
   cases: Collection<CaseRecord>;
   caseTasks: Collection<CaseTaskRecord>;

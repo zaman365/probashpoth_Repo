@@ -1,6 +1,7 @@
 import type { LocalizedText } from './localized';
 import type { MoneyJson } from './money';
 import type { VerificationSummary } from './verification';
+import type { BangladeshAccessibility } from './unified-mobility';
 
 /** §21 — a job is never VERIFIED merely because an agency created it. */
 export type JobPublicationStatus =
@@ -47,6 +48,8 @@ export interface VerifiedJob {
   updatedAt: string;
   /** Synthetic development records must be visibly labelled (§64). */
   isSyntheticDemoData: boolean;
+  bangladeshAccessibility?: BangladeshAccessibility;
+  accessibilityReason?: LocalizedText;
 }
 
 /** §21 — the public verification page shows state, never PII. */

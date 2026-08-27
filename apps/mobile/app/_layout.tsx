@@ -23,6 +23,8 @@ export default function RootLayout() {
       <Stack.Screen name="family" options={{ title: 'ফ্যামিলি কো-পাইলট' }} />
       <Stack.Screen name="study-applications" options={{ title: 'স্টাডি আবেদন' }} />
       <Stack.Screen name="outcomes" options={{ title: 'ফলাফল' }} />
+      <Stack.Screen name="quick-check" options={{ title: 'দ্রুত যাচাই' }} />
+      <Stack.Screen name="trust" options={{ title: 'ট্রাস্ট সেন্টার' }} />
     </Stack>
   );
 }

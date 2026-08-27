@@ -66,6 +66,17 @@ export const EVENT_NAMES = [
   'DelegationRevoked',
   'DocumentShared',
   'DocumentShareRevoked',
+  'QuickCheckCompleted',
+  'OfficialActionHandedOff',
+  'OfficialActionUserConfirmed',
+  'ApplicationQaEvaluated',
+  'SubmissionSnapshotApproved',
+  'MobilityRoiCalculated',
+  'UniversalDeadlineCreated',
+  'SavedItemChanged',
+  'TrustSafetyCheckCompleted',
+  'CopilotAnswerGenerated',
+  'SmartEscalationOffered',
 ] as const;
 
 export type EventName = (typeof EVENT_NAMES)[number];

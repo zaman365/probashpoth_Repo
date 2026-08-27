@@ -4,6 +4,7 @@ import { DomainError, NotFoundError, uuidv7 } from '@probash/domain';
 import type { Env } from '@probash/config';
 import {
   normalizePhone,
+  type ManagedSessionDto,
   type RequestOtpDto,
   type SessionDto,
   type UpdateProfileDto,
@@ -262,5 +263,39 @@ export class IdentityService {
       verifiedEmploymentOutcomes: [],
       updatedAt: profile.updatedAt,
     };
+  }
+
+  /** Shared-device privacy: expose only safe metadata and let the account owner end any session. */
+  async listSessions(userId: string): Promise<ManagedSessionDto[]> {
+    const sessions = await this.storage.sessions.list((session) => session.userId === userId);
+    return sessions
+      .sort((a, b) => Date.parse(b.issuedAt) - Date.parse(a.issuedAt))
+      .map((session) => ({
+        id: session.id,
+        kind: session.kind,
+        issuedAt: session.issuedAt,
+        expiresAt: session.expiresAt,
+        mfaSatisfied: Boolean(session.mfaSatisfiedAt),
+        ...(session.revokedAt ? { revokedAt: session.revokedAt } : {}),
+      }));
+  }
+
+  async revokeSession(userId: string, sessionId: string): Promise<{ revoked: true }> {
+    const session = await this.storage.sessions.get(sessionId);
+    if (!session || session.userId !== userId) {
+      throw new NotFoundError('session', sessionId);
+    }
+
+    if (!session.revokedAt) {
+      const revokedAt = this.clock.nowIso();
+      await this.storage.sessions.put({ ...session, revokedAt });
+      await this.audit.record({
+        actorUserId: userId,
+        action: 'session.revoked',
+        resourceType: 'session',
+        resourceId: sessionId,
+      });
+    }
+    return { revoked: true };
   }
 }

@@ -177,8 +177,71 @@ html[lang='en'] body {
   }
 
   /* A page that opens with a full-bleed section owns its own top spacing. */
-  main:not(:has(> .pui-section:first-child)) {
+  main:not(:has(> .pui-section:first-child)):not(:has(> .site-breadcrumbs:first-child)) {
     padding-block-start: var(--space-2xl);
+  }
+
+  main > .site-breadcrumbs {
+    width: 100%;
+    max-width: var(--size-max-site-width);
+    padding: var(--space-lg) clamp(var(--space-md), 3vw, var(--space-3xl)) 0;
+  }
+
+  .site-breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+  }
+
+  .site-breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    min-width: 0;
+  }
+
+  .site-breadcrumbs a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-underline-offset: 0.2em;
+  }
+
+  .site-breadcrumbs a:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  .site-breadcrumbs__current {
+    overflow: hidden;
+    max-width: min(42rem, 60vw);
+    color: var(--color-text);
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .site-breadcrumbs__separator {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: 0 0 auto;
+    color: var(--color-text-tertiary, var(--color-text-secondary));
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  .site-breadcrumbs + .pui-section {
+    margin-block-start: var(--space-md);
   }
 
   .skip-link {
@@ -477,7 +540,8 @@ html[lang='en'] body {
     padding: var(--space-md);
   }
 
-  /* §15 — every tap target is at least 48px, text + icon, never icon-only. */
+  /* §15 — every tap target is at least 48px. Critical journey actions retain text;
+     secondary icon utilities require an explicit accessible name and tooltip. */
   /* Worker-flow buttons stay at the touch minimum on every device (§15). */
   .btn {
     display: inline-flex;
@@ -666,6 +730,27 @@ html[lang='en'] body {
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-md);
+  }
+
+  .hero-listen-control {
+    position: absolute;
+    z-index: 3;
+    inset-block-start: var(--space-lg);
+    inset-inline-end: clamp(var(--space-lg), 4vw, var(--space-3xl));
+  }
+
+  .listen-button--icon {
+    width: var(--size-tap-target-min);
+    min-width: var(--size-tap-target-min);
+    height: var(--size-tap-target-min);
+    min-height: var(--size-tap-target-min);
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .listen-button__glyph {
+    display: inline-grid;
+    place-items: center;
   }
 
   .hero-note {
@@ -1344,17 +1429,8 @@ html[lang='en'] body {
   }
 
   main:has(> .experience-home) {
-    /* Pull the hero behind the transparent site chrome so its painted background
-       reaches the very top of the viewport and becomes the navbar's backdrop. */
-    --experience-header-overlap: 150px;
-    margin-block-start: calc(var(--experience-header-overlap) * -1);
+    margin-block-start: 0;
     padding-block: 0;
-  }
-
-  @media (min-width: 1024px) {
-    main:has(> .experience-home) {
-      --experience-header-overlap: 90px;
-    }
   }
 
   .experience-home {
@@ -1469,6 +1545,17 @@ html[lang='en'] body {
 
   .experience-btn:hover {
     transform: translateY(-2px);
+  }
+
+  .experience-btn-primary {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  .experience-btn-primary:hover {
+    border-color: var(--color-accent-hover);
+    background: var(--color-accent-hover);
   }
 
   .experience-btn-light {
@@ -1605,7 +1692,7 @@ html[lang='en'] body {
 
   /* Hero */
   .experience-hero {
-    min-height: 100svh;
+    min-height: auto;
     padding: 0;
   }
 
@@ -1616,10 +1703,11 @@ html[lang='en'] body {
   }
 
   .experience-hero-frame {
+    position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 100svh;
-    overflow: hidden;
+    min-height: auto;
+    overflow: visible;
     border-radius: 0;
     box-shadow: none;
   }
@@ -1646,10 +1734,10 @@ html[lang='en'] body {
     display: grid;
     align-content: center;
     width: 100%;
-    min-height: 100%;
+    min-height: auto;
     padding-inline: clamp(var(--space-lg), 6vw, 96px);
-    padding-block-start: var(--experience-header-overlap);
-    padding-block-end: clamp(96px, 12vh, 118px);
+    padding-block-start: clamp(48px, 5vw, 72px);
+    padding-block-end: clamp(56px, 6vw, 80px);
   }
 
   .experience-canvas .hero-grid {
@@ -1657,14 +1745,14 @@ html[lang='en'] body {
     max-width: var(--size-max-site-width);
   }
 
-  .hero-intent-dock {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    bottom: clamp(18px, 3vh, 30px);
-    left: 0;
+  .post-hero-intent-switch {
+    position: relative;
+    z-index: 4;
     display: flex;
     justify-content: center;
+    padding-block: 18px 20px;
+    border-bottom: 1px solid rgb(11 31 24 / 10%);
+    background: #f4f7f2;
   }
 
   .experience-hero-stage {
@@ -2800,7 +2888,7 @@ html[lang='en'] body {
     }
 
     .experience-hero {
-      min-height: 100svh;
+      min-height: auto;
       padding: 0;
     }
 
@@ -2809,7 +2897,7 @@ html[lang='en'] body {
     }
 
     .experience-hero-frame {
-      min-height: 100svh;
+      min-height: auto;
     }
 
     .experience-canvas .pui-canvas-inner {
@@ -3053,11 +3141,10 @@ body:has(> #main > .experience-home) {
   background: #edf8f0;
 }
 
-/* The homepage owns the first viewport. Override the generic page-column padding
-   and pull the hero beneath the floating header without leaving a white strip. */
+/* The homepage owns its full-width canvas but starts after the site header. */
 main#main:has(> .experience-home) {
   max-width: none;
-  margin-block-start: calc(var(--experience-header-overlap) * -1);
+  margin-block-start: 0;
   padding: 0;
 }
 
@@ -3121,6 +3208,19 @@ main#main > .experience-home > .experience-hero,
 .experience-home .experience-canvas .hero-utility .btn:hover {
   border-color: rgb(18 57 43 / 48%);
   background: rgb(255 255 255 / 58%);
+}
+
+.experience-home .experience-canvas .hero-listen-control .listen-button--icon {
+  border-color: rgb(18 57 43 / 24%);
+  background: rgb(255 255 255 / 62%);
+  box-shadow: 0 8px 24px rgb(18 57 43 / 12%);
+  color: var(--color-text-on-canvas);
+  backdrop-filter: blur(10px);
+}
+
+.experience-home .experience-canvas .hero-listen-control .listen-button--icon:hover {
+  border-color: rgb(18 57 43 / 42%);
+  background: rgb(255 255 255 / 84%);
 }
 
 .experience-home .experience-canvas .hero-verify-input {
@@ -5624,13 +5724,15 @@ html[lang='bn'] .account-empty h1 {
   right: max(20px, calc(env(safe-area-inset-right) + 16px));
   bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px));
   z-index: 45;
+  width: 56px;
+  height: 56px;
   min-height: 56px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 7px 18px 7px 7px;
+  justify-content: center;
+  padding: 7px;
   border: 1px solid color-mix(in srgb, var(--color-accent) 76%, #082e1b);
-  border-radius: 999px;
+  border-radius: 50%;
   color: #fff;
   background: linear-gradient(145deg, #148642 0%, #0b6b34 100%);
   box-shadow:
@@ -5669,56 +5771,10 @@ html[lang='bn'] .account-empty h1 {
   background: #fff;
 }
 
-.floating-chat-bubble {
-  position: relative;
-  width: 25px;
-  height: 19px;
-  display: grid;
-  place-items: center;
-  padding-bottom: 5px;
-  border: 2px solid currentColor;
-  border-radius: 8px;
-  font-size: 0.65rem;
-  font-weight: 900;
-  letter-spacing: 0.8px;
-  line-height: 1;
-}
-
-.floating-chat-bubble::after {
-  content: '';
-  position: absolute;
-  inset: auto auto -5px 4px;
-  width: 7px;
-  height: 7px;
-  border-bottom: 2px solid currentColor;
-  border-left: 2px solid currentColor;
-  border-bottom-left-radius: 3px;
-  background: #fff;
-  transform: skewY(-35deg);
-}
-
-.floating-chat-label {
-  padding-inline-end: 2px;
-  white-space: nowrap;
-}
-
 @media (max-width: 640px) {
   .floating-chat-button {
     right: max(14px, calc(env(safe-area-inset-right) + 12px));
     bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px));
-    width: 56px;
-    min-height: 56px;
-    justify-content: center;
-    padding: 7px;
-  }
-
-  .floating-chat-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
   }
 }
 

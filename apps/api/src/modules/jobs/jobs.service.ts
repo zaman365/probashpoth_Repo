@@ -43,6 +43,20 @@ export class JobsService {
       recruitmentFeePaidBy: job.terms.recruitmentFeePaidBy,
       demandValidTo: job.demandValidTo,
       isSyntheticDemoData: job.isSyntheticDemoData,
+      bangladeshAccessibility:
+        job.bangladeshAccessibility ??
+        (job.isSyntheticDemoData ? 'NOT_CONFIRMED' : 'POTENTIALLY_ELIGIBLE'),
+      accessibilityReason:
+        job.accessibilityReason ??
+        (job.isSyntheticDemoData
+          ? {
+              bn: 'ডেমো রেকর্ড—বাংলাদেশি আবেদনকারীর জন্য স্পনসরশিপ নিশ্চিত নয়।',
+              en: 'Demo record—sponsorship for a Bangladeshi applicant is not confirmed.',
+            }
+          : {
+              bn: 'রুট ও স্পনসরশিপের চূড়ান্ত যোগ্যতা আলাদাভাবে যাচাই করতে হবে।',
+              en: 'Final route and sponsorship eligibility must be checked separately.',
+            }),
     };
   }
 

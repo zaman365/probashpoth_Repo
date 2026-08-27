@@ -11,9 +11,16 @@ test('the hero carries the compact work/study switch at its foot', async ({ page
   await page.goto('/bn?intent=study');
 
   const canvas = page.locator('.pui-canvas').first();
-  const heroSwitch = canvas.locator('.intent-switch');
+  const heroSwitch = page.locator('.post-hero-intent-switch .intent-switch');
   await expect(heroSwitch).toHaveCount(1);
-  await expect(heroSwitch.locator('.is-selected')).toContainText('বিদেশে পড়াশোনা');
+  await expect(canvas.locator('.intent-switch')).toHaveCount(0);
+  await expect(page.locator('.experience-hero .post-hero-intent-switch')).toHaveCount(0);
+  await expect(heroSwitch.locator('.is-selected')).toContainText('উচ্চশিক্ষা');
+
+  const canvasBox = await canvas.boundingBox();
+  const switchBox = await heroSwitch.boundingBox();
+  const canvasBottom = (canvasBox?.y ?? 0) + (canvasBox?.height ?? 0);
+  expect(switchBox?.y ?? 0).toBeGreaterThan(canvasBottom);
 });
 
 test('the hero keeps both destinations visible', async ({ page }) => {
@@ -29,10 +36,67 @@ test('the hero renders on the painted canvas with its controls', async ({ page }
   const canvas = page.locator('.pui-canvas').first();
   await expect(canvas).toBeVisible();
   await expect(canvas.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(canvas.locator('.pui-chip-link')).toHaveCount(1);
+  await expect(canvas.locator('.experience-btn-primary')).toHaveCount(1);
+  await expect(canvas.locator('.hero-actions .experience-btn')).toHaveCount(2);
   await expect(canvas.locator('.pui-feature-pill')).toHaveCount(3);
   await expect(canvas.locator('.hero-choice-card')).toHaveCount(2);
   await expect(canvas.locator('.hero-warning')).toHaveCount(0);
+});
+
+test('the hero listen control is a separate icon-only utility', async ({ page }) => {
+  await page.goto('/bn');
+
+  const control = page.locator('.hero-listen-control .listen-button--icon');
+  await expect(control).toBeVisible();
+  await expect(control).toHaveAttribute('aria-label', 'শুনুন');
+  await expect(control).toHaveAttribute('title', 'শুনুন');
+  await expect(control.locator('.pui-icon')).toHaveCount(1);
+  await expect(page.locator('.hero-utility .listen-button')).toHaveCount(0);
+});
+
+test('the two hero actions share one button shape', async ({ page }) => {
+  await page.goto('/bn');
+
+  const actions = page.locator('.hero-actions .experience-btn');
+  await expect(actions).toHaveCount(2);
+  const shapes = await actions.evaluateAll((elements) =>
+    elements.map((element) => {
+      const style = getComputedStyle(element);
+      const box = element.getBoundingClientRect();
+      return {
+        height: box.height,
+        borderRadius: style.borderRadius,
+        paddingBlock: `${style.paddingTop} ${style.paddingBottom}`,
+      };
+    }),
+  );
+  expect(shapes[0]).toEqual(shapes[1]);
+});
+
+test('the hero ends shortly after its content instead of forcing an empty viewport', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/bn');
+
+  const canvasBox = await page.locator('.experience-canvas').boundingBox();
+  const contentBox = await page.locator('.experience-canvas .hero-grid').boundingBox();
+  const canvasBottom = (canvasBox?.y ?? 0) + (canvasBox?.height ?? 0);
+  const contentBottom = (contentBox?.y ?? 0) + (contentBox?.height ?? 0);
+  expect(canvasBottom - contentBottom).toBeLessThanOrEqual(82);
+});
+
+test('the hero starts below the navbar instead of being cropped behind it', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/bn');
+
+  const navbarBox = await page.locator('.site-header-row').boundingBox();
+  const heroBox = await page.locator('.experience-canvas').boundingBox();
+  const headingBox = await page.locator('.experience-canvas .hero-title').boundingBox();
+  const navbarBottom = (navbarBox?.y ?? 0) + (navbarBox?.height ?? 0);
+
+  expect(heroBox?.y ?? 0).toBeGreaterThanOrEqual(navbarBottom);
+  expect(headingBox?.y ?? 0).toBeGreaterThanOrEqual(navbarBottom + 40);
 });
 
 test('controls follow the device sizing rule', async ({ page }) => {
@@ -42,7 +106,11 @@ test('controls follow the device sizing rule', async ({ page }) => {
   const coarse = await page.evaluate(() => matchMedia('(pointer: coarse)').matches);
   const floor = coarse ? 48 : 44;
 
-  for (const selector of ['.pui-chip-link', '.hero-choice-card', '.intent-switch-option']) {
+  for (const selector of [
+    '.experience-btn-primary',
+    '.hero-choice-card',
+    '.intent-switch-option',
+  ]) {
     const box = await page.locator(selector).first().boundingBox();
     expect(
       box?.height ?? 0,

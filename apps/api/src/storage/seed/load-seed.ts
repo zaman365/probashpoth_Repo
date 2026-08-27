@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { InvariantViolatedError } from '@probash/domain';
+import { InvariantViolatedError, type LocalizedText } from '@probash/domain';
 import type {
   CountryProfileRecord,
   CountryRecord,
@@ -117,9 +117,30 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
     };
   });
 
-  const sources = sourcesFile.sources as SourceRecord[];
+  const sources: SourceRecord[] = sourcesFile.sources.map((source) => ({
+    ...source,
+    trustTier:
+      source.kind === 'institution_official'
+        ? 'TIER_3_INSTITUTION_OR_EMPLOYER'
+        : source.kind === 'international_organization'
+          ? 'TIER_2_REGULATOR_OR_PUBLIC_BODY'
+          : 'TIER_1_OFFICIAL',
+    jurisdiction: source.countryCode,
+    language: 'mixed',
+    status: source.lastReviewedAt ? 'ACTIVE' : 'REVIEW_REQUIRED',
+  }));
   const sourceIds = new Set(sources.map((s) => s.id));
 
+  const occupationAliases: Record<string, LocalizedText[]> = {
+    electrician: [
+      { bn: 'ইলেকট্রিশিয়ান', en: 'Electrical worker' },
+      { bn: 'ইলেক্ট্রিক মিস্ত্রি', en: 'Electric worker' },
+    ],
+    nurse: [{ bn: 'নার্সিং', en: 'Registered nurse' }],
+    caregiver: [{ bn: 'কেয়ারগিভার', en: 'Care giver' }],
+    heavy_vehicle_driver: [{ bn: 'লরি চালক', en: 'Truck driver' }],
+    software_engineer: [{ bn: 'সফটওয়্যার ডেভেলপার', en: 'Software developer' }],
+  };
   const occupations: OccupationRecord[] = occupationsFile.occupations.map((occupation) => ({
     id: `occ_${occupation.key}`,
     key: occupation.key,
@@ -127,7 +148,7 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
     title: occupation.title,
     iscoCode: occupation.iscoCode,
     skillLevel: occupation.skillLevel,
-    aliases: [],
+    aliases: occupationAliases[occupation.key] ?? [],
     mappings: [{ classification: 'ISCO08', code: occupation.iscoCode }],
   }));
   const occupationKeys = new Set(occupations.map((o) => o.key));
@@ -138,7 +159,16 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
   const ruleVersions = rulesFile.ruleVersions as RuleVersionRecord[];
   const ruleIds = new Set(ruleVersions.map((r) => r.ruleId));
 
-  const routeVersions = routesFile.routeVersions as unknown as RouteVersionRecord[];
+  const routeVersions = routesFile.routeVersions.map((route) => ({
+    ...route,
+    coverageMaturity: route.isSyntheticDemoData ? 'RESEARCH_ONLY' : 'INFORMATION_VERIFIED',
+    nationalityScope: ['BD'],
+    bangladeshAccessibility: route.isSyntheticDemoData
+      ? 'NOT_CONFIRMED'
+      : route.status === 'closed' || route.status === 'temporarily_paused'
+        ? 'NOT_ELIGIBLE'
+        : 'POTENTIALLY_ELIGIBLE',
+  })) as unknown as RouteVersionRecord[];
   const routeVersionIds = new Set(routeVersions.map((r) => r.id));
 
   const feeRules = feeRulesFile.feeRules as unknown as FeeRuleRecord[];
@@ -164,6 +194,16 @@ export function loadSeed(dataDir: string = findDataDir()): SeedBundle {
     createdAt: job.createdAt,
     updatedAt: job.updatedAt,
     isSyntheticDemoData: job.isSyntheticDemoData,
+    bangladeshAccessibility: job.isSyntheticDemoData ? 'NOT_CONFIRMED' : 'POTENTIALLY_ELIGIBLE',
+    accessibilityReason: job.isSyntheticDemoData
+      ? {
+          bn: 'ডেমো রেকর্ড—বাংলাদেশি আবেদনকারীর জন্য স্পনসরশিপ নিশ্চিত নয়।',
+          en: 'Demo record—sponsorship for a Bangladeshi applicant is not confirmed.',
+        }
+      : {
+          bn: 'রুট ও স্পনসরশিপের চূড়ান্ত যোগ্যতা আলাদাভাবে যাচাই করতে হবে।',
+          en: 'Final route and sponsorship eligibility must be checked separately.',
+        },
   }));
 
   const problems: string[] = [];

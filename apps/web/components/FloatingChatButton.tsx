@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Locale } from '@probash/domain';
+import { Icon } from '@probash/web-ui';
 import { localeSegment, translator } from '@/lib/i18n';
 
 export function FloatingChatButton({ locale }: { locale: Locale }) {
@@ -14,9 +15,8 @@ export function FloatingChatButton({ locale }: { locale: Locale }) {
       title={t('common.openSupportChat')}
     >
       <span className="floating-chat-icon" aria-hidden="true">
-        <span className="floating-chat-bubble">•••</span>
+        <Icon name="chat" size={24} />
       </span>
-      <span className="floating-chat-label">{t('common.chat')}</span>
     </Link>
   );
 }

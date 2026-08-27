@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   requestOtpSchema,
@@ -54,5 +54,19 @@ export class IdentityController {
   @UseGuards(SessionGuard)
   async skillPassport(@CurrentSubject() subject: Subject) {
     return this.identity.skillPassport(subject.userId);
+  }
+
+  @Get('me/sessions')
+  @ApiBearerAuth()
+  @UseGuards(SessionGuard)
+  async sessions(@CurrentSubject() subject: Subject) {
+    return this.identity.listSessions(subject.userId);
+  }
+
+  @Delete('me/sessions/:sessionId')
+  @ApiBearerAuth()
+  @UseGuards(SessionGuard)
+  async revokeSession(@CurrentSubject() subject: Subject, @Param('sessionId') sessionId: string) {
+    return this.identity.revokeSession(subject.userId, sessionId);
   }
 }

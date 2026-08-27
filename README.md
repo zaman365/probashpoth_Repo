@@ -41,6 +41,14 @@ publication and outcome review, privacy-thresholded institutional analytics, and
 Android-first Expo client. See `docs/blueprint-delivery.md` for the evidence gate of
 each release.
 
+The unified mobility strengthening release adds an account-free QuickCheck, explicit
+route coverage maturity and Bangladesh accessibility, tracked official-government
+handoffs, deterministic application QA with immutable submission snapshots,
+conservative mobility ROI/debt checks, universal deadlines and saved items, structured
+agency/fee/offer/contract safety checks, a Trust Center, a journey command-centre
+projection, grounded Copilot contracts, and privacy-safe session revocation. Work and
+Study remain equal first-class goals; unknown evidence remains unknown.
+
 Alongside it, the **public web surface (§14.1)** is live and needs no account:
 country guides, occupation guides, scam education, public job verification, and the
 SEO plumbing (`sitemap.xml`, `robots.txt`, canonical URLs, Bangla/English `hreflang`,
@@ -156,7 +164,9 @@ as `BD-QA-2026-99999999` to see the "not found" answer.
 
 Worth visiting without signing in at all: `/bn/countries`, `/bn/countries/qa`,
 `/bn/occupations/electrician`, `/bn/safety`, `/bn/verify`, and
-`/bn/verify/job/BD-QA-2026-00482915`. `/bn/countries/bt` shows what an honest empty
+`/bn/verify/job/BD-QA-2026-00482915`. Unified public entry points include
+`/bn/quick-check`, `/bn/trust`, `/bn/official-actions`, `/bn/visa`, `/bn/departure`,
+`/bn/arrival`, and `/bn/intelligence`. `/bn/countries/bt` shows what an honest empty
 answer looks like.
 
 ### Local services (PostgreSQL, Redis, Temporal, MinIO)
@@ -215,6 +225,9 @@ pnpm e2e:web                                # Playwright (needs API + web runnin
 The API suite drives the whole trust rail through real HTTP requests: onboarding,
 eligibility, public verification, the fraud scanner, cost plan, sandbox payment,
 milestone settlement, receipts, and the family co-pilot's exact permission boundary.
+It also exercises QuickCheck, official handoffs, agency/fee checks, application QA,
+ROI/debt calculations, deadlines, saved items, the freshness dashboard and capability
+gates. See `docs/benchmark-strengthening/TEST_PLAN.md` for the verification matrix.
 
 ---
 

@@ -83,6 +83,21 @@ test('the footer works as a site map in four columns', async ({ page }) => {
   await expect(footer.getByText('ডেমো তথ্য — এটি আসল চাকরি নয়')).toBeVisible();
 });
 
+test('the floating support launcher is an icon-only chat control', async ({ page }) => {
+  await page.goto('/bn');
+
+  const launcher = page.locator('.floating-chat-button');
+  await expect(launcher).toBeVisible();
+  await expect(launcher).toHaveAttribute('aria-label', 'সহায়তা চ্যাট খুলুন');
+  await expect(launcher).toHaveAttribute('title', 'সহায়তা চ্যাট খুলুন');
+  await expect(launcher.locator('.pui-icon')).toHaveCount(1);
+  await expect(launcher).toHaveText('');
+
+  const box = await launcher.boundingBox();
+  expect(box?.width).toBe(56);
+  expect(box?.height).toBe(56);
+});
+
 const PAGES = [
   '/about',
   '/how-it-works',

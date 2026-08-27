@@ -50,6 +50,17 @@ export const sessionSchema = z.object({
 });
 export type SessionDto = z.infer<typeof sessionSchema>;
 
+/** Privacy-safe session metadata for shared-device review. Tokens and token hashes are never returned. */
+export const managedSessionSchema = z.object({
+  id: z.string(),
+  kind: z.enum(['self', 'assisted', 'delegated', 'break_glass']),
+  issuedAt: z.string(),
+  expiresAt: z.string(),
+  mfaSatisfied: z.boolean(),
+  revokedAt: z.string().optional(),
+});
+export type ManagedSessionDto = z.infer<typeof managedSessionSchema>;
+
 export const workerProfileSchema = z.object({
   userId: z.string(),
   displayName: z.string().optional(),

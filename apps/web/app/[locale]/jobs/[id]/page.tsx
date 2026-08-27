@@ -43,6 +43,15 @@ export default async function JobDetailPage({
         <p className="badge badge-danger">{t('common.demoDataWarning')}</p>
       ) : null}
 
+      <div className="card-muted stack">
+        <span
+          className={`badge ${job.bangladeshAccessibility === 'NOT_ELIGIBLE' || job.bangladeshAccessibility === 'NOT_CONFIRMED' ? 'badge-warning' : 'badge-success'}`}
+        >
+          {job.bangladeshAccessibility}
+        </span>
+        <p>{pick(job.accessibilityReason, locale)}</p>
+      </div>
+
       <VerifiedBadge
         level={job.verification.level}
         facets={job.verification.facets}
@@ -124,15 +133,23 @@ export default async function JobDetailPage({
         <Link href={`/${seg}/verify/job/${job.publicId}`} className="btn btn-secondary">
           {t('job.publicId')}: {job.publicId}
         </Link>
-        <StartCaseButton
-          locale={locale}
-          routeVersionId={job.routeVersionId}
-          jobId={job.id}
-          label={t('case.title')}
-          signInLabel={t('onboarding.phoneTitle')}
-          title={pick(job.title, locale)}
-          destinationCountry={job.destinationCountry}
-        />
+        {[
+          'CONFIRMED_OPEN_TO_BANGLADESH',
+          'INTERNATIONAL_SPONSORSHIP_INDICATED',
+          'POTENTIALLY_ELIGIBLE',
+        ].includes(job.bangladeshAccessibility) ? (
+          <StartCaseButton
+            locale={locale}
+            routeVersionId={job.routeVersionId}
+            jobId={job.id}
+            label={t('case.title')}
+            signInLabel={t('onboarding.phoneTitle')}
+            title={pick(job.title, locale)}
+            destinationCountry={job.destinationCountry}
+          />
+        ) : (
+          <p className="badge badge-warning">{pick(job.accessibilityReason, locale)}</p>
+        )}
       </section>
 
       <SourceCitation sources={job.sources} locale={locale} />

@@ -12,6 +12,12 @@ import type {
   ScanResultDto,
   ServiceDirectoryEntryDto,
   SourceSummaryDto,
+  QuickCheckInputDto,
+  QuickCheckResultDto,
+  RouteCoverageDto,
+  OfficialActionDto,
+  TrustCenterDto,
+  CapabilityRegistryItemDto,
 } from '@probash/contracts';
 import { ApiRequestError } from '@probash/contracts';
 import { freshnessOf, routeAcceptsApplications } from '@probash/domain';
@@ -38,6 +44,8 @@ interface DemoSource {
   url: string;
   reviewCadenceDays: number;
   lastReviewedAt?: string;
+  trustTier?: SourceSummaryDto['trustTier'];
+  status?: SourceSummaryDto['status'];
 }
 
 interface DemoRequirement {
@@ -144,6 +152,14 @@ function sourceSummary(source: DemoSource): SourceSummaryDto {
     url: source.url,
     lastReviewedAt: source.lastReviewedAt,
     freshness: freshnessOf(source.lastReviewedAt, source.reviewCadenceDays),
+    trustTier:
+      source.trustTier ??
+      (source.kind === 'international_organization'
+        ? 'TIER_2_REGULATOR_OR_PUBLIC_BODY'
+        : source.kind === 'institution_official'
+          ? 'TIER_3_INSTITUTION_OR_EMPLOYER'
+          : 'TIER_1_OFFICIAL'),
+    status: source.status ?? 'ACTIVE',
   };
 }
 
@@ -168,6 +184,10 @@ function routeSummary(route: DemoRoute): RouteSummaryDto {
     expectedTimeline: route.expectedTimeline,
     lastReviewedAt: route.lastReviewedAt,
     freshness: freshnessOf(route.lastReviewedAt, route.reviewCadenceDays),
+    coverageMaturity: 'RESEARCH_ONLY',
+    bangladeshAccessibility: routeAcceptsApplications(route.status)
+      ? 'NOT_CONFIRMED'
+      : 'NOT_ELIGIBLE',
   };
 }
 
@@ -331,6 +351,11 @@ function jobSummary(job: DemoJob): JobSummaryDto {
     recruitmentFeePaidBy: job.terms.recruitmentFeePaidBy,
     demandValidTo: job.demandValidTo,
     isSyntheticDemoData: true,
+    bangladeshAccessibility: 'NOT_CONFIRMED',
+    accessibilityReason: {
+      bn: 'ডেমো রেকর্ড—বাংলাদেশি আবেদনকারীর জন্য স্পনসরশিপ নিশ্চিত নয়।',
+      en: 'Demo record—sponsorship for a Bangladeshi applicant is not confirmed.',
+    },
   };
 }
 
@@ -513,6 +538,244 @@ function eligibility(body: unknown): EligibilityResponseDto {
   };
 }
 
+function demoRouteCoverage(route: DemoRoute): RouteCoverageDto {
+  return {
+    id: `coverage_${route.id}`,
+    routeVersionId: route.id,
+    countryCode: route.destinationCountry,
+    nationalityScope: ['BD'],
+    maturity: 'RESEARCH_ONLY',
+    officialInformationAvailable: route.sourceIds.length > 0,
+    eligibilityEngineAvailable: false,
+    applicationGuidanceAvailable: false,
+    verifiedPartnerAvailable: false,
+    officialFeeDataAvailable: false,
+    processingTimeDataAvailable: Boolean(route.expectedTimeline),
+    sourceLastVerifiedAt: route.lastReviewedAt,
+    checklist: {
+      officialSourcesMapped: route.sourceIds.length > 0,
+      visaRoutesMapped: Boolean(route.visaClass || route.permitClass),
+      costsMapped: false,
+      recognitionMapped: false,
+      languageMapped: route.requirements.some((item) => item.kind === 'language'),
+      opportunitiesMapped: false,
+      providerVerificationAvailable: false,
+      complaintAndEmergencySourcesMapped: route.riskNotices.length > 0,
+      arrivalTasksMapped: route.postArrivalObligations.length > 0,
+      contentReviewed: false,
+      legalReviewComplete: false,
+      dataOwnerAssigned: false,
+      freshnessSlaConfigured: route.reviewCadenceDays > 0,
+    },
+    updatedAt: route.lastReviewedAt ?? route.verifiedAt,
+  };
+}
+
+function demoQuickCheck(body: unknown): QuickCheckResultDto {
+  const input = body as QuickCheckInputDto;
+  const preferred = input.preferredCountryCodes?.map((code) => code.toUpperCase()) ?? [];
+  const selected = routes
+    .filter((route) => route.publicationStatus === 'published')
+    .filter(
+      (route) =>
+        input.goal === 'EXPLORE' ||
+        (input.goal === 'WORK' && route.purpose === 'work') ||
+        (input.goal === 'STUDY' && route.purpose === 'study') ||
+        (input.goal === 'TRAINING' && route.purpose === 'training'),
+    )
+    .filter((route) => preferred.length === 0 || preferred.includes(route.destinationCountry))
+    .slice(0, 8);
+  return {
+    generatedAt: new Date().toISOString(),
+    accountRequired: false,
+    routes: selected.map((route) => {
+      const trace = eligibility({ routeVersionId: route.id }).trace;
+      return {
+        routeVersionId: route.id,
+        routeId: route.routeId,
+        title: route.officialName,
+        destinationCountry: route.destinationCountry,
+        goal:
+          route.purpose === 'work'
+            ? 'WORK'
+            : route.purpose === 'study'
+              ? 'STUDY'
+              : route.purpose === 'training'
+                ? 'TRAINING'
+                : 'EXPLORE',
+        eligibility: trace,
+        fit: 'POSSIBLE_FIT',
+        fitReasons: [
+          { bn: 'প্রাথমিক তথ্য পাওয়া গেছে', en: 'Preliminary information is available' },
+        ],
+        preparationGaps: trace.missingFacts.map((item) => item.label),
+        estimatedPreparation: {
+          minMonths: 1,
+          maxMonths: Math.max(3, trace.missingFacts.length * 2),
+        },
+        timeRange: route.expectedTimeline,
+        coverageMaturity: 'RESEARCH_ONLY',
+        bangladeshAccessibility: routeAcceptsApplications(route.status)
+          ? 'NOT_CONFIRMED'
+          : 'NOT_ELIGIBLE',
+        confidence: 'NEEDS_HUMAN_REVIEW',
+        sources: resolveSources(route.sourceIds),
+        lastVerifiedAt: route.lastReviewedAt,
+      };
+    }),
+    disclaimer: {
+      bn: 'এটি ডেমো ও প্রাথমিক যাচাই—চাকরি, ভর্তি বা ভিসার নিশ্চয়তা নয়। সরকারি উৎস আবার দেখুন।',
+      en: 'This is a demo preliminary check, not a job, admission, or visa guarantee. Recheck official sources.',
+    },
+    escalationOffered: true,
+  };
+}
+
+function demoOfficialActions(): OfficialActionDto[] {
+  const source = sources.find((item) => item.id === 'src_bd_oep')!;
+  return [
+    {
+      id: 'official_bd_oep_registration',
+      countryCode: 'BD',
+      authority: source.authority,
+      actionType: 'BMET_REGISTRATION',
+      title: { bn: 'বিএমইটি / ওইপি নিবন্ধন', en: 'BMET / OEP registration' },
+      description: {
+        bn: 'প্রস্তুতি দেখে সরকারি সিস্টেমে কাজটি সম্পন্ন করুন।',
+        en: 'Review the preparation, then complete the action in the official system.',
+      },
+      officialUrl: 'https://www.oep.gov.bd/',
+      isExternal: true,
+      requiresAccount: true,
+      requiresInPerson: false,
+      feeType: 'VARIES',
+      sourceRecordId: source.id,
+      lastVerifiedAt: source.lastReviewedAt,
+      status: 'ACTIVE',
+      preparationRequirementIds: [],
+      legalReviewRequired: false,
+    },
+    {
+      id: 'official_bd_raims_agency',
+      countryCode: 'BD',
+      authority: { bn: 'বিএমইটি', en: 'BMET' },
+      actionType: 'AGENCY_VERIFICATION',
+      title: { bn: 'এজেন্সির লাইসেন্স যাচাই', en: 'Verify an agency licence' },
+      description: {
+        bn: 'সরকারি রেইমস রেকর্ডে লাইসেন্স মিলিয়ে দেখুন।',
+        en: 'Compare the licence with the official RAIMS register.',
+      },
+      officialUrl: 'https://raims.bmet.gov.bd/agencies',
+      isExternal: true,
+      requiresAccount: false,
+      requiresInPerson: false,
+      feeType: 'FREE',
+      sourceRecordId: source.id,
+      lastVerifiedAt: source.lastReviewedAt,
+      status: 'ACTIVE',
+      preparationRequirementIds: [],
+      legalReviewRequired: false,
+    },
+  ];
+}
+
+function demoTrustCenter(): TrustCenterDto {
+  return {
+    verificationStatuses: [
+      'UNVERIFIED',
+      'PENDING',
+      'BASIC_VERIFIED',
+      'LICENSE_VERIFIED',
+      'ENHANCED_VERIFIED',
+      'RESTRICTED',
+      'SUSPENDED',
+      'REMOVED',
+      'EXPIRED',
+    ],
+    providerCategories: [
+      'UNIVERSITY',
+      'EMPLOYER',
+      'RECRUITING_AGENCY',
+      'ADVISOR',
+      'TRAINING_CENTER',
+      'FINANCE_PROVIDER',
+      'INSURANCE_PROVIDER',
+      'ACCOMMODATION_PROVIDER',
+    ],
+    sections: [
+      {
+        key: 'verification',
+        title: { bn: 'যাচাই কীভাবে হয়', en: 'How verification works' },
+        body: {
+          bn: 'প্রতিটি দাবির উৎস, তারিখ, মেয়াদ ও পদ্ধতি আলাদা করে রাখা হয়।',
+          en: 'Every claim records its source, date, expiry and method.',
+        },
+      },
+      {
+        key: 'ranking',
+        title: { bn: 'নিরপেক্ষ সুপারিশ', en: 'Neutral recommendations' },
+        body: {
+          bn: 'কমিশন অর্গানিক মিল বদলায় না; স্পনসরড ফল আলাদা।',
+          en: 'Commission does not change organic fit; sponsored results stay separate.',
+        },
+      },
+      {
+        key: 'privacy',
+        title: { bn: 'ডকুমেন্ট ও গোপনীয়তা', en: 'Documents and privacy' },
+        body: {
+          bn: 'সংবেদনশীল অ্যাক্সেসে সম্মতি, সীমা ও অডিট লাগে।',
+          en: 'Sensitive access requires consent, scope and audit.',
+        },
+      },
+    ],
+    recommendationNeutrality: {
+      organicRankingUsesCommission: false,
+      sponsoredSeparated: true,
+      partnerRelationshipDisclosed: true,
+    },
+    safetyBasicsPaywalled: false,
+    lastReviewedAt: new Date().toISOString(),
+  };
+}
+
+function demoCapabilities(): CapabilityRegistryItemDto[] {
+  const rows: Array<[string, 'P1' | 'P2', CapabilityRegistryItemDto['status'], string, string]> = [
+    ['advisor-network', 'P1', 'FOUNDATION_AVAILABLE', 'যাচাইকৃত উপদেষ্টা', 'Verified advisors'],
+    ['service-network', 'P1', 'FOUNDATION_AVAILABLE', 'যাচাইকৃত সেবা', 'Verified services'],
+    ['arrival-mode', 'P1', 'FOUNDATION_AVAILABLE', 'অ্যারাইভাল মোড', 'Arrival mode'],
+    ['moderated-community', 'P1', 'PILOT_ONLY', 'নিয়ন্ত্রিত কমিউনিটি', 'Moderated community'],
+    ['official-connectors', 'P1', 'EXTERNAL_DEPENDENCY', 'সরকারি কানেক্টর', 'Official connectors'],
+    ['assisted-centres', 'P2', 'PILOT_ONLY', 'সহায়তা কেন্দ্র', 'Assisted centres'],
+    [
+      'return-reintegration',
+      'P2',
+      'FOUNDATION_AVAILABLE',
+      'ফেরা ও পুনঃএকত্রীকরণ',
+      'Return and reintegration',
+    ],
+    [
+      'regulated-finance',
+      'P2',
+      'LEGAL_REVIEW_REQUIRED',
+      'নিয়ন্ত্রিত অর্থায়ন',
+      'Regulated finance',
+    ],
+  ];
+  return rows.map(([key, priority, status, bn, en]) => ({
+    key,
+    priority,
+    status,
+    title: { bn, en },
+    safeguards: [
+      {
+        bn: 'লাইভ হওয়ার আগে প্রমাণ ও পর্যালোচনা দরকার',
+        en: 'Evidence and review are required before going live',
+      },
+    ],
+    live: false,
+  }));
+}
+
 /**
  * Read-only fallback for the public platform when the separately deployed API is
  * not configured. It renders the repository's explicitly labelled demo catalogue;
@@ -563,7 +826,10 @@ export async function demoApiRequest<TResponse = unknown>(
         !query ||
         entry.key.includes(query) ||
         entry.title.en.toLowerCase().includes(query) ||
-        entry.title.bn.includes(query),
+        entry.title.bn.includes(query) ||
+        (query.includes('ইলেকট্রিশিয়ান') && entry.key === 'electrician') ||
+        (query.includes('নার্স') && entry.key === 'nurse') ||
+        (query.includes('চালক') && entry.key.includes('driver')),
     );
   } else if (pathname === '/api/v1/jobs') {
     payload = publishedJobs(url).map(jobSummary);
@@ -597,6 +863,20 @@ export async function demoApiRequest<TResponse = unknown>(
     payload = serviceDirectory(url);
   } else if (pathname === '/api/v1/public/outcomes/aggregates') {
     payload = outcomeAggregate(url);
+  } else if (pathname === '/api/v1/quick-check') {
+    payload = demoQuickCheck(requestOptions.body);
+  } else if (pathname === '/api/v1/route-coverages') {
+    const country = url.searchParams.get('country')?.toUpperCase();
+    payload = routes
+      .filter((route) => route.publicationStatus === 'published')
+      .filter((route) => !country || route.destinationCountry === country)
+      .map(demoRouteCoverage);
+  } else if (pathname === '/api/v1/official-actions') {
+    payload = demoOfficialActions();
+  } else if (pathname === '/api/v1/trust-center') {
+    payload = demoTrustCenter();
+  } else if (pathname === '/api/v1/mobility-capabilities') {
+    payload = demoCapabilities();
   } else {
     throw new ApiRequestError(503, 'API_UNAVAILABLE', 'This action requires the live API service');
   }

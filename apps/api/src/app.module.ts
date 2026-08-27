@@ -18,6 +18,7 @@ import { StudyModule } from './modules/study/study.module';
 import { OperationsModule } from './modules/operations/operations.module';
 import { SupplyModule } from './modules/supply/supply.module';
 import { OutcomesModule } from './modules/outcomes/outcomes.module';
+import { UnifiedMobilityModule } from './modules/unified/unified.module';
 
 /**
  * Bounded contexts as Nest modules (§44, ADR 0001). Modules talk through services
@@ -41,6 +42,7 @@ export class AppModule {
         OperationsModule,
         SupplyModule,
         OutcomesModule,
+        UnifiedMobilityModule,
         JobsModule,
         CasesModule,
         DocumentsModule,

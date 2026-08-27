@@ -40,6 +40,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/for-employers',
     '/for-agencies',
     '/for-government',
+    '/quick-check',
+    '/trust',
+    '/official-actions',
+    '/mobility-services',
+    '/visa',
+    '/departure',
+    '/arrival',
+    '/intelligence',
+    '/learn',
+    '/advisors',
+    '/events',
+    '/community',
+    '/return',
   ];
 
   // A sitemap must never take the site down: if the API is unreachable, the static

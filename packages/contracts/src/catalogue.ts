@@ -50,6 +50,26 @@ export const routeSummarySchema = z.object({
   expectedTimeline: z.object({ minDays: z.number(), maxDays: z.number() }).optional(),
   lastReviewedAt: z.string().optional(),
   freshness: z.enum(['fresh', 'ageing', 'stale', 'unknown']),
+  coverageMaturity: z
+    .enum([
+      'RESEARCH_ONLY',
+      'INFORMATION_VERIFIED',
+      'ELIGIBILITY_SUPPORTED',
+      'JOURNEY_SUPPORTED',
+      'PARTNER_SUPPORTED',
+      'TRANSACTION_SUPPORTED',
+    ])
+    .optional(),
+  bangladeshAccessibility: z
+    .enum([
+      'CONFIRMED_OPEN_TO_BANGLADESH',
+      'INTERNATIONAL_SPONSORSHIP_INDICATED',
+      'POTENTIALLY_ELIGIBLE',
+      'LOCAL_WORK_AUTHORIZATION_REQUIRED',
+      'NOT_CONFIRMED',
+      'NOT_ELIGIBLE',
+    ])
+    .optional(),
 });
 export type RouteSummaryDto = z.infer<typeof routeSummarySchema>;
 
@@ -159,6 +179,15 @@ export const jobSummarySchema = z.object({
   recruitmentFeePaidBy: z.string(),
   demandValidTo: z.string(),
   isSyntheticDemoData: z.boolean(),
+  bangladeshAccessibility: z.enum([
+    'CONFIRMED_OPEN_TO_BANGLADESH',
+    'INTERNATIONAL_SPONSORSHIP_INDICATED',
+    'POTENTIALLY_ELIGIBLE',
+    'LOCAL_WORK_AUTHORIZATION_REQUIRED',
+    'NOT_CONFIRMED',
+    'NOT_ELIGIBLE',
+  ]),
+  accessibilityReason: localizedTextSchema,
 });
 export type JobSummaryDto = z.infer<typeof jobSummarySchema>;
 

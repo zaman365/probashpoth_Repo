@@ -45,6 +45,21 @@ import type {
   PartnerPipelineEventRecord,
   OutcomeReviewRecord,
 } from '../records';
+import type {
+  ApplicationQaReviewRecord,
+  CaseApprovalRecord,
+  CaseEventRecord,
+  CaseParticipantRecord,
+  CaseRiskFlagRecord,
+  LifecycleResourceRecord,
+  MobilityRoiAssessmentRecord,
+  OfficialActionCompletionRecord,
+  OfficialActionRecord,
+  RouteCoverageRecord,
+  SavedItemRecord,
+  SubmissionSnapshotRecord,
+  UniversalDeadlineRecord,
+} from '../unified-records';
 
 /**
  * Development storage driver (ADR 0001). Reference data comes from the validated
@@ -94,6 +109,28 @@ export class MemoryStorage implements Storage {
   readonly consents = new MemoryCollection<ConsentRecordRow>('consent');
   readonly delegations = new MemoryCollection<DelegationRecord>('delegation');
   readonly credentials = new MemoryCollection<CredentialRecord>('credential');
+
+  readonly officialActions = new MemoryCollection<OfficialActionRecord>('official_action');
+  readonly officialActionCompletions = new MemoryCollection<OfficialActionCompletionRecord>(
+    'official_action_completion',
+  );
+  readonly routeCoverages = new MemoryCollection<RouteCoverageRecord>('route_coverage');
+  readonly savedItems = new MemoryCollection<SavedItemRecord>('saved_item');
+  readonly universalDeadlines = new MemoryCollection<UniversalDeadlineRecord>('universal_deadline');
+  readonly mobilityRoiAssessments = new MemoryCollection<MobilityRoiAssessmentRecord>(
+    'mobility_roi_assessment',
+  );
+  readonly submissionSnapshots = new MemoryCollection<SubmissionSnapshotRecord>(
+    'submission_snapshot',
+  );
+  readonly applicationQaReviews = new MemoryCollection<ApplicationQaReviewRecord>(
+    'application_qa_review',
+  );
+  readonly caseParticipants = new MemoryCollection<CaseParticipantRecord>('case_participant');
+  readonly caseEvents = new MemoryCollection<CaseEventRecord>('case_event');
+  readonly caseApprovals = new MemoryCollection<CaseApprovalRecord>('case_approval');
+  readonly caseRiskFlags = new MemoryCollection<CaseRiskFlagRecord>('case_risk_flag');
+  readonly lifecycleResources = new MemoryCollection<LifecycleResourceRecord>('lifecycle_resource');
 
   readonly countries;
   readonly sources;
@@ -172,6 +209,19 @@ export class MemoryStorage implements Storage {
     this.consents.clear();
     this.delegations.clear();
     this.credentials.clear();
+    this.officialActions.clear();
+    this.officialActionCompletions.clear();
+    this.routeCoverages.clear();
+    this.savedItems.clear();
+    this.universalDeadlines.clear();
+    this.mobilityRoiAssessments.clear();
+    this.submissionSnapshots.clear();
+    this.applicationQaReviews.clear();
+    this.caseParticipants.clear();
+    this.caseEvents.clear();
+    this.caseApprovals.clear();
+    this.caseRiskFlags.clear();
+    this.lifecycleResources.clear();
     this.cases.clear();
     this.caseTasks.clear();
     this.caseMilestones.clear();

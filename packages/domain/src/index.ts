@@ -26,3 +26,4 @@ export * from './credentials';
 export * from './consent';
 export * from './passport';
 export * from './matching';
+export * from './unified-mobility';

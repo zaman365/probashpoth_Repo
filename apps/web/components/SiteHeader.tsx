@@ -35,6 +35,7 @@ export function SiteHeader({
    * seen or clicked are worse than links that are not there.
    */
   const links = [
+    { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
     {
       href: `/${seg}/verify`,
       label: t('home.verifyOffer'),
@@ -43,6 +44,7 @@ export function SiteHeader({
     { href: `/${seg}/work`, label: t('nav.work') },
     { href: `/${seg}/study`, label: t('nav.study') },
     { href: `/${seg}/countries`, label: t('nav.countries') },
+    { href: `/${seg}/trust`, label: t('unified.trustCenter') },
   ];
 
   return (
@@ -88,6 +90,9 @@ export function SiteHeader({
           </summary>
           <nav aria-label={t('common.menu')}>
             <Link href={`/${seg}/passport`}>{t('passport.title')}</Link>
+            <Link href={`/${seg}/quick-check`}>{t('unified.quickCheck')}</Link>
+            <Link href={`/${seg}/trust`}>{t('unified.trustCenter')}</Link>
+            <Link href={`/${seg}/official-actions`}>{t('unified.officialActions')}</Link>
             <Link href={`/${seg}/countries`}>{t('guide.browseCountries')}</Link>
             <Link href={`/${seg}/occupations`}>{t('guide.browseOccupations')}</Link>
             <Link href={`/${seg}/work`}>{t('intent.work')}</Link>
@@ -97,6 +102,16 @@ export function SiteHeader({
             <Link href={`/${seg}/safety`}>{t('guide.learnSafety')}</Link>
             <Link href={`/${seg}/services`}>{t('nav.services')}</Link>
             <Link href={`/${seg}/outcomes`}>{t('outcomeIntelligence.title')}</Link>
+            <Link href={`/${seg}/visa`}>{t('unified.visa')}</Link>
+            <Link href={`/${seg}/departure`}>{t('unified.departure')}</Link>
+            <Link href={`/${seg}/arrival`}>{t('unified.arrival')}</Link>
+            <Link href={`/${seg}/intelligence`}>{t('unified.intelligence')}</Link>
+            <Link href={`/${seg}/learn`}>{t('unified.learn')}</Link>
+            <Link href={`/${seg}/advisors`}>{t('unified.advisors')}</Link>
+            <Link href={`/${seg}/events`}>{t('unified.events')}</Link>
+            <Link href={`/${seg}/community`}>{t('unified.community')}</Link>
+            <Link href={`/${seg}/return`}>{t('unified.return')}</Link>
+            <Link href={`/${seg}/mobility-services`}>{t('unified.mobilityServices')}</Link>
             <Link href={`/${seg}/partners`}>{t('supply.title')}</Link>
             <Link href={`/${seg}/how-it-works`}>{t('site.howItWorksTitle')}</Link>
             <Link href={`/${seg}/cases`}>{t('home.myApplications')}</Link>

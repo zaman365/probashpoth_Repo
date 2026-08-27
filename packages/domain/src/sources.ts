@@ -26,6 +26,18 @@ export interface RegulatorySource {
   /** sha256 of the last raw snapshot — immutable evidence of what we read (§42.15). */
   lastSnapshotHash?: string;
   notes?: LocalizedText;
+  /** Unified guide §18.4. Optional during additive backfill; material rules must prefer tiers 1–4. */
+  trustTier?:
+    | 'TIER_1_OFFICIAL'
+    | 'TIER_2_REGULATOR_OR_PUBLIC_BODY'
+    | 'TIER_3_INSTITUTION_OR_EMPLOYER'
+    | 'TIER_4_VERIFIED_PARTNER'
+    | 'TIER_5_SECONDARY_REFERENCE';
+  jurisdiction?: string;
+  language?: string;
+  effectiveFrom?: string;
+  effectiveTo?: string;
+  status?: 'ACTIVE' | 'STALE' | 'UNAVAILABLE' | 'REPLACED' | 'REVIEW_REQUIRED';
 }
 
 export interface SourceRef {

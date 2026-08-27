@@ -18,8 +18,8 @@ export interface IntentFacts {
 
 /**
  * The segmented control itself: two links, never state. It appears twice — in the
- * hero and above the cards — and both instances read and write the same URL, so they
- * can never disagree about what is selected.
+ * after the hero and above the comparison cards — and both instances read and write
+ * the same URL, so they can never disagree about what is selected.
  *
  * `tone="canvas"` is the variant for the dark hero; `light` is for ordinary sections.
  */

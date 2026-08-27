@@ -30,7 +30,7 @@ export interface ConsentRecord {
   resourceId?: string;
 }
 
-/** §28 — family co-pilot permissions. Deliberately cannot include identity or contract changes. */
+/** §29 — explicit, revocable delegate permissions; sensitive capabilities default off. */
 export type DelegationPermission =
   | 'view_progress'
   | 'view_cost'
@@ -39,7 +39,13 @@ export type DelegationPermission =
   | 'contact_support'
   | 'emergency_access'
   | 'approve_high_value_payment'
-  | 'view_contract_summary';
+  | 'view_contract_summary'
+  | 'upload_documents'
+  | 'join_session'
+  | 'view_documents'
+  | 'edit_profile_draft'
+  | 'approve_submission'
+  | 'view_messages';
 
 export const DELEGATION_PERMISSIONS: readonly DelegationPermission[] = [
   'view_progress',
@@ -50,6 +56,12 @@ export const DELEGATION_PERMISSIONS: readonly DelegationPermission[] = [
   'emergency_access',
   'approve_high_value_payment',
   'view_contract_summary',
+  'upload_documents',
+  'join_session',
+  'view_documents',
+  'edit_profile_draft',
+  'approve_submission',
+  'view_messages',
 ] as const;
 
 export type DelegationRelationship = 'spouse' | 'parent' | 'sibling' | 'child' | 'trusted_person';

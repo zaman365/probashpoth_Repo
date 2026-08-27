@@ -52,6 +52,22 @@ export const envSchema = z.object({
   OTEL_EXPORTER_OTLP_ENDPOINT: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
   REGULATORY_FETCH_USER_AGENT: z.string().default('ProbashOS-RegulatoryFetcher/0.1'),
+
+  FEATURE_UNIFIED_MOBILITY_CORE: z.enum(['false', 'true']).default('true'),
+  FEATURE_QUICK_CHECK: z.enum(['false', 'true']).default('true'),
+  FEATURE_OFFICIAL_ACTION_HANDOFFS: z.enum(['false', 'true']).default('true'),
+  FEATURE_APPLICATION_QA_GATE: z.enum(['false', 'true']).default('true'),
+  FEATURE_MOBILITY_ROI: z.enum(['false', 'true']).default('true'),
+  FEATURE_TRUST_CENTER: z.enum(['false', 'true']).default('true'),
+  FEATURE_GROUNDED_COPILOT: z.enum(['false', 'true']).default('true'),
+  FEATURE_ADVISOR_NETWORK: z.enum(['false', 'true']).default('false'),
+  FEATURE_SERVICE_NETWORK: z.enum(['false', 'true']).default('false'),
+  FEATURE_ARRIVAL_MODE: z.enum(['false', 'true']).default('false'),
+  FEATURE_JOURNEY_LEARNING: z.enum(['false', 'true']).default('false'),
+  FEATURE_MODERATED_COMMUNITY: z.enum(['false', 'true']).default('false'),
+  FEATURE_OPPORTUNITY_EVENTS: z.enum(['false', 'true']).default('false'),
+  FEATURE_ASSISTED_CENTRES: z.enum(['false', 'true']).default('false'),
+  FEATURE_RETURN_REINTEGRATION: z.enum(['false', 'true']).default('false'),
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -167,6 +183,21 @@ export interface FeatureFlags {
   liveLicensedPaymentProvider: boolean;
   temporalWorkflows: boolean;
   documentMalwareScanning: boolean;
+  unifiedMobilityCore: boolean;
+  quickCheck: boolean;
+  officialActionHandoffs: boolean;
+  applicationQaGate: boolean;
+  mobilityRoi: boolean;
+  trustCenter: boolean;
+  groundedCopilot: boolean;
+  advisorNetwork: boolean;
+  serviceNetwork: boolean;
+  arrivalMode: boolean;
+  journeyLearning: boolean;
+  moderatedCommunity: boolean;
+  opportunityEvents: boolean;
+  assistedCentres: boolean;
+  returnReintegration: boolean;
 }
 
 export function featureFlags(env: Env): FeatureFlags {
@@ -178,6 +209,21 @@ export function featureFlags(env: Env): FeatureFlags {
     liveLicensedPaymentProvider: false,
     temporalWorkflows: false,
     documentMalwareScanning: env.DOCUMENT_MALWARE_SCANNING_ENABLED === 'true',
+    unifiedMobilityCore: env.FEATURE_UNIFIED_MOBILITY_CORE === 'true',
+    quickCheck: env.FEATURE_QUICK_CHECK === 'true',
+    officialActionHandoffs: env.FEATURE_OFFICIAL_ACTION_HANDOFFS === 'true',
+    applicationQaGate: env.FEATURE_APPLICATION_QA_GATE === 'true',
+    mobilityRoi: env.FEATURE_MOBILITY_ROI === 'true',
+    trustCenter: env.FEATURE_TRUST_CENTER === 'true',
+    groundedCopilot: env.FEATURE_GROUNDED_COPILOT === 'true',
+    advisorNetwork: env.FEATURE_ADVISOR_NETWORK === 'true',
+    serviceNetwork: env.FEATURE_SERVICE_NETWORK === 'true',
+    arrivalMode: env.FEATURE_ARRIVAL_MODE === 'true',
+    journeyLearning: env.FEATURE_JOURNEY_LEARNING === 'true',
+    moderatedCommunity: env.FEATURE_MODERATED_COMMUNITY === 'true',
+    opportunityEvents: env.FEATURE_OPPORTUNITY_EVENTS === 'true',
+    assistedCentres: env.FEATURE_ASSISTED_CENTRES === 'true',
+    returnReintegration: env.FEATURE_RETURN_REINTEGRATION === 'true',
   };
 }
 

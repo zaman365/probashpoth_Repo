@@ -8,6 +8,12 @@ export interface SourceSummary {
   url: string;
   lastReviewedAt?: string;
   freshness: 'fresh' | 'ageing' | 'stale' | 'unknown';
+  trustTier?:
+    | 'TIER_1_OFFICIAL'
+    | 'TIER_2_REGULATOR_OR_PUBLIC_BODY'
+    | 'TIER_3_INSTITUTION_OR_EMPLOYER'
+    | 'TIER_4_VERIFIED_PARTNER'
+    | 'TIER_5_SECONDARY_REFERENCE';
 }
 
 const FRESHNESS_CLASS: Record<SourceSummary['freshness'], string> = {
@@ -43,6 +49,9 @@ export function SourceCitation({ sources, locale }: { sources: SourceSummary[]; 
             <span className={`badge ${FRESHNESS_CLASS[source.freshness]}`}>
               {t(FRESHNESS_KEY[source.freshness])}
             </span>
+            {source.trustTier ? (
+              <span className="badge badge-neutral">{source.trustTier}</span>
+            ) : null}
             {source.lastReviewedAt ? (
               <span className="muted">
                 {t('verification.lastVerified')}: {source.lastReviewedAt.slice(0, 10)}

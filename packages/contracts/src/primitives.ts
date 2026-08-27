@@ -26,6 +26,16 @@ export const sourceSummarySchema = z.object({
   kind: z.string(),
   lastReviewedAt: z.string().optional(),
   freshness: z.enum(['fresh', 'ageing', 'stale', 'unknown']),
+  trustTier: z
+    .enum([
+      'TIER_1_OFFICIAL',
+      'TIER_2_REGULATOR_OR_PUBLIC_BODY',
+      'TIER_3_INSTITUTION_OR_EMPLOYER',
+      'TIER_4_VERIFIED_PARTNER',
+      'TIER_5_SECONDARY_REFERENCE',
+    ])
+    .optional(),
+  status: z.enum(['ACTIVE', 'STALE', 'UNAVAILABLE', 'REPLACED', 'REVIEW_REQUIRED']).optional(),
 });
 export type SourceSummaryDto = z.infer<typeof sourceSummarySchema>;
 

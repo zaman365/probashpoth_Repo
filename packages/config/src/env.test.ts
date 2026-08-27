@@ -77,4 +77,17 @@ describe('environment loading', () => {
     expect(flags.liveLicensedPaymentProvider).toBe(false);
     expect(flags.liveOfficialSourceFetch).toBe(false);
   });
+
+  it('enables deterministic P0 mobility tools but keeps operating networks gated', () => {
+    const flags = featureFlags(loadEnv({}));
+    expect(flags.quickCheck).toBe(true);
+    expect(flags.applicationQaGate).toBe(true);
+    expect(flags.mobilityRoi).toBe(true);
+    expect(flags.trustCenter).toBe(true);
+    expect(flags.advisorNetwork).toBe(false);
+    expect(flags.moderatedCommunity).toBe(false);
+    expect(flags.assistedCentres).toBe(false);
+
+    expect(featureFlags(loadEnv({ FEATURE_QUICK_CHECK: 'false' })).quickCheck).toBe(false);
+  });
 });

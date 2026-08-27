@@ -135,6 +135,12 @@ export const createDelegationSchema = z.object({
         'emergency_access',
         'approve_high_value_payment',
         'view_contract_summary',
+        'upload_documents',
+        'join_session',
+        'view_documents',
+        'edit_profile_draft',
+        'approve_submission',
+        'view_messages',
       ]),
     )
     .min(1),

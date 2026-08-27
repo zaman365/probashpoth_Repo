@@ -10,6 +10,8 @@ import { Notice, t } from '../components/MobileUi';
  * ≥48px targets, text + icon, one question per screen.
  */
 const ACTIONS = [
+  { href: '/quick-check', icon: '⚡', key: 'unified.quickCheck' },
+  { href: '/trust', icon: '🛡️', key: 'unified.trustCenter' },
   { href: '/sign-in', icon: '🔐', key: 'mobile.signIn' },
   { href: '/passport', icon: '🪪', key: 'mobile.passport' },
   { href: '/matches', icon: '🧭', key: 'mobile.matches' },
