@@ -73,6 +73,7 @@ body.site-root {
 }
 
 .site-root .site-header-row {
+  position: relative;
   min-height: 78px;
   padding: 0;
   gap: clamp(18px, 2.4vw, 38px);
@@ -120,7 +121,7 @@ body.site-root {
   overflow: visible;
 }
 
-.site-root .site-nav-desktop a {
+.site-root .site-nav-desktop > a {
   position: relative;
   min-height: 40px;
   padding-inline: clamp(9px, 1vw, 15px);
@@ -134,7 +135,7 @@ body.site-root {
     background 160ms ease;
 }
 
-.site-root .site-nav-desktop a::after {
+.site-root .site-nav-desktop > a::after {
   position: absolute;
   right: 14px;
   bottom: 4px;
@@ -150,14 +151,122 @@ body.site-root {
     transform 160ms ease;
 }
 
-.site-root .site-nav-desktop a:hover {
+.site-root .site-nav-desktop > a:hover {
   background: #edf5f0;
   color: #075b40;
 }
 
-.site-root .site-nav-desktop a:hover::after {
+.site-root .site-nav-desktop > a:hover::after {
   opacity: 1;
   transform: scaleX(1);
+}
+
+.site-root .site-nav-directory {
+  position: static;
+}
+
+.site-root .site-nav-directory > summary {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 6px;
+  padding-inline: clamp(9px, 1vw, 15px);
+  border-radius: 10px;
+  color: #3e4e46;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 650;
+  list-style: none;
+}
+
+.site-root .site-nav-directory > summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-root .site-nav-directory > summary svg {
+  transform: rotate(90deg);
+  transition: transform 160ms ease;
+}
+
+.site-root .site-nav-directory > summary:hover,
+.site-root .site-nav-directory[open] > summary {
+  background: #edf5f0;
+  color: #075b40;
+}
+
+.site-root .site-nav-directory[open] > summary svg {
+  transform: rotate(-90deg);
+}
+
+.site-root .site-nav-directory-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  z-index: 4;
+  width: min(1080px, calc(100vw - 48px));
+  max-height: min(76svh, 720px);
+  overflow: auto;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid #c5d0c8;
+  border-radius: 22px;
+  background: rgb(255 254 250 / 99%);
+  box-shadow: 0 30px 90px rgb(11 42 33 / 22%);
+  transform: translateX(-50%);
+}
+
+.site-root .site-nav-directory-intro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-block-end: 24px;
+  padding-block-end: 18px;
+  border-block-end: 1px solid #dce2dd;
+}
+
+.site-root .site-nav-directory-intro strong {
+  color: #0b2a21;
+  font-size: 1.15rem;
+}
+
+.site-root .site-nav-directory-intro span {
+  color: #617068;
+  font-size: 0.8rem;
+}
+
+.site-root .site-nav-directory-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px 42px;
+}
+
+.site-root .site-nav-directory-groups h2 {
+  margin-block-end: 8px;
+  color: #77837c;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.site-root .site-nav-directory-groups section > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+
+.site-root .site-nav-directory-groups a {
+  min-height: 38px;
+  padding: 8px 0;
+  border-block-end: 1px solid #e4e8e5;
+  color: #1e3028;
+  font-size: 0.84rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.site-root .site-nav-directory-groups a:hover {
+  color: #08734f;
 }
 
 .site-root .site-header-actions {
@@ -1216,8 +1325,8 @@ html[lang='bn'] .site-root .talent-os-intro h2 {
 }
 
 .site-root .site-footer-columns {
-  grid-template-columns: 1.2fr 1.2fr 1fr 1fr;
-  gap: clamp(28px, 4vw, 58px);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 46px);
 }
 
 .site-root .site-footer-columns h2 {
@@ -1263,6 +1372,10 @@ html[lang='bn'] .site-root .talent-os-intro h2 {
 @media (max-width: 1180px) {
   .site-root .site-brand-copy small {
     display: none;
+  }
+
+  .site-root .site-footer-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .site-root .site-footer-legal {

@@ -6,6 +6,7 @@ import { OfflineBanner } from './OfflineBanner';
 import { AccountControl } from './AccountControl';
 import type { ChatGPTUser } from '@/app/chatgpt-auth';
 import type { OperationalProfile } from '@/db/operations';
+import { buildSiteNavigation } from './siteNavigation';
 
 /**
  * §14.1 — site chrome. The whole public surface is reachable from every page, and the
@@ -47,70 +48,7 @@ export function SiteHeader({
     },
   ];
 
-  const mobileGroups = [
-    {
-      title: t('site.footerProduct'),
-      links: [
-        { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
-        { href: `/${seg}/work`, label: t('intent.work') },
-        { href: `/${seg}/study`, label: t('intent.study') },
-        { href: `/${seg}/jobs`, label: t('home.findWork') },
-        { href: `/${seg}/scholarships`, label: t('scholarships.nav') },
-        { href: `/${seg}/verify`, label: t('home.verifyOffer') },
-      ],
-    },
-    {
-      title: t('site.footerGuides'),
-      links: [
-        { href: `/${seg}/countries`, label: t('guide.browseCountries') },
-        { href: `/${seg}/occupations`, label: t('guide.browseOccupations') },
-        { href: `/${seg}/safety`, label: t('guide.learnSafety') },
-        { href: `/${seg}/explore`, label: t('home.howMuchCost') },
-        { href: `/${seg}/services`, label: t('nav.services') },
-        { href: `/${seg}/outcomes`, label: t('outcomeIntelligence.title') },
-      ],
-    },
-    {
-      title: t('unified.mobilityServices'),
-      links: [
-        { href: `/${seg}/visa`, label: t('unified.visa') },
-        { href: `/${seg}/departure`, label: t('unified.departure') },
-        { href: `/${seg}/arrival`, label: t('unified.arrival') },
-        { href: `/${seg}/intelligence`, label: t('unified.intelligence') },
-        { href: `/${seg}/learn`, label: t('unified.learn') },
-        { href: `/${seg}/advisors`, label: t('unified.advisors') },
-        { href: `/${seg}/events`, label: t('unified.events') },
-        { href: `/${seg}/community`, label: t('unified.community') },
-        { href: `/${seg}/return`, label: t('unified.return') },
-        { href: `/${seg}/mobility-services`, label: t('unified.mobilityServices') },
-      ],
-    },
-    {
-      title: t('unified.trustCenter'),
-      links: [
-        { href: `/${seg}/trust`, label: t('unified.trustCenter') },
-        { href: `/${seg}/official-actions`, label: t('unified.officialActions') },
-      ],
-    },
-    {
-      title: t('site.footerOrganizations'),
-      links: [
-        { href: `/${seg}/for-employers`, label: t('site.orgEmployers') },
-        { href: `/${seg}/for-agencies`, label: t('site.orgAgencies') },
-        { href: `/${seg}/for-government`, label: t('site.orgGovernment') },
-        { href: `/${seg}/partners`, label: t('supply.title') },
-      ],
-    },
-    {
-      title: t('site.footerAbout'),
-      links: [
-        { href: `/${seg}/about`, label: t('site.aboutTitle') },
-        { href: `/${seg}/how-it-works`, label: t('site.howItWorksTitle') },
-        { href: `/${seg}/faq`, label: t('site.faqPageTitle') },
-        { href: `/${seg}/help`, label: t('common.help') },
-      ],
-    },
-  ];
+  const navigationGroups = buildSiteNavigation(t, seg);
 
   return (
     <header className="site-header no-print">
@@ -131,6 +69,32 @@ export function SiteHeader({
                 <span>{link.label}</span>
               </Link>
             ))}
+            <details className="site-nav-directory">
+              <summary>
+                <span>{t('nav.services')}</span>
+                <Icon name="arrow" size={15} />
+              </summary>
+              <div className="site-nav-directory-panel">
+                <div className="site-nav-directory-intro">
+                  <strong>{productName}</strong>
+                  <span>{t('site.tagline')}</span>
+                </div>
+                <div className="site-nav-directory-groups">
+                  {navigationGroups.map((group) => (
+                    <section key={group.title}>
+                      <h2>{group.title}</h2>
+                      <div>
+                        {group.links.map((link) => (
+                          <Link key={link.href} href={link.href}>
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              </div>
+            </details>
           </nav>
 
           <div className="site-header-actions">
@@ -161,7 +125,7 @@ export function SiteHeader({
                   <span>{t('site.tagline')}</span>
                 </div>
                 <nav aria-label={t('common.menu')}>
-                  {mobileGroups.map((group) => (
+                  {navigationGroups.map((group) => (
                     <section key={group.title}>
                       <h2>{group.title}</h2>
                       <div>

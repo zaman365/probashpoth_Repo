@@ -2,56 +2,13 @@ import Link from 'next/link';
 import type { Locale } from '@probash/domain';
 import { Container, Icon, LogoMark } from '@probash/web-ui';
 import { localeSegment, translator } from '@/lib/i18n';
+import { buildSiteNavigation } from './siteNavigation';
 
-/** A curated public site map; the complete route directory lives in the mobile menu. */
+/** Complete, structured route directory shared with the global menus. */
 export function SiteFooter({ locale, productName }: { locale: Locale; productName: string }) {
   const t = translator(locale);
   const seg = localeSegment(locale);
-
-  const columns = [
-    {
-      title: t('site.footerProduct'),
-      links: [
-        { href: `/${seg}/quick-check`, label: t('unified.quickCheck') },
-        { href: `/${seg}/work`, label: t('intent.work') },
-        { href: `/${seg}/study`, label: t('intent.study') },
-        { href: `/${seg}/jobs`, label: t('home.findWork') },
-        { href: `/${seg}/scholarships`, label: t('scholarships.nav') },
-        { href: `/${seg}/verify`, label: t('home.verifyOffer') },
-      ],
-    },
-    {
-      title: t('site.footerGuides'),
-      links: [
-        { href: `/${seg}/countries`, label: t('guide.countriesTitle') },
-        { href: `/${seg}/occupations`, label: t('guide.occupationsTitle') },
-        { href: `/${seg}/safety`, label: t('guide.safetyTitle') },
-        { href: `/${seg}/explore`, label: t('home.howMuchCost') },
-        { href: `/${seg}/services`, label: t('nav.services') },
-        { href: `/${seg}/outcomes`, label: t('outcomeIntelligence.title') },
-        { href: `/${seg}/trust`, label: t('unified.trustCenter') },
-      ],
-    },
-    {
-      title: t('site.footerOrganizations'),
-      links: [
-        { href: `/${seg}/for-employers`, label: t('site.orgEmployers') },
-        { href: `/${seg}/for-agencies`, label: t('site.orgAgencies') },
-        { href: `/${seg}/for-government`, label: t('site.orgGovernment') },
-        { href: `/${seg}/partners`, label: t('supply.title') },
-      ],
-    },
-    {
-      title: t('site.footerAbout'),
-      links: [
-        { href: `/${seg}/about`, label: t('site.aboutTitle') },
-        { href: `/${seg}/how-it-works`, label: t('site.howItWorksTitle') },
-        { href: `/${seg}/faq`, label: t('site.faqPageTitle') },
-        { href: `/${seg}/legal`, label: t('site.legalTitle') },
-        { href: `/${seg}/help`, label: t('common.help') },
-      ],
-    },
-  ];
+  const navigationGroups = buildSiteNavigation(t, seg);
 
   return (
     <footer className="site-footer no-print">
@@ -72,11 +29,11 @@ export function SiteFooter({ locale, productName }: { locale: Locale; productNam
         </div>
 
         <div className="site-footer-columns">
-          {columns.map((column) => (
-            <nav key={column.title} aria-label={column.title}>
-              <h2>{column.title}</h2>
+          {navigationGroups.map((group) => (
+            <nav key={group.title} aria-label={group.title}>
+              <h2>{group.title}</h2>
               <ul>
-                {column.links.map((link) => (
+                {group.links.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href}>{link.label}</Link>
                   </li>

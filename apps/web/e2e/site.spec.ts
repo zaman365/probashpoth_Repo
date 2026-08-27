@@ -74,11 +74,16 @@ test('desktop shows the full navigation; small screens get a no-JS menu', async 
   await expect(menu.getByRole('link', { name: 'দেশ দেখুন' })).toBeVisible();
 });
 
-test('the footer works as a site map in four columns', async ({ page }) => {
+test('the footer exposes the complete site map in structured groups', async ({ page }) => {
   await page.goto('/bn');
   const footer = page.locator('.site-footer');
-  await expect(footer.locator('nav')).toHaveCount(4);
-  await expect(footer.getByRole('link', { name: 'দেশভিত্তিক তথ্য' })).toBeVisible();
+  await expect(footer.locator('nav')).toHaveCount(6);
+  await expect(footer.locator('nav a')).toHaveCount(44);
+  await expect(footer.getByRole('link', { name: 'দেশ দেখুন' })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'আমার আবেদন' })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'সুরক্ষিত নথি' })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'অভিবাসন লেজার' })).toBeVisible();
+  await expect(footer.getByRole('link', { name: 'সতর্কতা ও ডেডলাইন' })).toBeVisible();
   await expect(footer.getByRole('link', { name: 'আইনগত অবস্থান' })).toBeVisible();
   await expect(footer.getByText('ডেমো তথ্য — এটি আসল চাকরি নয়')).toBeVisible();
 });
