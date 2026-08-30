@@ -33,6 +33,11 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
 
+      # ADR 0012 — unit tests exercise source, not packaging. This starts the built
+      # API and the built Worker and asks for a real Bangla page.
+      - name: Smoke test built artefacts
+        run: pnpm smoke:built
+
       # §64 — the seed must stay internally consistent and fully labelled as synthetic.
       - name: Verify development seed
         run: pnpm seed
@@ -58,11 +63,19 @@ jobs:
       - run: pnpm build
       - run: pnpm --filter @probash/web exec playwright install --with-deps chromium
 
-      - name: Start API and web
+      # ADR 0012 — apps/web is built by `vinext build` into a Cloudflare Workers
+      # bundle that imports `cloudflare:` scheme modules. `next start` cannot serve
+      # it: there is no .next production build, and Node's ESM loader rejects that
+      # scheme. E2E therefore runs the artefact on the runtime that ships it.
+      # Bindings stay in Wrangler's local mode, so no Cloudflare account is used.
+      - name: Start API and built web Worker
         run: |
           APP_ENV=test PORT=3001 node apps/api/dist/main.js &
-          API_BASE_URL=http://localhost:3001 pnpm --filter @probash/web exec next start --port 3000 &
-          npx --yes wait-on http://localhost:3001/api/v1/health http://localhost:3000/bn
+          API_BASE_URL=http://localhost:3001 WRANGLER_SEND_METRICS=false \
+            pnpm --filter @probash/web exec wrangler dev \
+              --config dist/server/wrangler.json --port 3000 --ip 127.0.0.1 &
+          npx --yes wait-on --timeout 180000 \
+            http://localhost:3001/api/v1/health http://localhost:3000/bn
 
       - run: pnpm --filter @probash/web test:e2e
       - uses: actions/upload-artifact@v4

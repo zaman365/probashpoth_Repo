@@ -13,6 +13,7 @@
 | [0009](0009-temporal-workflows.md)         | Queues deliver short jobs; Temporal remains for long-running cases pending comparison    | Delivery retries and durable human business workflows are different responsibilities             |
 | [0010](0010-d1-postgres-cutover.md)        | Signed export, shadow reconciliation, write freeze and explicit rollback                 | Avoids two sources of truth and makes aborting safe                                              |
 | [0011](0011-hostname-boundaries.md)        | Separate public, app, API and operations hostnames progressively                         | Enables independent controls without breaking the current journey                                |
+| [0012](0012-cloudflare-web-runtime.md)     | Cloudflare Workers is the only supported runtime for the built apps/web artefact         | A Node server cannot serve the Workers bundle, so CI must test what actually deploys             |
 
 ## Writing a new ADR
 

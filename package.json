@@ -39,6 +39,7 @@
     "services:up": "docker compose -f infra/docker/docker-compose.yml up -d",
     "services:down": "docker compose -f infra/docker/docker-compose.yml down",
     "e2e:web": "pnpm --filter @probash/web test:e2e",
+    "smoke:built": "node scripts/smoke-built.mjs",
     "release:gate": "node scripts/verify-release-gate.mjs",
     "migration:inventory": "node scripts/migration/create-inventory.mjs",
     "migration:reconcile": "node scripts/migration/reconcile-inventories.mjs"

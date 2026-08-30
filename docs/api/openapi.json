@@ -10,7 +10,9 @@
             "description": ""
           }
         },
-        "tags": ["health"]
+        "tags": [
+          "health"
+        ]
       }
     },
     "/api/v1/auth/request-otp": {
@@ -22,7 +24,9 @@
             "description": ""
           }
         },
-        "tags": ["identity"]
+        "tags": [
+          "identity"
+        ]
       }
     },
     "/api/v1/auth/verify-otp": {
@@ -34,7 +38,9 @@
             "description": ""
           }
         },
-        "tags": ["identity"]
+        "tags": [
+          "identity"
+        ]
       }
     },
     "/api/v1/me": {
@@ -51,7 +57,9 @@
             "bearer": []
           }
         ],
-        "tags": ["identity"]
+        "tags": [
+          "identity"
+        ]
       }
     },
     "/api/v1/me/profile": {
@@ -68,7 +76,9 @@
             "bearer": []
           }
         ],
-        "tags": ["identity"]
+        "tags": [
+          "identity"
+        ]
       }
     },
     "/api/v1/me/skill-passport": {
@@ -85,7 +95,9 @@
             "bearer": []
           }
         ],
-        "tags": ["identity"]
+        "tags": [
+          "identity"
+        ]
       }
     },
     "/api/v1/delegations": {
@@ -102,7 +114,9 @@
             "bearer": []
           }
         ],
-        "tags": ["delegations"]
+        "tags": [
+          "delegations"
+        ]
       },
       "post": {
         "operationId": "DelegationsController_invite",
@@ -117,7 +131,9 @@
             "bearer": []
           }
         ],
-        "tags": ["delegations"]
+        "tags": [
+          "delegations"
+        ]
       }
     },
     "/api/v1/delegations/{id}": {
@@ -143,7 +159,9 @@
             "bearer": []
           }
         ],
-        "tags": ["delegations"]
+        "tags": [
+          "delegations"
+        ]
       }
     },
     "/api/v1/countries": {
@@ -172,7 +190,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/countries/{code}/routes": {
@@ -201,7 +221,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/routes": {
@@ -230,7 +252,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/routes/{id}": {
@@ -251,7 +275,32 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
+      }
+    },
+    "/api/v1/countries/{code}/profile": {
+      "get": {
+        "operationId": "CatalogueController_countryProfile",
+        "parameters": [
+          {
+            "name": "code",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/occupations": {
@@ -272,7 +321,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/sources": {
@@ -293,7 +344,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/institutions": {
@@ -314,7 +367,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/courses": {
@@ -335,7 +390,9 @@
             "description": ""
           }
         },
-        "tags": ["catalogue"]
+        "tags": [
+          "catalogue"
+        ]
       }
     },
     "/api/v1/eligibility/evaluate": {
@@ -347,7 +404,9 @@
             "description": ""
           }
         },
-        "tags": ["eligibility"]
+        "tags": [
+          "eligibility"
+        ]
       }
     },
     "/api/v1/eligibility/evaluate/me": {
@@ -364,7 +423,1325 @@
             "bearer": []
           }
         ],
-        "tags": ["eligibility"]
+        "tags": [
+          "eligibility"
+        ]
+      }
+    },
+    "/api/v1/me/passport": {
+      "get": {
+        "operationId": "PassportController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/shared": {
+      "patch": {
+        "operationId": "PassportController_updateShared",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/work": {
+      "patch": {
+        "operationId": "PassportController_updateWork",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/study": {
+      "patch": {
+        "operationId": "PassportController_updateStudy",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/assessments": {
+      "post": {
+        "operationId": "PassportController_assess",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/matches": {
+      "post": {
+        "operationId": "PassportController_match",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/history": {
+      "get": {
+        "operationId": "PassportController_history",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/alerts": {
+      "get": {
+        "operationId": "PassportController_alerts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      },
+      "post": {
+        "operationId": "PassportController_createAlert",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/me/passport/alerts/{id}": {
+      "delete": {
+        "operationId": "PassportController_removeAlert",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "passport"
+        ]
+      }
+    },
+    "/api/v1/work/discover": {
+      "get": {
+        "operationId": "WorkController_discover",
+        "parameters": [
+          {
+            "name": "mode",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "occupation",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/work/cv": {
+      "get": {
+        "operationId": "WorkController_cv",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/work/dashboard": {
+      "get": {
+        "operationId": "WorkController_dashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/work/applications": {
+      "get": {
+        "operationId": "WorkController_applications",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      },
+      "post": {
+        "operationId": "WorkController_apply",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/work/applications/{id}/offer-review": {
+      "get": {
+        "operationId": "WorkController_review",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/work/applications/{id}/decision": {
+      "post": {
+        "operationId": "WorkController_decide",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/work/outcomes": {
+      "post": {
+        "operationId": "WorkController_outcome",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "work-os"
+        ]
+      }
+    },
+    "/api/v1/study/discover": {
+      "get": {
+        "operationId": "StudyController_discover",
+        "parameters": [
+          {
+            "name": "mode",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "level",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "budgetBdt",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/programs/{id}": {
+      "get": {
+        "operationId": "StudyController_program",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/shortlist": {
+      "get": {
+        "operationId": "StudyController_shortlist",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      },
+      "post": {
+        "operationId": "StudyController_addShortlist",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/shortlist/{id}": {
+      "delete": {
+        "operationId": "StudyController_removeShortlist",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/calendar": {
+      "get": {
+        "operationId": "StudyController_calendar",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/applications": {
+      "get": {
+        "operationId": "StudyController_applications",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      },
+      "post": {
+        "operationId": "StudyController_apply",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/materials/statement-review": {
+      "post": {
+        "operationId": "StudyController_reviewStatement",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/outcomes": {
+      "post": {
+        "operationId": "StudyController_outcome",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/work-handoff": {
+      "post": {
+        "operationId": "StudyController_handoff",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/study/dashboard": {
+      "get": {
+        "operationId": "StudyController_dashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "study-os"
+        ]
+      }
+    },
+    "/api/v1/operations/complaints": {
+      "post": {
+        "operationId": "OperationsController_createComplaint",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      },
+      "get": {
+        "operationId": "OperationsController_complaints",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/complaints/{id}": {
+      "get": {
+        "operationId": "OperationsController_complaint",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/complaints/{id}/actions": {
+      "post": {
+        "operationId": "OperationsController_complaintAction",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/reviews": {
+      "post": {
+        "operationId": "OperationsController_requestReview",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      },
+      "get": {
+        "operationId": "OperationsController_reviews",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/reviews/{id}/decision": {
+      "post": {
+        "operationId": "OperationsController_decideReview",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/publication-changes": {
+      "post": {
+        "operationId": "OperationsController_createChange",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/publication-changes/{id}/submit": {
+      "post": {
+        "operationId": "OperationsController_submitChange",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/operations/publication-changes/{id}/review": {
+      "post": {
+        "operationId": "OperationsController_reviewChange",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "trust-operations"
+        ]
+      }
+    },
+    "/api/v1/services": {
+      "get": {
+        "operationId": "ServiceDirectoryController_list",
+        "parameters": [
+          {
+            "name": "type",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "service-directory"
+        ]
+      }
+    },
+    "/api/v1/partner/dashboard": {
+      "get": {
+        "operationId": "SupplyController_dashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/partner/submissions": {
+      "get": {
+        "operationId": "SupplyController_submissions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      },
+      "post": {
+        "operationId": "SupplyController_createSubmission",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/partner/submissions/{id}/submit": {
+      "post": {
+        "operationId": "SupplyController_submit",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/partner/fees": {
+      "post": {
+        "operationId": "SupplyController_fee",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/partner/candidates": {
+      "get": {
+        "operationId": "SupplyController_candidates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/partner/applications/{id}/actions": {
+      "post": {
+        "operationId": "SupplyController_pipeline",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/partner/analytics": {
+      "get": {
+        "operationId": "SupplyController_analytics",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-portals"
+        ]
+      }
+    },
+    "/api/v1/me/partner-access": {
+      "get": {
+        "operationId": "PartnerAccessController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-consent"
+        ]
+      },
+      "post": {
+        "operationId": "PartnerAccessController_grant",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-consent"
+        ]
+      }
+    },
+    "/api/v1/me/partner-access/{id}": {
+      "delete": {
+        "operationId": "PartnerAccessController_revoke",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "partner-consent"
+        ]
+      }
+    },
+    "/api/v1/outcomes/reviews/{path}/{id}": {
+      "post": {
+        "operationId": "OutcomesController_review",
+        "parameters": [
+          {
+            "name": "path",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "outcomes"
+        ]
+      }
+    },
+    "/api/v1/outcomes/institutional/{organizationId}": {
+      "get": {
+        "operationId": "OutcomesController_institutional",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "path",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "outcomes"
+        ]
+      }
+    },
+    "/api/v1/me/outcomes/follow-ups": {
+      "get": {
+        "operationId": "MyOutcomesController_followUps",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "outcomes"
+        ]
+      }
+    },
+    "/api/v1/me/outcomes/comparisons": {
+      "get": {
+        "operationId": "MyOutcomesController_comparisons",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "outcomes"
+        ]
+      }
+    },
+    "/api/v1/public/outcomes/aggregates": {
+      "get": {
+        "operationId": "PublicOutcomesController_aggregate",
+        "parameters": [
+          {
+            "name": "path",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "organization",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "currency",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "public-outcomes"
+        ]
       }
     },
     "/api/v1/jobs": {
@@ -401,7 +1778,9 @@
             "description": ""
           }
         },
-        "tags": ["jobs"]
+        "tags": [
+          "jobs"
+        ]
       }
     },
     "/api/v1/jobs/{id}": {
@@ -422,7 +1801,9 @@
             "description": ""
           }
         },
-        "tags": ["jobs"]
+        "tags": [
+          "jobs"
+        ]
       }
     },
     "/api/v1/verify/job/{publicId}": {
@@ -443,7 +1824,9 @@
             "description": ""
           }
         },
-        "tags": ["jobs"]
+        "tags": [
+          "jobs"
+        ]
       }
     },
     "/api/v1/verify/qr": {
@@ -455,7 +1838,9 @@
             "description": ""
           }
         },
-        "tags": ["jobs"]
+        "tags": [
+          "jobs"
+        ]
       }
     },
     "/api/v1/cases": {
@@ -472,7 +1857,9 @@
             "bearer": []
           }
         ],
-        "tags": ["cases"]
+        "tags": [
+          "cases"
+        ]
       },
       "post": {
         "operationId": "CasesController_create",
@@ -487,7 +1874,9 @@
             "bearer": []
           }
         ],
-        "tags": ["cases"]
+        "tags": [
+          "cases"
+        ]
       }
     },
     "/api/v1/cases/{id}": {
@@ -513,7 +1902,9 @@
             "bearer": []
           }
         ],
-        "tags": ["cases"]
+        "tags": [
+          "cases"
+        ]
       }
     },
     "/api/v1/cases/{id}/tasks": {
@@ -539,7 +1930,9 @@
             "bearer": []
           }
         ],
-        "tags": ["cases"]
+        "tags": [
+          "cases"
+        ]
       }
     },
     "/api/v1/cases/{id}/cost-plan": {
@@ -565,7 +1958,9 @@
             "bearer": []
           }
         ],
-        "tags": ["cases"]
+        "tags": [
+          "cases"
+        ]
       }
     },
     "/api/v1/cases/{id}/actions": {
@@ -591,7 +1986,9 @@
             "bearer": []
           }
         ],
-        "tags": ["cases"]
+        "tags": [
+          "cases"
+        ]
       }
     },
     "/api/v1/me/documents": {
@@ -608,7 +2005,9 @@
             "bearer": []
           }
         ],
-        "tags": ["documents"]
+        "tags": [
+          "documents"
+        ]
       },
       "post": {
         "operationId": "DocumentsController_upload",
@@ -623,7 +2022,9 @@
             "bearer": []
           }
         ],
-        "tags": ["documents"]
+        "tags": [
+          "documents"
+        ]
       }
     },
     "/api/v1/me/documents/{id}/shares": {
@@ -649,7 +2050,9 @@
             "bearer": []
           }
         ],
-        "tags": ["documents"]
+        "tags": [
+          "documents"
+        ]
       }
     },
     "/api/v1/me/documents/shares/{shareId}": {
@@ -675,7 +2078,9 @@
             "bearer": []
           }
         ],
-        "tags": ["documents"]
+        "tags": [
+          "documents"
+        ]
       }
     },
     "/api/v1/cases/{caseId}/payment-intents": {
@@ -701,7 +2106,9 @@
             "bearer": []
           }
         ],
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       },
       "get": {
         "operationId": "PaymentsController_listIntents",
@@ -725,7 +2132,9 @@
             "bearer": []
           }
         ],
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       }
     },
     "/api/v1/payments/{id}/receipt": {
@@ -751,7 +2160,9 @@
             "bearer": []
           }
         ],
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       }
     },
     "/api/v1/cases/{caseId}/payment-intents/{id}/settle": {
@@ -785,7 +2196,9 @@
             "bearer": []
           }
         ],
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       }
     },
     "/api/v1/cases/{caseId}/ledger": {
@@ -811,7 +2224,9 @@
             "bearer": []
           }
         ],
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       }
     },
     "/api/v1/webhooks/payments/{provider}": {
@@ -840,7 +2255,9 @@
             "description": ""
           }
         },
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       }
     },
     "/api/v1/webhooks/payments/mock/sign": {
@@ -852,7 +2269,9 @@
             "description": ""
           }
         },
-        "tags": ["payments"]
+        "tags": [
+          "payments"
+        ]
       }
     },
     "/api/v1/verify/offer": {
@@ -864,12 +2283,14 @@
             "description": ""
           }
         },
-        "tags": ["scanner"]
+        "tags": [
+          "scanner"
+        ]
       }
     }
   },
   "info": {
-    "title": "ProbashOS API",
+    "title": "ProbashJatra API",
     "description": "Safe migration and global opportunity platform API.\n\nGuarantees this API is built to keep:\n- eligibility answers are deterministic and source-backed, and \"unknown\" is a real answer;\n- a verification level is derived from checked facts, never asserted;\n- money moves only on provider-confirmed webhooks, and settles only against verified milestones;\n- synthetic development records are labelled and are not served outside development.",
     "version": "0.1.0",
     "contact": {}

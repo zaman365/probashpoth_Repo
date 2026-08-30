@@ -191,17 +191,18 @@ production (§67). See `apps/api/src/storage/postgres/README.md`.
 
 ## Commands
 
-| Command                              | What it does                                              |
-| ------------------------------------ | --------------------------------------------------------- |
-| `pnpm build`                         | Builds every package and app (Turborepo)                  |
-| `pnpm test`                          | Runs all unit, integration and API tests                  |
-| `pnpm typecheck`                     | Strict TypeScript across the workspace                    |
-| `pnpm lint`                          | ESLint, including rules that encode blueprint constraints |
-| `pnpm format` / `pnpm format:check`  | Prettier                                                  |
-| `pnpm seed`                          | Validates the synthetic seed and its cross-references     |
-| `pnpm --filter @probash/api openapi` | Regenerates `docs/api/openapi.json` from source           |
-| `pnpm e2e:web`                       | Playwright suite (API and web must be running)            |
-| `pnpm services:up` / `services:down` | Local Docker services                                     |
+| Command                              | What it does                                                   |
+| ------------------------------------ | -------------------------------------------------------------- |
+| `pnpm build`                         | Builds every package and app (Turborepo)                       |
+| `pnpm test`                          | Runs all unit, integration and API tests                       |
+| `pnpm typecheck`                     | Strict TypeScript across the workspace                         |
+| `pnpm lint`                          | ESLint, including rules that encode blueprint constraints      |
+| `pnpm format` / `pnpm format:check`  | Prettier                                                       |
+| `pnpm seed`                          | Validates the synthetic seed and its cross-references          |
+| `pnpm --filter @probash/api openapi` | Regenerates `docs/api/openapi.json` from source                |
+| `pnpm smoke:built`                   | Starts the built API and Worker and fetches a real Bangla page |
+| `pnpm e2e:web`                       | Playwright suite (API and web must be running)                 |
+| `pnpm services:up` / `services:down` | Local Docker services                                          |
 
 ### Testing
 
@@ -210,6 +211,7 @@ pnpm test                                   # everything
 pnpm --filter @probash/rules test           # one package
 pnpm --filter @probash/api test             # API end-to-end over HTTP
 pnpm e2e:web                                # Playwright (needs API + web running)
+pnpm smoke:built                            # built artefacts must serve /bn (needs pnpm build)
 ```
 
 The API suite drives the whole trust rail through real HTTP requests: onboarding,

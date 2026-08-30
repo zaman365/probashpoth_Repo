@@ -1,13 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import {
-  CanvasPanel,
-  ChipLink,
-  Disclosure,
-  FeaturePill,
-  Icon,
-  Reveal,
-} from '@probash/web-ui';
+import { CanvasPanel, ChipLink, Disclosure, FeaturePill, Icon, Reveal } from '@probash/web-ui';
 import { apiRequest } from '@/lib/api';
 import { localeSegment, parseLocaleParam, translator } from '@/lib/i18n';
 import { canonicalMetadata, siteUrl } from '@/lib/seo';

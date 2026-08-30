@@ -28,6 +28,7 @@ describe('blueprint supply, mobile API and outcome moat', () => {
     roles: string[];
     organizationId?: string;
     mfa?: boolean;
+    mfaSatisfiedAt?: string;
   }): Promise<string> {
     const token = `token-${input.id}`;
     await storage.users.put({
@@ -45,7 +46,11 @@ describe('blueprint supply, mobile API and outcome moat', () => {
       issuedAt: now,
       expiresAt,
       kind: 'self',
-      mfaSatisfiedAt: input.mfa ? '2026-08-26T12:00:00.000Z' : undefined,
+      // A fixed timestamp made this fixture expire 12 hours after it was written
+      // (session.guard.ts treats MFA older than 12h as unsatisfied), so the suite
+      // passed only on the day it was authored. The step-up must be current
+      // unless a test is deliberately pinning a stale one.
+      mfaSatisfiedAt: input.mfaSatisfiedAt ?? (input.mfa ? new Date().toISOString() : undefined),
     });
     return token;
   }
@@ -64,6 +69,45 @@ describe('blueprint supply, mobile API and outcome moat', () => {
 
   afterAll(async () => {
     await app.close();
+  });
+
+  // Regression: the step-up window is a security control, not a test nuisance. If a
+  // future fixture expires again, the fix is a current timestamp — never a wider
+  // window in session.guard.ts. This test fails if that window is loosened.
+  it('refuses a reviewer action when the MFA step-up has expired', async () => {
+    const thirteenHoursAgo = new Date(Date.now() - 13 * 60 * 60 * 1000).toISOString();
+    const staleToken = await session({
+      id: 'stale-mfa-reviewer',
+      roles: ['compliance_reviewer'],
+      mfaSatisfiedAt: thirteenHoursAgo,
+    });
+
+    // The payload is valid, so the request reaches the service, where the MFA gate
+    // is checked before the change is loaded: a non-existent id must still be
+    // refused with 403 and never reach a 404.
+    const reviewBody = { decision: 'approve', note: 'Approving after source check.' };
+    const response = await post(
+      '/api/v1/operations/publication-changes/does-not-exist/review',
+      reviewBody,
+      staleToken,
+    );
+
+    expect(response.statusCode).toBe(403);
+    expect(json(response).error.code).toBe('FORBIDDEN');
+
+    // A current step-up gets past the gate, proving 403 came from MFA expiry
+    // alone and not from the role or the unknown id.
+    const freshToken = await session({
+      id: 'fresh-mfa-reviewer',
+      roles: ['compliance_reviewer'],
+      mfa: true,
+    });
+    const withFreshMfa = await post(
+      '/api/v1/operations/publication-changes/does-not-exist/review',
+      reviewBody,
+      freshToken,
+    );
+    expect(withFreshMfa.statusCode).toBe(404);
   });
 
   it('keeps partner submissions evidence-gated and payment-neutral', async () => {
