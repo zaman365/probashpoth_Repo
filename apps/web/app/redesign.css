@@ -1175,7 +1175,9 @@ html[lang='bn'] .site-root .talent-os-intro h2 {
 
 .site-root .experience-path-card.is-selected {
   border-color: #08734f;
-  box-shadow: 0 0 0 4px rgb(8 115 79 / 10%), 0 18px 48px rgb(11 42 33 / 10%);
+  box-shadow:
+    0 0 0 4px rgb(8 115 79 / 10%),
+    0 18px 48px rgb(11 42 33 / 10%);
 }
 
 .site-root .experience-journey {

@@ -15,10 +15,7 @@ export type SiteNavigationGroup = {
  * Detail routes remain reachable from their collection page, while every
  * top-level public and account route is represented here exactly once.
  */
-export function buildSiteNavigation(
-  t: Translate,
-  seg: 'bn' | 'en',
-): SiteNavigationGroup[] {
+export function buildSiteNavigation(t: Translate, seg: 'bn' | 'en'): SiteNavigationGroup[] {
   return [
     {
       title: t('site.footerProduct'),
