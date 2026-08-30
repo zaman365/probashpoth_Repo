@@ -60,7 +60,13 @@ export default tseslint.config(
     // Node scripts (.mjs generators, seed tools) run outside the browser.
     files: ['**/*.mjs', '**/scripts/**'],
     languageOptions: {
-      globals: { console: 'readonly', process: 'readonly', URL: 'readonly' },
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        URL: 'readonly',
+        fetch: 'readonly',
+        setTimeout: 'readonly',
+      },
     },
   },
   {

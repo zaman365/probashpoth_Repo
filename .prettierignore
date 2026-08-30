@@ -8,4 +8,5 @@ data/seed/*.json
 apps/web/app/tokens.css
 apps/web/next-env.d.ts
 apps/web/worker-configuration.d.ts
+docs/api/openapi.json
 docs/strategy.md
